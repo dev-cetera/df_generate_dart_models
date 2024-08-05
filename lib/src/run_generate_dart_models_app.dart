@@ -116,7 +116,7 @@ class _ArgsChecker extends ValidArgsChecker {
   @override
   List get args => [
         if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
-        this.templateFilePaths,
+        //this.templateFilePaths,
         this.rootPaths,
         if (this.subPaths != null) this.subPaths,
         if (this.pathPatterns != null) this.pathPatterns,
