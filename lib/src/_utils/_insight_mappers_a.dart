@@ -11,11 +11,10 @@ import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_string/df_string.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
-import '../dart_utils/dart_field.dart';
-import '../dart_utils/dart_type_code_mapper.dart';
+import '/src/_index.g.dart';
+
 import '_insight_mapper_utils.dart';
 import '_strip_special_syntax_from_field_type.dart';
-import 'dart_loose_type_mappers.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -23,9 +22,7 @@ final insightMappersA = [
   _InsightMapper(
     placeholder: PlaceholdersA.SUPER_CLASS_NAME,
     mapInsights: (insight) async {
-      return insight.annotation.shouldInherit == true
-          ? insight.className
-          : 'Model';
+      return insight.annotation.shouldInherit == true ? insight.className : 'Model';
     },
   ),
   _InsightMapper(
@@ -135,8 +132,7 @@ final insightMappersA = [
         final f = field.fieldName;
         final x = field.fieldTypeCode!;
         final s = stripSpecialSyntaxFromFieldType(x);
-        final b =
-            DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
+        final b = DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
           fieldName: "$a?['${keys.last}']",
           fieldTypeCode: s,
         );
@@ -175,8 +171,7 @@ final insightMappersA = [
           final f0 = '${f}0';
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
-          final a =
-              DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
+          final a = DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
             fieldName: 'this.$f',
             fieldTypeCode: s,
           );
@@ -193,16 +188,13 @@ final insightMappersA = [
           .where(
             (f1) =>
                 f1.fieldType == 'Map<String, dynamic>' &&
-                fields
-                    .map((e) => e.fieldName!)
-                    .any((e) => e.startsWith(f1.fieldName!)),
+                fields.map((e) => e.fieldName!).any((e) => e.startsWith(f1.fieldName!)),
           )
           .toList();
       fields.removeWhere((e) => parents.contains(e));
 
-      final type =
-          StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
-              StringCaseType.CAMEL_CASE;
+      final type = StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
+          StringCaseType.CAMEL_CASE;
 
       // void setValueInMap(
       //   Map<String, dynamic> data,
@@ -309,5 +301,4 @@ enum PlaceholdersA {
   FIELD_NAMES,
 }
 
-typedef _InsightMapper
-    = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersA>;
+typedef _InsightMapper = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersA>;
