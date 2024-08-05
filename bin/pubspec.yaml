@@ -1,0 +1,23 @@
+##.title
+## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+##
+## Dart/Flutter (DF) Packages by DevCetra.com & contributors. See MIT LICENSE
+## file in the root directory.
+##
+## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+##.title~
+
+name: generate_dart_models
+publish_to: none
+
+## -----------------------------------------------------------------------------
+
+environment:
+  sdk: ">=3.0.0 < 4.0.0"
+
+## -----------------------------------------------------------------------------
+
+dependencies:
+  df_generate_dart_models:
+    path: ../
+  df_log: ^0.1.1
