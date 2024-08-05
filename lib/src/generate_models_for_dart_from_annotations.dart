@@ -1,9 +1,8 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// 🇽🇾🇿 & Dev
-//
-// Licencing details are in the LICENSE file in the root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
+// in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -20,7 +19,7 @@ import 'dart_utils/dart_support.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Generates Dart model files from insights derived from classes annotated
-/// with `@GenerateModel` in Dart source files.
+/// with `@GenerateDartModel` in Dart source files.
 ///
 /// This function combines [rootDirPaths] and [subDirPaths], applying
 /// [pathPatterns] to filter and determine the directories to search for source
@@ -32,7 +31,7 @@ import 'dart_utils/dart_support.dart';
 ///
 /// If the `DART_SDK` environment variable is not set, [fallbackDartSdkPath] is
 /// used. This function leverages Dart's analyzer to interpret the annotations.
-Future<void> generateModelsForDartFromAnnotations({
+Future<void> GenerateDartModelsForDartFromAnnotations({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
@@ -62,7 +61,7 @@ Future<void> generateModelsForDartFromAnnotations({
 
   final template = await loadFileFromGitHub(
     username: 'robmllze',
-    repo: 'df_generate_dart_models',
+    repo: 'df_generate_dart_models_core',
     filePath: 'templates/template.dart.md',
   );
 

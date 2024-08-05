@@ -1,9 +1,8 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// 🇽🇾🇿 & Dev
-//
-// Licencing details are in the LICENSE file in the root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
+// in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -14,15 +13,13 @@ import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/file_system/physical_file_system.dart';
 import 'package:df_log/df_log.dart';
 import 'package:path/path.dart' as p;
-import 'package:xyz_gen_annotations/xyz_gen_annotations.dart' hide debugLogError;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Formats the Dart file at [filePath] via the `dart format` command
 Future<void> fmtDartFile(String filePath) async {
   try {
-    final localFilePath = toLocalSystemPathFormat(filePath);
-    await Process.run('dart', ['format', localFilePath]);
+    await Process.run('dart', ['format', filePath]);
   } catch (_) {
     debugLogError('Error formatting Dart file at $filePath');
   }
@@ -31,8 +28,7 @@ Future<void> fmtDartFile(String filePath) async {
 /// Fixes the Dart file at [filePath] via `dart fix --apply` command.
 Future<void> fixDartFile(String filePath) async {
   try {
-    final localFilePath = toLocalSystemPathFormat(filePath);
-    await Process.run('dart', ['fix', '--apply', localFilePath]);
+    await Process.run('dart', ['fix', '--apply', filePath]);
   } catch (_) {
     debugLogError('Error fixing Dart file at $filePath');
   }

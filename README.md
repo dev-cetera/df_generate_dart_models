@@ -16,19 +16,7 @@ A tool to generate index/exports files for all Dart files in a directory.
 1. You do not need to add this package to your pubspec.yaml file.
 2. Activate the tool by running: `dart pub global activate df_generate_dart_models`.
 3. Navigate to a folder in your project using the terminal (Tip: If you're using VS Code, you can right-click on a folder and select `"Open in Integrated Terminal"`).
-4. Run `dartindexes .` to generate an `_index.g.dart` file at the current location `.`.
-
-### Note:
-
-Files that start with an underscore, files in folders that start with an underscore, and generated files (those with the `.g.dart` extension) will be omitted from `_index.g.dart`.
-
-### Generated File Example:
-
-```dart
-
-```
-
----
+4. Run `dartmodels .` to generate models for the annotation `@GenerateDartModels` in the current directory `.`.
 
 ## Contributing and Discussions
 

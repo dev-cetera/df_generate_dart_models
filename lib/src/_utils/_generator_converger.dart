@@ -1,20 +1,19 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// 🇽🇾🇿 & Dev
-//
-// Licencing details are in the LICENSE file in the root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
+// in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
 import 'package:df_gen_core/df_gen_core.dart';
+// ignore: implementation_imports
 import 'package:df_gen_core/src/io.dart';
 import 'package:df_log/df_log.dart';
 import 'package:df_config/df_config.dart';
 import 'package:df_string/df_string.dart';
-import 'package:xyz_gen_annotations/xyz_gen_annotations.dart'
-    hide debugLogSuccess, StringCaseConversionsOnStringExtension, replaceData;
+import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 import 'package:path/path.dart' as p;
 
@@ -35,7 +34,6 @@ final generatorConverger = _GeneratorConverger(
 
         // Determine the output file name.
         final outputFileName = [
-          '_',
           replacement.insight.className.toLowerSnakeCase(),
           Lang.DART.genExt,
         ].join();
@@ -61,4 +59,4 @@ final generatorConverger = _GeneratorConverger(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef _GeneratorConverger = GeneratorConverger<ClassInsight<GenerateModel>, Enum, String>;
+typedef _GeneratorConverger = GeneratorConverger<ClassInsight<GenerateDartModel>, Enum, String>;

@@ -1,9 +1,8 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// 🇽🇾🇿 & Dev
-//
-// Licencing details are in the LICENSE file in the root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
+// in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -16,7 +15,7 @@ import 'generate_models_for_dart_from_annotations.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A command line app for generating Dart data models from annotations. The
-/// [args] are interpreted and passed to [generateModelsForDartFromAnnotations].
+/// [args] are interpreted and passed to [GenerateDartModelsForDartFromAnnotations].
 Future<void> runGenerateDartModelsApp(List<String> args) async {
   await runCommandLineApp(
     title: 'Generate Dart Models',
@@ -70,7 +69,7 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
       );
     },
     action: (parser, results, args) async {
-      await generateModelsForDartFromAnnotations(
+      await GenerateDartModelsForDartFromAnnotations(
         fallbackDartSdkPath: args.fallbackDartSdkPath,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},

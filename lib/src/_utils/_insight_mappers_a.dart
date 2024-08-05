@@ -1,19 +1,15 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// 🇽🇾🇿 & Dev
-//
-// Licencing details are in the LICENSE file in the root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
+// in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:df_collection/df_collection.dart';
 import 'package:df_gen_core/df_gen_core.dart';
-import 'package:df_type/df_type.dart';
 import 'package:df_string/df_string.dart';
-import 'package:xyz_gen_annotations/xyz_gen_annotations.dart'
-    hide NullIfEmptyOnStringExtension, StringCaseType, ValueOfOnEnumExtension;
+import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 import '../dart_utils/dart_field.dart';
 import '../dart_utils/dart_type_code_mapper.dart';
@@ -157,12 +153,12 @@ final insightMappersA = [
   _InsightMapper(
     placeholder: PlaceholdersA.FROM_JSON_A2,
     mapInsights: (insight) async {
-      return '${dartFields(insight).map(
+      return dartFields(insight).map(
         (e) {
           final f = e.fieldName;
           return '$f: $f,';
         },
-      ).join('\n')}';
+      ).join('\n');
     },
   ),
   _InsightMapper(
@@ -295,4 +291,4 @@ enum PlaceholdersA {
   FIELD_NAMES,
 }
 
-typedef _InsightMapper = InsightMapper<ClassInsight<GenerateModel>, PlaceholdersA>;
+typedef _InsightMapper = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersA>;

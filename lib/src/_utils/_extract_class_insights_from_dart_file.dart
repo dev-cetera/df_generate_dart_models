@@ -1,16 +1,17 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// 🇽🇾🇿 & Dev
-//
-// Licencing details are in the LICENSE file in the root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
+// in the root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:path/path.dart' as p;
-import 'package:xyz_gen_annotations/xyz_gen_annotations.dart';
+import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 import 'package:df_gen_core/df_gen_core.dart';
 
 import '../dart_utils/dart_annotated_class_analyzer.dart';
@@ -35,13 +36,13 @@ Future<List<_ClassInsight>> extractClassInsightsFromDartFile(
   );
 
   final insights = <_ClassInsight>[];
-  late GenerateModel temp;
+  late GenerateDartModel temp;
   await analyzer.analyze(
-    inclClassAnnotations: {GenerateModel.CLASS_NAME},
+    inclClassAnnotations: {GenerateDartModel.CLASS_NAME},
     inclMemberAnnotations: {Field.CLASS_NAME},
     onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
-    onPreAnalysis: (_, className) => temp = const GenerateModel(fields: {}),
+    onPreAnalysis: (_, className) => temp = const GenerateDartModel(fields: {}),
     onPostAnalysis: (params) {
       final fullPathName = params.fullFilePath;
       final fileName = p.basename(fullPathName);
@@ -62,20 +63,20 @@ Future<List<_ClassInsight>> extractClassInsightsFromDartFile(
 
 /// Updates [annotation] by incorporating the field from [params] into its
 /// "fields" property.
-GenerateModel _updateFromClassAnnotationField(
-  GenerateModel annotation,
+GenerateDartModel _updateFromClassAnnotationField(
+  GenerateDartModel annotation,
   OnClassAnnotationFieldParams params,
 ) {
   switch (params.fieldName) {
-    case GenerateModelFieldNames.className:
+    case GenerateDartModelFieldNames.className:
       return annotation.copyWith(
-        GenerateModel(
+        GenerateDartModel(
           className: params.fieldValue.toStringValue(),
         ),
       );
-    case GenerateModelFieldNames.fields:
+    case GenerateDartModelFieldNames.fields:
       return annotation.copyWith(
-        GenerateModel(
+        GenerateDartModel(
           fields: {
             ...?annotation.fields,
             ...?params.fieldValue.toSetValue()?.map((e) {
@@ -89,35 +90,35 @@ GenerateModel _updateFromClassAnnotationField(
           },
         ),
       );
-    case GenerateModelFieldNames.shouldInherit:
+    case GenerateDartModelFieldNames.shouldInherit:
       return annotation.copyWith(
-        GenerateModel(
+        GenerateDartModel(
           shouldInherit: params.fieldValue.toBoolValue(),
         ),
       );
-    case GenerateModelFieldNames.inheritanceConstructor:
+    case GenerateDartModelFieldNames.inheritanceConstructor:
       return annotation.copyWith(
-        GenerateModel(
+        GenerateDartModel(
           inheritanceConstructor: params.fieldValue.toStringValue(),
         ),
       );
-    case GenerateModelFieldNames.keyStringCase:
+    case GenerateDartModelFieldNames.keyStringCase:
       return annotation.copyWith(
-        GenerateModel(
+        GenerateDartModel(
           keyStringCase: params.fieldValue.toStringValue(),
         ),
       );
     default:
   }
-  return GenerateModel.of(annotation);
+  return GenerateDartModel.of(annotation);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Updates [annotation] by incorporating all members tagged with the @[Field]
 /// annotation into its "fields" property.
-GenerateModel _updateFromAnnotatedMember(
-  GenerateModel annotation,
+GenerateDartModel _updateFromAnnotatedMember(
+  GenerateDartModel annotation,
   OnAnnotatedMemberParams params,
 ) {
   if (params.memberAnnotationName == Field.CLASS_NAME) {
@@ -133,7 +134,7 @@ GenerateModel _updateFromAnnotatedMember(
       nullable: c1,
     );
     annotation = annotation.copyWith(
-      GenerateModel(
+      GenerateDartModel(
         fields: {
           ...?annotation.fields,
           field.toRecord,
@@ -146,4 +147,4 @@ GenerateModel _updateFromAnnotatedMember(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef _ClassInsight = ClassInsight<GenerateModel>;
+typedef _ClassInsight = ClassInsight<GenerateDartModel>;
