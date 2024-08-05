@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.3]
+
+- Released @ 8/2024 (UTC)
+- fix: Address pub.dev issues
+
 ## [0.1.2]
 
 - Released @ 8/2024 (UTC)
