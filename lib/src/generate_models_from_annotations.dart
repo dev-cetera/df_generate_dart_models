@@ -10,11 +10,8 @@
 import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_log/df_log.dart';
 
-import '_utils/_dart_support.dart';
-import '_utils/_extract_class_insights_from_dart_file.dart';
-import '_utils/_generator_converger.dart';
-import '_utils/_insight_mappers_a.dart';
-import '_utils/_insight_mappers_b.dart';
+import '_core_utils/_index.g.dart';
+import '_dart_utils/_index.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -31,7 +28,7 @@ import '_utils/_insight_mappers_b.dart';
 ///
 /// If the `DART_SDK` environment variable is not set, [fallbackDartSdkPath] is
 /// used. This function leverages Dart's analyzer to interpret the annotations.
-Future<void> GenerateDartModelsForDartFromAnnotations({
+Future<void> GenerateDartModelsFromAnnotations({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
@@ -74,8 +71,8 @@ Future<void> GenerateDartModelsForDartFromAnnotations({
   );
 
   // For each file...
-  for (final filePathResult in sourceFileExplorerResults.filePathResults
-      .where((e) => e.category == _Categories.DART)) {
+  for (final filePathResult
+      in sourceFileExplorerResults.filePathResults.where((e) => e.category == _Categories.DART)) {
     final filePath = filePathResult.path;
 
     // Extract insights from the file.

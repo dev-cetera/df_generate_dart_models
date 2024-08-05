@@ -11,10 +11,10 @@ import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_string/df_string.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
-import '_dart_type_code_mapper.dart';
-import '_dart_loose_type_mappers.dart';
-import '_insight_mapper_utils.dart';
-import '_strip_special_syntax_from_field_type.dart';
+import '/src/_dart_utils/_index.g.dart';
+
+import 'insight_mapper_utils.dart';
+import 'strip_special_syntax_from_field_type.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

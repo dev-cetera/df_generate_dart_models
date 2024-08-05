@@ -10,17 +10,16 @@
 import 'package:args/args.dart';
 import 'package:df_gen_core/df_gen_core.dart';
 
-import 'generate_models_for_dart_from_annotations.dart';
+import 'generate_models_from_annotations.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A command line app for generating Dart data models from annotations. The
-/// [args] are interpreted and passed to [GenerateDartModelsForDartFromAnnotations].
+/// [args] are interpreted and passed to [GenerateDartModelsFromAnnotations].
 Future<void> runGenerateDartModelsApp(List<String> args) async {
   await runCommandLineApp(
     title: 'Generate Dart Models',
-    description:
-        'A command line app for generating Dart models from annotations',
+    description: 'A command line app for generating Dart models from annotations',
     args: args,
     parser: ArgParser()
       ..addFlag(
@@ -70,7 +69,7 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
       );
     },
     action: (parser, results, args) async {
-      await GenerateDartModelsForDartFromAnnotations(
+      await GenerateDartModelsFromAnnotations(
         fallbackDartSdkPath: args.fallbackDartSdkPath,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},

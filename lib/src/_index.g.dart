@@ -9,23 +9,24 @@
 
 // --- PUBLIC FILES ---
 export 'run_generate_dart_models_app.dart';
-export 'generate_models_for_dart_from_annotations.dart';
+export 'generate_models_from_annotations.dart';
 
 // --- PRIVATE FILES (EXCLUDED) ---
+// export '_index.g.dart';
 // export '_utils/_insight_mappers_b.dart';
 // export '_utils/_generator_converger.dart';
 // export '_utils/_insight_mapper_utils.dart';
+// export '_utils/dart_annotated_class_analyzer.dart';
 // export '_utils/_strip_special_syntax_from_field_type.dart';
 // export '_utils/_extract_class_insights_from_dart_file.dart';
 // export '_utils/_insight_mappers_a.dart';
-// export '_utils/_dart_loose_type_mappers.dart';
-// export '_dart_utils/_dart_from_record_on_dart_object_x.dart';
-// export '_dart_utils/_dart_type_code_mapper.dart';
-// export '_dart_utils/_decompose_dart_collection_type.dart';
-// export '_dart_utils/_dart_obj_to_list.dart';
-// export '_dart_utils/_dart_support.dart';
-// export '_dart_utils/_dart_annotated_class_analyzer.dart';
-// export '_dart_utils/_dart_field.dart';
+// export '_utils/dart_utils/dart_type_code_mapper.dart';
+// export '_utils/dart_utils/dart_field.dart';
+// export '_utils/dart_utils/dart_obj_to_list.dart';
+// export '_utils/dart_utils/decompose_dart_collection_type.dart';
+// export '_utils/dart_utils/dart_support.dart';
+// export '_utils/dart_utils/dart_loose_type_mappers.dart';
+// export '_utils/dart_utils/dart_from_record_on_dart_object_x.dart';
 
 // --- GENERATED FILES (EXCLUDED) ---
-// export '_index.g.dart';
+// None found.
