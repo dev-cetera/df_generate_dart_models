@@ -5,6 +5,7 @@
 - Released @ 8/2024 (UTC)
 - fix: Address pub.dev issues
 - chore: Update changelog script
+- chore: Clean up file structure
 
 ## [0.1.2]
 
