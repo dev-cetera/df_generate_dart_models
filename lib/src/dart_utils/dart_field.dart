@@ -97,7 +97,8 @@ final class DartField extends Field {
   //
   //
 
-  bool? get _isFieldNameNullable => super.fieldPath?.any((e) => e.contains('?'));
+  bool? get _isFieldNameNullable =>
+      super.fieldPath?.any((e) => e.contains('?'));
 
   bool? get _isFieldTypeNullable => super.fieldType?.endsWith('?');
 
