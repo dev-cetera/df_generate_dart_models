@@ -28,7 +28,7 @@ import '_dart_utils/_index.g.dart';
 ///
 /// If the `DART_SDK` environment variable is not set, [fallbackDartSdkPath] is
 /// used. This function leverages Dart's analyzer to interpret the annotations.
-Future<void> GenerateDartModelsFromAnnotations({
+Future<void> generateDartModelsFromAnnotations({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},

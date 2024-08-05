@@ -15,7 +15,7 @@ import 'generate_models_from_annotations.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A command line app for generating Dart data models from annotations. The
-/// [args] are interpreted and passed to [GenerateDartModelsFromAnnotations].
+/// [args] are interpreted and passed to [generateDartModelsFromAnnotations].
 Future<void> runGenerateDartModelsApp(List<String> args) async {
   await runCommandLineApp(
     title: 'Generate Dart Models',
@@ -69,7 +69,7 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
       );
     },
     action: (parser, results, args) async {
-      await GenerateDartModelsFromAnnotations(
+      await generateDartModelsFromAnnotations(
         fallbackDartSdkPath: args.fallbackDartSdkPath,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
