@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.5]
+
+- Released @ 8/2024 (UTC)
+- fix: Rename GenerateDartModelsFromAnnotations to generateDartModelsFromAnnotations
+
 ## [0.1.3]
 
 - Released @ 8/2024 (UTC)
