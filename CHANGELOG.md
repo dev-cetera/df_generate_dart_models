@@ -4,6 +4,7 @@
 
 - Released @ 8/2024 (UTC)
 - fix: Fix insight mapper bug
+- chore: Update changelog script
 
 ## [0.1.1]
 
