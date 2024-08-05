@@ -2,7 +2,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
 // Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
-// in the root directory.
+// in root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -55,8 +55,7 @@ class DartTypeCodeMapper {
     required String fieldName,
     required String fieldTypeCode,
   }) {
-    final formula =
-        buildObjectMapper(fieldTypeCode, fieldName, this.mappers) ?? '#x0';
+    final formula = buildObjectMapper(fieldTypeCode, fieldName, this.mappers) ?? '#x0';
     return formula;
   }
 

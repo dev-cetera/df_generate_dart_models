@@ -2,7 +2,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
 // Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
-// in the root directory.
+// in root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -44,8 +44,7 @@ AnalysisContextCollection createDartAnalysisContextCollection(
   String? fallbackDartSdkPath,
 ) {
   final sdkPath = Platform.environment['DART_SDK'] ?? fallbackDartSdkPath;
-  final includePaths =
-      paths.toSet().map((e) => p.normalize(p.absolute(e))).toList();
+  final includePaths = paths.toSet().map((e) => p.normalize(p.absolute(e))).toList();
   final collection = AnalysisContextCollection(
     includedPaths: includePaths,
     resourceProvider: PhysicalResourceProvider.INSTANCE,

@@ -2,7 +2,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
 // Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
-// in the root directory.
+// in root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -22,10 +22,7 @@ extension DartFromRecordOnDartObjectX on DartObject {
   /// Returns `fieldName` property from `this` [DartObject] record if it matches
   /// the structure of [TFieldRecord] or `null`.
   List<String>? fieldPathFromRecord() {
-    return this
-        ._rawFieldPathFromRecord()
-        ?.map((e) => e.replaceAll('?', ''))
-        .toList();
+    return this._rawFieldPathFromRecord()?.map((e) => e.replaceAll('?', '')).toList();
   }
 
   List<String>? _rawFieldPathFromRecord() {
@@ -52,10 +49,7 @@ extension DartFromRecordOnDartObjectX on DartObject {
     final a = this.getField('\$2')?.toStringValue();
     final b = this.getField('\$2')?.toTypeValue()?.getDisplayString();
     final c = this.getField(FieldFieldNames.fieldType)?.toStringValue();
-    final d = this
-        .getField(FieldFieldNames.fieldType)
-        ?.toTypeValue()
-        ?.getDisplayString();
+    final d = this.getField(FieldFieldNames.fieldType)?.toTypeValue()?.getDisplayString();
     return a ?? b ?? c ?? d;
   }
 

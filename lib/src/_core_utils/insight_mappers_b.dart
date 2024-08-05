@@ -2,7 +2,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
 // Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
-// in the root directory.
+// in root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -87,13 +87,11 @@ final insightMappersB = [
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
           final n = e.nullable;
-          final a =
-              DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
+          final a = DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
             fieldName: 'this.$f',
             fieldTypeCode: x,
           );
-          final b =
-              DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
+          final b = DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
             fieldName: 'v',
             fieldTypeCode: x,
           );
@@ -125,5 +123,4 @@ enum PlaceholdersB {
   GETTERS_AND_SETTERS_B,
 }
 
-typedef _InsightMapper
-    = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersB>;
+typedef _InsightMapper = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersB>;
