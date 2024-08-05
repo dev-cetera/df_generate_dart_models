@@ -145,8 +145,9 @@ final insightMappersA = [
 
       final j = fields.map((a) {
         final ff = fields
-            .where((b) =>
-                a.fieldPath!.join('.').startsWith(b.fieldPath!.join('.')),)
+            .where(
+              (b) => a.fieldPath!.join('.').startsWith(b.fieldPath!.join('.')),
+            )
             .toList()
           ..sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
         return $v(ff.length > 1 ? '${ff[1].fieldName}' : 'otherData', ff.first);
@@ -223,16 +224,23 @@ final insightMappersA = [
       // }
 
       final entries = fields
-          .map((e) => MapEntry(
-              type.convertAll(e.fieldPath!).join('.'), '${e.fieldName}0',),)
+          .map(
+            (e) => MapEntry(
+              type.convertAll(e.fieldPath!).join('.'),
+              '${e.fieldName}0',
+            ),
+          )
           .toList()
         ..sort((a, b) => b.key.compareTo(a.key));
 
       var buffer = <String, dynamic>{};
 
       for (final e in entries) {
-        traverseMap(buffer, e.key.split('.').map((e) => "'$e'").toList(),
-            newValue: e.value,);
+        traverseMap(
+          buffer,
+          e.key.split('.').map((e) => "'$e'").toList(),
+          newValue: e.value,
+        );
       }
 
       for (final parent in parents) {
