@@ -8,8 +8,6 @@
 //.title~
 
 import 'package:df_gen_core/df_gen_core.dart';
-// ignore: implementation_imports
-import 'package:df_gen_core/src/io.dart';
 import 'package:df_log/df_log.dart';
 import 'package:df_config/df_config.dart';
 import 'package:df_string/df_string.dart';
@@ -39,8 +37,7 @@ final generatorConverger = _GeneratorConverger(
         ].join();
 
         // Determine the output file path.
-        final outputFilePath =
-            p.join(replacement.insight.dirPath, outputFileName);
+        final outputFilePath = p.join(replacement.insight.dirPath, outputFileName);
 
         // Write the generated Dart file.
         await writeFile(outputFilePath, output);
@@ -60,5 +57,4 @@ final generatorConverger = _GeneratorConverger(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef _GeneratorConverger
-    = GeneratorConverger<ClassInsight<GenerateDartModel>, Enum, String>;
+typedef _GeneratorConverger = GeneratorConverger<ClassInsight<GenerateDartModel>, Enum, String>;

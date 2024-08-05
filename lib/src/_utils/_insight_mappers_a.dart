@@ -22,9 +22,7 @@ final insightMappersA = [
   _InsightMapper(
     placeholder: PlaceholdersA.SUPER_CLASS_NAME,
     mapInsights: (insight) async {
-      return insight.annotation.shouldInherit == true
-          ? insight.className
-          : 'Model';
+      return insight.annotation.shouldInherit == true ? insight.className : 'Model';
     },
   ),
   _InsightMapper(
@@ -134,8 +132,7 @@ final insightMappersA = [
         final f = field.fieldName;
         final x = field.fieldTypeCode!;
         final s = stripSpecialSyntaxFromFieldType(x);
-        final b =
-            DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
+        final b = DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
           fieldName: "$a?['${keys.last}']",
           fieldTypeCode: s,
         );
@@ -174,8 +171,7 @@ final insightMappersA = [
           final f0 = '${f}0';
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
-          final a =
-              DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
+          final a = DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
             fieldName: 'this.$f',
             fieldTypeCode: s,
           );
@@ -193,15 +189,14 @@ final insightMappersA = [
             (f1) =>
                 f1.fieldType == 'Map<String, dynamic>' &&
                 fields
-                    .map((e) => e.fieldName!)
-                    .any((e) => e.startsWith(f1.fieldName!)),
+                    .map((e) => e.fieldPath!.join('.'))
+                    .any((e) => e.startsWith(f1.fieldPath!.join('.'))),
           )
           .toList();
       fields.removeWhere((e) => parents.contains(e));
 
-      final type =
-          StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
-              StringCaseType.CAMEL_CASE;
+      final type = StringCaseType.values.valueOf(insight.annotation.keyStringCase) ??
+          StringCaseType.CAMEL_CASE;
 
       // void setValueInMap(
       //   Map<String, dynamic> data,
@@ -308,5 +303,4 @@ enum PlaceholdersA {
   FIELD_NAMES,
 }
 
-typedef _InsightMapper
-    = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersA>;
+typedef _InsightMapper = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersA>;

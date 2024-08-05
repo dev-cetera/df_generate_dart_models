@@ -1,15 +1,15 @@
 ##.title
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##
-## Dart/Flutter (DF) Packages by DevCetra.com & contributors. See MIT LICENSE
-## file in the root directory.
+## Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
+## in the root directory.
 ##
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##.title~
 
 name: df_generate_dart_models
 description: A tool to generate index/exports files for all Dart files in a directory.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/robmllze/df_generate_dart_models
 
 ## -----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ dependencies:
   path: ^1.9.0
   df_collection: ">0.0.0 <=1.0.0"
   df_config: ">0.0.0 <=1.0.0"
-  df_gen_core: ">0.0.0 <=1.0.0"
+  df_gen_core: ^0.1.2
   df_generate_dart_models_core: ">0.0.0 <=1.0.0"
   df_log: ">0.0.0 <=1.0.0"
   df_string: ">0.0.0 <=1.0.0"
@@ -43,8 +43,3 @@ executables:
   df_generate_dart_models: generate_dart_models
   generate_dart_models: generate_dart_models
   dartmodels: generate_dart_models
-
-## -----------------------------------------------------------------------------
-
-assets:
-  - bin/templates/

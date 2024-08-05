@@ -7,8 +7,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:path/path.dart' as p;
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
