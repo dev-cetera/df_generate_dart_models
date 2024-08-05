@@ -39,7 +39,8 @@ final generatorConverger = _GeneratorConverger(
         ].join();
 
         // Determine the output file path.
-        final outputFilePath = p.join(replacement.insight.dirPath, outputFileName);
+        final outputFilePath =
+            p.join(replacement.insight.dirPath, outputFileName);
 
         // Write the generated Dart file.
         await writeFile(outputFilePath, output);
@@ -59,4 +60,5 @@ final generatorConverger = _GeneratorConverger(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef _GeneratorConverger = GeneratorConverger<ClassInsight<GenerateDartModel>, Enum, String>;
+typedef _GeneratorConverger
+    = GeneratorConverger<ClassInsight<GenerateDartModel>, Enum, String>;
