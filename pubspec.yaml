@@ -39,8 +39,9 @@ dev_dependencies:
 ## -----------------------------------------------------------------------------
 
 executables:
-  # generate_dart_indexes: generate_dart_indexes
-  # dartindexes: generate_dart_indexes
+  df_generate_dart_models: generate_dart_models
+  generate_dart_models: generate_dart_models
+  dartmodels: generate_dart_models
 
 ## -----------------------------------------------------------------------------
 
