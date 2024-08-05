@@ -10,7 +10,7 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
-import 'dart_obj_to_list.dart';
+import '_dart_obj_to_list.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 

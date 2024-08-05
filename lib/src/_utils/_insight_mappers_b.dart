@@ -11,8 +11,8 @@ import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_string/df_string.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
-import '/src/_index.g.dart';
-
+import '_dart_type_code_mapper.dart';
+import '_dart_loose_type_mappers.dart';
 import '_insight_mapper_utils.dart';
 import '_strip_special_syntax_from_field_type.dart';
 
@@ -87,13 +87,11 @@ final insightMappersB = [
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
           final n = e.nullable;
-          final a =
-              DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
+          final a = DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
             fieldName: 'this.$f',
             fieldTypeCode: x,
           );
-          final b =
-              DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
+          final b = DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
             fieldName: 'v',
             fieldTypeCode: x,
           );
@@ -125,5 +123,4 @@ enum PlaceholdersB {
   GETTERS_AND_SETTERS_B,
 }
 
-typedef _InsightMapper
-    = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersB>;
+typedef _InsightMapper = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersB>;

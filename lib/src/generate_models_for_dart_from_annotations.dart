@@ -10,8 +10,7 @@
 import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_log/df_log.dart';
 
-import '/src/_index.g.dart';
-
+import '_utils/_dart_support.dart';
 import '_utils/_extract_class_insights_from_dart_file.dart';
 import '_utils/_generator_converger.dart';
 import '_utils/_insight_mappers_a.dart';
@@ -75,8 +74,8 @@ Future<void> GenerateDartModelsForDartFromAnnotations({
   );
 
   // For each file...
-  for (final filePathResult in sourceFileExplorerResults.filePathResults
-      .where((e) => e.category == _Categories.DART)) {
+  for (final filePathResult
+      in sourceFileExplorerResults.filePathResults.where((e) => e.category == _Categories.DART)) {
     final filePath = filePathResult.path;
 
     // Extract insights from the file.

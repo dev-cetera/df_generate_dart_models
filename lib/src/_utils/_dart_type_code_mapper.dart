@@ -9,7 +9,7 @@
 
 import 'package:df_gen_core/df_gen_core.dart';
 
-import 'decompose_dart_collection_type.dart';
+import '_decompose_dart_collection_type.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
