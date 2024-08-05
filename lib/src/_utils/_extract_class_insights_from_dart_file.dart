@@ -14,6 +14,7 @@ import 'package:df_gen_core/df_gen_core.dart';
 
 import '_dart_annotated_class_analyzer.dart';
 import '_dart_field.dart';
+import '_dart_from_record_on_dart_object_x.dart';
 import '_dart_obj_to_list.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
