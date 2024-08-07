@@ -4,6 +4,7 @@
 
 - Released @ 8/2024 (UTC)
 - fix: Fix Uri mapping in dart_loose_type_mappers.dart
+- fix: Fix string case conversion bug
 
 ## [0.2.1]
 
