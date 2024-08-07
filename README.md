@@ -4,6 +4,7 @@ Dart & Flutter Packages by DevCetra.com & contributors.
 
 [![Pub Package](https://img.shields.io/pub/v/df_generate_dart_models.svg)](https://pub.dev/packages/df_generate_dart_models)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/robmllze/df_generate_dart_models/main/LICENSE)
+[![Buy Me a Coffee](https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/robmllze)
 
 ---
 
@@ -33,6 +34,12 @@ This is an open-source project, and contributions are welcome from everyone, reg
 ### Chief Maintainer:
 
 📧 Email _Robert Mollentze_ at robmllze@gmail.com
+
+### Donating
+
+If you're enjoying this package and find it valuable, consider showing your appreciation with a small donation. Every bit helps in supporting future development. You can donate here:
+
+https://www.buymeacoffee.com/robmllze
 
 ---
 
