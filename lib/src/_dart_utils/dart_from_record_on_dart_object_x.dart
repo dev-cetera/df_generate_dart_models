@@ -22,15 +22,12 @@ extension DartFromRecordOnDartObjectX on DartObject {
   /// Returns `fieldName` property from `this` [DartObject] record if it matches
   /// the structure of [TFieldRecord] or `null`.
   List<String>? fieldPathFromRecord() {
-    return this
-        ._rawFieldPathFromRecord()
-        ?.map((e) => e.replaceAll('?', ''))
-        .toList();
+    return this._rawFieldPathFromRecord()?.map((e) => e.replaceAll('?', '')).toList();
   }
 
   List<String>? _rawFieldPathFromRecord() {
     final a = dartObjToList(this.getField('\$1'));
-    final b = dartObjToList(this.getField(FieldFieldNames.fieldPath));
+    final b = dartObjToList(this.getField(FieldModelFieldNames.fieldPath));
     return (a ?? b)?.toList();
   }
 
@@ -51,11 +48,8 @@ extension DartFromRecordOnDartObjectX on DartObject {
   String? _rawFieldTypeFromRecord() {
     final a = this.getField('\$2')?.toStringValue();
     final b = this.getField('\$2')?.toTypeValue()?.getDisplayString();
-    final c = this.getField(FieldFieldNames.fieldType)?.toStringValue();
-    final d = this
-        .getField(FieldFieldNames.fieldType)
-        ?.toTypeValue()
-        ?.getDisplayString();
+    final c = this.getField(FieldModelFieldNames.fieldType)?.toStringValue();
+    final d = this.getField(FieldModelFieldNames.fieldType)?.toTypeValue()?.getDisplayString();
     return a ?? b ?? c ?? d;
   }
 
@@ -70,7 +64,7 @@ extension DartFromRecordOnDartObjectX on DartObject {
       return false;
     }
 
-    final a = this.getField(FieldFieldNames.nullable)?.toBoolValue();
+    final a = this.getField(FieldModelFieldNames.nullable)?.toBoolValue();
     final b = this.getField('\$3')?.toBoolValue();
     final c = this._rawFieldPathFromRecord()?.any((e) => e.contains('?'));
     final d = this._rawFieldTypeFromRecord()?.endsWith('?');

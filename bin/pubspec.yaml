@@ -20,4 +20,4 @@ environment:
 dependencies:
   df_generate_dart_models:
     path: ../
-  df_log: ^0.1.1
+  df_log: ^0.1.2
