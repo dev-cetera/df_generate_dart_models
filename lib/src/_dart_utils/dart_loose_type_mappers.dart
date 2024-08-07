@@ -106,7 +106,7 @@ class DartLooseTypeMappers extends TypeMappers {
           return '${e.name}?.toString().trim().nullIfEmpty?.tryParseDuration()';
         },
         r'^(Uri)\??$': (e) {
-          return '(){ final a = ${e.name}; return a is String ? a.trim().nullIfEmpty?.toUriOrNull(): null; }()';
+          return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; return a != null ? Uri.tryParse(a): null; }()';
         },
         r'^(Color)\??$': (e) {
           return '(){ final a = letAs<int>(${e.name}); return a is int ? Color(a): null; }()';
