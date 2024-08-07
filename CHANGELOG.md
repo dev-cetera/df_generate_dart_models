@@ -4,6 +4,7 @@
 
 - Released @ 8/2024 (UTC)
 - chore: Update dependencies
+- docs: Update readme
 
 ## [0.1.5]
 
