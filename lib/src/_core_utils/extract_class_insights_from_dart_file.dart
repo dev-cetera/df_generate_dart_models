@@ -119,7 +119,8 @@ GenerateDartModel _updateFromAnnotatedMember(
 ) {
   if (params.memberAnnotationName == Field.CLASS_NAME) {
     final a1 = dartObjToList(
-        params.memberAnnotationFields[FieldModelFieldNames.fieldPath],);
+      params.memberAnnotationFields[FieldModelFieldNames.fieldPath],
+    );
     final a2 = [params.memberName];
     final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]
         ?.toStringValue();
