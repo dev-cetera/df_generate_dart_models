@@ -15,8 +15,6 @@ import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 import 'package:path/path.dart' as p;
 
-import '/src/_dart_utils/_index.g.dart';
-
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 final generatorConverger = _GeneratorConverger(
