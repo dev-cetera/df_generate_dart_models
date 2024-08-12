@@ -8,8 +8,8 @@
 //.title~
 
 // --- PUBLIC FILES ---
-export 'run_generate_dart_models_app.dart';
-export 'generate_models_from_annotations.dart';
+export 'app.dart';
+export 'generate.dart';
 
 // --- PRIVATE FILES (EXCLUDED) ---
 // export '_index.g.dart';

@@ -10,7 +10,7 @@
 import 'package:args/args.dart';
 import 'package:df_gen_core/df_gen_core.dart';
 
-import 'generate_models_from_annotations.dart';
+import 'generate.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
