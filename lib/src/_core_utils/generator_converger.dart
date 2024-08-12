@@ -10,7 +10,6 @@
 import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_log/df_log.dart';
 import 'package:df_config/df_config.dart';
-import 'package:df_string/df_string.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 import 'package:path/path.dart' as p;

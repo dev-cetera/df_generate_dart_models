@@ -8,7 +8,6 @@
 //.title~
 
 import 'package:df_gen_core/df_gen_core.dart';
-import 'package:df_string/df_string.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 import '/src/_dart_utils/_index.g.dart';
