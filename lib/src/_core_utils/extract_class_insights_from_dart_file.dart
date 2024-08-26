@@ -1,8 +1,11 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
-// in root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. The use of this
+// source code is governed by an MIT-style license described in the LICENSE
+// file located in this project's root directory.
+//
+// See: https://opensource.org/license/mit
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -35,8 +38,7 @@ Future<List<_ClassInsight>> extractClassInsightsFromDartFile(
   await analyzer.analyze(
     inclClassAnnotations: {GenerateDartModel.CLASS_NAME},
     inclMemberAnnotations: {Field.CLASS_NAME},
-    onClassAnnotationField: (p) async =>
-        temp = _updateFromClassAnnotationField(temp, p),
+    onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateDartModel(fields: {}),
     onPostAnalysis: (params) {
@@ -122,12 +124,10 @@ GenerateDartModel _updateFromAnnotatedMember(
       params.memberAnnotationFields[FieldModelFieldNames.fieldPath],
     );
     final a2 = [params.memberName];
-    final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]
-        ?.toStringValue();
+    final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]?.toStringValue();
 
     final b2 = params.memberType.getDisplayString();
-    final c1 = params.memberAnnotationFields[FieldModelFieldNames.nullable]
-        ?.toBoolValue();
+    final c1 = params.memberAnnotationFields[FieldModelFieldNames.nullable]?.toBoolValue();
     final field = DartField(
       fieldPath: a1 ?? a2,
       fieldType: b1 ?? b2,

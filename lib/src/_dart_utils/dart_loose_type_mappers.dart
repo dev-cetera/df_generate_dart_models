@@ -1,8 +1,11 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
-// in root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. The use of this
+// source code is governed by an MIT-style license described in the LICENSE
+// file located in this project's root directory.
+//
+// See: https://opensource.org/license/mit
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -36,19 +39,19 @@ class DartLooseTypeMappers extends TypeMappers {
         // Standard.
         // ---------------------------------------------------------------------
         r'^(Map)\??$': (e) {
-          return 'letMap(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
+          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
         },
         r'^(Iterable)\??$': (e) {
-          return 'letIterable(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty';
+          return 'letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty';
         },
         r'^(List)\??$': (e) {
-          return 'letList(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';
+          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';
         },
         r'^(Set)\??$': (e) {
-          return 'letSet(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet()';
+          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet()';
         },
         r'^(Queue)\??$': (e) {
-          return '(){ final a = letList(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty; return a != null ? Queue.of(a): null; }()';
+          return '(){ final a = letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty; return a != null ? Queue.of(a): null; }()';
         },
       });
 
@@ -85,16 +88,16 @@ class DartLooseTypeMappers extends TypeMappers {
           return '${e.name}?.toString().trim().nullIfEmpty';
         },
         r'^(bool)\??$': (e) {
-          return 'letBool(${e.name})';
+          return 'letAs<bool>(${e.name})';
         },
         r'^(int)\??$': (e) {
-          return 'letInt(${e.name})';
+          return 'letAs<int>(${e.name})';
         },
         r'^(double)\??$': (e) {
-          return 'letDouble(${e.name})';
+          return 'letAs<double>(${e.name})';
         },
         r'^(num)\??$': (e) {
-          return 'letNum(${e.name})';
+          return 'letAs<num>(${e.name})';
         },
         r'^(Timestamp)\??$': (e) {
           return '() { final a = ${e.name}; return a is Timestamp ? a: null; }()';
@@ -158,15 +161,15 @@ class DartLooseTypeMappers extends TypeMappers {
         // ---------------------------------------------------------------------
         r'^(Type-?\w*|\w*-?Type)\??$': (e) {
           final typeName = e.matchGroups?.elementAt(1);
-          return '$typeName.values.valueOf(letAs<String>(${e.name}))';
+          return '$typeName.values.valueOf(${e.name}?.toString())';
         },
         r'^(Model-?\w*|\w*-?Model)\??$': (e) {
           final typeName = e.matchGroups?.elementAt(1);
-          return '() { final a = letMap<String, dynamic>(${e.name}); return a != null ? $typeName.fromJson(a): null; }()';
+          return '() { final a = letMapOrNull<String, dynamic>(${e.name}); return a != null ? $typeName.fromJson(a): null; }()';
         },
         r'^(Enum-?\w*|\w*-?Enum)\??$': (e) {
           final typeName = e.matchGroups?.elementAt(1);
-          return '$typeName.values.valueOf(letAs<String>(${e.name}))';
+          return '$typeName.values.valueOf(${e.name}?.toString())';
         },
         // ---------------------------------------------------------------------
         // Default.
