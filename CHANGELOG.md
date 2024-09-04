@@ -4,7 +4,6 @@
 
 - Released @ 8/2024 (UTC)
 - chore: Update dependencies
-- chore: Remove unused df_string dependency
 
 ## [0.2.3]
 
