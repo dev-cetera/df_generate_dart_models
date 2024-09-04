@@ -43,5 +43,5 @@ dev_dependencies:
 ## -----------------------------------------------------------------------------
 
 executables:
-  genmodels: genmodels-dart
-  genmodels-dart: genmodels-dart
+  genmodels: genmodels_dart
+  genmodels-dart: genmodels_dart
