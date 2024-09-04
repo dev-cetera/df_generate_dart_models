@@ -56,7 +56,10 @@ String stripSpecialSyntaxFromFieldType(String fieldType) {
   // brackets back to angle brackets and pluses back to commas.
   // This is likely to restore generic type syntax closer to standard Dart or TypeScript formats.
   String step4(String input) {
-    return input.replaceAll('[', '<').replaceAll(']', '>').replaceAll('+', ', ');
+    return input
+        .replaceAll('[', '<')
+        .replaceAll(']', '>')
+        .replaceAll('+', ', ');
   }
 
   // Apply all transformations sequentially to the input String.
