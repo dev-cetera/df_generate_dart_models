@@ -88,16 +88,16 @@ class DartLooseTypeMappers extends TypeMappers {
           return '${e.name}?.toString().trim().nullIfEmpty';
         },
         r'^(bool)\??$': (e) {
-          return 'letAs<bool>(${e.name})';
+          return 'letAsOrNull<bool>(${e.name})';
         },
         r'^(int)\??$': (e) {
-          return 'letAs<int>(${e.name})';
+          return 'letAsOrNull<int>(${e.name})';
         },
         r'^(double)\??$': (e) {
-          return 'letAs<double>(${e.name})';
+          return 'letAsOrNull<double>(${e.name})';
         },
         r'^(num)\??$': (e) {
-          return 'letAs<num>(${e.name})';
+          return 'letAsOrNull<num>(${e.name})';
         },
         r'^(Timestamp)\??$': (e) {
           return '() { final a = ${e.name}; return a is Timestamp ? a: null; }()';
@@ -112,7 +112,7 @@ class DartLooseTypeMappers extends TypeMappers {
           return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; return a != null ? Uri.tryParse(a): null; }()';
         },
         r'^(Color)\??$': (e) {
-          return '(){ final a = letAs<int>(${e.name}); return a is int ? Color(a): null; }()';
+          return '(){ final a = letAsOrNull<int>(${e.name}); return a is int ? Color(a): null; }()';
         },
         // ---------------------------------------------------------------------
         // Special.

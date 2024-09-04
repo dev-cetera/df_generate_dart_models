@@ -21,6 +21,6 @@ void main(List<String> args) async {
     '-r',
     currentDir,
     '-s',
-    args.first,
+    args.firstOrNull ?? '.',
   ]);
 }
