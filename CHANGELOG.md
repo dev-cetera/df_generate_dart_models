@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.0]
+
+- Released @ 9/2024 (UTC)
+- breaking: Update command name and improve type mappers
+
 ## [0.2.5]
 
 - Released @ 9/2024 (UTC)
