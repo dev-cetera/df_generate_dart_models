@@ -80,7 +80,7 @@ GenerateDartModel _updateFromClassAnnotationField(
             ...?params.fieldValue.toSetValue()?.map((e) {
               final field = Field(
                 fieldPath: e.fieldPathFromRecord() ?? ['unknown'],
-                fieldType: e.fieldTypeFromRecord() ?? dynamic,
+                fieldType: e.fieldTypeFromRecord() ?? 'dynamic',
                 nullable: e.nullableFromRecord() ?? true,
               );
               return field.toRecord;
