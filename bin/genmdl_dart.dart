@@ -19,7 +19,7 @@ void main(List<String> args) async {
   final currentDir = Directory.current.path;
   await runGenerateDartModelsApp([
     '-r',
-    currentDir,
+    '$currentDir/example/models',
     '-s',
     args.firstOrNull ?? '.',
   ]);

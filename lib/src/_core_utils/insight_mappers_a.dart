@@ -252,6 +252,7 @@ final insightMappersA = [
           final n = e.nullable;
           return [
             '  // $f.',
+            "@pragma('vm:prefer-inline')",
             '$s get ${f}Field => this.$f${n ? '' : '!'};',
             '',
           ].join('\n');
