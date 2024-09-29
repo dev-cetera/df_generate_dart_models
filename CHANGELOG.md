@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.0]
+
+- Released @ 9/2024 (UTC)
+- breaking: Add mergeWith, copyWith and copyWithout
+
 ## [0.3.0]
 
 - Released @ 9/2024 (UTC)
