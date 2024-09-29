@@ -10,6 +10,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'dart:io' show Directory;
+
 import 'package:args/args.dart';
 import 'package:df_gen_core/df_gen_core.dart';
 
@@ -22,8 +24,7 @@ import 'generate.dart';
 Future<void> runGenerateDartModelsApp(List<String> args) async {
   await runCommandLineApp(
     title: 'Generate Dart Models',
-    description:
-        'A command line app for generating Dart models from annotations',
+    description: 'A command line app for generating Dart models from annotations',
     args: args,
     parser: ArgParser()
       ..addFlag(
@@ -36,13 +37,13 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
         'roots',
         abbr: 'r',
         help: 'Root directory paths separated by `&`.',
-        defaultsTo: 'lib',
+        defaultsTo: Directory.current.path,
       )
       ..addOption(
         'subs',
         abbr: 's',
         help: 'Sub-directory paths separated by `&`.',
-        defaultsTo: 'models',
+        defaultsTo: '.',
       )
       ..addOption(
         'patterns',

@@ -67,13 +67,13 @@ GenerateDartModel _updateFromClassAnnotationField(
 ) {
   switch (params.fieldName) {
     case GenerateDartModelFieldNames.className:
-      return annotation.copyWith(
+      return annotation.mergeWith(
         GenerateDartModel(
           className: params.fieldValue.toStringValue(),
         ),
       );
     case GenerateDartModelFieldNames.fields:
-      return annotation.copyWith(
+      return annotation.mergeWith(
         GenerateDartModel(
           fields: {
             ...?annotation.fields,
@@ -89,19 +89,19 @@ GenerateDartModel _updateFromClassAnnotationField(
         ),
       );
     case GenerateDartModelFieldNames.shouldInherit:
-      return annotation.copyWith(
+      return annotation.mergeWith(
         GenerateDartModel(
           shouldInherit: params.fieldValue.toBoolValue(),
         ),
       );
     case GenerateDartModelFieldNames.inheritanceConstructor:
-      return annotation.copyWith(
+      return annotation.mergeWith(
         GenerateDartModel(
           inheritanceConstructor: params.fieldValue.toStringValue(),
         ),
       );
     case GenerateDartModelFieldNames.keyStringCase:
-      return annotation.copyWith(
+      return annotation.mergeWith(
         GenerateDartModel(
           keyStringCase: params.fieldValue.toStringValue(),
         ),
@@ -133,7 +133,7 @@ GenerateDartModel _updateFromAnnotatedMember(
       fieldType: b1 ?? b2,
       nullable: c1,
     );
-    annotation = annotation.copyWith(
+    annotation = annotation.mergeWith(
       GenerateDartModel(
         fields: {
           ...?annotation.fields,

@@ -10,6 +10,7 @@
 // ignore_for_file: annotate_overrides
 // ignore_for_file: invalid_null_aware_operator
 // ignore_for_file: overridden_fields
+// ignore_for_file: require_trailing_commas
 // ignore_for_file: unnecessary_non_null_assertion
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_question_mark
@@ -207,12 +208,46 @@ class ModelUser extends _ModelUser {
   //
 
   @override
-  ModelUser copyWith(BaseModel? other, {bool merge = false}) {
-    final a = this.toJson();
+  ModelUser mergeWith(
+    BaseModel? other, {
+    bool deepMerge = true,
+  }) {
+    final a = toJson();
     final b = other?.toJson() ?? {};
-    final data0 = merge ? mergeDataDeep(a, b) : {...a, ...b};
-    final data1 = letMapOrNull<String, dynamic>(data0);
-    return ModelUser.fromJson(data1);
+    final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
+    return ModelUser.fromJson(data.cast());
+  }
+
+  //
+  //
+  //
+
+  ModelUser copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+  }) {
+    return ModelUser.c2(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+    );
+  }
+
+  //
+  //
+  //
+
+  ModelUser copyWithout({
+    bool id = true,
+    bool firstName = true,
+    bool lastName = true,
+  }) {
+    return ModelUser.c2(
+      id: id ? this.id : null,
+      firstName: firstName ? this.firstName : null,
+      lastName: lastName ? this.lastName : null,
+    );
   }
 
   //

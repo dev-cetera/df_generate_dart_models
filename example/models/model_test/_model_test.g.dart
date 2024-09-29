@@ -10,6 +10,7 @@
 // ignore_for_file: annotate_overrides
 // ignore_for_file: invalid_null_aware_operator
 // ignore_for_file: overridden_fields
+// ignore_for_file: require_trailing_commas
 // ignore_for_file: unnecessary_non_null_assertion
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_question_mark
@@ -267,12 +268,46 @@ class ModelTest extends _ModelTest {
   //
 
   @override
-  ModelTest copyWith(BaseModel? other, {bool merge = false}) {
-    final a = this.toJson();
+  ModelTest mergeWith(
+    BaseModel? other, {
+    bool deepMerge = true,
+  }) {
+    final a = toJson();
     final b = other?.toJson() ?? {};
-    final data0 = merge ? mergeDataDeep(a, b) : {...a, ...b};
-    final data1 = letMapOrNull<String, dynamic>(data0);
-    return ModelTest.fromJson(data1);
+    final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
+    return ModelTest.fromJson(data.cast());
+  }
+
+  //
+  //
+  //
+
+  ModelTest copyWith({
+    List<ModelUser>? users,
+    List<int>? checks,
+    Map<String, Map<dynamic, int>>? random,
+  }) {
+    return ModelTest.c2(
+      users: users ?? this.users,
+      checks: checks ?? this.checks,
+      random: random ?? this.random,
+    );
+  }
+
+  //
+  //
+  //
+
+  ModelTest copyWithout({
+    bool users = true,
+    bool checks = true,
+    bool random = true,
+  }) {
+    return ModelTest.c2(
+      users: users ? this.users : null,
+      checks: checks ? this.checks : null,
+      random: random ? this.random : null,
+    );
   }
 
   //

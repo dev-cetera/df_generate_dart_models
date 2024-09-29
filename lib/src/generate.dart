@@ -61,7 +61,7 @@ Future<void> generateDartModelsFromAnnotations({
   final template = await loadFileFromGitHub(
     username: 'robmllze',
     repo: 'df_generate_dart_models_core',
-    filePath: 'templates/template.dart.md',
+    filePath: 'templates//v1/template.dart.md',
   );
 
   // ---------------------------------------------------------------------------
@@ -73,8 +73,8 @@ Future<void> generateDartModelsFromAnnotations({
   );
 
   // For each file...
-  for (final filePathResult in sourceFileExplorerResults.filePathResults
-      .where((e) => e.category == _Categories.DART)) {
+  for (final filePathResult
+      in sourceFileExplorerResults.filePathResults.where((e) => e.category == _Categories.DART)) {
     final filePath = filePathResult.path;
 
     // Extract insights from the file.
