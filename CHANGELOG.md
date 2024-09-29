@@ -4,6 +4,7 @@
 
 - Released @ 9/2024 (UTC)
 - breaking: Add mergeWith, copyWith and copyWithout
+- chore: Update dependencies
 
 ## [0.3.0]
 
