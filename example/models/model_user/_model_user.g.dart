@@ -188,9 +188,9 @@ class ModelUser extends _ModelUser {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = this.id?.trim().nullIfEmpty;
-      final firstName0 = this.firstName?.trim().nullIfEmpty;
-      final lastName0 = this.lastName?.trim().nullIfEmpty;
+      final id0 = id?.trim().nullIfEmpty;
+      final firstName0 = firstName?.trim().nullIfEmpty;
+      final lastName0 = lastName?.trim().nullIfEmpty;
       final withNulls = {
         'lastName': lastName0,
         'id': id0,
@@ -210,7 +210,7 @@ class ModelUser extends _ModelUser {
   @override
   ModelUser mergeWith(
     BaseModel? other, {
-    bool deepMerge = true,
+    bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};

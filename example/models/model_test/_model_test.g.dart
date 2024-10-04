@@ -217,24 +217,21 @@ class ModelTest extends _ModelTest {
     bool includeNulls = false,
   }) {
     try {
-      final users0 = this
-          .users
+      final users0 = users
           ?.map(
             (p0) => p0?.toJson(),
           )
           .nonNulls
           .nullIfEmpty
           ?.toList();
-      final checks0 = this
-          .checks
+      final checks0 = checks
           ?.map(
             (p0) => p0,
           )
           .nonNulls
           .nullIfEmpty
           ?.toList();
-      final random0 = this
-          .random
+      final random0 = random
           ?.map(
             (p0, p1) => MapEntry(
               p0?.trim().nullIfEmpty,
@@ -270,7 +267,7 @@ class ModelTest extends _ModelTest {
   @override
   ModelTest mergeWith(
     BaseModel? other, {
-    bool deepMerge = true,
+    bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};

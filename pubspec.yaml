@@ -12,8 +12,16 @@
 
 name: df_generate_dart_models
 description: A tool to generate index/exports files for all Dart files in a directory.
-version: 0.4.1
+version: 0.5.0
 repository: https://github.com/robmllze/df_generate_dart_models
+funding:
+  - https://www.buymeacoffee.com/robmllze
+topics:
+  - build-runner
+  - cli
+  - codegen
+  - freezed
+  - json-serializable
 
 ## -----------------------------------------------------------------------------
 
@@ -23,22 +31,22 @@ environment:
 ## -----------------------------------------------------------------------------
 
 dependencies:
+  df_collection: ^0.6.0
+  df_config: ^0.5.0
+  df_gen_core: ^0.3.0
+  df_generate_dart_models_core: ^0.5.0
+  df_log: ^0.2.4
+  df_string: ^0.2.2
+  df_type: ^0.6.1
+
   analyzer: ^6.8.0
   args: ^2.5.0
-  df_collection: ^0.4.0
-  df_config: ^0.4.0
-  df_gen_core: ^0.2.8
-  df_generate_dart_models_core: ^0.4.1
-  df_log: ^0.2.1
-  df_string: ^0.2.1
-  df_type: ^0.5.2
   path: ^1.9.0
 
 ## -----------------------------------------------------------------------------
 
 dev_dependencies:
-  lints: ^4.0.0
-  test: ^1.25.8
+  lints: ^5.0.0
 
 ## -----------------------------------------------------------------------------
 
