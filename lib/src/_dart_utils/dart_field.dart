@@ -117,7 +117,7 @@ final class DartField extends Field {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Expands some non-generic Dart collection types to their generic forms
-/// (e.g. Map to Map<dynamic, dynamic>). It processes types separated by "|"
+/// (e.g. Map to Map\<dynamic, dynamic\>). It processes types separated by "|"
 /// and skips over collections that already specify types.
 ///
 /// This only works for the following types:

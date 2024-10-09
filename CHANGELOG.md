@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.7.0]
+## [0.6.0]
 
 - Released @ 10/2024 (UTC)
 - feat: Add primative AI generation support
