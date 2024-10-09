@@ -25,7 +25,9 @@ extension DartFromRecordOnDartObjectX on DartObject {
   /// Returns `fieldName` property from `this` [DartObject] record if it matches
   /// the structure of [TFieldRecord] or `null`.
   List<String>? fieldPathFromRecord() {
-    return _rawFieldPathFromRecord()?.map((e) => e.replaceAll('?', '')).toList();
+    return _rawFieldPathFromRecord()
+        ?.map((e) => e.replaceAll('?', ''))
+        .toList();
   }
 
   List<String>? _rawFieldPathFromRecord() {
@@ -48,7 +50,9 @@ extension DartFromRecordOnDartObjectX on DartObject {
     final a = getField('\$2')?.toStringValue();
     final b = getField('\$2')?.toTypeValue()?.getDisplayString();
     final c = getField(FieldModelFieldNames.fieldType)?.toStringValue();
-    final d = getField(FieldModelFieldNames.fieldType)?.toTypeValue()?.getDisplayString();
+    final d = getField(FieldModelFieldNames.fieldType)
+        ?.toTypeValue()
+        ?.getDisplayString();
     return a ?? b ?? c ?? d;
   }
 
