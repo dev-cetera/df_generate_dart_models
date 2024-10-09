@@ -119,7 +119,7 @@ Future<void> generateDartModelsFromAnnotations({
   await sequentual.last;
 
   // Notify end.
-  printRed('Done!');
+  printPurple('Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
