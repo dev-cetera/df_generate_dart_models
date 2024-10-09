@@ -11,34 +11,29 @@
 //.title~
 
 import 'package:df_gen_core/df_gen_core.dart';
+import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 import 'package:df_log/df_log.dart';
 
 import '_core_utils/_index.g.dart';
 
+import 'generate_ai_models.dart';
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generates Dart model files from insights derived from classes annotated
-/// with `@GenerateDartModel` in Dart source files.
-///
-/// This function combines [rootDirPaths] and [subDirPaths], applying
-/// [pathPatterns] to filter and determine the directories to search for source
-/// files.
-///
-/// The outputs are generated from templates in [templatesRootDirPaths] and the
-/// generated files are placed in the same directories as the source
-/// files.
-///
-/// If the `DART_SDK` environment variable is not set, [fallbackDartSdkPath] is
-/// used. This function leverages Dart's analyzer to interpret the annotations.
 Future<void> generateDartModelsFromAnnotations({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
-  required Set<String> templatesRootDirPaths,
+  required String templateFilePath,
   String? fallbackDartSdkPath,
+  String? gemeniApiKey,
+  required String gemeniModel,
+  String? messageForAI,
+  required String aiOutput,
+  Set<String> generateForLanguages = const {},
 }) async {
   // Notify start.
-  debugLogStart('Starting generator. Please wait...');
+  printBlue('Starting generator. Please wait...');
 
   // Explore all source paths.
   final sourceFileExporer = PathExplorer(
@@ -58,11 +53,11 @@ Future<void> generateDartModelsFromAnnotations({
   );
   final sourceFileExplorerResults = await sourceFileExporer.explore();
 
-  final template = await loadFileFromGitHub(
-    username: 'robmllze',
-    repo: 'df_generate_dart_models_core',
-    filePath: 'templates//v1/template.dart.md',
-  );
+  final template = templateFilePath.isNotEmpty
+      ? extractCodeFromMarkdown(
+          await loadFileFromPathOrUrl(templateFilePath),
+        ).trim()
+      : '';
 
   // ---------------------------------------------------------------------------
 
@@ -72,9 +67,11 @@ Future<void> generateDartModelsFromAnnotations({
     fallbackDartSdkPath,
   );
 
+  final sequentual = Sequential();
+
   // For each file...
-  for (final filePathResult in sourceFileExplorerResults.filePathResults
-      .where((e) => e.category == _Categories.DART)) {
+  for (final filePathResult
+      in sourceFileExplorerResults.filePathResults.where((e) => e.category == _Categories.DART)) {
     final filePath = filePathResult.path;
 
     // Extract insights from the file.
@@ -83,23 +80,46 @@ Future<void> generateDartModelsFromAnnotations({
       filePath,
     );
 
-    if (classInsights.isNotEmpty) {
-      // Converge what was gathered to generate the output.
-      await generatorConverger.converge(
-        classInsights,
-        [template],
-        [
-          ...insightMappersA,
-          ...insightMappersB,
-        ],
+    if (classInsights.isEmpty) continue;
+
+    // Converge what was gathered to generate the output if the template is not
+    // empty.
+    if (template.isNotEmpty) {
+      sequentual.add(
+        (_) => generatorConverger.converge(
+          classInsights,
+          [template],
+          [
+            ...insightMappers,
+          ],
+        ),
+      );
+    }
+
+    // Generate AI models if requested.
+    if (gemeniApiKey != null &&
+        gemeniModel.isNotEmpty &&
+        gemeniApiKey.isNotEmpty &&
+        generateForLanguages.isNotEmpty) {
+      sequentual.add(
+        (_) => generateAIModels(
+          classInsights: classInsights,
+          gemeniApiKey: gemeniApiKey,
+          gemeniModel: gemeniModel,
+          generateForLanguages: generateForLanguages,
+          messageForAI: messageForAI,
+          aiOutput: aiOutput,
+        ),
       );
     }
   }
 
   // ---------------------------------------------------------------------------
 
+  await sequentual.last;
+
   // Notify end.
-  debugLogStop('Done!');
+  printRed('Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

@@ -29,7 +29,7 @@ linter:
     prefer_relative_imports: true
     prefer_single_quotes: true
     require_trailing_commas: true
-    unnecessary_this: false
+    unnecessary_this: true
 
 analyzer:
   exclude:

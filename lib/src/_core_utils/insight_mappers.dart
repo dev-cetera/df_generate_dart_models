@@ -20,13 +20,17 @@ import 'strip_special_syntax_from_field_type.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-final insightMappersA = [
+final insightMappers = [
+  _InsightMapper(
+    placeholder: PlaceholdersA.DESCRIPTION,
+    mapInsights: (insight) async {
+      return insight.annotation.description ?? 'Generated class for [${insight.className}].';
+    },
+  ),
   _InsightMapper(
     placeholder: PlaceholdersA.SUPER_CLASS_NAME,
     mapInsights: (insight) async {
-      return insight.annotation.shouldInherit == true
-          ? insight.className
-          : 'Model';
+      return insight.annotation.shouldInherit == true ? insight.className : 'Model';
     },
   ),
   _InsightMapper(
@@ -56,20 +60,25 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.FIELD_DECLARATIONS_A,
+    placeholder: PlaceholdersA.FIELD_DECLARATIONS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
+          final description = e.description;
           final t = e.fieldType!;
           final r = stripSpecialSyntaxFromFieldType(t);
           final f = e.fieldName;
-          return 'final $r? $f;';
+          return [
+            '  /// ${description ?? 'No description provided.'}',
+            'final $r? $f;',
+            '',
+          ].join('\n');
         },
       ).join('\n');
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.PARAMS_A1,
+    placeholder: PlaceholdersA.PARAMS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
@@ -81,7 +90,7 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.PARAMS_A2,
+    placeholder: PlaceholdersA.PERMISSIVE_PARAMS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
@@ -92,7 +101,7 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.PARAMS_A3,
+    placeholder: PlaceholdersA.STRICT_PARAMS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
@@ -105,7 +114,7 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.FIELD_ASSERTIONS,
+    placeholder: PlaceholdersA.STRICT_PARAM_ASSERTIONS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
@@ -117,7 +126,7 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.ARGS_A,
+    placeholder: PlaceholdersA.STRICT_ARGS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
@@ -128,7 +137,7 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.FROM_JSON_A1,
+    placeholder: PlaceholdersA.FROM_JSON_OR_NULL_PARAMS,
     mapInsights: (insight) async {
       final fields = dartFields(insight).toList();
 
@@ -139,8 +148,7 @@ final insightMappersA = [
         final f = field.fieldName;
         final x = field.fieldTypeCode!;
         final s = stripSpecialSyntaxFromFieldType(x);
-        final b =
-            DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
+        final b = DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
           fieldName: "$a?['${parts.last}']",
           fieldTypeCode: s,
         );
@@ -150,21 +158,17 @@ final insightMappersA = [
       final j = fields.map((a) {
         final ff = fields
             .where(
-              (b) => a.fieldPath!
-                  .join('.')
-                  .startsWith('${b.fieldPath!.join('.')}.'),
+              (b) => a.fieldPath!.join('.').startsWith('${b.fieldPath!.join('.')}.'),
             )
             .toList();
-
         ff.sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
-
-        return $v(ff.length > 1 ? '${ff[1].fieldName}' : 'otherData', a);
+        return $v(ff.length > 1 ? '${ff[1].fieldName}' : 'json', a);
       });
       return j.join('\n');
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.FROM_JSON_A2,
+    placeholder: PlaceholdersA.FROM_JSON_OR_NULL_ARGS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
@@ -175,7 +179,7 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.TO_JSON_A1,
+    placeholder: PlaceholdersA.TO_JSON_PARAMS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
@@ -183,8 +187,7 @@ final insightMappersA = [
           final f0 = '${f}0';
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
-          final a =
-              DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
+          final a = DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
             fieldName: f,
             fieldTypeCode: s,
           );
@@ -194,7 +197,7 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.TO_JSON_A2,
+    placeholder: PlaceholdersA.TO_JSON_ARGS,
     mapInsights: (insight) async {
       final fields = dartFields(insight).toList();
       final parents = fields
@@ -244,7 +247,7 @@ final insightMappersA = [
     },
   ),
   _InsightMapper(
-    placeholder: PlaceholdersA.GETTERS_A,
+    placeholder: PlaceholdersA.GETTERS,
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
@@ -253,9 +256,11 @@ final insightMappersA = [
           final s = stripSpecialSyntaxFromFieldType(x);
           final n = e.nullable;
           return [
-            '  // $f.',
+            '  /// Returns the value of the [$f] field.',
+            '  /// If the field is nullable, the return value may be null; otherwise, it',
+            '  /// will always return a non-null value.',
             "@pragma('vm:prefer-inline')",
-            '$s get ${f}Field => this.$f${n ? '' : '!'};',
+            '$s get $f\$ => $f${n ? '' : '!'};',
             '',
           ].join('\n');
         },
@@ -267,9 +272,18 @@ final insightMappersA = [
     mapInsights: (insight) async {
       return dartFields(insight).map(
         (e) {
+          final className = insight.annotation.className ??
+              insight.className.replaceFirst(
+                RegExp(r'^[_$]+'),
+                '',
+              );
           final f = e.fieldName;
           final c = stringCaseType(insight).convert(e.fieldName!);
-          return "static const $f = '$c';";
+          return [
+            '  /// The field name of [$className.$f].',
+            "static const $f = '$c';",
+            '',
+          ].join('\n');
         },
       ).join('\n');
     },
@@ -325,21 +339,22 @@ final insightMappersA = [
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 enum PlaceholdersA {
+  DESCRIPTION,
   SUPER_CLASS_NAME,
   CLASS_NAME,
   SUPER_CONSTRUCTOR,
   CLASS_FILE_NAME,
-  FIELD_DECLARATIONS_A,
-  PARAMS_A1,
-  FIELD_ASSERTIONS,
-  ARGS_A,
-  PARAMS_A2,
-  PARAMS_A3,
-  FROM_JSON_A1,
-  FROM_JSON_A2,
-  TO_JSON_A1,
-  TO_JSON_A2,
-  GETTERS_A,
+  FIELD_DECLARATIONS,
+  PARAMS,
+  STRICT_PARAM_ASSERTIONS,
+  STRICT_ARGS,
+  PERMISSIVE_PARAMS,
+  STRICT_PARAMS,
+  FROM_JSON_OR_NULL_PARAMS,
+  FROM_JSON_OR_NULL_ARGS,
+  TO_JSON_PARAMS,
+  TO_JSON_ARGS,
+  GETTERS,
   FIELD_NAMES,
   COPY_WITH_PARAMS,
   COPY_WITH_ARGS,
@@ -347,5 +362,4 @@ enum PlaceholdersA {
   COPY_WITHOUT_ARGS,
 }
 
-typedef _InsightMapper
-    = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersA>;
+typedef _InsightMapper = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersA>;

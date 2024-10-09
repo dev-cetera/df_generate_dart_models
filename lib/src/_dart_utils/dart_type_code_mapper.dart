@@ -37,12 +37,12 @@ class DartTypeCodeMapper {
     required String fieldName,
     required String fieldTypeCode,
   }) {
-    var result = this.mapCollection(
+    var result = mapCollection(
       fieldName: fieldName,
       genericTypeCode: fieldTypeCode,
     );
     if (result == '#x0') {
-      result = this.mapObject(
+      result = mapObject(
         fieldName: fieldName,
         fieldTypeCode: fieldTypeCode,
       );
@@ -59,7 +59,7 @@ class DartTypeCodeMapper {
     required String fieldTypeCode,
   }) {
     final formula =
-        buildObjectMapper(fieldTypeCode, fieldName, this.mappers) ?? '#x0';
+        buildObjectMapper(fieldTypeCode, fieldName, mappers) ?? '#x0';
     return formula;
   }
 
@@ -75,7 +75,7 @@ class DartTypeCodeMapper {
     // by the builder.
     final typeData = decomposeDartCollectionType(genericTypeCode);
     // Use the typeData to build a mapping formula.
-    var formula = buildCollectionMapper(typeData, this.mappers);
+    var formula = buildCollectionMapper(typeData, mappers);
     // Insert the field name into the formula.
     formula = formula.replaceFirst('p0', fieldName);
     return formula;

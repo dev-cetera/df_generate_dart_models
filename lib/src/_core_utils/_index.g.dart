@@ -9,11 +9,10 @@
 
 // --- PUBLIC FILES ---
 export 'insight_mapper_utils.dart';
-export 'insight_mappers_b.dart';
 export 'extract_class_insights_from_dart_file.dart';
 export 'generator_converger.dart';
 export 'strip_special_syntax_from_field_type.dart';
-export 'insight_mappers_a.dart';
+export 'insight_mappers.dart';
 
 // --- PRIVATE FILES (EXCLUDED) ---
 // None found.

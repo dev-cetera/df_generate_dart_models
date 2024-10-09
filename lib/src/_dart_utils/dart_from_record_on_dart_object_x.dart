@@ -25,26 +25,19 @@ extension DartFromRecordOnDartObjectX on DartObject {
   /// Returns `fieldName` property from `this` [DartObject] record if it matches
   /// the structure of [TFieldRecord] or `null`.
   List<String>? fieldPathFromRecord() {
-    return this
-        ._rawFieldPathFromRecord()
-        ?.map((e) => e.replaceAll('?', ''))
-        .toList();
+    return _rawFieldPathFromRecord()?.map((e) => e.replaceAll('?', '')).toList();
   }
 
   List<String>? _rawFieldPathFromRecord() {
-    final a = dartObjToList(this.getField('\$1'));
-    final b = dartObjToList(this.getField(FieldModelFieldNames.fieldPath));
+    final a = dartObjToList(getField('\$1'));
+    final b = dartObjToList(getField(FieldModelFieldNames.fieldPath));
     return (a ?? b)?.toList();
   }
 
-  //
-  //
-  //
-
-  /// Returns `fieldType` property from `this` DartObject record if it matches
-  /// the structure of [TFieldRecord] or `null`.
+  /// Returns the `fieldType` property from `this` DartObject record if it
+  /// matches the structure of [TFieldRecord] or `null`.
   String? fieldTypeFromRecord() {
-    final raw = this._rawFieldTypeFromRecord();
+    final raw = _rawFieldTypeFromRecord();
     if (raw != null) {
       return raw.endsWith('?') ? raw.substring(0, raw.length - 1) : raw;
     }
@@ -52,31 +45,30 @@ extension DartFromRecordOnDartObjectX on DartObject {
   }
 
   String? _rawFieldTypeFromRecord() {
-    final a = this.getField('\$2')?.toStringValue();
-    final b = this.getField('\$2')?.toTypeValue()?.getDisplayString();
-    final c = this.getField(FieldModelFieldNames.fieldType)?.toStringValue();
-    final d = this
-        .getField(FieldModelFieldNames.fieldType)
-        ?.toTypeValue()
-        ?.getDisplayString();
+    final a = getField('\$2')?.toStringValue();
+    final b = getField('\$2')?.toTypeValue()?.getDisplayString();
+    final c = getField(FieldModelFieldNames.fieldType)?.toStringValue();
+    final d = getField(FieldModelFieldNames.fieldType)?.toTypeValue()?.getDisplayString();
     return a ?? b ?? c ?? d;
   }
 
-  //
-  //
-  //
-
-  /// Returns `nullable` property from the `this` [DartObject] record if it
+  /// Returns the `nullable` property from `this` [DartObject] record if it
   /// matches the structure of [TFieldRecord] or `null`.
   bool? nullableFromRecord() {
-    if (this.fieldTypeFromRecord() == 'dynamic') {
+    if (fieldTypeFromRecord() == 'dynamic') {
       return false;
     }
 
-    final a = this.getField(FieldModelFieldNames.nullable)?.toBoolValue();
-    final b = this.getField('\$3')?.toBoolValue();
-    final c = this._rawFieldPathFromRecord()?.any((e) => e.contains('?'));
-    final d = this._rawFieldTypeFromRecord()?.endsWith('?');
+    final a = getField(FieldModelFieldNames.nullable)?.toBoolValue();
+    final b = getField('\$3')?.toBoolValue();
+    final c = _rawFieldPathFromRecord()?.any((e) => e.contains('?'));
+    final d = _rawFieldTypeFromRecord()?.endsWith('?');
     return a ?? b ?? ((c ?? false) || (d ?? false));
+  }
+
+  /// Returns the `description` property from `this` [DartObject] record if it
+  /// matches the structure of [TFieldRecord] or `null`.
+  String? descriptionFromRecord() {
+    return getField(FieldModelFieldNames.description)?.toStringValue();
   }
 }

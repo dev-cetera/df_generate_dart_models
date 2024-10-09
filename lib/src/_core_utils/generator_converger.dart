@@ -21,42 +21,38 @@ import 'package:path/path.dart' as p;
 
 final generatorConverger = _GeneratorConverger(
   (replacements, templates) async {
-    for (final template in templates) {
-      final templateContent = extractCodeFromMarkdown(template);
-      for (final replacement in replacements) {
-        // Fill the template with the replacement data.
-        final output = replaceData(
-          templateContent,
-          replacement.replacements,
-        );
+    final template = templates.first;
+    for (final replacement in replacements) {
+      // Fill the template with the replacement data.
+      final output = replaceData(
+        template,
+        replacement.replacements,
+      );
 
-        // Determine the output file name.
-        final outputFileName = [
-          replacement.insight.className.toLowerSnakeCase(),
-          Lang.DART.genExt,
-        ].join();
+      // Determine the output file name.
+      final outputFileName = [
+        replacement.insight.className.toLowerSnakeCase(),
+        Lang.DART.genExt,
+      ].join();
 
-        // Determine the output file path.
-        final outputFilePath =
-            p.join(replacement.insight.dirPath, outputFileName);
+      // Determine the output file path.
+      final outputFilePath = p.join(replacement.insight.dirPath, outputFileName);
 
-        // Write the generated Dart file.
-        await writeFile(outputFilePath, output);
+      // Write the generated Dart file.
+      await writeFile(outputFilePath, output);
 
-        // Fix the generated Dart file.
-        await fixDartFile(outputFilePath);
+      // Fix the generated Dart file.
+      await fixDartFile(outputFilePath);
 
-        // Format the generated Dart file.
-        await fmtDartFile(outputFilePath);
+      // Format the generated Dart file.
+      await fmtDartFile(outputFilePath);
 
-        // Log a success.
-        debugLogSuccess('Generated "${previewPath(outputFilePath)}"');
-      }
+      // Log a success.
+      printGreen('Generated "${previewPath(outputFilePath)}"');
     }
   },
 );
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-typedef _GeneratorConverger
-    = GeneratorConverger<ClassInsight<GenerateDartModel>, Enum, String>;
+typedef _GeneratorConverger = GeneratorConverger<ClassInsight<GenerateDartModel>, Enum, String>;

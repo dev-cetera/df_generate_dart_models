@@ -24,8 +24,7 @@ import 'generate.dart';
 Future<void> runGenerateDartModelsApp(List<String> args) async {
   await runCommandLineApp(
     title: 'Generate Dart Models',
-    description:
-        'A command line app for generating Dart models from annotations',
+    description: 'A command line app for generating Dart models from annotations',
     args: args,
     parser: ArgParser()
       ..addFlag(
@@ -52,14 +51,33 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
         help: 'Path patterns separated by `&`.',
       )
       ..addOption(
-        'templates',
+        'template',
         abbr: 't',
-        help: 'Template file paths separated by `&`..',
+        help: 'Template file path or URL.',
+        defaultsTo:
+            'https://raw.githubusercontent.com/robmllze/df_generate_dart_models_core/main/templates/v2.dart.md',
       )
       ..addOption(
-        'output',
-        abbr: 'o',
-        help: 'Output directory path.',
+        'gemeni_api_key',
+        help: 'Obtain your API key here https://ai.google.dev/gemini-api/docs/api-key.',
+      )
+      ..addOption(
+        'gemeni_model',
+        help: 'The Gemeni LLM to use.',
+        defaultsTo: 'gemini-1.5-flash-latest',
+      )
+      ..addOption(
+        'message_for_ai',
+        help: 'Provide a message for the AI to assist with generation.',
+      )
+      ..addOption(
+        'generate_for_languages',
+        help: 'Programming languages to generate additional models for using AI, separated by `&`.',
+      )
+      ..addOption(
+        'ai_output',
+        help: 'Output dir for AI generated models.',
+        defaultsTo: 'ai_generated_models',
       )
       ..addOption(
         'dart-sdk',
@@ -68,19 +86,29 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
     onResults: (parser, results) {
       return _ArgsChecker(
         fallbackDartSdkPath: results['dart-sdk'],
-        templateFilePaths: results['templates'],
+        templateFilePath: results['template'],
+        gemeniApiKey: results['gemeni_api_key'],
+        gemeniModel: results['gemeni_model'],
+        messageForAI: results['message_for_ai'],
+        aiOutput: results['ai_output'],
         rootPaths: results['roots'],
         subPaths: results['subs'],
         pathPatterns: results['patterns'],
+        generateForLanguages: results['generate_for_languages'],
       );
     },
     action: (parser, results, args) async {
       await generateDartModelsFromAnnotations(
         fallbackDartSdkPath: args.fallbackDartSdkPath,
+        gemeniApiKey: args.gemeniApiKey,
+        gemeniModel: args.gemeniModel!,
+        messageForAI: args.messageForAI,
+        aiOutput: args.aiOutput!,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
-        templatesRootDirPaths: args.templateFilePaths ?? const {},
+        templateFilePath: args.templateFilePath!,
+        generateForLanguages: args.generateForLanguages ?? const {},
       );
     },
   );
@@ -94,7 +122,12 @@ class _ArgsChecker extends ValidArgsChecker {
   //
 
   final String? fallbackDartSdkPath;
-  final Set<String>? templateFilePaths;
+  final String? gemeniApiKey;
+  final String? gemeniModel;
+  final String? messageForAI;
+  final String? aiOutput;
+  final Set<String>? generateForLanguages;
+  final String? templateFilePath;
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
   final Set<String>? pathPatterns;
@@ -105,14 +138,19 @@ class _ArgsChecker extends ValidArgsChecker {
 
   _ArgsChecker({
     this.fallbackDartSdkPath,
-    required dynamic templateFilePaths,
+    this.gemeniApiKey,
+    this.gemeniModel,
+    this.messageForAI,
+    this.aiOutput,
+    required this.templateFilePath,
     required dynamic rootPaths,
     required dynamic subPaths,
     required dynamic pathPatterns,
-  })  : this.templateFilePaths = splitArg(templateFilePaths)?.toSet(),
-        this.rootPaths = splitArg(rootPaths)?.toSet(),
-        this.subPaths = splitArg(subPaths)?.toSet(),
-        this.pathPatterns = splitArg(pathPatterns)?.toSet();
+    required dynamic generateForLanguages,
+  })  : rootPaths = splitArg(rootPaths)?.toSet(),
+        subPaths = splitArg(subPaths)?.toSet(),
+        pathPatterns = splitArg(pathPatterns)?.toSet(),
+        generateForLanguages = splitArg(generateForLanguages)?.toSet();
 
   //
   //
@@ -120,10 +158,15 @@ class _ArgsChecker extends ValidArgsChecker {
 
   @override
   List get args => [
-        if (this.fallbackDartSdkPath != null) this.fallbackDartSdkPath,
-        //this.templateFilePaths,
-        this.rootPaths,
-        if (this.subPaths != null) this.subPaths,
-        if (this.pathPatterns != null) this.pathPatterns,
+        if (fallbackDartSdkPath != null) fallbackDartSdkPath,
+        templateFilePath,
+        if (gemeniApiKey != null) gemeniApiKey,
+        gemeniModel,
+        if (messageForAI != null) messageForAI,
+        aiOutput,
+        rootPaths,
+        if (subPaths != null) subPaths,
+        if (pathPatterns != null) pathPatterns,
+        if (generateForLanguages != null) generateForLanguages,
       ];
 }

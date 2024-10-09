@@ -23,6 +23,7 @@ final class DartField extends Field {
     required super.fieldPath,
     required super.fieldType,
     super.nullable,
+    super.description,
   });
 
   /// Derives an instance [DartField] from [source].
@@ -31,6 +32,7 @@ final class DartField extends Field {
       fieldPath: source.fieldPath,
       fieldType: source.fieldType,
       nullable: source.nullable,
+      description: source.description,
     );
   }
 
@@ -40,6 +42,7 @@ final class DartField extends Field {
       fieldPath: record.fieldPath,
       fieldType: record.fieldType,
       nullable: record.nullable,
+      description: record.description,
     );
   }
 
@@ -55,7 +58,7 @@ final class DartField extends Field {
 
   /// The [fieldPath] joined and to camelCase.
   String? get fieldName {
-    return this.fieldPath?.join('_').toCamelCase();
+    return fieldPath?.join('_').toCamelCase();
   }
 
   /// The super.fieldType stripped of '?'.
@@ -64,7 +67,7 @@ final class DartField extends Field {
     final temp = super.fieldType?.toString();
     if (temp != null) {
       return _expandDynamicTypes(
-        this._isFieldTypeNullable! ? temp.substring(0, temp.length - 1) : temp,
+        _isFieldTypeNullable! ? temp.substring(0, temp.length - 1) : temp,
       );
     } else {
       return null;
@@ -74,33 +77,24 @@ final class DartField extends Field {
   /// The this.fieldPath with '?' if nullable.
   @override
   String? get fieldTypeCode {
-    if (this.fieldType != null) {
-      return '${this.fieldType}${this.nullable ? '?' : ''}';
+    if (fieldType != null) {
+      return '$fieldType${nullable ? '?' : ''}';
     } else {
       return null;
     }
   }
-
-  //
-  //
-  //
 
   // Whether super.fieldPath or super.fieldType ends with '?' or super.nullable is true.
   @override
   bool get nullable {
     return [
       super.nullable,
-      this._isFieldNameNullable,
-      this._isFieldTypeNullable,
+      _isFieldNameNullable,
+      _isFieldTypeNullable,
     ].any((e) => e == true);
   }
 
-  //
-  //
-  //
-
-  bool? get _isFieldNameNullable =>
-      super.fieldPath?.any((e) => e.contains('?'));
+  bool? get _isFieldNameNullable => super.fieldPath?.any((e) => e.contains('?'));
 
   bool? get _isFieldTypeNullable => super.fieldType?.endsWith('?');
 
