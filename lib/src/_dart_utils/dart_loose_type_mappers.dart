@@ -157,8 +157,9 @@ class DartLooseTypeMappers extends TypeMappers {
           return '${e.name}?.toString().trim().nullIfEmpty?.toPathCase()';
         },
         // ---------------------------------------------------------------------
-        // Default.
-        // ---------------------------------------------------------------------
+        r'^(DataRefModel)\??$': (e) {
+          return 'dataRefFromString(${e.name}?.toString())';
+        },
         r'^(Type-?\w*|\w*-?Type)\??$': (e) {
           final typeName = e.matchGroups?.elementAt(1);
           return '$typeName.values.valueOf(${e.name}?.toString())';
@@ -186,7 +187,7 @@ class DartLooseTypeMappers extends TypeMappers {
   @override
   get objectToMappers => newTypeMappers<ObjectMapperEvent>({
         // ---------------------------------------------------------------------
-        // Standart.
+        // Standard.
         // ---------------------------------------------------------------------
         r'^(String)\??$': (e) {
           return '${e.name}?.trim().nullIfEmpty';
@@ -247,6 +248,9 @@ class DartLooseTypeMappers extends TypeMappers {
         },
         r'^(Type-?\w*|\w*-?Type)\??$': (e) {
           return '${e.name}?.name';
+        },
+        r'^(DataRefModel)\??$': (e) {
+          return '${e.name}?.path';
         },
         r'^(Model-?\w*|\w*-?Model)\??$': (e) {
           return '${e.name}?.toJson()';

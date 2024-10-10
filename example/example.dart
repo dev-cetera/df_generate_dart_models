@@ -10,13 +10,20 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
+
 import 'models/model_test/model_test.dart';
 import 'models/model_user/model_user.dart';
 
 void main() {
   final a = const ModelTest(
     users: [
-      ModelUser(id: '123'),
+      ModelUser(
+        ref: DataRefModel(
+          collection: ['users'],
+          id: '123',
+        ),
+      ),
     ],
     checks: [1, 2, 3, 4],
   );

@@ -11,9 +11,11 @@
 //.title~
 
 import 'package:analyzer/dart/constant/value.dart';
+
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
-import 'dart_obj_to_list.dart';
+import 'dart_obj_to_string_list.dart';
+import 'dart_obj_to_object.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -25,14 +27,12 @@ extension DartFromRecordOnDartObjectX on DartObject {
   /// Returns `fieldName` property from `this` [DartObject] record if it matches
   /// the structure of [TFieldRecord] or `null`.
   List<String>? fieldPathFromRecord() {
-    return _rawFieldPathFromRecord()
-        ?.map((e) => e.replaceAll('?', ''))
-        .toList();
+    return _rawFieldPathFromRecord()?.map((e) => e.replaceAll('?', '')).toList();
   }
 
   List<String>? _rawFieldPathFromRecord() {
-    final a = dartObjToList(getField('\$1'));
-    final b = dartObjToList(getField(FieldModelFieldNames.fieldPath));
+    final a = dartObjToStringList(getField('\$1'));
+    final b = dartObjToStringList(getField(FieldModelFieldNames.fieldPath));
     return (a ?? b)?.toList();
   }
 
@@ -50,9 +50,7 @@ extension DartFromRecordOnDartObjectX on DartObject {
     final a = getField('\$2')?.toStringValue();
     final b = getField('\$2')?.toTypeValue()?.getDisplayString();
     final c = getField(FieldModelFieldNames.fieldType)?.toStringValue();
-    final d = getField(FieldModelFieldNames.fieldType)
-        ?.toTypeValue()
-        ?.getDisplayString();
+    final d = getField(FieldModelFieldNames.fieldType)?.toTypeValue()?.getDisplayString();
     return a ?? b ?? c ?? d;
   }
 
@@ -68,6 +66,36 @@ extension DartFromRecordOnDartObjectX on DartObject {
     final c = _rawFieldPathFromRecord()?.any((e) => e.contains('?'));
     final d = _rawFieldTypeFromRecord()?.endsWith('?');
     return a ?? b ?? ((c ?? false) || (d ?? false));
+  }
+
+  /// Returns the `children` property from `this` [DartObject] record if it
+  /// matches the structure of [TFieldRecord] or `null`.
+  List<Map<String, dynamic>>? childrenFromRecord() {
+    return getField(FieldModelFieldNames.children)
+        ?.toListValue()
+        ?.map(
+          (e) => e.toMapValue()!.map((k, v) => MapEntry(k!.toStringValue()!, dartObjToObject(v))),
+        )
+        .toList();
+  }
+
+  /// Returns the `primaryKey` property from `this` [DartObject] record if it
+  /// matches the structure of [TFieldRecord] or `null`.
+  bool? primaryKeyFromRecord() {
+    return getField(FieldModelFieldNames.primaryKey)?.toBoolValue();
+  }
+
+  /// Returns the `foreignKey` property from `this` [DartObject] record if it
+  /// matches the structure of [TFieldRecord] or `null`.
+  bool? foreignKeyFromRecord() {
+    return getField(FieldModelFieldNames.foreignKey)?.toBoolValue();
+  }
+
+  /// Retrieves the `fallback` property from this [DartObject] record if it
+  /// matches the structure of [TFieldRecord] or returns `null`.
+  Object? fallbackFromRecord() {
+    final fallbackField = getField(FieldModelFieldNames.fallback);
+    return dartObjToObject(fallbackField);
   }
 
   /// Returns the `description` property from `this` [DartObject] record if it

@@ -24,16 +24,13 @@ final insightMappers = [
   _InsightMapper(
     placeholder: PlaceholdersA.DESCRIPTION,
     mapInsights: (insight) async {
-      return insight.annotation.description ??
-          'Generated class for [${insight.className}].';
+      return insight.annotation.description ?? 'Generated class for [${insight.className}].';
     },
   ),
   _InsightMapper(
     placeholder: PlaceholdersA.SUPER_CLASS_NAME,
     mapInsights: (insight) async {
-      return insight.annotation.shouldInherit == true
-          ? insight.className
-          : 'Model';
+      return insight.annotation.shouldInherit == true ? insight.className : 'Model';
     },
   ),
   _InsightMapper(
@@ -151,8 +148,7 @@ final insightMappers = [
         final f = field.fieldName;
         final x = field.fieldTypeCode!;
         final s = stripSpecialSyntaxFromFieldType(x);
-        final b =
-            DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
+        final b = DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
           fieldName: "$a?['${parts.last}']",
           fieldTypeCode: s,
         );
@@ -162,9 +158,7 @@ final insightMappers = [
       final j = fields.map((a) {
         final ff = fields
             .where(
-              (b) => a.fieldPath!
-                  .join('.')
-                  .startsWith('${b.fieldPath!.join('.')}.'),
+              (b) => a.fieldPath!.join('.').startsWith('${b.fieldPath!.join('.')}.'),
             )
             .toList();
         ff.sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
@@ -193,8 +187,7 @@ final insightMappers = [
           final f0 = '${f}0';
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
-          final a =
-              DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
+          final a = DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
             fieldName: f,
             fieldTypeCode: s,
           );
@@ -369,5 +362,4 @@ enum PlaceholdersA {
   COPY_WITHOUT_ARGS,
 }
 
-typedef _InsightMapper
-    = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersA>;
+typedef _InsightMapper = InsightMapper<ClassInsight<GenerateDartModel>, PlaceholdersA>;

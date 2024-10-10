@@ -10,38 +10,15 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
-
-part '_model_user.g.dart';
+import 'package:analyzer/dart/constant/value.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-@GenerateDartModel(
-  shouldInherit: true,
-  fields: {
-    Field(
-      fieldPath: ['ref'],
-      fieldType: DataRef,
-      primaryKey: true,
-      children: [
-        {
-          'fieldPath': ['test'],
-          'fieldType': String,
-        }
-      ],
-    ),
-    Field(
-      fieldPath: ['firstName'],
-      fieldType: String,
-      nullable: true,
-    ),
-    Field(
-      fieldPath: ['lastName'],
-      fieldType: String,
-      nullable: true,
-    ),
-  },
-)
-abstract class _ModelUser extends Model {
-  const _ModelUser();
+List<String>? dartObjToStringList(DartObject? obj) {
+  final a = obj?.toStringValue();
+  if (a != null) {
+    return [a];
+  }
+  final b = obj?.toListValue()?.map((e) => e.toStringValue()).nonNulls.toList();
+  return b;
 }

@@ -23,6 +23,10 @@ final class DartField extends Field {
     required super.fieldPath,
     required super.fieldType,
     super.nullable,
+    super.children,
+    super.primaryKey,
+    super.foreignKey,
+    super.fallback,
     super.description,
   });
 
@@ -32,6 +36,10 @@ final class DartField extends Field {
       fieldPath: source.fieldPath,
       fieldType: source.fieldType,
       nullable: source.nullable,
+      children: source.children,
+      primaryKey: source.primaryKey,
+      foreignKey: source.foreignKey,
+      fallback: source.fallback,
       description: source.description,
     );
   }
@@ -42,6 +50,10 @@ final class DartField extends Field {
       fieldPath: record.fieldPath,
       fieldType: record.fieldType,
       nullable: record.nullable,
+      children: record.children,
+      primaryKey: record.primaryKey,
+      foreignKey: record.foreignKey,
+      fallback: record.fallback,
       description: record.description,
     );
   }
@@ -94,8 +106,7 @@ final class DartField extends Field {
     ].any((e) => e == true);
   }
 
-  bool? get _isFieldNameNullable =>
-      super.fieldPath?.any((e) => e.contains('?'));
+  bool? get _isFieldNameNullable => super.fieldPath?.any((e) => e.contains('?'));
 
   bool? get _isFieldTypeNullable => super.fieldType?.endsWith('?');
 

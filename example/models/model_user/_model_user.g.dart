@@ -7,6 +7,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+// ignore_for_file: annotate_overrides
 // ignore_for_file: invalid_null_aware_operator
 // ignore_for_file: overridden_fields
 // ignore_for_file: require_trailing_commas
@@ -31,7 +32,7 @@ class ModelUser extends _ModelUser {
   String get $className => CLASS_NAME;
 
   /// No description provided.
-  final String? id;
+  final DataRefModel? ref;
 
   /// No description provided.
   final String? firstName;
@@ -42,7 +43,7 @@ class ModelUser extends _ModelUser {
   /// Constructs a new instance of [ModelUser]
   /// from optional and required parameters.
   const ModelUser({
-    required this.id,
+    required this.ref,
     this.firstName,
     this.lastName,
   });
@@ -50,7 +51,7 @@ class ModelUser extends _ModelUser {
   /// Construcs a new instance of [ModelUser],
   /// forcing all parameters to be optional.
   const ModelUser.optional({
-    this.id,
+    this.ref,
     this.firstName,
     this.lastName,
   });
@@ -58,14 +59,14 @@ class ModelUser extends _ModelUser {
   /// Constructs a new instance of [ModelUser],
   /// and asserts that all required parameters are not null.
   factory ModelUser.assertRequired({
-    String? id,
+    DataRefModel? ref,
     String? firstName,
     String? lastName,
   }) {
-    assert(id != null);
+    assert(ref != null);
 
     return ModelUser(
-      id: id,
+      ref: ref,
       firstName: firstName,
       lastName: lastName,
     );
@@ -170,11 +171,11 @@ class ModelUser extends _ModelUser {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
+      final ref = dataRefFromString(json?['ref']?.toString());
       final firstName = json?['firstName']?.toString().trim().nullIfEmpty;
       final lastName = json?['lastName']?.toString().trim().nullIfEmpty;
       return ModelUser(
-        id: id,
+        ref: ref,
         firstName: firstName,
         lastName: lastName,
       );
@@ -219,12 +220,12 @@ class ModelUser extends _ModelUser {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
+      final ref0 = ref?.path;
       final firstName0 = firstName?.trim().nullIfEmpty;
       final lastName0 = lastName?.trim().nullIfEmpty;
       final withNulls = {
+        'ref': ref0,
         'lastName': lastName0,
-        'id': id0,
         'firstName': firstName0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
@@ -247,12 +248,12 @@ class ModelUser extends _ModelUser {
 
   /// Creates a copy of this instance, replacing the specified fields.
   ModelUser copyWith({
-    String? id,
+    DataRefModel? ref,
     String? firstName,
     String? lastName,
   }) {
     return ModelUser.assertRequired(
-      id: id ?? this.id,
+      ref: ref ?? this.ref,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
     );
@@ -260,22 +261,22 @@ class ModelUser extends _ModelUser {
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelUser copyWithout({
-    bool id = true,
+    bool ref = true,
     bool firstName = true,
     bool lastName = true,
   }) {
     return ModelUser.assertRequired(
-      id: id ? this.id : null,
+      ref: ref ? this.ref : null,
       firstName: firstName ? this.firstName : null,
       lastName: lastName ? this.lastName : null,
     );
   }
 
-  /// Returns the value of the [id] field.
+  /// Returns the value of the [ref] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
   @pragma('vm:prefer-inline')
-  String get id$ => id!;
+  DataRefModel get ref$ => ref!;
 
   /// Returns the value of the [firstName] field.
   /// If the field is nullable, the return value may be null; otherwise, it
@@ -293,8 +294,8 @@ class ModelUser extends _ModelUser {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelUserFieldNames {
-  /// The field name of [ModelUser.id].
-  static const id = 'id';
+  /// The field name of [ModelUser.ref].
+  static const ref = 'ref';
 
   /// The field name of [ModelUser.firstName].
   static const firstName = 'firstName';
