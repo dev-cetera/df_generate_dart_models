@@ -149,8 +149,8 @@ GenerateDartModel _updateFromAnnotatedMember(
         .memberAnnotationFields[FieldModelFieldNames.foreignKey]
         ?.toBoolValue();
     final children = (dartObjToObject(
-                params.memberAnnotationFields[FieldModelFieldNames.children],)
-            as List?)
+      params.memberAnnotationFields[FieldModelFieldNames.children],
+    ) as List?)
         ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
         .nonNulls
         .toList();
