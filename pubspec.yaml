@@ -12,7 +12,7 @@
 
 name: df_generate_dart_models
 description: A tool to generate index/exports files for all Dart files in a directory.
-version: 0.7.2
+version: 0.7.3
 repository: https://github.com/robmllze/df_generate_dart_models
 funding:
   - https://www.buymeacoffee.com/robmllze
@@ -52,7 +52,9 @@ dev_dependencies:
 ## -----------------------------------------------------------------------------
 
 executables:
+  genmdl-basic: genmdl_dart_basic
   genmdl-dart-amplify: genmdl_dart_amplify
+  genmdl-dart-basic: genmdl_dart_basic
   genmdl-dart-js: genmdl_dart_js
   genmdl-dart-py: genmdl_dart_py
   genmdl-dart-ts: genmdl_dart_ts
