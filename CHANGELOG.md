@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.3]
+
+- Released @ 10/2024 (UTC)
+- chore: Add basic model generator binary
+
 ## [0.7.2]
 
 - Released @ 10/2024 (UTC)
