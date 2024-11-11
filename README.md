@@ -13,13 +13,77 @@ Dart & Flutter Packages by DevCetra.com & contributors.
 
 A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed. It supports generating classes from template files for enhanced customization, ensures stronger type safety, and includes intelligent conversion mechanisms.
 
-## Usage Instructions
+Below are some basic steps to get you started with this package. This package is designed to work with the [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_models_core) package, which provides the core functionality for generating models.
 
-1. There’s no need to add this package to your `pubspec.yaml`.
-2. Activate the tool by running: `dart pub global activate df_generate_dart_models`.
-3. Open your terminal and navigate to a folder in your project (Pro Tip: In VS Code, right-click a folder and select "Open in Integrated Terminal").
-4. Run `dfmdl` to generate models for the `@GenerateDartModels` annotation in the current directory `.`.
-5. Alternatively, run `dfmdl:basic` to generate a simple model with basic `fromJson` and `toJson`methods.
+The example below provides a glimpse of what this package can do. It also includes advanced features such as AI-driven generation, customizable type mappers, template files, model conversion to other programming languages, and more. Please note that these advanced features are still in development and not yet documented. Feel free to contact the developer for more information.
+
+## Getting Started
+
+### Step 1:
+
+Install this tool by running `dart pub global activate df_generate_dart_models` in your terminal.
+
+### Step 2:
+
+Add [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_models_core) to your `pubspec.yaml` file.
+
+```yaml
+dependencies:
+  df_generate_dart_models_core: any # use the latest version
+```
+
+### Step 3:
+
+Create a template for your model, for example:
+
+```dart
+// Import the annotation GenerateDartModel, Field, and the Model class, etc.
+import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
+
+// This file may not yet exist but will be generated.
+part '_model_user.g.dart';
+
+// Define the model to generate.
+@GenerateDartModel(
+  fields: {
+    Field(
+      fieldPath: ['id'],
+      fieldType: String,
+    ),
+    Field(
+      fieldPath: ['firstName'], // the field key
+      fieldType: String, // the field type
+      nullable: true, // whether the field can be null or not
+    ),
+    Field(
+      fieldPath: ['lastName'],
+      fieldType: String,
+      nullable: true,
+    ),
+  },
+  shouldInherit: true, // lets extend some base class
+)
+
+// Since `shouldInherit` is true, the generated model will know to extend this class.
+abstract class _ModelUser extends Model {
+  const _ModelUser();
+}
+
+// We can add some extension methods to the generated model.
+extension ModelUserX on ModelUser {
+  String fullName() {
+    return '${this.firstName} ${this.lastName}';
+  }
+}
+```
+
+### Step 4:
+
+Save the file somewhere in its own directory, for example `lib/models/model_user/model_user.dart`.
+
+### Step 5:
+
+Open the terminal and navigate to `lib/models/model_user`, then run `dfmdl`. This will generate the `_model_user.g.dart` file in the same directory. In editors like VS Code, you can right-click on the folder and select _“Open in Integrated Terminal”_ to open the terminal directly at the desired location, and then run `dfmdl` to generate the file.
 
 ## Contributing and Discussions
 

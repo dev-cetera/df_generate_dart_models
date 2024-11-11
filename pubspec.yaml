@@ -53,10 +53,10 @@ dev_dependencies:
 ## -----------------------------------------------------------------------------
 
 executables:
-  dfmdl: genmdl_dart
-  dfmdl:basic: genmdl_dart_basic
-  dfmdl:dart-amplify: genmdl_dart_amplify
-  dfmdl:dart-js: genmdl_dart_js
-  dfmdl:dart-py: genmdl_dart_py
-  dfmdl:dart-ts: genmdl_dart_ts
-  dfmdl:dart-tstype: genmdl_dart_tstype
+  dfmdl: dfmdl_dart
+  dfmdl-basic: dfmdl_dart_basic
+  dfmdl-dart-amplify: dfmdl_dart_amplify
+  dfmdl-dart-js: dfmdl_dart_js
+  dfmdl-dart-py: dfmdl_dart_py
+  dfmdl-dart-ts: dfmdl_dart_ts
+  dfmdl-dart-tstype: dfmdl_dart_tstype
