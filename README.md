@@ -29,7 +29,7 @@ Add [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_m
 
 ```yaml
 dependencies:
-  df_generate_dart_models_core: 0.6.8 # Fixed version to ensure compatibility and avoid issues from frequent updates.
+  df_generate_dart_models_core: 0.6.9 # Fixed version to ensure compatibility and avoid issues from frequent updates.
 ```
 
 ### Step 3

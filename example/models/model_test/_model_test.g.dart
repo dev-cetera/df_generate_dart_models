@@ -178,14 +178,16 @@ class ModelTest extends _ModelTest {
           )
           .nonNulls
           .nullIfEmpty
-          ?.toList();
+          ?.toList()
+          .unmodifiable;
       final checks = letListOrNull<dynamic>(json?['checks'])
           ?.map(
             (p0) => letAsOrNull<int>(p0),
           )
           .nonNulls
           .nullIfEmpty
-          ?.toList();
+          ?.toList()
+          .unmodifiable;
       final random = letMapOrNull<dynamic, dynamic>(json?['random'])
           ?.map(
             (p0, p1) => MapEntry(
@@ -198,11 +200,13 @@ class ModelTest extends _ModelTest {
                     ),
                   )
                   .nonNulls
-                  .nullIfEmpty,
+                  .nullIfEmpty
+                  ?.unmodifiable,
             ),
           )
           .nonNulls
-          .nullIfEmpty;
+          .nullIfEmpty
+          ?.unmodifiable;
       return ModelTest(
         users: users,
         checks: checks,
@@ -275,11 +279,13 @@ class ModelTest extends _ModelTest {
                     ),
                   )
                   .nonNulls
-                  .nullIfEmpty,
+                  .nullIfEmpty
+                  ?.unmodifiable,
             ),
           )
           .nonNulls
-          .nullIfEmpty;
+          .nullIfEmpty
+          ?.unmodifiable;
       final withNulls = {
         'users': users0,
         'random': random0,

@@ -62,7 +62,7 @@ class DartLooseTypeMappers extends TypeMappers {
         // Standard.
         // ---------------------------------------------------------------------
         r'^(Map)\??$': (e) {
-          return '${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?';
+          return '${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
         },
         r'^(Iterable|List|Set|Queue)\??$': (e) {
           return '${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';

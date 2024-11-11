@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.9.3]
+
+- Released @ 10/2024 (UTC)
+- fix: Fix generation output bug
+- chore: Update dependencies
+
 ## [0.9.2]
 
 - Released @ 10/2024 (UTC)
