@@ -15,13 +15,13 @@ A tool for generating data models and classes from annotations, offering greater
 
 Below are some basic steps to get you started with this package. This package is designed to work with the [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_models_core) package, which provides the core functionality for generating models.
 
-The example below provides a glimpse of what this package can do. It also includes advanced features such as AI-driven generation, customizable type mappers, template files, model conversion to other programming languages, and more. Please note that these advanced features are still in development and not yet documented. Feel free to contact the developer for more information.
+The example below provides a glimpse of what this package can do. The package includes advanced features such as AI-driven generation, customizable type mappers, template files, model conversion to other programming languages, and mor but these advanced features are still in development and not yet documented. Feel free to contact the developer if you require more information.
 
 ## Getting Started
 
 ### Step 1:
 
-Install this tool by running `dart pub global activate df_generate_dart_models` in your terminal.
+To install this tool, `run dart pub global activate df_generate_dart_models 0.9.1` in your terminal. You can replace `0.9.1` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
 
 ### Step 2:
 
@@ -29,7 +29,7 @@ Add [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_m
 
 ```yaml
 dependencies:
-  df_generate_dart_models_core: any # use the latest version
+  df_generate_dart_models_core: 0.6.8 # Fixed version to ensure compatibility and avoid issues from frequent updates.
 ```
 
 ### Step 3:
