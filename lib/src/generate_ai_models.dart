@@ -66,7 +66,7 @@ Future<void> generateAIModels({
         fileName,
       );
 
-      await writeFile(filePath, output);
+      await FileSystemUtility.i.writeLocalFile(filePath, output);
 
       // Log a success.
       printGreen(

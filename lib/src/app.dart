@@ -24,8 +24,7 @@ import 'generate.dart';
 Future<void> runGenerateDartModelsApp(List<String> args) async {
   await runCommandLineApp(
     title: 'Generate Dart Models',
-    description:
-        'A command line app for generating Dart models from annotations',
+    description: 'A command line app for generating Dart models from annotations',
     args: args,
     parser: ArgParser()
       ..addFlag(
@@ -60,8 +59,7 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
       )
       ..addOption(
         'gemeni_api_key',
-        help:
-            'Obtain your API key here https://ai.google.dev/gemini-api/docs/api-key.',
+        help: 'Obtain your API key here https://ai.google.dev/gemini-api/docs/api-key.',
       )
       ..addOption(
         'gemeni_model',
@@ -74,8 +72,7 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
       )
       ..addOption(
         'generate_for_languages',
-        help:
-            'Programming languages to generate additional models for using AI, separated by `&`.',
+        help: 'Programming languages to generate additional models for using AI, separated by `&`.',
       )
       ..addOption(
         'ai_output',
@@ -109,7 +106,7 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
         aiOutput: args.aiOutput!,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
-        pathPatterns: args.pathPatterns ?? const {},
+        matchPatterns: args.pathPatterns ?? const {},
         templateFilePath: args.templateFilePath!,
         generateForLanguages: args.generateForLanguages ?? const {},
       );

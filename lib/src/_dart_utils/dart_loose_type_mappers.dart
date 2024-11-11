@@ -39,19 +39,16 @@ class DartLooseTypeMappers extends TypeMappers {
         // Standard.
         // ---------------------------------------------------------------------
         r'^(Map)\??$': (e) {
-          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
+          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?.unmodifiable';
         },
         r'^(Iterable)\??$': (e) {
           return 'letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty';
         },
         r'^(List)\??$': (e) {
-          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';
+          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().unmodifiable';
         },
         r'^(Set)\??$': (e) {
-          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet()';
-        },
-        r'^(Queue)\??$': (e) {
-          return '(){ final a = letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty; return a != null ? Queue.of(a): null; }()';
+          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().unmodifiable';
         },
       });
 
@@ -65,7 +62,7 @@ class DartLooseTypeMappers extends TypeMappers {
         // Standard.
         // ---------------------------------------------------------------------
         r'^(Map)\??$': (e) {
-          return '${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
+          return '${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?';
         },
         r'^(Iterable|List|Set|Queue)\??$': (e) {
           return '${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';

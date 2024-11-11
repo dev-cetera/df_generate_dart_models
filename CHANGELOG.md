@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.8.0]
+
+- Released @ 10/2024 (UTC)
+- breaking: Improve generator output
+
 ## [0.7.3]
 
 - Released @ 10/2024 (UTC)

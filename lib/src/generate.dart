@@ -23,7 +23,7 @@ import 'generate_ai_models.dart';
 Future<void> generateDartModelsFromAnnotations({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
-  Set<String> pathPatterns = const {},
+  Set<String> matchPatterns = const {},
   required String templateFilePath,
   String? fallbackDartSdkPath,
   String? gemeniApiKey,
@@ -44,10 +44,10 @@ Future<void> generateDartModelsFromAnnotations({
       ),
     ],
     dirPathGroups: {
-      CombinedPaths(
+      MatchedPathPowerset(
         rootDirPaths,
         subPaths: subDirPaths,
-        pathPatterns: pathPatterns,
+        matchPatterns: matchPatterns,
       ),
     },
   );
@@ -55,7 +55,7 @@ Future<void> generateDartModelsFromAnnotations({
 
   final template = templateFilePath.isNotEmpty
       ? extractCodeFromMarkdown(
-          await loadFileFromPathOrUrl(templateFilePath),
+          (await FileSystemUtility.i.readFileFromPathOrUrl(templateFilePath))!,
         ).trim()
       : '';
 
@@ -63,15 +63,15 @@ Future<void> generateDartModelsFromAnnotations({
 
   // Create context for the Dart analyzer.
   final analysisContextCollection = createDartAnalysisContextCollection(
-    sourceFileExporer.dirPathGroups.first.paths,
+    sourceFileExporer.dirPathGroups.first.output,
     fallbackDartSdkPath,
   );
 
   final sequentual = Sequential();
 
   // For each file...
-  for (final filePathResult in sourceFileExplorerResults.filePathResults
-      .where((e) => e.category == _Categories.DART)) {
+  for (final filePathResult
+      in sourceFileExplorerResults.filePathResults.where((e) => e.category == _Categories.DART)) {
     final filePath = filePathResult.path;
 
     // Extract insights from the file.
