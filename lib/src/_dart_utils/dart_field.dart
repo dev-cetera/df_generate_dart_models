@@ -106,10 +106,9 @@ final class DartField extends Field {
     ].any((e) => e == true);
   }
 
-  bool? get _isFieldNameNullable =>
-      super.fieldPath?.any((e) => e.contains('?'));
+  bool? get _isFieldNameNullable => super.fieldPath?.any((e) => e.contains('?'));
 
-  bool? get _isFieldTypeNullable => super.fieldType?.endsWith('?');
+  bool? get _isFieldTypeNullable => super.fieldType?.endsWith('?') == true;
 
   //
   //
@@ -119,7 +118,7 @@ final class DartField extends Field {
   /// construct a [DartField], otherwise returns `null`.
   static DartField? ofOrNull(dynamic unknown) {
     try {
-      return DartField.from(Field.ofOrNull(unknown)!);
+      return DartField.from(Field.ofOrNull(unknown as FieldModel?)!);
     } catch (_) {
       return null;
     }

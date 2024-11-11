@@ -279,13 +279,11 @@ class ModelTest extends _ModelTest {
                     ),
                   )
                   .nonNulls
-                  .nullIfEmpty
-                  ?.unmodifiable,
+                  .nullIfEmpty,
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .nullIfEmpty;
       final withNulls = {
         'users': users0,
         'random': random0,

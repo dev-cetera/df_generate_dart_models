@@ -85,12 +85,12 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
       ),
     onResults: (parser, results) {
       return _ArgsChecker(
-        fallbackDartSdkPath: results['dart-sdk'],
-        templateFilePath: results['template'],
-        gemeniApiKey: results['gemeni_api_key'],
-        gemeniModel: results['gemeni_model'],
-        messageForAI: results['message_for_ai'],
-        aiOutput: results['ai_output'],
+        fallbackDartSdkPath: results['dart-sdk'] as String?,
+        templatePathOrUrl: results['template'] as String?,
+        gemeniApiKey: results['gemeni_api_key'] as String?,
+        gemeniModel: results['gemeni_model'] as String?,
+        messageForAI: results['message_for_ai'] as String?,
+        aiOutput: results['ai_output'] as String?,
         rootPaths: results['roots'],
         subPaths: results['subs'],
         pathPatterns: results['patterns'],
@@ -107,7 +107,7 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
         pathPatterns: args.pathPatterns ?? const {},
-        templateFilePath: args.templateFilePath!,
+        templatePathOrUrl: args.templatePathOrUrl!,
         generateForLanguages: args.generateForLanguages ?? const {},
       );
     },
@@ -127,7 +127,7 @@ class _ArgsChecker extends ValidArgsChecker {
   final String? messageForAI;
   final String? aiOutput;
   final Set<String>? generateForLanguages;
-  final String? templateFilePath;
+  final String? templatePathOrUrl;
   final Set<String>? rootPaths;
   final Set<String>? subPaths;
   final Set<String>? pathPatterns;
@@ -142,7 +142,7 @@ class _ArgsChecker extends ValidArgsChecker {
     this.gemeniModel,
     this.messageForAI,
     this.aiOutput,
-    required this.templateFilePath,
+    required this.templatePathOrUrl,
     required dynamic rootPaths,
     required dynamic subPaths,
     required dynamic pathPatterns,
@@ -157,9 +157,9 @@ class _ArgsChecker extends ValidArgsChecker {
   //
 
   @override
-  List get args => [
+  List<dynamic> get args => [
         if (fallbackDartSdkPath != null) fallbackDartSdkPath,
-        templateFilePath,
+        templatePathOrUrl,
         if (gemeniApiKey != null) gemeniApiKey,
         gemeniModel,
         if (messageForAI != null) messageForAI,

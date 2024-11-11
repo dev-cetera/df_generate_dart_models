@@ -18,7 +18,7 @@ import '/src/_dart_utils/_index.g.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Iterable<DartField> dartFields(ClassInsight<GenerateDartModel> insight) {
-  return insight.annotation.fields?.map((e) {
+  return insight.annotation.fields?.whereType<TFieldRecord>().map((e) {
         e.runtimeType;
         return DartField.fromRecord(e);
       }).nonNulls ??

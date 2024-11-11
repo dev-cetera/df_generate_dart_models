@@ -10,7 +10,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-/// A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
+/// A tool for generating data models and classes from annotations, offering
+/// greater flexibility than json_serializable or freezed.
 library;
 
 export 'src/_index.g.dart';

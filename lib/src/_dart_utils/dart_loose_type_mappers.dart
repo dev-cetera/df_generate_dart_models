@@ -34,7 +34,8 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  get collectionFromMappers => newTypeMappers<CollectionMapperEvent>({
+  Map<String, String Function(CollectionMapperEvent)> get collectionFromMappers =>
+      newTypeMappers<CollectionMapperEvent>({
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------
@@ -57,7 +58,8 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  get collectionToMappers => newTypeMappers<CollectionMapperEvent>({
+  Map<String, String Function(CollectionMapperEvent)> get collectionToMappers =>
+      newTypeMappers<CollectionMapperEvent>({
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------
@@ -74,7 +76,8 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  get objectFromMappers => newTypeMappers<ObjectMapperEvent>({
+  Map<String, String Function(ObjectMapperEvent)> get objectFromMappers =>
+      newTypeMappers<ObjectMapperEvent>({
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------
@@ -182,7 +185,8 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  get objectToMappers => newTypeMappers<ObjectMapperEvent>({
+  Map<String, String Function(ObjectMapperEvent)> get objectToMappers =>
+      newTypeMappers<ObjectMapperEvent>({
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------

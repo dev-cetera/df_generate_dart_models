@@ -24,7 +24,7 @@ Future<void> generateDartModelsFromAnnotations({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
   Set<String> pathPatterns = const {},
-  required String templateFilePath,
+  required String templatePathOrUrl,
   String? fallbackDartSdkPath,
   String? gemeniApiKey,
   required String gemeniModel,
@@ -52,9 +52,9 @@ Future<void> generateDartModelsFromAnnotations({
     },
   );
   final sourceFileExplorerResults = await sourceFileExporer.explore();
-  final template = templateFilePath.isNotEmpty
+  final template = templatePathOrUrl.isNotEmpty
       ? extractCodeFromMarkdown(
-          (await FileSystemUtility.i.readFileFromPathOrUrl(templateFilePath))!,
+          (await FileSystemUtility.i.readFileFromPathOrUrl(templatePathOrUrl))!,
         ).trim()
       : '';
 
