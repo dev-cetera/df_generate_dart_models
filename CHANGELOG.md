@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.9.0]
+
+- Released @ 10/2024 (UTC)
+- breaking: Improve binaries, fix bugs and update readme
+
 ## [0.8.0]
 
 - Released @ 10/2024 (UTC)

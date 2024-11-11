@@ -23,7 +23,7 @@ import 'generate_ai_models.dart';
 Future<void> generateDartModelsFromAnnotations({
   required Set<String> rootDirPaths,
   Set<String> subDirPaths = const {},
-  Set<String> matchPatterns = const {},
+  Set<String> pathPatterns = const {},
   required String templateFilePath,
   String? fallbackDartSdkPath,
   String? gemeniApiKey,
@@ -47,12 +47,11 @@ Future<void> generateDartModelsFromAnnotations({
       MatchedPathPowerset(
         rootDirPaths,
         subPaths: subDirPaths,
-        matchPatterns: matchPatterns,
+        pathPatterns: pathPatterns,
       ),
     },
   );
   final sourceFileExplorerResults = await sourceFileExporer.explore();
-
   final template = templateFilePath.isNotEmpty
       ? extractCodeFromMarkdown(
           (await FileSystemUtility.i.readFileFromPathOrUrl(templateFilePath))!,

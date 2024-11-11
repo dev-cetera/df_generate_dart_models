@@ -37,7 +37,7 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
         'roots',
         abbr: 'r',
         help: 'Root directory paths separated by `&`.',
-        defaultsTo: Directory.current.path,
+        defaultsTo: '${Directory.current.path}/',
       )
       ..addOption(
         'subs',
@@ -106,7 +106,7 @@ Future<void> runGenerateDartModelsApp(List<String> args) async {
         aiOutput: args.aiOutput!,
         rootDirPaths: args.rootPaths!,
         subDirPaths: args.subPaths ?? const {},
-        matchPatterns: args.pathPatterns ?? const {},
+        pathPatterns: args.pathPatterns ?? const {},
         templateFilePath: args.templateFilePath!,
         generateForLanguages: args.generateForLanguages ?? const {},
       );

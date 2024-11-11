@@ -1,4 +1,4 @@
-# DF - Generate Dart Models
+# DF - Generate Dart Models (DFMDL)
 
 <a href="https://www.buymeacoffee.com/robmllze" target="_blank"><img align="right" src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
@@ -11,14 +11,15 @@ Dart & Flutter Packages by DevCetra.com & contributors.
 
 ## Summary
 
-A tool to generate index/exports files for all Dart files in a directory.
+A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed. It supports generating classes from template files for enhanced customization, ensures stronger type safety, and includes intelligent conversion mechanisms.
 
 ## Usage Instructions
 
-1. You do not need to add this package to your pubspec.yaml file.
+1. There’s no need to add this package to your `pubspec.yaml`.
 2. Activate the tool by running: `dart pub global activate df_generate_dart_models`.
-3. Navigate to a folder in your project using the terminal (Tip: If you're using VS Code, you can right-click on a folder and select `"Open in Integrated Terminal"`).
-4. Run `genmdl` to generate models for the annotation `@GenerateDartModels` in the current directory `.`.
+3. Open your terminal and navigate to a folder in your project (Pro Tip: In VS Code, right-click a folder and select "Open in Integrated Terminal").
+4. Run `dfmdl` to generate models for the `@GenerateDartModels` annotation in the current directory `.`.
+5. Alternatively, run `dfmdl:basic` to generate a simple model with basic `fromJson` and `toJson`methods.
 
 ## Contributing and Discussions
 

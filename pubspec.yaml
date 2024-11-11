@@ -11,8 +11,8 @@
 ##.title~
 
 name: df_generate_dart_models
-description: A tool to generate index/exports files for all Dart files in a directory.
-version: 0.8.0
+description: A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
+version: 0.9.0
 repository: https://github.com/robmllze/df_generate_dart_models
 funding:
   - https://www.buymeacoffee.com/robmllze
@@ -31,9 +31,9 @@ environment:
 ## -----------------------------------------------------------------------------
 
 dependencies:
-  df_collection: ^0.8.0
+  df_collection: ^0.8.1
   df_config: ^0.5.1
-  df_gen_core: ^0.4.1
+  df_gen_core: ^0.4.3
   df_generate_dart_models_core: ^0.6.8
   df_log: ^0.2.4
   df_string: ^0.2.2
@@ -53,12 +53,10 @@ dev_dependencies:
 ## -----------------------------------------------------------------------------
 
 executables:
-  genmdl-basic: genmdl_dart_basic
-  genmdl-dart-amplify: genmdl_dart_amplify
-  genmdl-dart-basic: genmdl_dart_basic
-  genmdl-dart-js: genmdl_dart_js
-  genmdl-dart-py: genmdl_dart_py
-  genmdl-dart-ts: genmdl_dart_ts
-  genmdl-dart-tstype: genmdl_dart_tstype
-  genmdl-dart: genmdl_dart
-  genmdl: genmdl_dart
+  dfmdl: genmdl_dart
+  dfmdl:basic: genmdl_dart_basic
+  dfmdl:dart-amplify: genmdl_dart_amplify
+  dfmdl:dart-js: genmdl_dart_js
+  dfmdl:dart-py: genmdl_dart_py
+  dfmdl:dart-ts: genmdl_dart_ts
+  dfmdl:dart-tstype: genmdl_dart_tstype
