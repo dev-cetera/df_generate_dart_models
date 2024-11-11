@@ -21,7 +21,7 @@ The example below provides a glimpse of what this package can do. The package in
 
 ### Step 1
 
-To install this tool, run `dart pub global activate df_generate_dart_models 0.9.2` in your terminal. You can replace `0.9.2` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
+To install this tool, run `dart pub global activate df_generate_dart_models 0.9.3` in your terminal. You can replace `0.9.3` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
 
 ### Step 2
 
