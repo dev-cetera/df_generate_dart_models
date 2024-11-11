@@ -17,13 +17,13 @@ Below are some basic steps to get you started with this package. This package is
 
 The example below provides a glimpse of what this package can do. The package includes advanced features such as AI-driven generation, customizable type mappers, template files, model conversion to other programming languages, and mor but these advanced features are still in development and not yet documented. Feel free to contact the developer if you require more information.
 
-## Getting Started
+## Quickstart
 
-### Step 1:
+### Step 1
 
-To install this tool, `run dart pub global activate df_generate_dart_models 0.9.1` in your terminal. You can replace `0.9.1` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
+To install this tool, run `dart pub global activate df_generate_dart_models 0.9.2` in your terminal. You can replace `0.9.2` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
 
-### Step 2:
+### Step 2
 
 Add [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_models_core) to your `pubspec.yaml` file.
 
@@ -32,7 +32,7 @@ dependencies:
   df_generate_dart_models_core: 0.6.8 # Fixed version to ensure compatibility and avoid issues from frequent updates.
 ```
 
-### Step 3:
+### Step 3
 
 Create a template for your model, for example:
 
@@ -77,11 +77,11 @@ extension ModelUserX on ModelUser {
 }
 ```
 
-### Step 4:
+### Step 4
 
 Save the file somewhere in its own directory, for example `lib/models/model_user/model_user.dart`.
 
-### Step 5:
+### Step 5
 
 Open the terminal and navigate to `lib/models/model_user`, then run `dfmdl`. This will generate the `_model_user.g.dart` file in the same directory. In editors like VS Code, you can right-click on the folder and select _“Open in Integrated Terminal”_ to open the terminal directly at the desired location, and then run `dfmdl` to generate the file.
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.9.2]
+
+- Released @ 10/2024 (UTC)
+- docs: Fix typo in readme
+
 ## [0.9.1]
 
 - Released @ 10/2024 (UTC)
