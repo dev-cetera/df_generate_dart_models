@@ -34,24 +34,24 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  Map<String, String Function(CollectionMapperEvent)> get collectionFromMappers =>
-      newTypeMappers<CollectionMapperEvent>({
-        // ---------------------------------------------------------------------
-        // Standard.
-        // ---------------------------------------------------------------------
-        r'^(Map)\??$': (e) {
-          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?.unmodifiable';
-        },
-        r'^(Iterable)\??$': (e) {
-          return 'letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty';
-        },
-        r'^(List)\??$': (e) {
-          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().unmodifiable';
-        },
-        r'^(Set)\??$': (e) {
-          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().unmodifiable';
-        },
-      });
+  Map<String, String Function(CollectionMapperEvent)>
+      get collectionFromMappers => newTypeMappers<CollectionMapperEvent>({
+            // ---------------------------------------------------------------------
+            // Standard.
+            // ---------------------------------------------------------------------
+            r'^(Map)\??$': (e) {
+              return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?.unmodifiable';
+            },
+            r'^(Iterable)\??$': (e) {
+              return 'letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty';
+            },
+            r'^(List)\??$': (e) {
+              return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().unmodifiable';
+            },
+            r'^(Set)\??$': (e) {
+              return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().unmodifiable';
+            },
+          });
 
   //
   //
