@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.3]
+
+- Released @ 11/2024 (UTC)
+- fix: Fix generator issue
+
 ## [0.10.2]
 
 - Released @ 11/2024 (UTC)
