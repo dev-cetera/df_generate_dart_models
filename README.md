@@ -1,5 +1,3 @@
-# DF - Generate Dart Models (DFMDL)
-
 <a href="https://www.buymeacoffee.com/robmllze" target="_blank"><img align="right" src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
 Dart & Flutter Packages by DevCetra.com & contributors.
@@ -21,7 +19,7 @@ The example below provides a glimpse of what this package can do. The package in
 
 ### Step 1
 
-To install this tool, run `dart pub global activate df_generate_dart_models 0.9.3` in your terminal. You can replace `0.9.3` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
+To install this tool, run `dart pub global activate df_generate_dart_models 0.10.4` in your terminal. You can replace `0.10.4` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
 
 ### Step 2
 
@@ -29,7 +27,7 @@ Add [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_m
 
 ```yaml
 dependencies:
-  df_generate_dart_models_core: 0.6.9 # Fixed version to ensure compatibility and avoid issues from frequent updates.
+  df_generate_dart_models_core: 0.6.11 # Fixed version to ensure compatibility and avoid issues from frequent updates.
 ```
 
 ### Step 3
