@@ -12,8 +12,8 @@
 
 name: df_generate_dart_models
 description: A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
-version: 0.10.1
-repository: https://github.com/robmllze/df_generate_dart_models
+version: 0.10.2
+repository: https://github.com/DevCetra/df_generate_dart_models
 funding:
   - https://www.buymeacoffee.com/robmllze
 topics:
@@ -34,12 +34,12 @@ dependencies:
   df_collection: ^0.8.3
   df_config: ^0.5.3
   df_gen_core: ^0.4.5
-  df_generate_dart_models_core: ^0.6.10
+  df_generate_dart_models_core: ^0.6.11
   df_log: ^0.2.4
   df_string: ^0.2.3
   df_type: ^0.7.2
 
-  analyzer: ^6.11.0
+  analyzer: ^6.8.0
   args: ^2.6.0
   path: ^1.9.1
   google_generative_ai: ^0.4.6
@@ -47,7 +47,7 @@ dependencies:
 ## -----------------------------------------------------------------------------
 
 dev_dependencies:
-  lints: ^5.1.0
+  lints: ^5.0.0
   test: ^1.25.8
 
 ## -----------------------------------------------------------------------------
