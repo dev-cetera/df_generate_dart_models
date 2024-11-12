@@ -34,32 +34,32 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  Map<String, String Function(CollectionMapperEvent)>
-      get collectionFromMappers => newTypeMappers<CollectionMapperEvent>({
-            // ---------------------------------------------------------------------
-            // Standard.
-            // ---------------------------------------------------------------------
-            r'^(Map)\??$': (e) {
-              return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?.unmodifiable';
-            },
-            r'^(Iterable)\??$': (e) {
-              return 'letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty';
-            },
-            r'^(List)\??$': (e) {
-              return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().unmodifiable';
-            },
-            r'^(Set)\??$': (e) {
-              return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().unmodifiable';
-            },
-          });
+  TTypeMappers<CollectionMapperEvent> get collectionFromMappers =>
+      Map.unmodifiable(<String, String Function(CollectionMapperEvent event)>{
+        // ---------------------------------------------------------------------
+        // Standard.
+        // ---------------------------------------------------------------------
+        r'^(Map)\??$': (e) {
+          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?.unmodifiable';
+        },
+        r'^(Iterable)\??$': (e) {
+          return 'letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty';
+        },
+        r'^(List)\??$': (e) {
+          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().unmodifiable';
+        },
+        r'^(Set)\??$': (e) {
+          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().unmodifiable';
+        },
+      });
 
   //
   //
   //
 
   @override
-  Map<String, String Function(CollectionMapperEvent)> get collectionToMappers =>
-      newTypeMappers<CollectionMapperEvent>({
+  TTypeMappers<CollectionMapperEvent> get collectionToMappers =>
+      Map.unmodifiable(<String, String Function(CollectionMapperEvent event)>{
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------
@@ -76,8 +76,8 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  Map<String, String Function(ObjectMapperEvent)> get objectFromMappers =>
-      newTypeMappers<ObjectMapperEvent>({
+  TTypeMappers<ObjectMapperEvent> get objectFromMappers =>
+      Map.unmodifiable(<String, String Function(ObjectMapperEvent event)>{
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------
@@ -185,8 +185,8 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  Map<String, String Function(ObjectMapperEvent)> get objectToMappers =>
-      newTypeMappers<ObjectMapperEvent>({
+  TTypeMappers<ObjectMapperEvent> get objectToMappers =>
+      Map.unmodifiable(<String, String Function(ObjectMapperEvent event)>{
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------
