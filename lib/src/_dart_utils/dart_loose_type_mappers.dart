@@ -34,8 +34,7 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  TTypeMappers<CollectionMapperEvent> get collectionFromMappers =>
-      Map.unmodifiable(<String, String Function(CollectionMapperEvent event)>{
+  TTypeMappers<CollectionMapperEvent> get collectionFromMappers => newTypeMap({
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------
@@ -58,26 +57,26 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  TTypeMappers<CollectionMapperEvent> get collectionToMappers =>
-      Map.unmodifiable(<String, String Function(CollectionMapperEvent event)>{
-        // ---------------------------------------------------------------------
-        // Standard.
-        // ---------------------------------------------------------------------
-        r'^(Map)\??$': (e) {
-          return '${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
+  TTypeMappers<CollectionMapperEvent> get collectionToMappers => newTypeMap(
+        {
+          // ---------------------------------------------------------------------
+          // Standard.
+          // ---------------------------------------------------------------------
+          r'^(Map)\??$': (e) {
+            return '${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
+          },
+          r'^(Iterable|List|Set|Queue)\??$': (e) {
+            return '${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';
+          },
         },
-        r'^(Iterable|List|Set|Queue)\??$': (e) {
-          return '${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';
-        },
-      });
+      );
 
   //
   //
   //
 
   @override
-  TTypeMappers<ObjectMapperEvent> get objectFromMappers =>
-      Map.unmodifiable(<String, String Function(ObjectMapperEvent event)>{
+  TTypeMappers<MapperEvent> get objectFromMappers => newTypeMap({
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------
@@ -185,8 +184,7 @@ class DartLooseTypeMappers extends TypeMappers {
   //
 
   @override
-  TTypeMappers<ObjectMapperEvent> get objectToMappers =>
-      Map.unmodifiable(<String, String Function(ObjectMapperEvent event)>{
+  TTypeMappers<MapperEvent> get objectToMappers => newTypeMap({
         // ---------------------------------------------------------------------
         // Standard.
         // ---------------------------------------------------------------------

@@ -158,7 +158,6 @@ final insightMappers = [
         );
         return 'final $f = $b;';
       }
-
       final j = fields.map((a) {
         final ff = fields
             .where(
