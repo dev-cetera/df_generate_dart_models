@@ -37,7 +37,7 @@ dependencies:
   df_generate_dart_models_core: ^0.6.11
   df_log: ^0.2.4
   df_string: ^0.2.3
-  df_type: ^0.7.2
+  df_type: ^0.7.4
 
   analyzer: ^6.8.0
   args: ^2.6.0
