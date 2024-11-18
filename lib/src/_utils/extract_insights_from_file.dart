@@ -15,7 +15,7 @@ import 'package:path/path.dart' as p;
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 import 'package:df_gen_core/df_gen_core.dart';
 
-import '/src/_dart_utils/_index.g.dart';
+import '_index.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -24,7 +24,7 @@ import '/src/_dart_utils/_index.g.dart';
 ///
 /// Each item in the list consists of the name of the analyzed class and the
 /// annotation applied to that class.
-Future<List<_ClassInsight>> extractClassInsightsFromDartFile(
+Future<List<ClassInsight<GenerateDartModel>>> extractInsightsFromFile(
   AnalysisContextCollection analysisContextCollection,
   String filePath,
 ) async {
@@ -33,20 +33,19 @@ Future<List<_ClassInsight>> extractClassInsightsFromDartFile(
     analysisContextCollection: analysisContextCollection,
   );
 
-  final insights = <_ClassInsight>[];
+  final insights = <ClassInsight<GenerateDartModel>>[];
   late GenerateDartModel temp;
   await analyzer.analyze(
     inclClassAnnotations: {GenerateDartModel.CLASS_NAME},
     inclMemberAnnotations: {Field.CLASS_NAME},
-    onClassAnnotationField: (p) async =>
-        temp = _updateFromClassAnnotationField(temp, p),
+    onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateDartModel(fields: {}),
     onPostAnalysis: (params) {
       final fullPathName = params.fullFilePath;
       final fileName = p.basename(fullPathName);
       final dirPath = p.dirname(fullPathName);
-      final insight = _ClassInsight(
+      final insight = ClassInsight<GenerateDartModel>(
         className: params.className,
         annotation: temp,
         dirPath: dirPath,
@@ -136,30 +135,22 @@ GenerateDartModel _updateFromAnnotatedMember(
       params.memberAnnotationFields[FieldModelFieldNames.fieldPath],
     );
     final a2 = [params.memberName];
-    final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]
-        ?.toStringValue();
+    final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]?.toStringValue();
     final b2 = params.memberType.getDisplayString();
-    final nullable = params
-        .memberAnnotationFields[FieldModelFieldNames.nullable]
-        ?.toBoolValue();
-    final primaryKey = params
-        .memberAnnotationFields[FieldModelFieldNames.primaryKey]
-        ?.toBoolValue();
-    final foreignKey = params
-        .memberAnnotationFields[FieldModelFieldNames.foreignKey]
-        ?.toBoolValue();
+    final nullable = params.memberAnnotationFields[FieldModelFieldNames.nullable]?.toBoolValue();
+    final primaryKey =
+        params.memberAnnotationFields[FieldModelFieldNames.primaryKey]?.toBoolValue();
+    final foreignKey =
+        params.memberAnnotationFields[FieldModelFieldNames.foreignKey]?.toBoolValue();
     final children = (dartObjToObject(
       params.memberAnnotationFields[FieldModelFieldNames.children],
     ) as List?)
         ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
         .nonNulls
         .toList();
-    final fallback = params
-        .memberAnnotationFields[FieldModelFieldNames.fallback]
-        ?.toListValue();
-    final description = params
-        .memberAnnotationFields[FieldModelFieldNames.description]
-        ?.toStringValue();
+    final fallback = params.memberAnnotationFields[FieldModelFieldNames.fallback]?.toListValue();
+    final description =
+        params.memberAnnotationFields[FieldModelFieldNames.description]?.toStringValue();
     final field = DartField(
       fieldPath: a1 ?? a2,
       fieldType: b1 ?? b2,
@@ -181,7 +172,3 @@ GenerateDartModel _updateFromAnnotatedMember(
   }
   return annotation;
 }
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-typedef _ClassInsight = ClassInsight<GenerateDartModel>;

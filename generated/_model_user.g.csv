@@ -1,0 +1,5 @@
+GENERATED WITH GEMENI. VERIFY AND MODIFY AS NEEDED BEFORE USING IN CODE.
+fieldPath,fieldType,children,description,fallback,foreignKey,nullable,primaryKey
+ref,DataRefModel,"[{fieldPath: (test), fieldType: null}]",null,null,null,false,true
+firstName,String,null,null,null,null,true,null
+lastName,String,null,null,null,null,true,null
