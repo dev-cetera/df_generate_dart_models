@@ -7,14 +7,13 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'dart:io' show Directory;
+import 'package:path/path.dart' as p;
 import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_gen_core/df_gen_core.dart' as df_gen_core;
 import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:path/path.dart' as p;
 
 import '_utils/_index.g.dart';
 
@@ -41,6 +40,7 @@ Future<void> dfmdWithGemenilApp(List<String> args) async {
   final NOTE = const df_gen_core.Option(
     name: 'note',
     help: 'A note to pass to Gemeni to offer assistance.',
+    defaultsTo: 'Provide a fromJson constructor or method and a toJson method.',
   );
   final LANG = const df_gen_core.Option(
     name: 'lang',
@@ -51,7 +51,8 @@ Future<void> dfmdWithGemenilApp(List<String> args) async {
     title: 'DevCetra.com/Tools',
     description:
         'DFMDL - A tool for generating data models for Dart classes annotated with @GenerateDartModel, using Gemeni.',
-    example: 'dfmdl-gemeni -i . -o models --lang dart --api-key <GEMENI API KEY>',
+    example:
+        'dfmdl-gemeni -i . -o models --lang ts --api-key <GEMENI API KEY> --note "I would like a type/interface and not a class"',
     additional:
         'For contributions, error reports and information, visit: https://github.com/DevCetra.',
     params: [
@@ -84,7 +85,7 @@ Future<void> dfmdWithGemenilApp(List<String> args) async {
   late final String outputDirPath;
   late final String gemeniApiKey;
   late final String gemeniModel;
-  late final String? note;
+  late final String note;
   late final String lang;
   try {
     inputPath = argResults.option(DefaultOptions.INPUT_PATH.name)!;
@@ -93,7 +94,8 @@ Future<void> dfmdWithGemenilApp(List<String> args) async {
     outputDirPath = argResults.option(DefaultOptions.GENERATED_OUTPUT.name)!;
     gemeniApiKey = argResults.option(GEMENI_API_KEY.name)!;
     gemeniModel = argResults.option(GEMENI_MODEL.name)!;
-    note = argResults.option(NOTE.name);
+    note = argResults.option(NOTE.name)!;
+    printRed(note);
     lang = _fixLang(argResults.option(LANG.name)!);
   } catch (_) {
     spinner.stop();
@@ -141,13 +143,6 @@ Future<void> dfmdWithGemenilApp(List<String> args) async {
     );
     exit(ExitCodes.FAILURE.code);
   }
-  print(
-    '[DFMDL] Fixing and formatting generated files...',
-  );
-  spinner.start();
-  await fixDartFile(inputPath);
-  await fmtDartFile(inputPath);
-  spinner.stop();
   printGreen('[DFMDL] Done!');
 }
 
@@ -164,7 +159,7 @@ Future<void> generateModelWithGemeni({
   required String gemeniApiKey,
   required String gemeniModel,
   required String lang,
-  required String? note,
+  required String note,
   required String outputFileNamePattern,
   required String outputDirPath,
 }) async {
@@ -175,22 +170,27 @@ Future<void> generateModelWithGemeni({
   prompt.writeAll(
     [
       'Generate a data class called $className for the programming language "$lang" using the given data below, orignally for Dart models.',
-      'Provide a fromJson constructor or method and a toJson method.',
+      note,
       'Only respond with code.',
       'Assume any undefined/unknown variables/classes exist. Do not redefine them.',
-      'Start the file with the comment "GENERATED WITH GEMENI. '
-          'VERIFY AND MODIFY AS NEEDED BEFORE USING IN CODE."',
+      'Start the file with the comment "GENERATED WITH GEMENI. VERIFY AND MODIFY AS NEEDED BEFORE USING IN CODE."',
       'Do not provide additional comments.',
       'Do not provide examples.',
-      if (note != null) note,
       '\n\n',
     ],
     ' ',
   );
   prompt.writeAll(
-    fields.map((e) => e.toString()),
+    fields.map(
+      (e) => {
+        'field-name': e.fieldPath!.join(''),
+        'field-type': e.fieldType,
+        'nullable': e.nullable,
+      }.toString(),
+    ),
     '\n',
   );
+  print(prompt);
   final output = await _generateWithGemeni(
     prompt: prompt.toString(),
     gemeniApiKey: gemeniApiKey,
@@ -200,12 +200,19 @@ Future<void> generateModelWithGemeni({
     '{class}': className.replaceAll('_', '').toSnakeCase(),
     '{lang}': lang,
   });
-  final filePath = p.join(
-    Directory.current.path,
+  var outputFilePath = p.join(
     outputDirPath,
     fileName,
   );
-  await FileSystemUtility.i.writeLocalFile(filePath, output);
+
+  if (p.isRelative(outputFilePath)) {
+    outputFilePath = p.join(
+      FileSystemUtility.i.currentScriptDir,
+      outputFilePath,
+    );
+  }
+
+  await FileSystemUtility.i.writeLocalFile(outputFilePath, output);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

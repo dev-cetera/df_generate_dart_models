@@ -20,7 +20,7 @@ void main(List<String> args) async {
     '--generate_for_languages',
     'ts',
     '--message_for_ai',
-    '"Actually, do not generate a toJson and fromJson. The model must be a typescript type.',
+    'Actually, do not generate a toJson and fromJson. The model must be a typescript type.',
     '--ai_output',
     '.genmdl/ts_types',
     '--template',

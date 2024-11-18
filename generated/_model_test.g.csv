@@ -1,5 +1,0 @@
-GENERATED WITH GEMENI. VERIFY AND MODIFY AS NEEDED BEFORE USING IN CODE.
-children,description,fallback,fieldPath,fieldType,foreignKey,nullable,primaryKey
-null,Some users!,null,[users],List<ModelUser>,null,true,null
-null,null,null,[checks],List<int>,null,true,null
-null,null,null,[random],Map<String, Map<dynamic, int>>,null,true,null
