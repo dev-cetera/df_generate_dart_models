@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.11.0]
+
+- Released @ 11/2024 (UTC)
+- breaking: Rework code for clarity
+
 ## [0.10.3]
 
 - Released @ 11/2024 (UTC)
