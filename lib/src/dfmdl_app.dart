@@ -386,7 +386,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
       return insight.fields.map(
         (e) {
           final f = e.fieldName;
-          return '$f: $f ?? src.$f,';
+          return '$f: $f ?? this.$f,';
         },
       ).join('\n');
     },
@@ -402,7 +402,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
       return insight.fields.map(
         (e) {
           final f = e.fieldName;
-          return '$f: $f ? src.$f: null,';
+          return '$f: $f ? this.$f: null,';
         },
       ).join('\n');
     },
