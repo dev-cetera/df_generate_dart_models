@@ -57,7 +57,7 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
     params: [
       DefaultFlags.HELP.flag,
       DefaultOptions.INPUT_PATH.option.copyWith(
-        defaultsTo: FileSystemUtility.i.currentScriptDir,
+        defaultsTo: '.', // FileSystemUtility.i.currentScriptDir,
       ),
       DefaultOptions.GENERATED_OUTPUT.option.copyWith(
         help: 'The directory to write the generated files to.',
