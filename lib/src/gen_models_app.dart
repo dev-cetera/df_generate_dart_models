@@ -131,7 +131,7 @@ Future<void> genModelsApp(
     );
     exit(ExitCodes.FAILURE.code);
   }
-  print(
+  printWhite(
     '[gen-models] Fixing and formatting generated files...',
   );
   spinner.start();
