@@ -8,5 +8,4 @@
 //.title~
 
 export 'dfmdl_app.dart';
-export 'generate.dart';
-export 'app.dart';
+export 'dfmdl_with_gemeni_app.dart';

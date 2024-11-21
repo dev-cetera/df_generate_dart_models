@@ -19,7 +19,7 @@ import '_utils/_index.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> dfmdWithGemenilApp(List<String> args) async {
+Future<void> dfmdlWithGemenilApp(List<String> args) async {
   print('[DFMDL] Generating models with Gemeni...');
   final spinner = Spinner();
   spinner.start();

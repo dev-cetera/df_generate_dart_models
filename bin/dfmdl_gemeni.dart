@@ -15,13 +15,5 @@ import 'package:df_generate_dart_models/df_generate_dart_models.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main(List<String> args) async {
-  await runGenerateDartModelsApp([
-    ...args,
-    '--generate_for_languages',
-    'ts',
-    '--ai_output',
-    '.genmdl/ts_models',
-    '--template',
-    '" "',
-  ]);
+  await dfmdlWithGemenilApp(args);
 }

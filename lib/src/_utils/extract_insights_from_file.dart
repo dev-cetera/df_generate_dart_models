@@ -71,7 +71,7 @@ GenerateDartModel _updateFromClassAnnotationField(
         GenerateDartModel(
           className: params.fieldValue.toStringValue(),
         ),
-      );
+      ) as GenerateDartModel;
     case GenerateDartModelFieldNames.fields:
       return annotation.mergeWith(
         GenerateDartModel(
@@ -92,31 +92,31 @@ GenerateDartModel _updateFromClassAnnotationField(
             }),
           },
         ),
-      );
+      ) as GenerateDartModel;
     case GenerateDartModelFieldNames.shouldInherit:
       return annotation.mergeWith(
         GenerateDartModel(
           shouldInherit: params.fieldValue.toBoolValue(),
         ),
-      );
+      ) as GenerateDartModel;
     case GenerateDartModelFieldNames.inheritanceConstructor:
       return annotation.mergeWith(
         GenerateDartModel(
           inheritanceConstructor: params.fieldValue.toStringValue(),
         ),
-      );
+      ) as GenerateDartModel;
     case GenerateDartModelFieldNames.keyStringCase:
       return annotation.mergeWith(
         GenerateDartModel(
           keyStringCase: params.fieldValue.toStringValue(),
         ),
-      );
+      ) as GenerateDartModel;
     case GenerateDartModelFieldNames.description:
       return annotation.mergeWith(
         GenerateDartModel(
           description: params.fieldValue.toStringValue(),
         ),
-      );
+      ) as GenerateDartModel;
     default:
   }
   return GenerateDartModel.of(annotation);
@@ -168,7 +168,7 @@ GenerateDartModel _updateFromAnnotatedMember(
           field.toRecord,
         },
       ),
-    );
+    ) as GenerateDartModel;
   }
   return annotation;
 }

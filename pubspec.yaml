@@ -12,7 +12,7 @@
 
 name: df_generate_dart_models
 description: A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
-version: 0.10.4
+version: 0.11.0
 repository: https://github.com/DevCetra/df_generate_dart_models
 funding:
   - https://www.buymeacoffee.com/robmllze
@@ -33,8 +33,8 @@ environment:
 dependencies:
   df_collection: ^0.8.3
   df_config: ^0.5.3
-  df_gen_core: ^0.4.8
-  df_generate_dart_models_core: ^0.6.11
+  df_gen_core: ^0.5.0
+  df_generate_dart_models_core: ^0.7.0
   df_log: ^0.2.4
   df_string: ^0.2.3
   df_type: ^0.7.4
@@ -53,10 +53,5 @@ dev_dependencies:
 ## -----------------------------------------------------------------------------
 
 executables:
-  dfmdl: dfmdl_dart
-  dfmdl-basic: dfmdl_dart_basic
-  dfmdl-dart-amplify: dfmdl_dart_amplify
-  dfmdl-dart-js: dfmdl_dart_js
-  dfmdl-dart-py: dfmdl_dart_py
-  dfmdl-dart-ts: dfmdl_dart_ts
-  dfmdl-dart-tstype: dfmdl_dart_tstype
+  dfmdl: dfmdl
+  dfmdl-gemeni: dfmdl_gemeni
