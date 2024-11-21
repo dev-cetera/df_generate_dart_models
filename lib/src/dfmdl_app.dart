@@ -62,7 +62,8 @@ Future<void> dfmdlApp(List<String> args) async {
   late final String outputFileNamePattern;
   try {
     inputPath = argResults.option(DefaultOptions.INPUT_PATH.name)!;
-    templatePathOrUrl = argResults.option(DefaultOptions.TEMPLATE_PATH_OR_URL.name)!;
+    templatePathOrUrl =
+        argResults.option(DefaultOptions.TEMPLATE_PATH_OR_URL.name)!;
     dartSdk = argResults.option(DefaultOptions.DART_SDK.name);
     outputFileNamePattern = argResults.option(OUTPUT_FILE_NAME_PATTERN.name)!;
   } catch (_) {
@@ -89,7 +90,8 @@ Future<void> dfmdlApp(List<String> args) async {
   }
   final template = result.unwrap();
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
-  final filePathStream1 = filePathStream0.where((e) => _isAllowedFileName(e.path));
+  final filePathStream1 =
+      filePathStream0.where((e) => _isAllowedFileName(e.path));
   List<FilePathExplorerFinding> findings;
   try {
     findings = await filePathStream1.toList();
@@ -149,10 +151,13 @@ bool _isAllowedFileName(String e) {
 final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
   {
     '___DESCRIPTION___': (insight) {
-      return insight.annotation.description ?? 'Generated class for [${insight.className}].';
+      return insight.annotation.description ??
+          'Generated class for [${insight.className}].';
     },
     '___SUPER_CLASS_NAME___': (insight) {
-      return insight.annotation.shouldInherit == true ? insight.className : 'Model';
+      return insight.annotation.shouldInherit == true
+          ? insight.className
+          : 'Model';
     },
     '___CLASS_FILE_NAME___': (insight) {
       return insight.fileName;
@@ -239,7 +244,8 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
         final f = field.fieldName;
         final x = field.fieldTypeCode!;
         final s = stripSpecialSyntaxFromFieldType(x);
-        final b = DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
+        final b =
+            DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
           fieldName: "$a?['${parts.last}']",
           fieldTypeCode: s,
         );
@@ -249,7 +255,9 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
       final j = fields.map((a) {
         final ff = fields
             .where(
-              (b) => a.fieldPath!.join('.').startsWith('${b.fieldPath!.join('.')}.'),
+              (b) => a.fieldPath!
+                  .join('.')
+                  .startsWith('${b.fieldPath!.join('.')}.'),
             )
             .toList();
         ff.sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
@@ -272,7 +280,8 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
           final f0 = '${f}0';
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
-          final a = DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
+          final a =
+              DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
             fieldName: f,
             fieldTypeCode: s,
           );
@@ -317,7 +326,8 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
         traverseMap(
           buffer,
           [
-            ...parent.fieldPath!.map((e) => "'${insight.stringCaseType.convert(e)}'"),
+            ...parent.fieldPath!
+                .map((e) => "'${insight.stringCaseType.convert(e)}'"),
             '#',
           ],
           newValue: '...?${parent.fieldName}0,',
@@ -411,6 +421,7 @@ extension _ClassInsightExtension on ClassInsight<GenerateDartModel> {
   }
 
   StringCaseType get stringCaseType {
-    return StringCaseType.values.valueOf(annotation.keyStringCase) ?? StringCaseType.CAMEL_CASE;
+    return StringCaseType.values.valueOf(annotation.keyStringCase) ??
+        StringCaseType.CAMEL_CASE;
   }
 }

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.0]
+
+- Released @ 11/2024 (UTC)
+- breaking: Update way copyWith and copyWithout works
+
 ## [0.11.0]
 
 - Released @ 11/2024 (UTC)
