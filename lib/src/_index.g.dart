@@ -7,5 +7,5 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-export 'dfmdl_app.dart';
-export 'dfmdl_with_gemeni_app.dart';
+export 'gen_models_app.dart';
+export 'gen_models_gemeni_app.dart';

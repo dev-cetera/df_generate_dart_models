@@ -296,45 +296,6 @@ class ModelTest extends _ModelTest {
     }
   }
 
-  @override
-  T mergeWith<T extends BaseModel>(
-    BaseModel? other, {
-    bool deepMerge = false,
-  }) {
-    final a = toJson();
-    final b = other?.toJson() ?? {};
-    final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelTest.fromJson(data.cast()) as T;
-  }
-
-  /// Creates a copy of this instance, replacing the specified fields.
-  static ModelTest copyWith(
-    ModelTest src, {
-    List<ModelUser>? users,
-    List<int>? checks,
-    Map<String, Map<dynamic, int>>? random,
-  }) {
-    return ModelTest.assertRequired(
-      users: users ?? src.users,
-      checks: checks ?? src.checks,
-      random: random ?? src.random,
-    );
-  }
-
-  /// Creates a copy of this instance, removing the specified fields.
-  static ModelTest copyWithout(
-    ModelTest src, {
-    bool users = true,
-    bool checks = true,
-    bool random = true,
-  }) {
-    return ModelTest.assertRequired(
-      users: users ? src.users : null,
-      checks: checks ? src.checks : null,
-      random: random ? src.random : null,
-    );
-  }
-
   /// Returns the value of the [users] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
@@ -365,4 +326,46 @@ abstract final class ModelTestFieldNames {
 
   /// The field name of [ModelTest.random].
   static const random = 'random';
+}
+
+extension ModelTestX on ModelTest {
+  /// Creates a copy of this instance, merging another model's fields into
+  /// this model's fields.
+  ModelTest mergeWith(
+    BaseModel? other, {
+    bool deepMerge = false,
+  }) {
+    final a = toJson();
+    final b = other?.toJson() ?? {};
+    final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
+    return ModelTest.fromJson(data.cast());
+  }
+
+  /// Creates a copy of this instance, replacing the specified fields.
+  ModelTest copyWith(
+    ModelTest src, {
+    List<ModelUser>? users,
+    List<int>? checks,
+    Map<String, Map<dynamic, int>>? random,
+  }) {
+    return ModelTest.assertRequired(
+      users: users ?? this.users,
+      checks: checks ?? this.checks,
+      random: random ?? this.random,
+    );
+  }
+
+  /// Creates a copy of this instance, removing the specified fields.
+  ModelTest copyWithout(
+    ModelTest src, {
+    bool users = true,
+    bool checks = true,
+    bool random = true,
+  }) {
+    return ModelTest.assertRequired(
+      users: users ? this.users : null,
+      checks: checks ? this.checks : null,
+      random: random ? this.random : null,
+    );
+  }
 }

@@ -235,45 +235,6 @@ class ModelUser extends _ModelUser {
     }
   }
 
-  @override
-  T mergeWith<T extends BaseModel>(
-    BaseModel? other, {
-    bool deepMerge = false,
-  }) {
-    final a = toJson();
-    final b = other?.toJson() ?? {};
-    final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelUser.fromJson(data.cast()) as T;
-  }
-
-  /// Creates a copy of this instance, replacing the specified fields.
-  static ModelUser copyWith(
-    ModelUser src, {
-    DataRefModel? ref,
-    String? firstName,
-    String? lastName,
-  }) {
-    return ModelUser.assertRequired(
-      ref: ref ?? src.ref,
-      firstName: firstName ?? src.firstName,
-      lastName: lastName ?? src.lastName,
-    );
-  }
-
-  /// Creates a copy of this instance, removing the specified fields.
-  static ModelUser copyWithout(
-    ModelUser src, {
-    bool ref = true,
-    bool firstName = true,
-    bool lastName = true,
-  }) {
-    return ModelUser.assertRequired(
-      ref: ref ? src.ref : null,
-      firstName: firstName ? src.firstName : null,
-      lastName: lastName ? src.lastName : null,
-    );
-  }
-
   /// Returns the value of the [ref] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
@@ -304,4 +265,46 @@ abstract final class ModelUserFieldNames {
 
   /// The field name of [ModelUser.lastName].
   static const lastName = 'lastName';
+}
+
+extension ModelUserX on ModelUser {
+  /// Creates a copy of this instance, merging another model's fields into
+  /// this model's fields.
+  ModelUser mergeWith(
+    BaseModel? other, {
+    bool deepMerge = false,
+  }) {
+    final a = toJson();
+    final b = other?.toJson() ?? {};
+    final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
+    return ModelUser.fromJson(data.cast());
+  }
+
+  /// Creates a copy of this instance, replacing the specified fields.
+  ModelUser copyWith(
+    ModelUser src, {
+    DataRefModel? ref,
+    String? firstName,
+    String? lastName,
+  }) {
+    return ModelUser.assertRequired(
+      ref: ref ?? this.ref,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+    );
+  }
+
+  /// Creates a copy of this instance, removing the specified fields.
+  ModelUser copyWithout(
+    ModelUser src, {
+    bool ref = true,
+    bool firstName = true,
+    bool lastName = true,
+  }) {
+    return ModelUser.assertRequired(
+      ref: ref ? this.ref : null,
+      firstName: firstName ? this.firstName : null,
+      lastName: lastName ? this.lastName : null,
+    );
+  }
 }

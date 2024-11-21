@@ -19,7 +19,7 @@ The example below provides a glimpse of what this package can do. The package in
 
 ### Step 1
 
-To install this tool, run `dart pub global activate df_generate_dart_models 0.12.3` in your terminal. You can replace `0.12.3` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
+To install this tool, run `dart pub global activate df_generate_dart_models 0.12.4` in your terminal. You can replace `0.12.4` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
 
 ### Step 2
 
@@ -81,7 +81,7 @@ Save the file somewhere in its own directory, for example `lib/models/model_user
 
 ### Step 5
 
-Open the terminal and navigate to `lib/models/model_user`, then run `dfmdl`. This will generate the `_model_user.g.dart` file in the same directory. In editors like VS Code, you can right-click on the folder and select _“Open in Integrated Terminal”_ to open the terminal directly at the desired location, and then run `dfmdl` to generate the file.
+Open the terminal and navigate to `lib/models/model_user`, then run `-models`. This will generate the `_model_user.g.dart` file in the same directory. In editors like VS Code, you can right-click on the folder and select _“Open in Integrated Terminal”_ to open the terminal directly at the desired location, and then run `-models` to generate the file.
 
 ## Contributing and Discussions
 

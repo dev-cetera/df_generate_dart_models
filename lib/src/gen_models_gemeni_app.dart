@@ -19,8 +19,8 @@ import '_utils/_index.g.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> dfmdlWithGemenilApp(List<String> args) async {
-  print('[DFMDL] Generating models with Gemeni...');
+Future<void> genModelsGemeniApp(List<String> args) async {
+  print('[gen-models] Generating models with Gemeni...');
   final spinner = Spinner();
   spinner.start();
   final OUTPUT_FILE_NAME_PATTERN = const df_gen_core.Option(
@@ -29,8 +29,7 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
   );
   final GEMENI_API_KEY = const df_gen_core.Option(
     name: 'api-key',
-    help:
-        'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
+    help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
   final GEMENI_MODEL = const df_gen_core.Option(
     name: 'model',
@@ -44,22 +43,21 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
   );
   final LANG = const df_gen_core.Option(
     name: 'lang',
-    help:
-        'The programming language to generate the data model for, e.g. "dart" or "ts"',
+    help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
   );
   final parser = CliParser(
-    title: 'DevCetra.com/Tools',
+    title: 'DevCetra.com/df/tools',
     description:
-        'DFMDL - A tool for generating data models for Dart classes annotated with @GenerateDartModel, using Gemeni.',
+        ' A tool for generating data models for Dart classes annotated with @GenerateDartModel, using Gemeni.',
     example:
-        'dfmdl-gemeni -i . -o models --lang ts --api-key <GEMENI API KEY> --note "I would like a type/interface and not a class"',
+        'gen-models-gemeni -i . -o models --lang ts --api-key <GEMENI API KEY> --note "I would like a type/interface and not a class"',
     additional:
         'For contributions, error reports and information, visit: https://github.com/DevCetra.',
     params: [
       DefaultFlags.HELP.flag,
       DefaultOptions.INPUT_PATH.option.copyWith(
-        defaultsTo: '.', // FileSystemUtility.i.currentScriptDir,
+        defaultsTo: '.',
       ),
       DefaultOptions.GENERATED_OUTPUT.option.copyWith(
         help: 'The directory to write the generated files to.',
@@ -101,7 +99,7 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
   } catch (_) {
     spinner.stop();
     printRed(
-      '[DFMDL] Missing required args! Use --help flag for more information.',
+      '[gen-models] Missing required args! Use --help flag for more information.',
     );
     exit(ExitCodes.FAILURE.code);
   }
@@ -110,14 +108,13 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
     dartSdk,
   );
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
-  final filePathStream1 =
-      filePathStream0.where((e) => _isAllowedFileName(e.path));
+  final filePathStream1 = filePathStream0.where((e) => _isAllowedFileName(e.path));
   List<FilePathExplorerFinding> findings;
   try {
     findings = await filePathStream1.toList();
   } catch (e) {
     printRed(
-      '[DFMDL] Failed to read file tree!',
+      '[gen-models] Failed to read file tree!',
     );
     exit(ExitCodes.FAILURE.code);
   }
@@ -144,11 +141,11 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
     }
   } catch (e) {
     printRed(
-      '[DFMDL] ✘ One or more files failed to generate!',
+      '[gen-models] ✘ One or more files failed to generate!',
     );
     exit(ExitCodes.FAILURE.code);
   }
-  printGreen('[DFMDL] Done!');
+  printGreen('[gen-models] Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
