@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.4]
+
+- Released @ 11/2024 (UTC)
+- chore: Update generators
+
 ## [0.12.3]
 
 - Released @ 11/2024 (UTC)
