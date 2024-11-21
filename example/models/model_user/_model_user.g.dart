@@ -236,39 +236,41 @@ class ModelUser extends _ModelUser {
   }
 
   @override
-  ModelUser mergeWith(
+  T mergeWith<T extends BaseModel>(
     BaseModel? other, {
     bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelUser.fromJson(data.cast());
+    return ModelUser.fromJson(data.cast()) as T;
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelUser copyWith({
+  static ModelUser copyWith(
+    ModelUser src, {
     DataRefModel? ref,
     String? firstName,
     String? lastName,
   }) {
     return ModelUser.assertRequired(
-      ref: ref ?? this.ref,
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
+      ref: ref ?? src.ref,
+      firstName: firstName ?? src.firstName,
+      lastName: lastName ?? src.lastName,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelUser copyWithout({
+  static ModelUser copyWithout(
+    ModelUser src, {
     bool ref = true,
     bool firstName = true,
     bool lastName = true,
   }) {
     return ModelUser.assertRequired(
-      ref: ref ? this.ref : null,
-      firstName: firstName ? this.firstName : null,
-      lastName: lastName ? this.lastName : null,
+      ref: ref ? src.ref : null,
+      firstName: firstName ? src.firstName : null,
+      lastName: lastName ? src.lastName : null,
     );
   }
 

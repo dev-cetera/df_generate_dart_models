@@ -297,39 +297,41 @@ class ModelTest extends _ModelTest {
   }
 
   @override
-  ModelTest mergeWith(
+  T mergeWith<T extends BaseModel>(
     BaseModel? other, {
     bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelTest.fromJson(data.cast());
+    return ModelTest.fromJson(data.cast()) as T;
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelTest copyWith({
+  static ModelTest copyWith(
+    ModelTest src, {
     List<ModelUser>? users,
     List<int>? checks,
     Map<String, Map<dynamic, int>>? random,
   }) {
     return ModelTest.assertRequired(
-      users: users ?? this.users,
-      checks: checks ?? this.checks,
-      random: random ?? this.random,
+      users: users ?? src.users,
+      checks: checks ?? src.checks,
+      random: random ?? src.random,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelTest copyWithout({
+  static ModelTest copyWithout(
+    ModelTest src, {
     bool users = true,
     bool checks = true,
     bool random = true,
   }) {
     return ModelTest.assertRequired(
-      users: users ? this.users : null,
-      checks: checks ? this.checks : null,
-      random: random ? this.random : null,
+      users: users ? src.users : null,
+      checks: checks ? src.checks : null,
+      random: random ? src.random : null,
     );
   }
 
