@@ -29,9 +29,7 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
   );
   final GEMENI_API_KEY = const df_gen_core.Option(
     name: 'api-key',
-    help:
-        'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
-    defaultsTo: 'AIzaSyATEp4UYewDUDllX7CSEL8-CQ7a3r76wTI',
+    help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
   final GEMENI_MODEL = const df_gen_core.Option(
     name: 'model',
@@ -45,8 +43,7 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
   );
   final LANG = const df_gen_core.Option(
     name: 'lang',
-    help:
-        'The programming language to generate the data model for, e.g. "dart" or "ts"',
+    help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
   );
   final parser = CliParser(
@@ -111,8 +108,7 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
     dartSdk,
   );
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
-  final filePathStream1 =
-      filePathStream0.where((e) => _isAllowedFileName(e.path));
+  final filePathStream1 = filePathStream0.where((e) => _isAllowedFileName(e.path));
   List<FilePathExplorerFinding> findings;
   try {
     findings = await filePathStream1.toList();
@@ -128,7 +124,9 @@ Future<void> dfmdlWithGemenilApp(List<String> args) async {
     for (final finding in findings) {
       final inputFilePath = finding.path;
       final insights = await extractInsightsFromFile(
-          analysisContextCollection, inputFilePath,);
+        analysisContextCollection,
+        inputFilePath,
+      );
       for (final insight in insights) {
         await generateModelWithGemeni(
           insight: insight,
