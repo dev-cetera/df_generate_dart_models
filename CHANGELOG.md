@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.8]
+
+- Released @ 11/2024 (UTC)
+- refactor: Change CLI output messages
+
 ## [0.12.7]
 
 - Released @ 11/2024 (UTC)
