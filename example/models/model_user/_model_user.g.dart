@@ -31,44 +31,47 @@ class ModelUser extends _ModelUser {
   @override
   String get $className => CLASS_NAME;
 
-  /// No description provided.
-  final DataRefModel? ref;
+    /// No description provided.
+final DataRefModel? ref;
 
   /// No description provided.
-  final String? firstName;
+final String? firstName;
 
   /// No description provided.
-  final String? lastName;
+final String? lastName;
+
 
   /// Constructs a new instance of [ModelUser]
   /// from optional and required parameters.
   const ModelUser({
     required this.ref,
-    this.firstName,
-    this.lastName,
-  });
+ this.firstName,
+ this.lastName,
+  }) ;
 
   /// Construcs a new instance of [ModelUser],
   /// forcing all parameters to be optional.
   const ModelUser.optional({
     this.ref,
-    this.firstName,
-    this.lastName,
-  });
+this.firstName,
+this.lastName,
+  }) ;
+
 
   /// Constructs a new instance of [ModelUser],
   /// and asserts that all required parameters are not null.
   factory ModelUser.assertRequired({
     DataRefModel? ref,
-    String? firstName,
-    String? lastName,
+String? firstName,
+String? lastName,
   }) {
     assert(ref != null);
 
+
     return ModelUser(
       ref: ref,
-      firstName: firstName,
-      lastName: lastName,
+firstName: firstName,
+lastName: lastName,
     );
   }
 
@@ -94,6 +97,7 @@ class ModelUser extends _ModelUser {
   ) {
     return fromJsonOrNull(another?.toJson())!;
   }
+
 
   /// Constructs a new instance of [ModelUser],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -127,7 +131,7 @@ class ModelUser extends _ModelUser {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-      assert(false, '$ModelUser.fromJsonString: $e');
+     assert(false, '$ModelUser.fromJsonString: $e');
       rethrow;
     }
   }
@@ -172,12 +176,12 @@ class ModelUser extends _ModelUser {
   ) {
     try {
       final ref = dataRefFromString(json?['ref']?.toString());
-      final firstName = json?['firstName']?.toString().trim().nullIfEmpty;
-      final lastName = json?['lastName']?.toString().trim().nullIfEmpty;
+final firstName = json?['firstName']?.toString().trim().nullIfEmpty;
+final lastName = json?['lastName']?.toString().trim().nullIfEmpty;
       return ModelUser(
         ref: ref,
-        firstName: firstName,
-        lastName: lastName,
+firstName: firstName,
+lastName: lastName,
       );
     } catch (e) {
       return null;
@@ -221,12 +225,10 @@ class ModelUser extends _ModelUser {
   }) {
     try {
       final ref0 = ref?.path;
-      final firstName0 = firstName?.trim().nullIfEmpty;
-      final lastName0 = lastName?.trim().nullIfEmpty;
+final firstName0 = firstName?.trim().nullIfEmpty;
+final lastName0 = lastName?.trim().nullIfEmpty;
       final withNulls = {
-        'ref': ref0,
-        'lastName': lastName0,
-        'firstName': firstName0,
+        'ref': ref0,'lastName': lastName0,'firstName': firstName0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -235,36 +237,38 @@ class ModelUser extends _ModelUser {
     }
   }
 
-  /// Returns the value of the [ref] field.
+    /// Returns the value of the [ref] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-  @pragma('vm:prefer-inline')
-  DataRefModel get ref$ => ref!;
+@pragma('vm:prefer-inline')
+DataRefModel get ref$ => ref!;
 
   /// Returns the value of the [firstName] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-  @pragma('vm:prefer-inline')
-  String? get firstName$ => firstName;
+@pragma('vm:prefer-inline')
+String? get firstName$ => firstName;
 
   /// Returns the value of the [lastName] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-  @pragma('vm:prefer-inline')
-  String? get lastName$ => lastName;
+@pragma('vm:prefer-inline')
+String? get lastName$ => lastName;
+
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelUserFieldNames {
-  /// The field name of [ModelUser.ref].
-  static const ref = 'ref';
+    /// The field name of [ModelUser.ref].
+static const ref = 'ref';
 
   /// The field name of [ModelUser.firstName].
-  static const firstName = 'firstName';
+static const firstName = 'firstName';
 
   /// The field name of [ModelUser.lastName].
-  static const lastName = 'lastName';
+static const lastName = 'lastName';
+
 }
 
 extension ModelUserX on ModelUser {
@@ -281,30 +285,28 @@ extension ModelUserX on ModelUser {
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelUser copyWith(
-    ModelUser src, {
+  ModelUser copyWith({
     DataRefModel? ref,
-    String? firstName,
-    String? lastName,
+String? firstName,
+String? lastName,
   }) {
     return ModelUser.assertRequired(
       ref: ref ?? this.ref,
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
+firstName: firstName ?? this.firstName,
+lastName: lastName ?? this.lastName,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelUser copyWithout(
-    ModelUser src, {
+  ModelUser copyWithout({
     bool ref = true,
-    bool firstName = true,
-    bool lastName = true,
+bool firstName = true,
+bool lastName = true,
   }) {
     return ModelUser.assertRequired(
-      ref: ref ? this.ref : null,
-      firstName: firstName ? this.firstName : null,
-      lastName: lastName ? this.lastName : null,
+      ref: ref ? this.ref: null,
+firstName: firstName ? this.firstName: null,
+lastName: lastName ? this.lastName: null,
     );
   }
 }
