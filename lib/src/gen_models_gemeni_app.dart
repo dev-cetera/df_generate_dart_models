@@ -1,8 +1,11 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Dart/Flutter (DF) Packages by DevCetra.com & contributors. SSee MIT LICENSE
-// file in the root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. The use of this
+// source code is governed by an MIT-style license described in the LICENSE
+// file located in this project's root directory.
+//
+// See: https://opensource.org/license/mit
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -20,17 +23,13 @@ import '_utils/_index.g.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 Future<void> genModelsGemeniApp(List<String> args) async {
-  printWhite('[gen-models] Generating models with Gemeni...');
-  final spinner = Spinner();
-  spinner.start();
   final OUTPUT_FILE_NAME_PATTERN = const df_gen_core.Option(
     name: 'output-file-name',
     defaultsTo: '_{class}.g.{lang}',
   );
   final GEMENI_API_KEY = const df_gen_core.Option(
     name: 'api-key',
-    help:
-        'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
+    help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
   final GEMENI_MODEL = const df_gen_core.Option(
     name: 'model',
@@ -44,8 +43,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   );
   final LANG = const df_gen_core.Option(
     name: 'lang',
-    help:
-        'The programming language to generate the data model for, e.g. "dart" or "ts"',
+    help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
   );
   final parser = CliParser(
@@ -76,8 +74,10 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   final (argResults, argParser) = parser.parse(args);
   final help = argResults.flag(DefaultFlags.HELP.name);
   if (help) {
-    spinner.stop();
-    printLightBlue(parser.getInfo(argParser));
+    _print(
+      printCyan,
+      parser.getInfo(argParser),
+    );
     exit(ExitCodes.SUCCESS.code);
   }
   late final String inputPath;
@@ -98,9 +98,9 @@ Future<void> genModelsGemeniApp(List<String> args) async {
     note = argResults.option(NOTE.name)!;
     lang = _fixLang(argResults.option(LANG.name)!);
   } catch (_) {
-    spinner.stop();
-    printRed(
-      '[gen-models] Missing required args! Use --help flag for more information.',
+    _print(
+      printRed,
+      'Missing required args! Use --help flag for more information.',
     );
     exit(ExitCodes.FAILURE.code);
   }
@@ -109,19 +109,33 @@ Future<void> genModelsGemeniApp(List<String> args) async {
     dartSdk,
   );
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
-  final filePathStream1 =
-      filePathStream0.where((e) => _isAllowedFileName(e.path));
+  final filePathStream1 = filePathStream0.where((e) => _isAllowedFileName(e.path));
   List<FilePathExplorerFinding> findings;
+
+  final spinner = Spinner();
+  spinner.start();
+  _print(
+    printWhite,
+    'Looking for annotated classes...',
+    spinner,
+  );
+
   try {
     findings = await filePathStream1.toList();
   } catch (e) {
-    printRed(
-      '[gen-models] Failed to read file tree!',
+    _print(
+      printRed,
+      'Failed to read file tree!',
+      spinner,
     );
     exit(ExitCodes.FAILURE.code);
   }
-  spinner.stop();
 
+  _print(
+    printWhite,
+    'Generating your models...',
+    spinner,
+  );
   try {
     for (final finding in findings) {
       final inputFilePath = finding.path;
@@ -130,7 +144,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
         inputFilePath,
       );
       for (final insight in insights) {
-        await generateModelWithGemeni(
+        await _generateModelWithGemeni(
           insight: insight,
           gemeniApiKey: gemeniApiKey,
           gemeniModel: gemeniModel,
@@ -142,23 +156,37 @@ Future<void> genModelsGemeniApp(List<String> args) async {
       }
     }
   } catch (e) {
-    printRed(
-      '[gen-models] ✘ One or more files failed to generate!',
+    _print(
+      printRed,
+      '✘ One or more files failed to generate!',
+      spinner,
     );
     exit(ExitCodes.FAILURE.code);
   }
-  printGreen('[gen-models] Done!');
+  _print(
+    printGreen,
+    'Done!',
+    spinner,
+  );
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+void _print(
+  void Function(String) print,
+  String message, [
+  Spinner? spinner,
+]) {
+  spinner?.stop();
+  print('[gen-models-gemeni] $message');
+  spinner?.start();
+}
 
 bool _isAllowedFileName(String e) {
   return !e.endsWith('.g.dart') && e.endsWith('.dart');
 }
 
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-Future<void> generateModelWithGemeni({
+Future<void> _generateModelWithGemeni({
   required ClassInsight<GenerateDartModel> insight,
   required String gemeniApiKey,
   required String gemeniModel,
@@ -216,10 +244,10 @@ Future<void> generateModelWithGemeni({
   }
 
   await FileSystemUtility.i.writeLocalFile(outputFilePath, output);
-  printWhite('[gen-models] ✔ Generated $outputFilePath');
+  printWhite(
+    '[gen-models] ✔ Generated $outputFilePath',
+  );
 }
-
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 String _fixLang(String lang) {
   final l = lang

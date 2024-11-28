@@ -1,8 +1,11 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Dart/Flutter (DF) Packages by DevCetra.com & contributors. SSee MIT LICENSE
-// file in the root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. The use of this
+// source code is governed by an MIT-style license described in the LICENSE
+// file located in this project's root directory.
+//
+// See: https://opensource.org/license/mit
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -22,9 +25,6 @@ Future<void> genModelsApp(
   String defaultTemplatePathOrUrl =
       'https://raw.githubusercontent.com/robmllze/df_generate_dart_models_core/main/templates/v2.dart.md',
 }) async {
-  print('[gen-models] Generating Dart models...');
-  final spinner = Spinner();
-  spinner.start();
   final OUTPUT_FILE_NAME_PATTERN = const df_gen_core.Option(
     name: 'output-file-name',
     defaultsTo: '_{class}.g.dart',
@@ -51,8 +51,10 @@ Future<void> genModelsApp(
   final (argResults, argParser) = parser.parse(args);
   final help = argResults.flag(DefaultFlags.HELP.name);
   if (help) {
-    spinner.stop();
-    printLightBlue(parser.getInfo(argParser));
+    _print(
+      printCyan,
+      parser.getInfo(argParser),
+    );
     exit(ExitCodes.SUCCESS.code);
   }
   late final String inputPath;
@@ -61,14 +63,13 @@ Future<void> genModelsApp(
   late final String outputFileNamePattern;
   try {
     inputPath = argResults.option(DefaultOptions.INPUT_PATH.name)!;
-    templatePathOrUrl =
-        argResults.option(DefaultOptions.TEMPLATE_PATH_OR_URL.name)!;
+    templatePathOrUrl = argResults.option(DefaultOptions.TEMPLATE_PATH_OR_URL.name)!;
     dartSdk = argResults.option(DefaultOptions.DART_SDK.name);
     outputFileNamePattern = argResults.option(OUTPUT_FILE_NAME_PATTERN.name)!;
   } catch (_) {
-    spinner.stop();
-    printRed(
-      '[gen-models] Missing required args! Use --help flag for more information.',
+    _print(
+      printRed,
+      'Missing required args! Use --help flag for more information.',
     );
     exit(ExitCodes.FAILURE.code);
   }
@@ -76,32 +77,47 @@ Future<void> genModelsApp(
     {inputPath},
     dartSdk,
   );
-
+  final spinner = Spinner();
+  spinner.start();
+  _print(
+    printWhite,
+    'Reading template at: $templatePathOrUrl...',
+  );
   final result = await MdTemplateUtility.i.readTemplateFromPathOrUrl(
     templatePathOrUrl,
   );
   if (result.isErr) {
-    spinner.stop();
-    printRed(
-      '[gen-models] Failed to read template at: $templatePathOrUrl',
+    _print(
+      printRed,
+      ' Failed to read template!',
+      spinner,
     );
     exit(ExitCodes.FAILURE.code);
   }
+  _print(
+    printWhite,
+    'Looking for Dart files..',
+  );
   final template = result.unwrap();
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
-  final filePathStream1 =
-      filePathStream0.where((e) => _isAllowedFileName(e.path));
+  final filePathStream1 = filePathStream0.where((e) => _isAllowedFileName(e.path));
   List<FilePathExplorerFinding> findings;
   try {
     findings = await filePathStream1.toList();
   } catch (e) {
-    printRed(
-      '[gen-models] Failed to read file tree!',
+    _print(
+      printRed,
+      'Failed to read file tree!',
+      spinner,
     );
     exit(ExitCodes.FAILURE.code);
   }
-  spinner.stop();
 
+  _print(
+    printWhite,
+    'Generating your models...',
+    spinner,
+  );
   try {
     for (final finding in findings) {
       final inputFilePath = finding.path;
@@ -124,26 +140,51 @@ Future<void> genModelsApp(
           fileName,
         );
         await FileSystemUtility.i.writeLocalFile(outputFilePath, output);
-        printWhite('[gen-models] ✔ Generated $fileName');
+        printWhite(
+          '[gen-models] ✔ Generated $fileName',
+        );
       }
     }
   } catch (e) {
-    printRed(
-      '[gen-models] ✘ One or more files failed to generate!',
+    _print(
+      printRed,
+      '✘ One or more files failed to generate!',
+      spinner,
     );
     exit(ExitCodes.FAILURE.code);
   }
-  printWhite(
-    '[gen-models] Fixing and formatting generated files...',
+  _print(
+    printWhite,
+    'Fixing generated files..',
+    spinner,
+  );
+  await fixDartFile(inputPath);
+  _print(
+    printWhite,
+    'Formatting generated files..',
+    spinner,
   );
   spinner.start();
-  await fixDartFile(inputPath);
   await fmtDartFile(inputPath);
   spinner.stop();
-  printGreen('[gen-models] Done!');
+  _print(
+    printGreen,
+    'Done!',
+    spinner,
+  );
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+void _print(
+  void Function(String) print,
+  String message, [
+  Spinner? spinner,
+]) {
+  spinner?.stop();
+  print('[gen-models] $message');
+  spinner?.start();
+}
 
 bool _isAllowedFileName(String e) {
   return !e.endsWith('.g.dart') && e.endsWith('.dart');
@@ -152,13 +193,10 @@ bool _isAllowedFileName(String e) {
 final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
   {
     '___DESCRIPTION___': (insight) {
-      return insight.annotation.description ??
-          'Generated class for [${insight.className}].';
+      return insight.annotation.description ?? 'Generated class for [${insight.className}].';
     },
     '___SUPER_CLASS_NAME___': (insight) {
-      return insight.annotation.shouldInherit == true
-          ? insight.className
-          : 'Model';
+      return insight.annotation.shouldInherit == true ? insight.className : 'Model';
     },
     '___CLASS_FILE_NAME___': (insight) {
       return insight.fileName;
@@ -245,8 +283,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
         final f = field.fieldName;
         final x = field.fieldTypeCode!;
         final s = stripSpecialSyntaxFromFieldType(x);
-        final b =
-            DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
+        final b = DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
           fieldName: "$a?['${parts.last}']",
           fieldTypeCode: s,
         );
@@ -256,9 +293,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
       final j = fields.map((a) {
         final ff = fields
             .where(
-              (b) => a.fieldPath!
-                  .join('.')
-                  .startsWith('${b.fieldPath!.join('.')}.'),
+              (b) => a.fieldPath!.join('.').startsWith('${b.fieldPath!.join('.')}.'),
             )
             .toList();
         ff.sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
@@ -281,8 +316,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
           final f0 = '${f}0';
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
-          final a =
-              DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
+          final a = DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
             fieldName: f,
             fieldTypeCode: s,
           );
@@ -327,8 +361,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
         traverseMap(
           buffer,
           [
-            ...parent.fieldPath!
-                .map((e) => "'${insight.stringCaseType.convert(e)}'"),
+            ...parent.fieldPath!.map((e) => "'${insight.stringCaseType.convert(e)}'"),
             '#',
           ],
           newValue: '...?${parent.fieldName}0,',
@@ -410,8 +443,6 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
   },
 );
 
-// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
 extension _ClassInsightExtension on ClassInsight<GenerateDartModel> {
   Iterable<DartField> get fields {
     return annotation.fields?.whereType<TFieldRecord>().map((e) {
@@ -422,7 +453,6 @@ extension _ClassInsightExtension on ClassInsight<GenerateDartModel> {
   }
 
   StringCaseType get stringCaseType {
-    return StringCaseType.values.valueOf(annotation.keyStringCase) ??
-        StringCaseType.CAMEL_CASE;
+    return StringCaseType.values.valueOf(annotation.keyStringCase) ?? StringCaseType.CAMEL_CASE;
   }
 }
