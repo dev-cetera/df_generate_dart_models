@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.7]
+
+- Released @ 11/2024 (UTC)
+- fix: Fix bug with output file generation
+
 ## [0.12.5]
 
 - Released @ 11/2024 (UTC)

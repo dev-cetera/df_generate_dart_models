@@ -31,47 +31,42 @@ class ModelTest extends _ModelTest {
   @override
   String get $className => CLASS_NAME;
 
-    /// Some users!
-final List<ModelUser>? users;
+  /// Some users!
+  final List<ModelUser>? users;
 
   /// No description provided.
-final List<int>? checks;
+  final List<int>? checks;
 
   /// No description provided.
-final Map<String,Map<dynamic,int>>? random;
-
+  final Map<String, Map<dynamic, int>>? random;
 
   /// Constructs a new instance of [ModelTest]
   /// from optional and required parameters.
   const ModelTest({
-     this.users,
- this.checks,
- this.random,
-  }) ;
+    this.users,
+    this.checks,
+    this.random,
+  });
 
   /// Construcs a new instance of [ModelTest],
   /// forcing all parameters to be optional.
   const ModelTest.optional({
     this.users,
-this.checks,
-this.random,
-  }) ;
-
+    this.checks,
+    this.random,
+  });
 
   /// Constructs a new instance of [ModelTest],
   /// and asserts that all required parameters are not null.
   factory ModelTest.assertRequired({
     List<ModelUser>? users,
-List<int>? checks,
-Map<String,Map<dynamic,int>>? random,
+    List<int>? checks,
+    Map<String, Map<dynamic, int>>? random,
   }) {
-    
-
-
     return ModelTest(
       users: users,
-checks: checks,
-random: random,
+      checks: checks,
+      random: random,
     );
   }
 
@@ -97,7 +92,6 @@ random: random,
   ) {
     return fromJsonOrNull(another?.toJson())!;
   }
-
 
   /// Constructs a new instance of [ModelTest],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -131,7 +125,7 @@ random: random,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelTest.fromJsonString: $e');
+      assert(false, '$ModelTest.fromJsonString: $e');
       rethrow;
     }
   }
@@ -175,13 +169,48 @@ random: random,
     Map<String, dynamic>? json,
   ) {
     try {
-      final users = letListOrNull<dynamic>(json?['users'])?.map((p0) => () { final a = letMapOrNull<String, dynamic>(p0); return a != null ? ModelUser.fromJson(a): null; }(),).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final checks = letListOrNull<dynamic>(json?['checks'])?.map((p0) => letAsOrNull<int>(p0),).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final random = letMapOrNull<dynamic, dynamic>(json?['random'])?.map((p0, p1) => MapEntry(p0?.toString().trim().nullIfEmpty, letMapOrNull<dynamic, dynamic>(p1)?.map((p0, p1) => MapEntry(p0, letAsOrNull<int>(p1),),).nonNulls.nullIfEmpty?.unmodifiable,),).nonNulls.nullIfEmpty?.unmodifiable;
+      final users = letListOrNull<dynamic>(json?['users'])
+          ?.map(
+            (p0) => () {
+              final a = letMapOrNull<String, dynamic>(p0);
+              return a != null ? ModelUser.fromJson(a) : null;
+            }(),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final checks = letListOrNull<dynamic>(json?['checks'])
+          ?.map(
+            (p0) => letAsOrNull<int>(p0),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final random = letMapOrNull<dynamic, dynamic>(json?['random'])
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.toString().trim().nullIfEmpty,
+              letMapOrNull<dynamic, dynamic>(p1)
+                  ?.map(
+                    (p0, p1) => MapEntry(
+                      p0,
+                      letAsOrNull<int>(p1),
+                    ),
+                  )
+                  .nonNulls
+                  .nullIfEmpty
+                  ?.unmodifiable,
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.unmodifiable;
       return ModelTest(
         users: users,
-checks: checks,
-random: random,
+        checks: checks,
+        random: random,
       );
     } catch (e) {
       return null;
@@ -224,11 +253,41 @@ random: random,
     bool includeNulls = false,
   }) {
     try {
-      final users0 = users?.map((p0) => p0?.toJson(),).nonNulls.nullIfEmpty?.toList();
-final checks0 = checks?.map((p0) => p0,).nonNulls.nullIfEmpty?.toList();
-final random0 = random?.map((p0, p1) => MapEntry(p0?.trim().nullIfEmpty, p1?.map((p0, p1) => MapEntry(p0, p1,),).nonNulls.nullIfEmpty,),).nonNulls.nullIfEmpty;
+      final users0 = users
+          ?.map(
+            (p0) => p0?.toJson(),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList();
+      final checks0 = checks
+          ?.map(
+            (p0) => p0,
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList();
+      final random0 = random
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.trim().nullIfEmpty,
+              p1
+                  ?.map(
+                    (p0, p1) => MapEntry(
+                      p0,
+                      p1,
+                    ),
+                  )
+                  .nonNulls
+                  .nullIfEmpty,
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty;
       final withNulls = {
-        'users': users0,'random': random0,'checks': checks0,
+        'users': users0,
+        'random': random0,
+        'checks': checks0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -237,38 +296,36 @@ final random0 = random?.map((p0, p1) => MapEntry(p0?.trim().nullIfEmpty, p1?.map
     }
   }
 
-    /// Returns the value of the [users] field.
+  /// Returns the value of the [users] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<ModelUser>? get users$ => users;
+  @pragma('vm:prefer-inline')
+  List<ModelUser>? get users$ => users;
 
   /// Returns the value of the [checks] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<int>? get checks$ => checks;
+  @pragma('vm:prefer-inline')
+  List<int>? get checks$ => checks;
 
   /// Returns the value of the [random] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Map<String,Map<dynamic,int>>? get random$ => random;
-
+  @pragma('vm:prefer-inline')
+  Map<String, Map<dynamic, int>>? get random$ => random;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelTestFieldNames {
-    /// The field name of [ModelTest.users].
-static const users = 'users';
+  /// The field name of [ModelTest.users].
+  static const users = 'users';
 
   /// The field name of [ModelTest.checks].
-static const checks = 'checks';
+  static const checks = 'checks';
 
   /// The field name of [ModelTest.random].
-static const random = 'random';
-
+  static const random = 'random';
 }
 
 extension ModelTestX on ModelTest {
@@ -287,26 +344,26 @@ extension ModelTestX on ModelTest {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelTest copyWith({
     List<ModelUser>? users,
-List<int>? checks,
-Map<String,Map<dynamic,int>>? random,
+    List<int>? checks,
+    Map<String, Map<dynamic, int>>? random,
   }) {
     return ModelTest.assertRequired(
       users: users ?? this.users,
-checks: checks ?? this.checks,
-random: random ?? this.random,
+      checks: checks ?? this.checks,
+      random: random ?? this.random,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelTest copyWithout({
     bool users = true,
-bool checks = true,
-bool random = true,
+    bool checks = true,
+    bool random = true,
   }) {
     return ModelTest.assertRequired(
-      users: users ? this.users: null,
-checks: checks ? this.checks: null,
-random: random ? this.random: null,
+      users: users ? this.users : null,
+      checks: checks ? this.checks : null,
+      random: random ? this.random : null,
     );
   }
 }
