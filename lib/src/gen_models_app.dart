@@ -39,7 +39,7 @@ Future<void> genModelsApp(
     params: [
       DefaultFlags.HELP.flag,
       DefaultOptions.INPUT_PATH.option.copyWith(
-        defaultsTo: '.',
+        defaultsTo: FileSystemUtility.i.currentDir,
       ),
       DefaultOptions.TEMPLATE_PATH_OR_URL.option.copyWith(
         defaultsTo: defaultTemplatePathOrUrl,

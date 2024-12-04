@@ -59,7 +59,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
     params: [
       DefaultFlags.HELP.flag,
       DefaultOptions.INPUT_PATH.option.copyWith(
-        defaultsTo: '.',
+        defaultsTo: FileSystemUtility.i.currentDir,
       ),
       DefaultOptions.GENERATED_OUTPUT.option.copyWith(
         help: 'The directory to write the generated files to.',
