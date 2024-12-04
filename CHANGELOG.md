@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.11]
+
+- Released @ 12/2024 (UTC)
+- chore: Update default args of CLI
+
 ## [0.12.10]
 
 - Released @ 12/2024 (UTC)
