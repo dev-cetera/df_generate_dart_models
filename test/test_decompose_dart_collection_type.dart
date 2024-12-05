@@ -1,4 +1,3 @@
-
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core_utils.dart';
 import 'package:test/test.dart';
 

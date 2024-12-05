@@ -4,6 +4,7 @@
 
 - Released @ 12/2024 (UTC)
 - chore: Update default args of CLI
+- chore: Update dependencies, add templates
 
 ## [0.12.10]
 
