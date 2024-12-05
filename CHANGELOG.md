@@ -1,10 +1,14 @@
 # Changelog
 
+## [0.12.12]
+
+- Released @ 12/2024 (UTC)
+- chore: Update dependencies, add templates
+
 ## [0.12.11]
 
 - Released @ 12/2024 (UTC)
 - chore: Update default args of CLI
-- chore: Update dependencies, add templates
 
 ## [0.12.10]
 
