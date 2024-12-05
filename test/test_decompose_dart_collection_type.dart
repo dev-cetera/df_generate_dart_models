@@ -1,4 +1,5 @@
-import 'package:df_generate_dart_models/src/_utils/decompose_dart_collection_type.dart';
+
+import 'package:df_generate_dart_models_core/df_generate_dart_models_core_utils.dart';
 import 'package:test/test.dart';
 
 void main() {

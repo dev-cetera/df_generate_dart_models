@@ -34,7 +34,7 @@ dependencies:
   df_collection: ^0.8.4
   df_config: ^0.5.4
   df_gen_core: ^0.5.4
-  df_generate_dart_models_core: ^0.8.3
+  df_generate_dart_models_core: ^0.8.9
   df_log: ^0.2.4
   df_string: ^0.2.3
   df_type: ^0.7.6

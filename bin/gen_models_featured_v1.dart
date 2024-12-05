@@ -18,6 +18,6 @@ void main(List<String> args) async {
   await genModelsApp(
     args,
     defaultTemplatePathOrUrl:
-        'https://raw.githubusercontent.com/robmllze/df_generate_dart_models_core/main/templates/featured_v1.dart.md',
+        'https://raw.githubusercontent.com/robmllze/df_generate_dart_models/main/templates/featured_v1.dart.md',
   );
 }
