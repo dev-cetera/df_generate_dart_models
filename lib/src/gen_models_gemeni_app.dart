@@ -10,14 +10,15 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'package:df_generate_dart_models_core/df_generate_dart_models_core_utils.dart';
 import 'package:path/path.dart' as p;
+import 'package:google_generative_ai/google_generative_ai.dart';
+
 import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_gen_core/df_gen_core.dart' as df_gen_core;
 import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'extract_insights_from_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -28,8 +29,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   );
   final GEMENI_API_KEY = const df_gen_core.Option(
     name: 'api-key',
-    help:
-        'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
+    help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
   final GEMENI_MODEL = const df_gen_core.Option(
     name: 'model',
@@ -43,8 +43,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   );
   final LANG = const df_gen_core.Option(
     name: 'lang',
-    help:
-        'The programming language to generate the data model for, e.g. "dart" or "ts"',
+    help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
   );
   final parser = CliParser(
@@ -110,8 +109,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
     dartSdk,
   );
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
-  final filePathStream1 =
-      filePathStream0.where((e) => _isAllowedFileName(e.path));
+  final filePathStream1 = filePathStream0.where((e) => _isAllowedFileName(e.path));
   List<FilePathExplorerFinding> findings;
 
   final spinner = Spinner();
@@ -142,8 +140,8 @@ Future<void> genModelsGemeniApp(List<String> args) async {
     for (final finding in findings) {
       final inputFilePath = finding.path;
       final insights = await extractInsightsFromFile(
-        analysisContextCollection,
         inputFilePath,
+        analysisContextCollection,
       );
       for (final insight in insights) {
         await _generateModelWithGemeni(

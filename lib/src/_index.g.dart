@@ -9,4 +9,5 @@
 
 export './gen_models_app.dart';
 export './gen_models_gemeni_app.dart';
+export './extract_insights_from_file.dart';
 export './dart_loose_type_mappers.dart';
