@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.14]
+
+- Released @ 12/2024 (UTC)
+- chore: Update dependencies and formatting
+
 ## [0.12.13]
 
 - Released @ 12/2024 (UTC)
