@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.19]
+
+- Released @ 12/2024 (UTC)
+- fix: Fix dart type issue
+
 ## [0.12.18]
 
 - Released @ 12/2024 (UTC)
