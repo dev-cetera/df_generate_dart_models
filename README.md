@@ -19,7 +19,7 @@ The example below provides a glimpse of what this package can do. The package in
 
 ### Step 1
 
-To install this tool, run `dart pub global activate df_generate_dart_models 0.12.4` in your terminal. You can replace `0.12.4` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
+To install this tool, run `dart pub global activate df_generate_dart_models 0.12.4` in your terminal. You can replace `0.12.19` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
 
 ### Step 2
 
@@ -27,7 +27,7 @@ Add [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_m
 
 ```yaml
 dependencies:
-  df_generate_dart_models_core: 0.8.1 # Fixed version to ensure compatibility and avoid issues from frequent updates.
+  df_generate_dart_models_core: 0.8.18 # Fixed version to ensure compatibility and avoid issues from frequent updates.
 ```
 
 ### Step 3
