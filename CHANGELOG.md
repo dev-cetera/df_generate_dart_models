@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.18]
+
+- Released @ 12/2024 (UTC)
+- chore: Update templates path
+
 ## [0.12.17]
 
 - Released @ 12/2024 (UTC)
