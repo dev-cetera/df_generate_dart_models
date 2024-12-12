@@ -37,8 +37,7 @@ Future<List<ClassInsight<GenerateDartModel>>> extractInsightsFromFile(
   await analyzer.analyze(
     inclClassAnnotations: {GenerateDartModel.CLASS_NAME},
     inclMemberAnnotations: {Field.CLASS_NAME},
-    onClassAnnotationField: (p) async =>
-        temp = _updateFromClassAnnotationField(temp, p),
+    onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateDartModel(fields: {}),
     onPostAnalysis: (params) {
@@ -79,21 +78,35 @@ GenerateDartModel _updateFromClassAnnotationField(
             ...?annotation.fields,
             ...?params.fieldValue.toSetValue()?.map((e) {
               final x = DartFromRecordOnDartObjectX(e);
-              final field = Field(
-                fieldPath: x.fieldPathFromRecord() ?? ['unknown'],
-                fieldType: x.fieldTypeFromRecord() ?? 'dynamic',
-                nullable: x.nullableFromRecord() ?? true,
-                children: x.childrenFromRecord(),
-                primaryKey: x.primaryKeyFromRecord(),
-                foreignKey: x.foreignKeyFromRecord(),
-                fallback: x.fallbackFromRecord(),
-                description: x.descriptionFromRecord(),
-              );
-              return field.toRecord;
+              try {
+                final fieldPath = x.fieldPathFromRecord() ?? ['unknown'];
+                final fieldType = x.fieldTypeFromRecord() ?? 'dynamic';
+                final nullable = x.nullableFromRecord() ?? true;
+                final children = x.childrenFromRecord();
+                final primaryKey = x.primaryKeyFromRecord();
+                final foreignKey = x.foreignKeyFromRecord();
+                final fallback = x.fallbackFromRecord();
+                final description = x.descriptionFromRecord();
+                final field = Field(
+                  fieldPath: fieldPath,
+                  fieldType: fieldType,
+                  nullable: nullable,
+                  children: children,
+                  primaryKey: primaryKey,
+                  foreignKey: foreignKey,
+                  fallback: fallback,
+                  description: description,
+                );
+                return field.toRecord;
+              } catch (e) {
+                printGreen(e);
+                rethrow;
+              }
             }),
           },
         ),
       );
+
     case GenerateDartModelFieldNames.shouldInherit:
       return annotation.mergeWith(
         GenerateDartModel(
@@ -136,30 +149,22 @@ GenerateDartModel _updateFromAnnotatedMember(
       params.memberAnnotationFields[FieldModelFieldNames.fieldPath],
     );
     final a2 = [params.memberName];
-    final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]
-        ?.toStringValue();
+    final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]?.toStringValue();
     final b2 = params.memberType.getDisplayString();
-    final nullable = params
-        .memberAnnotationFields[FieldModelFieldNames.nullable]
-        ?.toBoolValue();
-    final primaryKey = params
-        .memberAnnotationFields[FieldModelFieldNames.primaryKey]
-        ?.toBoolValue();
-    final foreignKey = params
-        .memberAnnotationFields[FieldModelFieldNames.foreignKey]
-        ?.toBoolValue();
+    final nullable = params.memberAnnotationFields[FieldModelFieldNames.nullable]?.toBoolValue();
+    final primaryKey =
+        params.memberAnnotationFields[FieldModelFieldNames.primaryKey]?.toBoolValue();
+    final foreignKey =
+        params.memberAnnotationFields[FieldModelFieldNames.foreignKey]?.toBoolValue();
     final children = (dartObjToObject(
       params.memberAnnotationFields[FieldModelFieldNames.children],
     ) as List?)
         ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
         .nonNulls
         .toList();
-    final fallback = params
-        .memberAnnotationFields[FieldModelFieldNames.fallback]
-        ?.toListValue();
-    final description = params
-        .memberAnnotationFields[FieldModelFieldNames.description]
-        ?.toStringValue();
+    final fallback = params.memberAnnotationFields[FieldModelFieldNames.fallback]?.toListValue();
+    final description =
+        params.memberAnnotationFields[FieldModelFieldNames.description]?.toStringValue();
     final field = DartField(
       fieldPath: a1 ?? a2,
       fieldType: b1 ?? b2,
