@@ -27,11 +27,7 @@ part '_model_test.g.dart';
       nullable: true,
       description: 'Some users!',
     ),
-    Field(
-      fieldPath: ['checks'],
-      fieldType: List<int>,
-      nullable: true,
-    ),
+    Field(fieldPath: ['checks'], fieldType: List<int>, nullable: true),
     Field(
       fieldPath: ['random'],
       fieldType: Map<String, Map<dynamic, int>>,

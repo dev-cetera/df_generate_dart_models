@@ -37,7 +37,8 @@ Future<List<ClassInsight<GenerateDartModel>>> extractInsightsFromFile(
   await analyzer.analyze(
     inclClassAnnotations: {GenerateDartModel.CLASS_NAME},
     inclMemberAnnotations: {Field.CLASS_NAME},
-    onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
+    onClassAnnotationField:
+        (p) async => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateDartModel(fields: {}),
     onPostAnalysis: (params) {
@@ -67,9 +68,7 @@ GenerateDartModel _updateFromClassAnnotationField(
   switch (params.fieldName) {
     case GenerateDartModelFieldNames.className:
       return annotation.mergeWith(
-        GenerateDartModel(
-          className: params.fieldValue.toStringValue(),
-        ),
+        GenerateDartModel(className: params.fieldValue.toStringValue()),
       );
     case GenerateDartModelFieldNames.fields:
       return annotation.mergeWith(
@@ -109,9 +108,7 @@ GenerateDartModel _updateFromClassAnnotationField(
 
     case GenerateDartModelFieldNames.shouldInherit:
       return annotation.mergeWith(
-        GenerateDartModel(
-          shouldInherit: params.fieldValue.toBoolValue(),
-        ),
+        GenerateDartModel(shouldInherit: params.fieldValue.toBoolValue()),
       );
     case GenerateDartModelFieldNames.inheritanceConstructor:
       return annotation.mergeWith(
@@ -121,15 +118,11 @@ GenerateDartModel _updateFromClassAnnotationField(
       );
     case GenerateDartModelFieldNames.keyStringCase:
       return annotation.mergeWith(
-        GenerateDartModel(
-          keyStringCase: params.fieldValue.toStringValue(),
-        ),
+        GenerateDartModel(keyStringCase: params.fieldValue.toStringValue()),
       );
     case GenerateDartModelFieldNames.description:
       return annotation.mergeWith(
-        GenerateDartModel(
-          description: params.fieldValue.toStringValue(),
-        ),
+        GenerateDartModel(description: params.fieldValue.toStringValue()),
       );
     default:
   }
@@ -149,22 +142,33 @@ GenerateDartModel _updateFromAnnotatedMember(
       params.memberAnnotationFields[FieldModelFieldNames.fieldPath],
     );
     final a2 = [params.memberName];
-    final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]?.toStringValue();
+    final b1 =
+        params.memberAnnotationFields[FieldModelFieldNames.fieldType]
+            ?.toStringValue();
     final b2 = params.memberType.getDisplayString();
-    final nullable = params.memberAnnotationFields[FieldModelFieldNames.nullable]?.toBoolValue();
+    final nullable =
+        params.memberAnnotationFields[FieldModelFieldNames.nullable]
+            ?.toBoolValue();
     final primaryKey =
-        params.memberAnnotationFields[FieldModelFieldNames.primaryKey]?.toBoolValue();
+        params.memberAnnotationFields[FieldModelFieldNames.primaryKey]
+            ?.toBoolValue();
     final foreignKey =
-        params.memberAnnotationFields[FieldModelFieldNames.foreignKey]?.toBoolValue();
-    final children = (dartObjToObject(
-      params.memberAnnotationFields[FieldModelFieldNames.children],
-    ) as List?)
-        ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
-        .nonNulls
-        .toList();
-    final fallback = params.memberAnnotationFields[FieldModelFieldNames.fallback]?.toListValue();
+        params.memberAnnotationFields[FieldModelFieldNames.foreignKey]
+            ?.toBoolValue();
+    final children =
+        (dartObjToObject(
+                  params.memberAnnotationFields[FieldModelFieldNames.children],
+                )
+                as List?)
+            ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
+            .nonNulls
+            .toList();
+    final fallback =
+        params.memberAnnotationFields[FieldModelFieldNames.fallback]
+            ?.toListValue();
     final description =
-        params.memberAnnotationFields[FieldModelFieldNames.description]?.toStringValue();
+        params.memberAnnotationFields[FieldModelFieldNames.description]
+            ?.toStringValue();
     final field = DartField(
       fieldPath: a1 ?? a2,
       fieldType: b1 ?? b2,
@@ -176,12 +180,7 @@ GenerateDartModel _updateFromAnnotatedMember(
       description: description,
     );
     annotation = annotation.mergeWith(
-      GenerateDartModel(
-        fields: {
-          ...?annotation.fields,
-          field.toRecord,
-        },
-      ),
+      GenerateDartModel(fields: {...?annotation.fields, field.toRecord}),
     );
   }
   return annotation;

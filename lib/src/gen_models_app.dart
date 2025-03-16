@@ -55,10 +55,7 @@ Future<void> genModelsApp(
   final (argResults, argParser) = parser.parse(args);
   final help = argResults.flag(DefaultFlags.HELP.name);
   if (help) {
-    _print(
-      printCyan,
-      parser.getInfo(argParser),
-    );
+    _print(printCyan, parser.getInfo(argParser));
     exit(ExitCodes.SUCCESS.code);
   }
   late final String inputPath;
@@ -67,7 +64,8 @@ Future<void> genModelsApp(
   late final String outputFileNamePattern;
   try {
     inputPath = argResults.option(DefaultOptions.INPUT_PATH.name)!;
-    templatePathOrUrl = argResults.option(DefaultOptions.TEMPLATE_PATH_OR_URL.name)!;
+    templatePathOrUrl =
+        argResults.option(DefaultOptions.TEMPLATE_PATH_OR_URL.name)!;
     dartSdk = argResults.option(DefaultOptions.DART_SDK.name);
     outputFileNamePattern = argResults.option(OUTPUT_FILE_NAME_PATTERN.name)!;
   } catch (_) {
@@ -77,53 +75,35 @@ Future<void> genModelsApp(
     );
     exit(ExitCodes.FAILURE.code);
   }
-  final analysisContextCollection = createDartAnalysisContextCollection(
-    {inputPath},
-    dartSdk,
-  );
+  final analysisContextCollection = createDartAnalysisContextCollection({
+    inputPath,
+  }, dartSdk,);
   final spinner = Spinner();
   spinner.start();
-  _print(
-    printWhite,
-    'Reading template at: $templatePathOrUrl...',
-  );
-  final result = await MdTemplateUtility.i
-      .readTemplateFromPathOrUrl(
-        templatePathOrUrl,
-      )
-      .value;
+  _print(printWhite, 'Reading template at: $templatePathOrUrl...');
+  final result =
+      await MdTemplateUtility.i
+          .readTemplateFromPathOrUrl(templatePathOrUrl)
+          .value;
   if (result.isErr()) {
-    _print(
-      printRed,
-      ' Failed to read template!',
-      spinner,
-    );
+    _print(printRed, ' Failed to read template!', spinner);
     exit(ExitCodes.FAILURE.code);
   }
   final template = result.unwrap();
-  _print(
-    printWhite,
-    'Looking for Dart files..',
-  );
+  _print(printWhite, 'Looking for Dart files..');
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
-  final filePathStream1 = filePathStream0.where((e) => _isAllowedFileName(e.path));
+  final filePathStream1 = filePathStream0.where(
+    (e) => _isAllowedFileName(e.path),
+  );
   List<FilePathExplorerFinding> findings;
   try {
     findings = await filePathStream1.toList();
   } catch (e) {
-    _print(
-      printRed,
-      'Failed to read file tree!',
-      spinner,
-    );
+    _print(printRed, 'Failed to read file tree!', spinner);
     exit(ExitCodes.FAILURE.code);
   }
 
-  _print(
-    printWhite,
-    'Generating your models...',
-    spinner,
-  );
+  _print(printWhite, 'Generating your models...', spinner);
   try {
     for (final finding in findings) {
       final inputFilePath = finding.path;
@@ -147,47 +127,26 @@ Future<void> genModelsApp(
           fileName,
         );
         await FileSystemUtility.i.writeLocalFile(outputFilePath, output);
-        printWhite(
-          '[gen-models] ✔ Generated $fileName',
-        );
+        printWhite('[gen-models] ✔ Generated $fileName');
       }
     }
   } catch (e) {
     printRed(e);
-    _print(
-      printRed,
-      '✘ One or more files failed to generate!',
-      spinner,
-    );
+    _print(printRed, '✘ One or more files failed to generate!', spinner);
     exit(ExitCodes.FAILURE.code);
   }
-  _print(
-    printWhite,
-    'Fixing generated files..',
-    spinner,
-  );
+  _print(printWhite, 'Fixing generated files..', spinner);
   await fixDartFile(inputPath);
-  _print(
-    printWhite,
-    'Formatting generated files..',
-    spinner,
-  );
+  _print(printWhite, 'Formatting generated files..', spinner);
   spinner.start();
   await fmtDartFile(inputPath);
   spinner.stop();
-  _print(
-    printGreen,
-    'Done!',
-  );
+  _print(printGreen, 'Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-void _print(
-  void Function(String) print,
-  String message, [
-  Spinner? spinner,
-]) {
+void _print(void Function(String) print, String message, [Spinner? spinner]) {
   spinner?.stop();
   print('[gen-models] $message');
   spinner?.start();
@@ -198,34 +157,33 @@ bool _isAllowedFileName(String e) {
   return !lc.endsWith('.g.dart') && lc.endsWith('.dart');
 }
 
-final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
-  {
-    '___DESCRIPTION___': (insight) {
-      return insight.annotation.description ?? 'Generated class for [${insight.className}].';
-    },
-    '___SUPER_CLASS_NAME___': (insight) {
-      return insight.annotation.shouldInherit == true ? insight.className : 'Model';
-    },
-    '___CLASS_FILE_NAME___': (insight) {
-      return insight.fileName;
-    },
-    '___CLASS_NAME___': (insight) {
-      return insight.annotation.className ??
-          insight.className.replaceFirst(
-            RegExp(r'^[_$]+'),
-            '',
-          );
-    },
-    '___SUPER_CONSTRUCTOR___': (insight) {
-      return insight.annotation.shouldInherit == true
-          ? insight.annotation.inheritanceConstructor?.nullIfEmpty != null
-              ? ': super.${insight.annotation.inheritanceConstructor}()'
-              : ''
-          : '';
-    },
-    '___FIELD_DECLARATIONS___': (insight) {
-      return insight.fields.map(
-        (e) {
+final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
+  '___DESCRIPTION___': (insight) {
+    return insight.annotation.description ??
+        'Generated class for [${insight.className}].';
+  },
+  '___SUPER_CLASS_NAME___': (insight) {
+    return insight.annotation.shouldInherit == true
+        ? insight.className
+        : 'Model';
+  },
+  '___CLASS_FILE_NAME___': (insight) {
+    return insight.fileName;
+  },
+  '___CLASS_NAME___': (insight) {
+    return insight.annotation.className ??
+        insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
+  },
+  '___SUPER_CONSTRUCTOR___': (insight) {
+    return insight.annotation.shouldInherit == true
+        ? insight.annotation.inheritanceConstructor?.nullIfEmpty != null
+            ? ': super.${insight.annotation.inheritanceConstructor}()'
+            : ''
+        : '';
+  },
+  '___FIELD_DECLARATIONS___': (insight) {
+    return insight.fields
+        .map((e) {
           final description = e.description;
           final t = e.fieldType!;
           final r = stripSpecialSyntaxFromFieldType(t);
@@ -235,152 +193,153 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
             'final $r? $f;',
             '',
           ].join('\n');
-        },
-      ).join('\n');
-    },
-    '___PARAMS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___PARAMS___': (insight) {
+    return insight.fields
+        .map((e) {
           final n = e.nullable;
           final f = e.fieldName;
           return '${n ? '' : 'required'} this.$f,';
-        },
-      ).join('\n');
-    },
-    '___PERMISSIVE_PARAMS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___PERMISSIVE_PARAMS___': (insight) {
+    return insight.fields
+        .map((e) {
           final f = e.fieldName;
           return 'this.$f,';
-        },
-      ).join('\n');
-    },
-    '___STRICT_PARAMS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___STRICT_PARAMS___': (insight) {
+    return insight.fields
+        .map((e) {
           final t = e.fieldType!;
           final r = stripSpecialSyntaxFromFieldType(t);
           final f = e.fieldName;
           return '$r? $f,';
-        },
-      ).join('\n');
-    },
-    '___STRICT_PARAM_ASSERTIONS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___STRICT_PARAM_ASSERTIONS___': (insight) {
+    return insight.fields
+        .map((e) {
           final n = e.nullable;
           final f = e.fieldName;
           return n ? '' : 'assert($f != null);';
-        },
-      ).join('\n');
-    },
-    '___STRICT_ARGS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___STRICT_ARGS___': (insight) {
+    return insight.fields
+        .map((e) {
           final f = e.fieldName;
           return '$f: $f,';
-        },
-      ).join('\n');
-    },
-    '___FROM_JSON_OR_NULL_PARAMS___': (insight) {
-      final fields = insight.fields.toList();
-      String $v(String a, DartField field) {
-        final fieldPath = field.fieldPath;
-        if (fieldPath == null || fieldPath.isEmpty) return '';
-        final parts = insight.stringCaseType.convertAll(field.fieldPath!);
-        final f = field.fieldName;
-        final x = field.fieldTypeCode!;
-        final s = stripSpecialSyntaxFromFieldType(x);
-        final b = DartTypeCodeMapper(DartLooseTypeMappers.instance.fromMappers).map(
-          fieldName: "$a?['${parts.last}']",
-          fieldTypeCode: s,
-        );
-        return 'final $f = $b;';
-      }
+        })
+        .join('\n');
+  },
+  '___FROM_JSON_OR_NULL_PARAMS___': (insight) {
+    final fields = insight.fields.toList();
+    String $v(String a, DartField field) {
+      final fieldPath = field.fieldPath;
+      if (fieldPath == null || fieldPath.isEmpty) return '';
+      final parts = insight.stringCaseType.convertAll(field.fieldPath!);
+      final f = field.fieldName;
+      final x = field.fieldTypeCode!;
+      final s = stripSpecialSyntaxFromFieldType(x);
+      final b = DartTypeCodeMapper(
+        DartLooseTypeMappers.instance.fromMappers,
+      ).map(fieldName: "$a?['${parts.last}']", fieldTypeCode: s);
+      return 'final $f = $b;';
+    }
 
-      final j = fields.map((a) {
-        final ff = fields
-            .where(
-              (b) => a.fieldPath!.join('.').startsWith('${b.fieldPath!.join('.')}.'),
-            )
-            .toList();
-        ff.sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
-        return $v(ff.length > 1 ? '${ff[1].fieldName}' : 'json', a);
-      });
-      return j.join('\n');
-    },
-    '___FROM_JSON_OR_NULL_ARGS___': (insight) {
-      return insight.fields.map(
-        (e) {
+    final j = fields.map((a) {
+      final ff =
+          fields
+              .where(
+                (b) => a.fieldPath!
+                    .join('.')
+                    .startsWith('${b.fieldPath!.join('.')}.'),
+              )
+              .toList();
+      ff.sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
+      return $v(ff.length > 1 ? '${ff[1].fieldName}' : 'json', a);
+    });
+    return j.join('\n');
+  },
+  '___FROM_JSON_OR_NULL_ARGS___': (insight) {
+    return insight.fields
+        .map((e) {
           final f = e.fieldName;
           return '$f: $f,';
-        },
-      ).join('\n');
-    },
-    '___TO_JSON_PARAMS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___TO_JSON_PARAMS___': (insight) {
+    return insight.fields
+        .map((e) {
           final f = e.fieldName!;
           final f0 = '${f}0';
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
-          final a = DartTypeCodeMapper(DartLooseTypeMappers.instance.toMappers).map(
-            fieldName: f,
-            fieldTypeCode: s,
-          );
+          final a = DartTypeCodeMapper(
+            DartLooseTypeMappers.instance.toMappers,
+          ).map(fieldName: f, fieldTypeCode: s);
           return 'final $f0 = $a;';
-        },
-      ).join('\n');
-    },
-    '___TO_JSON_ARGS___': (insight) {
-      final fields = insight.fields.toList();
-      final parents = fields
-          .where(
-            (f1) =>
-                f1.fieldType == 'Map<String, dynamic>' &&
-                fields
-                    .map((e) => e.fieldPath!.join('.'))
-                    .any((e) => e.startsWith('${f1.fieldPath!.join('.')}.')),
-          )
-          .toList();
-      fields.removeWhere((e) => parents.contains(e));
-      final stringCaseType = insight.stringCaseType;
-      final entries = fields
-          .map(
-            (e) => MapEntry(
-              stringCaseType.convertAll(e.fieldPath!).join('.'),
-              '${e.fieldName}0',
-            ),
-          )
-          .toList()
-        ..sort((a, b) => b.key.compareTo(a.key));
+        })
+        .join('\n');
+  },
+  '___TO_JSON_ARGS___': (insight) {
+    final fields = insight.fields.toList();
+    final parents =
+        fields
+            .where(
+              (f1) =>
+                  f1.fieldType == 'Map<String, dynamic>' &&
+                  fields
+                      .map((e) => e.fieldPath!.join('.'))
+                      .any((e) => e.startsWith('${f1.fieldPath!.join('.')}.')),
+            )
+            .toList();
+    fields.removeWhere((e) => parents.contains(e));
+    final stringCaseType = insight.stringCaseType;
+    final entries =
+        fields
+            .map(
+              (e) => MapEntry(
+                stringCaseType.convertAll(e.fieldPath!).join('.'),
+                '${e.fieldName}0',
+              ),
+            )
+            .toList()
+          ..sort((a, b) => b.key.compareTo(a.key));
 
-      var buffer = <String, dynamic>{};
+    var buffer = <String, dynamic>{};
 
-      for (final e in entries) {
-        traverseMap(
-          buffer,
-          e.key.split('.').map((e) => "'$e'").toList(),
-          newValue: e.value,
-        );
-      }
+    for (final e in entries) {
+      traverseMap(
+        buffer,
+        e.key.split('.').map((e) => "'$e'").toList(),
+        newValue: e.value,
+      );
+    }
 
-      for (final parent in parents) {
-        traverseMap(
-          buffer,
-          [
-            ...parent.fieldPath!.map((e) => "'${insight.stringCaseType.convert(e)}'"),
-            '#',
-          ],
-          newValue: '...?${parent.fieldName}0,',
-        );
-      }
-      final test = buffer.entries.map((e) => '${e.key}: ${e.value},').join();
-      return test.replaceAll('#:', '');
-    },
-    '___GETTERS___': (insight) {
-      return insight.fields.map(
-        (e) {
+    for (final parent in parents) {
+      traverseMap(buffer, [
+        ...parent.fieldPath!.map(
+          (e) => "'${insight.stringCaseType.convert(e)}'",
+        ),
+        '#',
+      ], newValue: '...?${parent.fieldName}0,',);
+    }
+    final test = buffer.entries.map((e) => '${e.key}: ${e.value},').join();
+    return test.replaceAll('#:', '');
+  },
+  '___GETTERS___': (insight) {
+    return insight.fields
+        .map((e) {
           final f = e.fieldName;
           final x = e.fieldTypeCode!;
           final s = stripSpecialSyntaxFromFieldType(x);
@@ -393,17 +352,15 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
             '$s get $f\$ => $f${n ? '' : '!'};',
             '',
           ].join('\n');
-        },
-      ).join('\n');
-    },
-    '___FIELD_NAMES___': (insight) {
-      return insight.fields.map(
-        (e) {
-          final className = insight.annotation.className ??
-              insight.className.replaceFirst(
-                RegExp(r'^[_$]+'),
-                '',
-              );
+        })
+        .join('\n');
+  },
+  '___FIELD_NAMES___': (insight) {
+    return insight.fields
+        .map((e) {
+          final className =
+              insight.annotation.className ??
+              insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
           final f = e.fieldName;
           final c = insight.stringCaseType.convert(e.fieldName!);
           return [
@@ -411,45 +368,44 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>(
             "static const $f = '$c';",
             '',
           ].join('\n');
-        },
-      ).join('\n');
-    },
-    '___COPY_WITH_PARAMS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___COPY_WITH_PARAMS___': (insight) {
+    return insight.fields
+        .map((e) {
           final f = e.fieldName;
           final t = e.fieldType!;
           final r = stripSpecialSyntaxFromFieldType(t);
           return '$r? $f,';
-        },
-      ).join('\n');
-    },
-    '___COPY_WITH_ARGS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___COPY_WITH_ARGS___': (insight) {
+    return insight.fields
+        .map((e) {
           final f = e.fieldName;
           return '$f: $f ?? this.$f,';
-        },
-      ).join('\n');
-    },
-    '___COPY_WITHOUT_PARAMS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___COPY_WITHOUT_PARAMS___': (insight) {
+    return insight.fields
+        .map((e) {
           final f = e.fieldName;
           return 'bool $f = true,';
-        },
-      ).join('\n');
-    },
-    '___COPY_WITHOUT_ARGS___': (insight) {
-      return insight.fields.map(
-        (e) {
+        })
+        .join('\n');
+  },
+  '___COPY_WITHOUT_ARGS___': (insight) {
+    return insight.fields
+        .map((e) {
           final f = e.fieldName;
           return '$f: $f ? this.$f: null,';
-        },
-      ).join('\n');
-    },
+        })
+        .join('\n');
   },
-);
+});
 
 extension _ClassInsightExtension on ClassInsight<GenerateDartModel> {
   Iterable<DartField> get fields {
@@ -461,6 +417,7 @@ extension _ClassInsightExtension on ClassInsight<GenerateDartModel> {
   }
 
   StringCaseType get stringCaseType {
-    return StringCaseType.values.valueOf(annotation.keyStringCase) ?? StringCaseType.CAMEL_CASE;
+    return StringCaseType.values.valueOf(annotation.keyStringCase) ??
+        StringCaseType.CAMEL_CASE;
   }
 }

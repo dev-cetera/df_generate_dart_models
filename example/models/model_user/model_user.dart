@@ -27,19 +27,11 @@ part '_model_user.g.dart';
         {
           'fieldPath': ['test'],
           'fieldType': String,
-        }
+        },
       ],
     ),
-    Field(
-      fieldPath: ['firstName'],
-      fieldType: String,
-      nullable: true,
-    ),
-    Field(
-      fieldPath: ['lastName'],
-      fieldType: String,
-      nullable: true,
-    ),
+    Field(fieldPath: ['firstName'], fieldType: String, nullable: true),
+    Field(fieldPath: ['lastName'], fieldType: String, nullable: true),
   },
 )
 abstract class _ModelUser extends Model {

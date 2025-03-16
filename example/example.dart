@@ -18,19 +18,11 @@ import 'models/model_user/model_user.dart';
 void main() {
   final a = const ModelTest(
     users: [
-      ModelUser(
-        ref: DataRefModel(
-          collection: ['users'],
-          id: '123',
-        ),
-      ),
+      ModelUser(ref: DataRefModel(collection: ['users'], id: '123')),
     ],
     checks: [1, 2, 3, 4],
   );
   print(a);
-  final b = a.mergeWith(
-    const ModelTest(checks: [4, 5, 6]),
-    deepMerge: false,
-  );
+  final b = a.mergeWith(const ModelTest(checks: [4, 5, 6]), deepMerge: false);
   print(b);
 }
