@@ -1,7 +1,7 @@
 ##.title
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##
-## Dart/Flutter (DF) Packages by DevCetra.com & contributors. The use of this
+## Dart/Flutter (DF) Packages by dev-cetera.com & contributors. The use of this
 ## source code is governed by an MIT-style license described in the LICENSE
 ## file located in this project's root directory.
 ##
@@ -12,10 +12,10 @@
 
 name: df_generate_dart_models
 description: A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
-version: 0.12.19
-repository: https://github.com/DevCetra/df_generate_dart_models
+version: 0.13.0
+repository: https://github.com/dev-cetera/df_generate_dart_models
 funding:
-  - https://www.buymeacoffee.com/robmllze
+  - https://www.buymeacoffee.com/dev_cetera
 topics:
   - build-runner
   - cli
@@ -31,14 +31,13 @@ environment:
 ## -----------------------------------------------------------------------------
 
 dependencies:
-  df_collection: ^0.8.6
-  df_config: ^0.5.4
-  df_gen_core: ^0.5.11
-  df_generate_dart_models_core: ^0.8.18
+  df_collection: ^0.9.1
+  df_config: ^0.7.0
+  df_gen_core: ^0.6.6
+  df_generate_dart_models_core: ^0.9.7
   df_log: ^0.2.4
   df_string: ^0.2.4
-  df_type: ^0.7.6
-
+  df_type: ^0.10.3
   google_generative_ai: ^0.4.6
   path: ^1.9.1
 

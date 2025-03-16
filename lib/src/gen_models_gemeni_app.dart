@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Dart/Flutter (DF) Packages by DevCetra.com & contributors. The use of this
+// Dart/Flutter (DF) Packages by dev-cetera.com & contributors. The use of this
 // source code is governed by an MIT-style license described in the LICENSE
 // file located in this project's root directory.
 //
@@ -9,6 +9,9 @@
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
+
+// ignore: implementation_imports
+import 'package:df_config/src/_etc/replace_data.dart';
 
 import 'package:path/path.dart' as p;
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -29,8 +32,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   );
   final GEMENI_API_KEY = const df_gen_core.Option(
     name: 'api-key',
-    help:
-        'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
+    help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
   final GEMENI_MODEL = const df_gen_core.Option(
     name: 'model',
@@ -44,18 +46,17 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   );
   final LANG = const df_gen_core.Option(
     name: 'lang',
-    help:
-        'The programming language to generate the data model for, e.g. "dart" or "ts"',
+    help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
   );
   final parser = CliParser(
-    title: 'DevCetra.com/df/tools',
+    title: 'dev-cetera.com/df/tools',
     description:
         ' A tool for generating data models for Dart classes annotated with @GenerateDartModel, using Gemeni.',
     example:
         'gen-models-gemeni -i . -o models --lang ts --api-key <GEMENI API KEY> --note "I would like a type/interface and not a class"',
     additional:
-        'For contributions, error reports and information, visit: https://github.com/DevCetra.',
+        'For contributions, error reports and information, visit: https://github.com/dev-cetera.',
     params: [
       DefaultFlags.HELP.flag,
       DefaultOptions.INPUT_PATH.option.copyWith(
@@ -111,8 +112,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
     dartSdk,
   );
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
-  final filePathStream1 =
-      filePathStream0.where((e) => _isAllowedFileName(e.path));
+  final filePathStream1 = filePathStream0.where((e) => _isAllowedFileName(e.path));
   List<FilePathExplorerFinding> findings;
 
   final spinner = Spinner();
@@ -186,7 +186,8 @@ void _print(
 }
 
 bool _isAllowedFileName(String e) {
-  return !e.endsWith('.g.dart') && e.endsWith('.dart');
+  final lc = e.toLowerCase();
+  return !lc.endsWith('.g.dart') && lc.endsWith('.dart');
 }
 
 Future<void> _generateModelWithGemeni({
@@ -230,6 +231,7 @@ Future<void> _generateModelWithGemeni({
     gemeniApiKey: gemeniApiKey,
     gemeniModel: gemeniModel,
   );
+  // ignore: invalid_use_of_internal_member
   final fileName = outputFileNamePattern.replaceData({
     '{class}': className.replaceAll('_', '').toSnakeCase(),
     '{lang}': lang,

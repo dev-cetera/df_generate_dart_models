@@ -1,7 +1,7 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Dart/Flutter (DF) Packages by DevCetra.com & contributors. The use of this
+// Dart/Flutter (DF) Packages by dev-cetera.com & contributors. The use of this
 // source code is governed by an MIT-style license described in the LICENSE
 // file located in this project's root directory.
 //
@@ -37,8 +37,7 @@ Future<List<ClassInsight<GenerateDartModel>>> extractInsightsFromFile(
   await analyzer.analyze(
     inclClassAnnotations: {GenerateDartModel.CLASS_NAME},
     inclMemberAnnotations: {Field.CLASS_NAME},
-    onClassAnnotationField: (p) async =>
-        temp = _updateFromClassAnnotationField(temp, p),
+    onClassAnnotationField: (p) async => temp = _updateFromClassAnnotationField(temp, p),
     onAnnotatedMember: (p) async => temp = _updateFromAnnotatedMember(temp, p),
     onPreAnalysis: (_, className) => temp = const GenerateDartModel(fields: {}),
     onPostAnalysis: (params) {
@@ -150,30 +149,22 @@ GenerateDartModel _updateFromAnnotatedMember(
       params.memberAnnotationFields[FieldModelFieldNames.fieldPath],
     );
     final a2 = [params.memberName];
-    final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]
-        ?.toStringValue();
+    final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]?.toStringValue();
     final b2 = params.memberType.getDisplayString();
-    final nullable = params
-        .memberAnnotationFields[FieldModelFieldNames.nullable]
-        ?.toBoolValue();
-    final primaryKey = params
-        .memberAnnotationFields[FieldModelFieldNames.primaryKey]
-        ?.toBoolValue();
-    final foreignKey = params
-        .memberAnnotationFields[FieldModelFieldNames.foreignKey]
-        ?.toBoolValue();
+    final nullable = params.memberAnnotationFields[FieldModelFieldNames.nullable]?.toBoolValue();
+    final primaryKey =
+        params.memberAnnotationFields[FieldModelFieldNames.primaryKey]?.toBoolValue();
+    final foreignKey =
+        params.memberAnnotationFields[FieldModelFieldNames.foreignKey]?.toBoolValue();
     final children = (dartObjToObject(
       params.memberAnnotationFields[FieldModelFieldNames.children],
     ) as List?)
         ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
         .nonNulls
         .toList();
-    final fallback = params
-        .memberAnnotationFields[FieldModelFieldNames.fallback]
-        ?.toListValue();
-    final description = params
-        .memberAnnotationFields[FieldModelFieldNames.description]
-        ?.toStringValue();
+    final fallback = params.memberAnnotationFields[FieldModelFieldNames.fallback]?.toListValue();
+    final description =
+        params.memberAnnotationFields[FieldModelFieldNames.description]?.toStringValue();
     final field = DartField(
       fieldPath: a1 ?? a2,
       fieldType: b1 ?? b2,

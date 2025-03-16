@@ -1,9 +1,9 @@
-<a href="https://www.buymeacoffee.com/robmllze" target="_blank"><img align="right" src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+<a href="https://www.buymeacoffee.com/dev_cetera" target="_blank"><img align="right" src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
-Dart & Flutter Packages by DevCetra.com & contributors.
+Dart & Flutter Packages by dev-cetera.com & contributors.
 
 [![Pub Package](https://img.shields.io/pub/v/df_generate_dart_models.svg)](https://pub.dev/packages/df_generate_dart_models)
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/robmllze/df_generate_dart_models/main/LICENSE)
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_generate_dart_models/main/LICENSE)
 
 ---
 
@@ -83,13 +83,15 @@ Save the file somewhere in its own directory, for example `lib/models/model_user
 
 Open the terminal and navigate to `lib/models/model_user`, then run `-models`. This will generate the `_model_user.g.dart` file in the same directory. In editors like VS Code, you can right-click on the folder and select _“Open in Integrated Terminal”_ to open the terminal directly at the desired location, and then run `-models` to generate the file.
 
+---
+
 ## Contributing and Discussions
 
 This is an open-source project, and we warmly welcome contributions from everyone, regardless of experience level. Whether you're a seasoned developer or just starting out, contributing to this project is a fantastic way to learn, share your knowledge, and make a meaningful impact on the community.
 
 ### Ways you can contribute:
 
-- **Buy me a coffee:** If you'd like to support the project financially, consider [buying me a coffee](https://www.buymeacoffee.com/robmllze). Your support helps cover the costs of development and keeps the project growing.
+- **Buy me a coffee:** If you'd like to support the project financially, consider [buying me a coffee](https://www.buymeacoffee.com/dev_cetera). Your support helps cover the costs of development and keeps the project growing.
 - **Share your ideas:** Every perspective matters, and your ideas can spark innovation.
 - **Report bugs:** Help us identify and fix issues to make the project more robust.
 - **Suggest improvements or new features:** Your ideas can help shape the future of the project.
@@ -98,20 +100,20 @@ This is an open-source project, and we warmly welcome contributions from everyon
 
 No matter how you choose to contribute, your involvement is greatly appreciated and valued!
 
----
+### Discord Server
 
-### Chief Maintainer:
+Feel free to ask questions and engage with the community here: https://discord.gg/gEQ8y2nfyX
+
+## Chief Maintainer:
 
 📧 Email _Robert Mollentze_ at robmllze@gmail.com
 
-### Dontations:
+## Dontations:
 
 If you're enjoying this package and find it valuable, consider showing your appreciation with a small donation. Every bit helps in supporting future development. You can donate here:
 
-https://www.buymeacoffee.com/robmllze
-
----
+https://www.buymeacoffee.com/dev_cetera
 
 ## License
 
-This project is released under the MIT License. See [LICENSE](https://raw.githubusercontent.com/robmllze/df_generate_dart_models/main/LICENSE) for more information.
+This project is released under the MIT License. See [LICENSE](https://raw.githubusercontent.com/dev-cetera/df_generate_dart_models/main/LICENSE) for more information.
