@@ -18,7 +18,7 @@ part of '___CLASS_FILE_NAME___';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// ___DESCRIPTION___
-class ___CLASS_NAME___ extends ___SUPER_CLASS_NAME___ {
+class ___CLASS_NAME___ {
   //
   //
   //
