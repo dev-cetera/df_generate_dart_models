@@ -98,7 +98,7 @@ GenerateDartModel _updateFromClassAnnotationField(
                 );
                 return field.toRecord;
               } catch (e) {
-                printGreen(e);
+                Log.printRed(e);
                 rethrow;
               }
             }),

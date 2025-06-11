@@ -55,7 +55,7 @@ Future<void> genModelsApp(
   final (argResults, argParser) = parser.parse(args);
   final help = argResults.flag(DefaultFlags.HELP.name);
   if (help) {
-    _print(printCyan, parser.getInfo(argParser));
+    _print(Log.printCyan, parser.getInfo(argParser));
     exit(ExitCodes.SUCCESS.code);
   }
   late final String inputPath;
@@ -70,7 +70,7 @@ Future<void> genModelsApp(
     outputFileNamePattern = argResults.option(OUTPUT_FILE_NAME_PATTERN.name)!;
   } catch (_) {
     _print(
-      printRed,
+      Log.printRed,
       'Missing required args! Use --help flag for more information.',
     );
     exit(ExitCodes.FAILURE.code);
@@ -80,17 +80,17 @@ Future<void> genModelsApp(
   }, dartSdk,);
   final spinner = Spinner();
   spinner.start();
-  _print(printWhite, 'Reading template at: $templatePathOrUrl...');
+  _print(Log.printWhite, 'Reading template at: $templatePathOrUrl...');
   final result =
       await MdTemplateUtility.i
           .readTemplateFromPathOrUrl(templatePathOrUrl)
           .value;
   if (result.isErr()) {
-    _print(printRed, ' Failed to read template!', spinner);
+    _print(Log.printRed, ' Failed to read template!', spinner);
     exit(ExitCodes.FAILURE.code);
   }
   final template = result.unwrap();
-  _print(printWhite, 'Looking for Dart files..');
+  _print(Log.printWhite, 'Looking for Dart files..');
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
   final filePathStream1 = filePathStream0.where(
     (e) => _isAllowedFileName(e.path),
@@ -99,11 +99,11 @@ Future<void> genModelsApp(
   try {
     findings = await filePathStream1.toList();
   } catch (e) {
-    _print(printRed, 'Failed to read file tree!', spinner);
+    _print(Log.printRed, 'Failed to read file tree!', spinner);
     exit(ExitCodes.FAILURE.code);
   }
 
-  _print(printWhite, 'Generating your models...', spinner);
+  _print(Log.printWhite, 'Generating your models...', spinner);
   try {
     for (final finding in findings) {
       final inputFilePath = finding.path;
@@ -127,21 +127,21 @@ Future<void> genModelsApp(
           fileName,
         );
         await FileSystemUtility.i.writeLocalFile(outputFilePath, output);
-        printWhite('[gen-models] ✔ Generated $fileName');
+        Log.printWhite('[gen-models] ✔ Generated $fileName');
       }
     }
   } catch (e) {
-    printRed(e);
-    _print(printRed, '✘ One or more files failed to generate!', spinner);
+    Log.printRed(e);
+    _print(Log.printRed, '✘ One or more files failed to generate!', spinner);
     exit(ExitCodes.FAILURE.code);
   }
-  _print(printWhite, 'Fixing generated files..', spinner);
+  _print(Log.printWhite, 'Fixing generated files..', spinner);
   await fixDartFile(inputPath);
-  _print(printWhite, 'Formatting generated files..', spinner);
+  _print(Log.printWhite, 'Formatting generated files..', spinner);
   spinner.start();
   await fmtDartFile(inputPath);
   spinner.stop();
-  _print(printGreen, 'Done!');
+  _print(Log.printGreen, 'Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░

@@ -32,8 +32,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   );
   final GEMENI_API_KEY = const df_gen_core.Option(
     name: 'api-key',
-    help:
-        'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
+    help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
   final GEMENI_MODEL = const df_gen_core.Option(
     name: 'model',
@@ -47,8 +46,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   );
   final LANG = const df_gen_core.Option(
     name: 'lang',
-    help:
-        'The programming language to generate the data model for, e.g. "dart" or "ts"',
+    help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
   );
   final parser = CliParser(
@@ -79,7 +77,7 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   final (argResults, argParser) = parser.parse(args);
   final help = argResults.flag(DefaultFlags.HELP.name);
   if (help) {
-    _print(printCyan, parser.getInfo(argParser));
+    _print(Log.printCyan, parser.getInfo(argParser));
     exit(ExitCodes.SUCCESS.code);
   }
   late final String inputPath;
@@ -101,14 +99,17 @@ Future<void> genModelsGemeniApp(List<String> args) async {
     lang = _fixLang(argResults.option(LANG.name)!);
   } catch (_) {
     _print(
-      printRed,
+      Log.printRed,
       'Missing required args! Use --help flag for more information.',
     );
     exit(ExitCodes.FAILURE.code);
   }
-  final analysisContextCollection = createDartAnalysisContextCollection({
-    inputPath,
-  }, dartSdk,);
+  final analysisContextCollection = createDartAnalysisContextCollection(
+    {
+      inputPath,
+    },
+    dartSdk,
+  );
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
   final filePathStream1 = filePathStream0.where(
     (e) => _isAllowedFileName(e.path),
@@ -117,16 +118,16 @@ Future<void> genModelsGemeniApp(List<String> args) async {
 
   final spinner = Spinner();
   spinner.start();
-  _print(printWhite, 'Looking for annotated classes...', spinner);
+  _print(Log.printWhite, 'Looking for annotated classes...', spinner);
 
   try {
     findings = await filePathStream1.toList();
   } catch (e) {
-    _print(printRed, 'Failed to read file tree!', spinner);
+    _print(Log.printRed, 'Failed to read file tree!', spinner);
     exit(ExitCodes.FAILURE.code);
   }
 
-  _print(printWhite, 'Generating your models...', spinner);
+  _print(Log.printWhite, 'Generating your models...', spinner);
   try {
     for (final finding in findings) {
       final inputFilePath = finding.path;
@@ -147,11 +148,11 @@ Future<void> genModelsGemeniApp(List<String> args) async {
       }
     }
   } catch (e) {
-    _print(printRed, '✘ One or more files failed to generate!', spinner);
+    _print(Log.printRed, '✘ One or more files failed to generate!', spinner);
     exit(ExitCodes.FAILURE.code);
   }
   spinner.stop();
-  _print(printGreen, 'Done!');
+  _print(Log.printGreen, 'Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -180,24 +181,26 @@ Future<void> _generateModelWithGemeni({
   if (fields == null) return;
   final className = insight.className;
   final prompt = StringBuffer();
-  prompt.writeAll([
-    'Generate a data class called $className for the programming language "$lang" using the given data below, orignally for Dart models.',
-    note,
-    'Only respond with code.',
-    'Assume any undefined/unknown variables/classes exist. Do not redefine them.',
-    'Start the file with the comment "GENERATED WITH GEMENI. VERIFY AND MODIFY AS NEEDED BEFORE USING IN CODE."',
-    'Do not provide additional comments.',
-    'Do not provide examples.',
-    '\n\n',
-  ], ' ',);
+  prompt.writeAll(
+    [
+      'Generate a data class called $className for the programming language "$lang" using the given data below, orignally for Dart models.',
+      note,
+      'Only respond with code.',
+      'Assume any undefined/unknown variables/classes exist. Do not redefine them.',
+      'Start the file with the comment "GENERATED WITH GEMENI. VERIFY AND MODIFY AS NEEDED BEFORE USING IN CODE."',
+      'Do not provide additional comments.',
+      'Do not provide examples.',
+      '\n\n',
+    ],
+    ' ',
+  );
   prompt.writeAll(
     fields.map(
-      (e) =>
-          {
-            'field-name': e.fieldPath!.join(''),
-            'field-type': e.fieldType,
-            'nullable': e.nullable,
-          }.toString(),
+      (e) => {
+        'field-name': e.fieldPath!.join(''),
+        'field-type': e.fieldType,
+        'nullable': e.nullable,
+      }.toString(),
     ),
     '\n',
   );
@@ -221,7 +224,7 @@ Future<void> _generateModelWithGemeni({
   }
 
   await FileSystemUtility.i.writeLocalFile(outputFilePath, output);
-  printWhite('[gen-models-gemeni] ✔ Generated $outputFilePath');
+  Log.printWhite('[gen-models-gemeni] ✔ Generated $outputFilePath');
 }
 
 String _fixLang(String lang) {
