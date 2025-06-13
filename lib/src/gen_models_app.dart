@@ -64,8 +64,9 @@ Future<void> genModelsApp(
   late final String outputFileNamePattern;
   try {
     inputPath = argResults.option(DefaultOptions.INPUT_PATH.name)!;
-    templatePathOrUrl =
-        argResults.option(DefaultOptions.TEMPLATE_PATH_OR_URL.name)!;
+    templatePathOrUrl = argResults.option(
+      DefaultOptions.TEMPLATE_PATH_OR_URL.name,
+    )!;
     dartSdk = argResults.option(DefaultOptions.DART_SDK.name);
     outputFileNamePattern = argResults.option(OUTPUT_FILE_NAME_PATTERN.name)!;
   } catch (_) {
@@ -77,14 +78,13 @@ Future<void> genModelsApp(
   }
   final analysisContextCollection = createDartAnalysisContextCollection({
     inputPath,
-  }, dartSdk,);
+  }, dartSdk);
   final spinner = Spinner();
   spinner.start();
   _print(Log.printWhite, 'Reading template at: $templatePathOrUrl...');
-  final result =
-      await MdTemplateUtility.i
-          .readTemplateFromPathOrUrl(templatePathOrUrl)
-          .value;
+  final result = await MdTemplateUtility.i
+      .readTemplateFromPathOrUrl(templatePathOrUrl)
+      .value;
   if (result.isErr()) {
     _print(Log.printRed, ' Failed to read template!', spinner);
     exit(ExitCodes.FAILURE.code);
@@ -177,8 +177,8 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
   '___SUPER_CONSTRUCTOR___': (insight) {
     return insight.annotation.shouldInherit == true
         ? insight.annotation.inheritanceConstructor?.nullIfEmpty != null
-            ? ': super.${insight.annotation.inheritanceConstructor}()'
-            : ''
+              ? ': super.${insight.annotation.inheritanceConstructor}()'
+              : ''
         : '';
   },
   '___FIELD_DECLARATIONS___': (insight) {
@@ -256,14 +256,12 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     }
 
     final j = fields.map((a) {
-      final ff =
-          fields
-              .where(
-                (b) => a.fieldPath!
-                    .join('.')
-                    .startsWith('${b.fieldPath!.join('.')}.'),
-              )
-              .toList();
+      final ff = fields
+          .where(
+            (b) =>
+                a.fieldPath!.join('.').startsWith('${b.fieldPath!.join('.')}.'),
+          )
+          .toList();
       ff.sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
       return $v(ff.length > 1 ? '${ff[1].fieldName}' : 'json', a);
     });
@@ -293,16 +291,15 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
   },
   '___TO_JSON_ARGS___': (insight) {
     final fields = insight.fields.toList();
-    final parents =
-        fields
-            .where(
-              (f1) =>
-                  f1.fieldType == 'Map<String, dynamic>' &&
-                  fields
-                      .map((e) => e.fieldPath!.join('.'))
-                      .any((e) => e.startsWith('${f1.fieldPath!.join('.')}.')),
-            )
-            .toList();
+    final parents = fields
+        .where(
+          (f1) =>
+              f1.fieldType == 'Map<String, dynamic>' &&
+              fields
+                  .map((e) => e.fieldPath!.join('.'))
+                  .any((e) => e.startsWith('${f1.fieldPath!.join('.')}.')),
+        )
+        .toList();
     fields.removeWhere((e) => parents.contains(e));
     final stringCaseType = insight.stringCaseType;
     final entries =
@@ -332,7 +329,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
           (e) => "'${insight.stringCaseType.convert(e)}'",
         ),
         '#',
-      ], newValue: '...?${parent.fieldName}0,',);
+      ], newValue: '...?${parent.fieldName}0,');
     }
     final test = buffer.entries.map((e) => '${e.key}: ${e.value},').join();
     return test.replaceAll('#:', '');

@@ -18,7 +18,9 @@ import 'models/model_user/model_user.dart';
 void main() {
   final a = const ModelTest(
     users: [
-      ModelUser(ref: DataRefModel(collection: ['users'], id: '123')),
+      ModelUser(
+        ref: DataRefModel(collection: ['users'], id: '123'),
+      ),
     ],
     checks: [1, 2, 3, 4],
   );

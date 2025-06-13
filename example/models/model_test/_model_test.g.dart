@@ -142,40 +142,37 @@ class ModelTest extends _ModelTest {
   /// [json] is `null` or if the conversion fails.
   static ModelTest? fromJsonOrNull(Map<String, dynamic>? json) {
     try {
-      final users =
-          letListOrNull<dynamic>(json?['users'])
-              ?.map(
-                (p0) => () {
-                  final a = letMapOrNull<String, dynamic>(p0);
-                  return a != null ? ModelUser.fromJson(a) : null;
-                }(),
-              )
-              .nonNulls
-              .nullIfEmpty
-              ?.toList()
-              .unmodifiable;
-      final checks =
-          letListOrNull<dynamic>(json?['checks'])
-              ?.map((p0) => letAsOrNull<int>(p0))
-              .nonNulls
-              .nullIfEmpty
-              ?.toList()
-              .unmodifiable;
-      final random =
-          letMapOrNull<dynamic, dynamic>(json?['random'])
-              ?.map(
-                (p0, p1) => MapEntry(
-                  p0?.toString().trim().nullIfEmpty,
-                  letMapOrNull<dynamic, dynamic>(p1)
-                      ?.map((p0, p1) => MapEntry(p0, letAsOrNull<int>(p1)))
-                      .nonNulls
-                      .nullIfEmpty
-                      ?.unmodifiable,
-                ),
-              )
-              .nonNulls
-              .nullIfEmpty
-              ?.unmodifiable;
+      final users = letListOrNull<dynamic>(json?['users'])
+          ?.map(
+            (p0) => () {
+              final a = letMapOrNull<String, dynamic>(p0);
+              return a != null ? ModelUser.fromJson(a) : null;
+            }(),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final checks = letListOrNull<dynamic>(json?['checks'])
+          ?.map((p0) => letAsOrNull<int>(p0))
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final random = letMapOrNull<dynamic, dynamic>(json?['random'])
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.toString().trim().nullIfEmpty,
+              letMapOrNull<dynamic, dynamic>(p1)
+                  ?.map((p0, p1) => MapEntry(p0, letAsOrNull<int>(p1)))
+                  .nonNulls
+                  .nullIfEmpty
+                  ?.unmodifiable,
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.unmodifiable;
       return ModelTest(users: users, checks: checks, random: random);
     } catch (e) {
       return null;
@@ -212,19 +209,21 @@ class ModelTest extends _ModelTest {
   @override
   Map<String, dynamic> toJson({bool includeNulls = false}) {
     try {
-      final users0 =
-          users?.map((p0) => p0?.toJson()).nonNulls.nullIfEmpty?.toList();
+      final users0 = users
+          ?.map((p0) => p0?.toJson())
+          .nonNulls
+          .nullIfEmpty
+          ?.toList();
       final checks0 = checks?.map((p0) => p0).nonNulls.nullIfEmpty?.toList();
-      final random0 =
-          random
-              ?.map(
-                (p0, p1) => MapEntry(
-                  p0?.trim().nullIfEmpty,
-                  p1?.map((p0, p1) => MapEntry(p0, p1)).nonNulls.nullIfEmpty,
-                ),
-              )
-              .nonNulls
-              .nullIfEmpty;
+      final random0 = random
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.trim().nullIfEmpty,
+              p1?.map((p0, p1) => MapEntry(p0, p1)).nonNulls.nullIfEmpty,
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty;
       final withNulls = {'users': users0, 'random': random0, 'checks': checks0};
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
