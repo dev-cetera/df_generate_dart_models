@@ -43,11 +43,19 @@ class ModelUser extends _ModelUser {
 
   /// Constructs a new instance of [ModelUser]
   /// from optional and required parameters.
-  const ModelUser({required this.ref, this.firstName, this.lastName});
+  const ModelUser({
+    required this.ref,
+    this.firstName,
+    this.lastName,
+  });
 
   /// Construcs a new instance of [ModelUser],
   /// forcing all parameters to be optional.
-  const ModelUser.optional({this.ref, this.firstName, this.lastName});
+  const ModelUser.optional({
+    this.ref,
+    this.firstName,
+    this.lastName,
+  });
 
   /// Constructs a new instance of [ModelUser],
   /// and asserts that all required parameters are not null.
@@ -58,12 +66,18 @@ class ModelUser extends _ModelUser {
   }) {
     assert(ref != null);
 
-    return ModelUser(ref: ref, firstName: firstName, lastName: lastName);
+    return ModelUser(
+      ref: ref,
+      firstName: firstName,
+      lastName: lastName,
+    );
   }
 
   /// Constructs a new instance of [ModelUser],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelUser.from(BaseModel another) {
+  factory ModelUser.from(
+    BaseModel another,
+  ) {
     try {
       return fromOrNull(another)!;
     } catch (e) {
@@ -76,13 +90,17 @@ class ModelUser extends _ModelUser {
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelUser? fromOrNull(BaseModel? another) {
+  static ModelUser? fromOrNull(
+    BaseModel? another,
+  ) {
     return fromJsonOrNull(another?.toJson())!;
   }
 
   /// Constructs a new instance of [ModelUser],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelUser.of(ModelUser another) {
+  factory ModelUser.of(
+    ModelUser another,
+  ) {
     try {
       return ofOrNull(another)!;
     } catch (e) {
@@ -95,14 +113,18 @@ class ModelUser extends _ModelUser {
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelUser? ofOrNull(ModelUser? other) {
+  static ModelUser? ofOrNull(
+    ModelUser? other,
+  ) {
     return fromJsonOrNull(other?.toJson());
   }
 
   /// Constructs a new instance of [ModelUser],
   /// from [jsonString], which must be a valid JSON String. Throws if the
   /// conversion fails.
-  factory ModelUser.fromJsonString(String jsonString) {
+  factory ModelUser.fromJsonString(
+    String jsonString,
+  ) {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
@@ -114,7 +136,9 @@ class ModelUser extends _ModelUser {
   /// Constructs a new instance of [ModelUser],
   /// from [jsonString], which must be a valid JSON String. Returns `null` if
   /// [jsonString] is `null` or if the conversion fails.
-  static ModelUser? fromJsonStringOrNull(String? jsonString) {
+  static ModelUser? fromJsonStringOrNull(
+    String? jsonString,
+  ) {
     try {
       if (jsonString!.isNotEmpty) {
         final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
@@ -130,7 +154,9 @@ class ModelUser extends _ModelUser {
   /// Constructs a new instance of [ModelUser],
   /// from [json], which must be a valid JSON object. Throws if the conversion
   /// fails.
-  factory ModelUser.fromJson(Map<String, dynamic>? json) {
+  factory ModelUser.fromJson(
+    Map<String, dynamic>? json,
+  ) {
     try {
       return fromJsonOrNull(json)!;
     } catch (e) {
@@ -142,12 +168,18 @@ class ModelUser extends _ModelUser {
   /// Constructs a new instance of [ModelUser],
   /// from [json], which must be a valid JSON object. Returns `null` if
   /// [json] is `null` or if the conversion fails.
-  static ModelUser? fromJsonOrNull(Map<String, dynamic>? json) {
+  static ModelUser? fromJsonOrNull(
+    Map<String, dynamic>? json,
+  ) {
     try {
       final ref = dataRefFromString(json?['ref']?.toString());
       final firstName = json?['firstName']?.toString().trim().nullIfEmpty;
       final lastName = json?['lastName']?.toString().trim().nullIfEmpty;
-      return ModelUser(ref: ref, firstName: firstName, lastName: lastName);
+      return ModelUser(
+        ref: ref,
+        firstName: firstName,
+        lastName: lastName,
+      );
     } catch (e) {
       return null;
     }
@@ -156,7 +188,9 @@ class ModelUser extends _ModelUser {
   /// Constructs a new instance of [ModelUser],
   /// from the query parameters of [uri]. Throws if the conversion
   /// fails.
-  factory ModelUser.fromUri(Uri? uri) {
+  factory ModelUser.fromUri(
+    Uri? uri,
+  ) {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
@@ -168,7 +202,9 @@ class ModelUser extends _ModelUser {
   /// Constructs a new instance of [ModelUser],
   /// from the query parameters of [uri]. Returns `null` if [uri] is `null` or
   /// if the conversion fails.
-  static ModelUser? fromUriOrNull(Uri? uri) {
+  static ModelUser? fromUriOrNull(
+    Uri? uri,
+  ) {
     try {
       if (uri != null && uri.path == CLASS_NAME) {
         return ModelUser.fromJson(uri.queryParameters);
@@ -181,7 +217,9 @@ class ModelUser extends _ModelUser {
   }
 
   @override
-  Map<String, dynamic> toJson({bool includeNulls = false}) {
+  Map<String, dynamic> toJson({
+    bool includeNulls = false,
+  }) {
     try {
       final ref0 = ref?.path;
       final firstName0 = firstName?.trim().nullIfEmpty;
@@ -233,7 +271,10 @@ abstract final class ModelUserFieldNames {
 extension ModelUserX on ModelUser {
   /// Creates a copy of this instance, merging another model's fields into
   /// this model's fields.
-  ModelUser mergeWith(BaseModel? other, {bool deepMerge = false}) {
+  ModelUser mergeWith(
+    BaseModel? other, {
+    bool deepMerge = false,
+  }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
@@ -241,7 +282,11 @@ extension ModelUserX on ModelUser {
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelUser copyWith({DataRefModel? ref, String? firstName, String? lastName}) {
+  ModelUser copyWith({
+    DataRefModel? ref,
+    String? firstName,
+    String? lastName,
+  }) {
     return ModelUser.assertRequired(
       ref: ref ?? this.ref,
       firstName: firstName ?? this.firstName,
