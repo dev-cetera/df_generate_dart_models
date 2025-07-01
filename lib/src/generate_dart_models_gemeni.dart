@@ -30,8 +30,7 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
   );
   final GEMENI_API_KEY = const OptionParam(
     name: 'api-key',
-    help:
-        'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
+    help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
   final GEMENI_MODEL = const OptionParam(
     name: 'model',
@@ -45,8 +44,7 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
   );
   final LANG = const OptionParam(
     name: 'lang',
-    help:
-        'The programming language to generate the data model for, e.g. "dart" or "ts"',
+    help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
   );
   final parser = CliParser(
@@ -106,9 +104,10 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
     );
     exit(ExitCodes.FAILURE.code);
   }
-  final analysisContextCollection = createDartAnalysisContextCollection({
-    inputPath,
-  }, dartSdk);
+  final analysisContextCollection = createDartAnalysisContextCollection(
+    {inputPath},
+    dartSdk, //
+  );
   final filePathStream0 = PathExplorer(inputPath).exploreFiles();
   final filePathStream1 = filePathStream0.where(
     (e) => _isAllowedFileName(e.path),
@@ -180,16 +179,19 @@ Future<void> _generateModelWithGemeni({
   if (fields == null) return;
   final className = insight.className;
   final prompt = StringBuffer();
-  prompt.writeAll([
-    'Generate a data class called $className for the programming language "$lang" using the given data below, orignally for Dart models.',
-    note,
-    'Only respond with code.',
-    'Assume any undefined/unknown variables/classes exist. Do not redefine them.',
-    'Start the file with the comment "GENERATED WITH GEMENI. VERIFY AND MODIFY AS NEEDED BEFORE USING IN CODE."',
-    'Do not provide additional comments.',
-    'Do not provide examples.',
-    '\n\n',
-  ], ' ');
+  prompt.writeAll(
+    [
+      'Generate a data class called $className for the programming language "$lang" using the given data below, orignally for Dart models.',
+      note,
+      'Only respond with code.',
+      'Assume any undefined/unknown variables/classes exist. Do not redefine them.',
+      'Start the file with the comment "GENERATED WITH GEMENI. VERIFY AND MODIFY AS NEEDED BEFORE USING IN CODE."',
+      'Do not provide additional comments.',
+      'Do not provide examples.',
+      '\n\n',
+    ],
+    ' ', //
+  );
   prompt.writeAll(
     fields.map(
       (e) => {
