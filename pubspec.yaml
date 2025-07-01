@@ -53,9 +53,9 @@ dev_dependencies:
 
 executables:
   --models: df_generate_dart_models
-  --models-minimal: df_generate_dart_models
-  --models-gemani: df_generate_dart_models
+  --models-min: df_generate_dart_models_min
+  --models-gemeni: df_generate_dart_models_gemeni
   df_generate_dart_models: df_generate_dart_models
-  df_generate_dart_models_minimal: df_generate_dart_models_minimal
+  df_generate_dart_models_min: df_generate_dart_models_min
   df_generate_dart_models_gemeni: df_generate_dart_models_gemeni
 
