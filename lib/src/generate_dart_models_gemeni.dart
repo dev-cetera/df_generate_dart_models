@@ -30,7 +30,8 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
   );
   final GEMENI_API_KEY = const OptionParam(
     name: 'api-key',
-    help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
+    help:
+        'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
   final GEMENI_MODEL = const OptionParam(
     name: 'model',
@@ -44,7 +45,8 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
   );
   final LANG = const OptionParam(
     name: 'lang',
-    help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
+    help:
+        'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
   );
   final parser = CliParser(
