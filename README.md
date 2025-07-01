@@ -6,7 +6,7 @@ Dart & Flutter Packages by dev-cetera.com & contributors.
 [![sponsor](https://img.shields.io/badge/sponsor-grey?logo=github-sponsors)](https://github.com/sponsors/dev-cetera)
 [![patreon](https://img.shields.io/badge/patreon-grey?logo=patreon)](https://www.patreon.com/c/RobertMollentze)
 [![pub](https://img.shields.io/pub/v/df_generate_dart_models.svg)](https://pub.dev/packages/df_generate_dart_models)
-[![tag](https://img.shields.io/badge/tag-v0.14.0-purple?logo=github)](https://github.com/dev-cetera/df_generate_dart_models/tree/v0.14.0)
+[![tag](https://img.shields.io/badge/tag-v0.14.1-purple?logo=github)](https://github.com/dev-cetera/df_generate_dart_models/tree/v0.14.1)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_generate_dart_models/main/LICENSE)
 
 ---
@@ -91,6 +91,7 @@ Save the file somewhere in its own directory, for example `lib/models/model_user
 1. Install this tool by running `dart pub global activate df_generate_dart_models 0.14.0` in your terminal. You can replace `0.14.0` with any other version or omit it to install the latest version.
 2. In your project, open a terminal at the desired folder, e.g. `cd lib/models/model_user/model_user.dart`.
 3. Run `--models-min`. This will generate the `_model_user.g.dart` file in the same directory.
+
 
 <!-- END _README_CONTENT -->
 
