@@ -30,8 +30,7 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
   );
   final GEMENI_API_KEY = const OptionParam(
     name: 'api-key',
-    help:
-        'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
+    help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
   final GEMENI_MODEL = const OptionParam(
     name: 'model',
@@ -45,16 +44,15 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
   );
   final LANG = const OptionParam(
     name: 'lang',
-    help:
-        'The programming language to generate the data model for, e.g. "dart" or "ts"',
+    help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
   );
   final parser = CliParser(
-    title: 'dev-cetera.com/df/tools',
+    title: 'dev-cetera.com',
     description:
         ' A tool for generating data models for Dart classes annotated with @GenerateDartModel, using Gemeni.',
     example:
-        'gen-models-gemeni -i . -o models --lang ts --api-key <GEMENI API KEY> --note "I would like a type/interface and not a class"',
+        'generate_dart_models_gemeni -i . -o models --lang ts --api-key <GEMENI API KEY> --note "I would like a type/interface and not a class"',
     additional:
         'For contributions, error reports and information, visit: https://github.com/dev-cetera.',
     params: [
@@ -77,7 +75,7 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
   final (argResults, argParser) = parser.parse(args);
   final help = argResults.flag(DefaultFlags.HELP.name);
   if (help) {
-    _print(Log.printCyan, parser.getInfo(argParser));
+    Log.printCyan(parser.getInfo(argParser));
     exit(ExitCodes.SUCCESS.code);
   }
   late final String inputPath;
@@ -100,10 +98,7 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
     note = argResults.option(NOTE.name)!;
     lang = _fixLang(argResults.option(LANG.name)!);
   } catch (_) {
-    _print(
-      Log.printRed,
-      'Missing required args! Use --help flag for more information.',
-    );
+    Log.printRed('Missing required args! Use --help flag for more information.');
     exit(ExitCodes.FAILURE.code);
   }
   final analysisContextCollection = createDartAnalysisContextCollection(
@@ -115,19 +110,15 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
     (e) => _isAllowedFileName(e.path),
   );
   List<FilePathExplorerFinding> findings;
-
-  final spinner = Spinner();
-  spinner.start();
-  _print(Log.printWhite, 'Looking for annotated classes...', spinner);
-
+  Log.printWhite('Looking for annotated classes...');
   try {
     findings = await filePathStream1.toList();
   } catch (e) {
-    _print(Log.printRed, 'Failed to read file tree!', spinner);
+    Log.printRed('Failed to read file tree!');
     exit(ExitCodes.FAILURE.code);
   }
 
-  _print(Log.printWhite, 'Generating your models...', spinner);
+  Log.printWhite('Generating your models...');
   try {
     for (final finding in findings) {
       final inputFilePath = finding.path;
@@ -148,20 +139,13 @@ Future<void> generateDartModelsGemeni(List<String> args) async {
       }
     }
   } catch (e) {
-    _print(Log.printRed, '✘ One or more files failed to generate!', spinner);
+    Log.printRed('✘ One or more files failed to generate!');
     exit(ExitCodes.FAILURE.code);
   }
-  spinner.stop();
-  _print(Log.printGreen, 'Done!');
+  Log.printGreen('Done!');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-void _print(void Function(String) print, String message, [Spinner? spinner]) {
-  spinner?.stop();
-  print('[gen-models-gemeni] $message');
-  spinner?.start();
-}
 
 bool _isAllowedFileName(String e) {
   final lc = e.toLowerCase();
@@ -224,7 +208,7 @@ Future<void> _generateModelWithGemeni({
   }
 
   await FileSystemUtility.i.writeLocalFile(outputFilePath, output);
-  Log.printWhite('[gen-models-gemeni] ✔ Generated $outputFilePath');
+  Log.printWhite('✔ Generated $outputFilePath');
 }
 
 String _fixLang(String lang) {

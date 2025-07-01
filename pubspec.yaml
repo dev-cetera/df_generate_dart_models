@@ -16,7 +16,7 @@ repository: https://github.com/robmllze/df_generate_dart_models
 funding:
   - https://www.buymeacoffee.com/dev_cetera
 description: A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
-version: 0.14.0
+version: 0.14.1
 topics:
   - build-runner
   - cli
