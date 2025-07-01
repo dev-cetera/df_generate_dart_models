@@ -16,7 +16,6 @@ import 'package:df_config/src/_etc/replace_data.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:df_gen_core/df_gen_core.dart';
-import 'package:df_gen_core/df_gen_core.dart' as df_gen_core;
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core_utils.dart';
 
@@ -25,12 +24,12 @@ import 'extract_insights_from_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> genModelsApp(
+Future<void> generateDartModels(
   List<String> args, {
   required String defaultTemplatePathOrUrl,
 }) async {
   Log.enableReleaseAsserts = true;
-  final OUTPUT_FILE_NAME_PATTERN = const df_gen_core.Option(
+  final OUTPUT_FILE_NAME_PATTERN = const OptionParam(
     name: 'output-file-name',
     defaultsTo: '_{class}.g.dart',
   );
@@ -43,13 +42,13 @@ Future<void> genModelsApp(
         'For contributions, error reports and information, visit: https://github.com/dev-cetera.',
     params: [
       DefaultFlags.HELP.flag,
-      DefaultOptions.INPUT_PATH.option.copyWith(
+      DefaultOptionParams.INPUT_PATH.option.copyWith(
         defaultsTo: FileSystemUtility.i.currentDir,
       ),
-      DefaultOptions.TEMPLATE_PATH_OR_URL.option.copyWith(
+      DefaultOptionParams.TEMPLATE_PATH_OR_URL.option.copyWith(
         defaultsTo: defaultTemplatePathOrUrl,
       ),
-      DefaultOptions.DART_SDK.option,
+      DefaultOptionParams.DART_SDK.option,
       OUTPUT_FILE_NAME_PATTERN,
     ],
   );
@@ -64,11 +63,11 @@ Future<void> genModelsApp(
   late final String? dartSdk;
   late final String outputFileNamePattern;
   try {
-    inputPath = argResults.option(DefaultOptions.INPUT_PATH.name)!;
+    inputPath = argResults.option(DefaultOptionParams.INPUT_PATH.name)!;
     templatePathOrUrl = argResults.option(
-      DefaultOptions.TEMPLATE_PATH_OR_URL.name,
+      DefaultOptionParams.TEMPLATE_PATH_OR_URL.name,
     )!;
-    dartSdk = argResults.option(DefaultOptions.DART_SDK.name);
+    dartSdk = argResults.option(DefaultOptionParams.DART_SDK.name);
     outputFileNamePattern = argResults.option(OUTPUT_FILE_NAME_PATTERN.name)!;
   } catch (_) {
     _print(

@@ -16,7 +16,7 @@ repository: https://github.com/robmllze/df_generate_dart_models
 funding:
   - https://www.buymeacoffee.com/dev_cetera
 description: A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
-version: 0.13.5
+version: 0.14.0
 topics:
   - build-runner
   - cli
@@ -32,15 +32,16 @@ environment:
 ## -----------------------------------------------------------------------------
 
 dependencies:
-  df_collection: ^0.9.8
-  df_config: ^0.7.5
-  df_gen_core: ^0.6.16
-  df_generate_dart_models_core: ^0.9.21
-  df_log: ^0.3.19
-  df_string: ^0.2.7
-  df_type: ^0.14.2
   google_generative_ai: ^0.4.7
   path: ^1.9.1
+
+  df_collection: ^0.9.8
+  df_config: ^0.7.5
+  df_gen_core: ^0.7.0
+  df_generate_dart_models_core: ^0.9.22
+  df_log: ^0.3.19
+  df_string: ^0.2.9
+  df_type: ^0.14.2
 
 ## -----------------------------------------------------------------------------
 
@@ -51,8 +52,10 @@ dev_dependencies:
 ## -----------------------------------------------------------------------------
 
 executables:
-  gen-models-featured: gen_models_featured_v1
-  gen-models-gemeni: gen_models_gemeni
-  gen-models-minimal: gen_models_minimal_v1
-  gen-models: gen_models_featured_v1
+  --models: df_generate_dart_models
+  --models-minimal: df_generate_dart_models
+  --models-gemani: df_generate_dart_models
+  df_generate_dart_models: df_generate_dart_models
+  df_generate_dart_models_minimal: df_generate_dart_models_minimal
+  df_generate_dart_models_gemeni: df_generate_dart_models_gemeni
 

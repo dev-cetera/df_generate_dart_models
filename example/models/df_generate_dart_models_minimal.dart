@@ -15,9 +15,9 @@ import 'package:df_generate_dart_models/df_generate_dart_models.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main(List<String> args) async {
-  await genModelsApp(
+  await generateDartModels(
     args,
     defaultTemplatePathOrUrl:
-        'https://raw.githubusercontent.com/dev-cetera/df_generate_dart_models/main/templates/featured_v1.dart.md',
+        'https://raw.githubusercontent.com/dev-cetera/df_generate_dart_models/main/templates/minimal_v1.dart.md',
   );
 }

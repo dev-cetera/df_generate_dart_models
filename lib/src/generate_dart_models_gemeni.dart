@@ -17,34 +17,32 @@ import 'package:path/path.dart' as p;
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 import 'package:df_gen_core/df_gen_core.dart';
-import 'package:df_gen_core/df_gen_core.dart' as df_gen_core;
-import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 import 'extract_insights_from_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-Future<void> genModelsGemeniApp(List<String> args) async {
-  final OUTPUT_FILE_NAME_PATTERN = const df_gen_core.Option(
+Future<void> generateDartModelsGemeni(List<String> args) async {
+  final OUTPUT_FILE_NAME_PATTERN = const OptionParam(
     name: 'output-file-name',
     defaultsTo: '_{class}.g.{lang}',
   );
-  final GEMENI_API_KEY = const df_gen_core.Option(
+  final GEMENI_API_KEY = const OptionParam(
     name: 'api-key',
     help: 'Get your Gemeni API key here https://ai.google.dev/gemini-api/docs/api-key.',
   );
-  final GEMENI_MODEL = const df_gen_core.Option(
+  final GEMENI_MODEL = const OptionParam(
     name: 'model',
     defaultsTo: 'gemini-1.5-flash-latest',
     help: 'The Gemeni model to use for generation.',
   );
-  final NOTE = const df_gen_core.Option(
+  final NOTE = const OptionParam(
     name: 'note',
     help: 'A note to pass to Gemeni to offer assistance.',
     defaultsTo: 'Provide a fromJson constructor or method and a toJson method.',
   );
-  final LANG = const df_gen_core.Option(
+  final LANG = const OptionParam(
     name: 'lang',
     help: 'The programming language to generate the data model for, e.g. "dart" or "ts"',
     defaultsTo: 'ts',
@@ -59,14 +57,14 @@ Future<void> genModelsGemeniApp(List<String> args) async {
         'For contributions, error reports and information, visit: https://github.com/dev-cetera.',
     params: [
       DefaultFlags.HELP.flag,
-      DefaultOptions.INPUT_PATH.option.copyWith(
+      DefaultOptionParams.INPUT_PATH.option.copyWith(
         defaultsTo: FileSystemUtility.i.currentDir,
       ),
-      DefaultOptions.GENERATED_OUTPUT.option.copyWith(
+      DefaultOptionParams.GENERATED_OUTPUT.option.copyWith(
         help: 'The directory to write the generated files to.',
         defaultsTo: 'generated',
       ),
-      DefaultOptions.DART_SDK.option,
+      DefaultOptionParams.DART_SDK.option,
       OUTPUT_FILE_NAME_PATTERN,
       GEMENI_API_KEY,
       GEMENI_MODEL,
@@ -89,10 +87,10 @@ Future<void> genModelsGemeniApp(List<String> args) async {
   late final String note;
   late final String lang;
   try {
-    inputPath = argResults.option(DefaultOptions.INPUT_PATH.name)!;
-    dartSdk = argResults.option(DefaultOptions.DART_SDK.name);
+    inputPath = argResults.option(DefaultOptionParams.INPUT_PATH.name)!;
+    dartSdk = argResults.option(DefaultOptionParams.DART_SDK.name);
     outputFileNamePattern = argResults.option(OUTPUT_FILE_NAME_PATTERN.name)!;
-    outputDirPath = argResults.option(DefaultOptions.GENERATED_OUTPUT.name)!;
+    outputDirPath = argResults.option(DefaultOptionParams.GENERATED_OUTPUT.name)!;
     gemeniApiKey = argResults.option(GEMENI_API_KEY.name)!;
     gemeniModel = argResults.option(GEMENI_MODEL.name)!;
     note = argResults.option(NOTE.name)!;

@@ -14,4 +14,4 @@
 /// greater flexibility than json_serializable or freezed.
 library;
 
-export 'src/_index.g.dart';
+export 'src/_src.g.dart';

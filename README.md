@@ -25,7 +25,7 @@ The example below provides a glimpse of what this package can do. The package in
 
 ### Step 1
 
-To install this tool, run `dart pub global activate df_generate_dart_models 0.12.4` in your terminal. You can replace `0.12.19` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
+To install this tool, run `dart pub global activate df_generate_dart_models 0.14.0` in your terminal. You can replace `0.14.0` with any other version or omit it to install the latest version. It’s recommended to specify a version to avoid potential issues from frequent updates and changes.
 
 ### Step 2
 
@@ -33,7 +33,7 @@ Add [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_m
 
 ```yaml
 dependencies:
-  df_generate_dart_models_core: 0.8.18 # Fixed version to ensure compatibility and avoid issues from frequent updates.
+  df_generate_dart_models_core: 0.9.22 # Fixed version to ensure compatibility and avoid issues from frequent updates.
 ```
 
 ### Step 3
@@ -87,7 +87,7 @@ Save the file somewhere in its own directory, for example `lib/models/model_user
 
 ### Step 5
 
-Open the terminal and navigate to `lib/models/model_user`, then run `-models`. This will generate the `_model_user.g.dart` file in the same directory. In editors like VS Code, you can right-click on the folder and select _“Open in Integrated Terminal”_ to open the terminal directly at the desired location, and then run `-models` to generate the file.
+Open the terminal and navigate to `lib/models/model_user`, then run `df_generate_dart_models`. This will generate the `_model_user.g.dart` file in the same directory. In editors like VS Code, you can right-click on the folder and select _“Open in Integrated Terminal”_ to open the terminal directly at the desired location, and then run `df_generate_dart_models` to generate the file.
 
 <!-- END _README_CONTENT -->
 
@@ -123,4 +123,3 @@ If you're enjoying this package and find it valuable, consider showing your appr
 ## 🧑‍⚖️ License
 
 This project is released under the [MIT License](https://raw.githubusercontent.com/dev-cetera/df_generate_dart_models/main/LICENSE). See [LICENSE](https://raw.githubusercontent.com/dev-cetera/df_generate_dart_models/main/LICENSE) for more information.
-
