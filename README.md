@@ -6,7 +6,7 @@ Dart & Flutter Packages by dev-cetera.com & contributors.
 [![sponsor](https://img.shields.io/badge/sponsor-grey?logo=github-sponsors)](https://github.com/sponsors/dev-cetera)
 [![patreon](https://img.shields.io/badge/patreon-grey?logo=patreon)](https://www.patreon.com/c/RobertMollentze)
 [![pub](https://img.shields.io/pub/v/df_generate_dart_models.svg)](https://pub.dev/packages/df_generate_dart_models)
-[![tag](https://img.shields.io/badge/tag-v0.13.5-purple?logo=github)](https://github.com/dev-cetera/df_generate_dart_models/tree/v0.13.5)
+[![tag](https://img.shields.io/badge/tag-v0.14.0-purple?logo=github)](https://github.com/dev-cetera/df_generate_dart_models/tree/v0.14.0)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_generate_dart_models/main/LICENSE)
 
 ---
@@ -88,6 +88,7 @@ Save the file somewhere in its own directory, for example `lib/models/model_user
 ### Step 5
 
 Open the terminal and navigate to `lib/models/model_user`, then run `df_generate_dart_models`. This will generate the `_model_user.g.dart` file in the same directory. In editors like VS Code, you can right-click on the folder and select _“Open in Integrated Terminal”_ to open the terminal directly at the desired location, and then run `df_generate_dart_models` to generate the file.
+
 
 <!-- END _README_CONTENT -->
 
