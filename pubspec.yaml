@@ -18,7 +18,7 @@ funding:
   - https://www.patreon.com/c/RobertMollentze
   - https://github.com/sponsors/robmllze
 description: A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
-version: 0.14.1
+version: 0.14.2
 topics:
   - build-runner
   - cli
