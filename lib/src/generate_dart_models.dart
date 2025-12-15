@@ -79,10 +79,12 @@ Future<void> generateDartModels(
   }
   final analysisContextCollection = createDartAnalysisContextCollection(
     {inputPath},
-    dartSdk, //
+    dartSdk,
   );
   Log.printWhite('Reading template at: $templatePathOrUrl...');
-  final result = await MdTemplateUtility.i.readTemplateFromPathOrUrl(templatePathOrUrl).value;
+  final result = await MdTemplateUtility.i
+      .readTemplateFromPathOrUrl(templatePathOrUrl)
+      .value;
   if (result.isErr()) {
     Log.printRed(' Failed to read template!');
     exit(ExitCodes.FAILURE.code);
@@ -150,16 +152,20 @@ bool _isAllowedFileName(String e) {
 
 final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
   '___DESCRIPTION___': (insight) {
-    return insight.annotation.description ?? 'Generated class for [${insight.className}].';
+    return insight.annotation.description ??
+        'Generated class for [${insight.className}].';
   },
   '___SUPER_CLASS_NAME___': (insight) {
-    return insight.annotation.shouldInherit == true ? insight.className : 'Model';
+    return insight.annotation.shouldInherit == true
+        ? insight.className
+        : 'Model';
   },
   '___CLASS_FILE_NAME___': (insight) {
     return insight.fileName;
   },
   '___CLASS_NAME___': (insight) {
-    return insight.annotation.className ?? insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
+    return insight.annotation.className ??
+        insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
   },
   '___SUPER_CONSTRUCTOR___': (insight) {
     return insight.annotation.shouldInherit == true
@@ -233,7 +239,8 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     final j = fields.map((a) {
       final ff = fields
           .where(
-            (b) => a.fieldPath!.join('.').startsWith('${b.fieldPath!.join('.')}.'),
+            (b) =>
+                a.fieldPath!.join('.').startsWith('${b.fieldPath!.join('.')}.'),
           )
           .toList();
       ff.sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
@@ -325,8 +332,8 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
   },
   '___FIELD_NAMES___': (insight) {
     return insight.fields.map((e) {
-      final className =
-          insight.annotation.className ?? insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
+      final className = insight.annotation.className ??
+          insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
       final f = e.fieldName;
       final c = insight.stringCaseType.convert(e.fieldName!);
       return [
@@ -374,6 +381,7 @@ extension _ClassInsightExtension on ClassInsight<GenerateDartModel> {
   }
 
   StringCaseType get stringCaseType {
-    return StringCaseType.values.valueOf(annotation.keyStringCase) ?? StringCaseType.CAMEL_CASE;
+    return StringCaseType.values.valueOf(annotation.keyStringCase) ??
+        StringCaseType.CAMEL_CASE;
   }
 }
