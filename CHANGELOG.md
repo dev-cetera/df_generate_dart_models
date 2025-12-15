@@ -2,8 +2,9 @@
 
 ## [0.14.2]
 
-- Released @ 7/2025 (UTC)
+- Released @ 12/2025 (UTC)
 - Update readme
+- Update dependencies
 
 ## [0.14.1]
 

@@ -4,7 +4,7 @@
 [![tag](https://img.shields.io/badge/Tag-v0.14.2-purple?logo=github)](https://github.com/dev-cetera/df_generate_dart_models/tree/v0.14.2)
 [![buymeacoffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/dev_cetera)
 [![sponsor](https://img.shields.io/badge/Sponsor-grey?logo=github-sponsors&logoColor=pink)](https://github.com/sponsors/dev-cetera)
-[![patreon](https://img.shields.io/badge/Patreon-grey?logo=patreon)](https://www.patreon.com/robelator)
+[![patreon](https://img.shields.io/badge/Patreon-grey?logo=patreon)](https://www.patreon.com/t0mb3rr)
 [![discord](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=white)](https://discord.gg/gEQ8y2nfyX)
 [![instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/dev_cetera/)
 [![license](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_generate_dart_models/main/LICENSE)
@@ -91,6 +91,7 @@ Save the file somewhere in its own directory, for example `lib/models/model_user
 1. Install this tool by running `dart pub global activate df_generate_dart_models 0.14.0` in your terminal. You can replace `0.14.0` with any other version or omit it to install the latest version.
 2. In your project, open a terminal at the desired folder, e.g. `cd lib/models/model_user/model_user.dart`.
 3. Run `--models-min`. This will generate the `_model_user.g.dart` file in the same directory.
+
 
 <!-- END _README_CONTENT -->
 
