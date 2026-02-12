@@ -209,8 +209,11 @@ class ModelTest extends _ModelTest {
   @override
   Map<String, dynamic> toJson({bool includeNulls = false}) {
     try {
-      final users0 =
-          users?.map((p0) => p0?.toJson()).nonNulls.nullIfEmpty?.toList();
+      final users0 = users
+          ?.map((p0) => p0?.toJson())
+          .nonNulls
+          .nullIfEmpty
+          ?.toList();
       final checks0 = checks?.map((p0) => p0).nonNulls.nullIfEmpty?.toList();
       final random0 = random
           ?.map(

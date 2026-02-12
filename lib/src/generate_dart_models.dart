@@ -78,9 +78,7 @@ Future<void> generateDartModels(
     exit(ExitCodes.FAILURE.code);
   }
   final analysisContextCollection = createDartAnalysisContextCollection(
-    {
-      inputPath,
-    },
+    {inputPath},
     dartSdk, //
   );
   Log.printWhite('Reading template at: $templatePathOrUrl...');
@@ -172,56 +170,68 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
   '___SUPER_CONSTRUCTOR___': (insight) {
     return insight.annotation.shouldInherit == true
         ? insight.annotation.inheritanceConstructor?.nullIfEmpty != null
-            ? ': super.${insight.annotation.inheritanceConstructor}()'
-            : ''
+              ? ': super.${insight.annotation.inheritanceConstructor}()'
+              : ''
         : '';
   },
   '___FIELD_DECLARATIONS___': (insight) {
-    return insight.fields.map((e) {
-      final description = e.description;
-      final t = e.fieldType!;
-      final r = stripSpecialSyntaxFromFieldType(t);
-      final f = e.fieldName;
-      return [
-        '  /// ${description ?? 'No description provided.'}',
-        'final $r? $f;',
-        '',
-      ].join('\n');
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final description = e.description;
+          final t = e.fieldType!;
+          final r = stripSpecialSyntaxFromFieldType(t);
+          final f = e.fieldName;
+          return [
+            '  /// ${description ?? 'No description provided.'}',
+            'final $r? $f;',
+            '',
+          ].join('\n');
+        })
+        .join('\n');
   },
   '___PARAMS___': (insight) {
-    return insight.fields.map((e) {
-      final n = e.nullable;
-      final f = e.fieldName;
-      return '${n ? '' : 'required'} this.$f,';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final n = e.nullable;
+          final f = e.fieldName;
+          return '${n ? '' : 'required'} this.$f,';
+        })
+        .join('\n');
   },
   '___PERMISSIVE_PARAMS___': (insight) {
-    return insight.fields.map((e) {
-      final f = e.fieldName;
-      return 'this.$f,';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final f = e.fieldName;
+          return 'this.$f,';
+        })
+        .join('\n');
   },
   '___STRICT_PARAMS___': (insight) {
-    return insight.fields.map((e) {
-      final t = e.fieldType!;
-      final r = stripSpecialSyntaxFromFieldType(t);
-      final f = e.fieldName;
-      return '$r? $f,';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final t = e.fieldType!;
+          final r = stripSpecialSyntaxFromFieldType(t);
+          final f = e.fieldName;
+          return '$r? $f,';
+        })
+        .join('\n');
   },
   '___STRICT_PARAM_ASSERTIONS___': (insight) {
-    return insight.fields.map((e) {
-      final n = e.nullable;
-      final f = e.fieldName;
-      return n ? '' : 'assert($f != null);';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final n = e.nullable;
+          final f = e.fieldName;
+          return n ? '' : 'assert($f != null);';
+        })
+        .join('\n');
   },
   '___STRICT_ARGS___': (insight) {
-    return insight.fields.map((e) {
-      final f = e.fieldName;
-      return '$f: $f,';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final f = e.fieldName;
+          return '$f: $f,';
+        })
+        .join('\n');
   },
   '___FROM_JSON_OR_NULL_PARAMS___': (insight) {
     final fields = insight.fields.toList();
@@ -251,22 +261,26 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     return j.join('\n');
   },
   '___FROM_JSON_OR_NULL_ARGS___': (insight) {
-    return insight.fields.map((e) {
-      final f = e.fieldName;
-      return '$f: $f,';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final f = e.fieldName;
+          return '$f: $f,';
+        })
+        .join('\n');
   },
   '___TO_JSON_PARAMS___': (insight) {
-    return insight.fields.map((e) {
-      final f = e.fieldName!;
-      final f0 = '${f}0';
-      final x = e.fieldTypeCode!;
-      final s = stripSpecialSyntaxFromFieldType(x);
-      final a = DartTypeCodeMapper(
-        DartLooseTypeMappers.instance.toMappers,
-      ).map(fieldName: f, fieldTypeCode: s);
-      return 'final $f0 = $a;';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final f = e.fieldName!;
+          final f0 = '${f}0';
+          final x = e.fieldTypeCode!;
+          final s = stripSpecialSyntaxFromFieldType(x);
+          final a = DartTypeCodeMapper(
+            DartLooseTypeMappers.instance.toMappers,
+          ).map(fieldName: f, fieldTypeCode: s);
+          return 'final $f0 = $a;';
+        })
+        .join('\n');
   },
   '___TO_JSON_ARGS___': (insight) {
     final fields = insight.fields.toList();
@@ -281,15 +295,16 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
         .toList();
     fields.removeWhere((e) => parents.contains(e));
     final stringCaseType = insight.stringCaseType;
-    final entries = fields
-        .map(
-          (e) => MapEntry(
-            stringCaseType.convertAll(e.fieldPath!).join('.'),
-            '${e.fieldName}0',
-          ),
-        )
-        .toList()
-      ..sort((a, b) => b.key.compareTo(a.key));
+    final entries =
+        fields
+            .map(
+              (e) => MapEntry(
+                stringCaseType.convertAll(e.fieldPath!).join('.'),
+                '${e.fieldName}0',
+              ),
+            )
+            .toList()
+          ..sort((a, b) => b.key.compareTo(a.key));
 
     var buffer = <String, dynamic>{};
 
@@ -317,59 +332,72 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     return test.replaceAll('#:', '');
   },
   '___GETTERS___': (insight) {
-    return insight.fields.map((e) {
-      final f = e.fieldName;
-      final x = e.fieldTypeCode!;
-      final s = stripSpecialSyntaxFromFieldType(x);
-      final n = e.nullable;
-      return [
-        '  /// Returns the value of the [$f] field.',
-        '  /// If the field is nullable, the return value may be null; otherwise, it',
-        '  /// will always return a non-null value.',
-        "@pragma('vm:prefer-inline')",
-        '$s get $f\$ => $f${n ? '' : '!'};',
-        '',
-      ].join('\n');
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final f = e.fieldName;
+          final x = e.fieldTypeCode!;
+          final s = stripSpecialSyntaxFromFieldType(x);
+          final n = e.nullable;
+          return [
+            '  /// Returns the value of the [$f] field.',
+            '  /// If the field is nullable, the return value may be null; otherwise, it',
+            '  /// will always return a non-null value.',
+            "@pragma('vm:prefer-inline')",
+            '$s get $f\$ => $f${n ? '' : '!'};',
+            '',
+          ].join('\n');
+        })
+        .join('\n');
   },
   '___FIELD_NAMES___': (insight) {
-    return insight.fields.map((e) {
-      final className = insight.annotation.className ??
-          insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
-      final f = e.fieldName;
-      final c = insight.stringCaseType.convert(e.fieldName!);
-      return [
-        '  /// The field name of [$className.$f].',
-        "static const $f = '$c';",
-        '',
-      ].join('\n');
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final className =
+              insight.annotation.className ??
+              insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
+          final f = e.fieldName;
+          final c = insight.stringCaseType.convert(e.fieldName!);
+          return [
+            '  /// The field name of [$className.$f].',
+            "static const $f = '$c';",
+            '',
+          ].join('\n');
+        })
+        .join('\n');
   },
   '___COPY_WITH_PARAMS___': (insight) {
-    return insight.fields.map((e) {
-      final f = e.fieldName;
-      final t = e.fieldType!;
-      final r = stripSpecialSyntaxFromFieldType(t);
-      return '$r? $f,';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final f = e.fieldName;
+          final t = e.fieldType!;
+          final r = stripSpecialSyntaxFromFieldType(t);
+          return '$r? $f,';
+        })
+        .join('\n');
   },
   '___COPY_WITH_ARGS___': (insight) {
-    return insight.fields.map((e) {
-      final f = e.fieldName;
-      return '$f: $f ?? this.$f,';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final f = e.fieldName;
+          return '$f: $f ?? this.$f,';
+        })
+        .join('\n');
   },
   '___COPY_WITHOUT_PARAMS___': (insight) {
-    return insight.fields.map((e) {
-      final f = e.fieldName;
-      return 'bool $f = true,';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final f = e.fieldName;
+          return 'bool $f = true,';
+        })
+        .join('\n');
   },
   '___COPY_WITHOUT_ARGS___': (insight) {
-    return insight.fields.map((e) {
-      final f = e.fieldName;
-      return '$f: $f ? this.$f: null,';
-    }).join('\n');
+    return insight.fields
+        .map((e) {
+          final f = e.fieldName;
+          return '$f: $f ? this.$f: null,';
+        })
+        .join('\n');
   },
 });
 
