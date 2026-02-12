@@ -256,10 +256,16 @@ Future<String> _generateWithGemeni({
   final model = GenerativeModel(model: gemeniModel, apiKey: gemeniApiKey);
   final content = [Content.text(prompt)];
   final response = await model.generateContent(content);
-  var text = response.text!.trim();
+  final responseText = response.text;
+  if (responseText == null || responseText.isEmpty) {
+    throw StateError('Gemini API returned an empty response.');
+  }
+  var text = responseText.trim();
   if (text.startsWith('```')) {
-    final startIndex = text.indexOf('\n') + 1;
-    text = text.substring(startIndex);
+    final newlineIndex = text.indexOf('\n');
+    if (newlineIndex != -1 && newlineIndex + 1 < text.length) {
+      text = text.substring(newlineIndex + 1);
+    }
     if (text.endsWith('```')) {
       text = text.substring(0, text.length - 3).trim();
     }

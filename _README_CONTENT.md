@@ -2,7 +2,7 @@ A tool for generating data models and classes from annotations, offering greater
 
 Below are some basic steps to get you started with this package. This package is designed to work with the [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_models_core) package, which provides the core functionality for generating models.
 
-The example below provides a glimpse of what this package can do. The package includes advanced features such as AI-driven generation, customizable type mappers, template files, model conversion to other programming languages, and mor but these advanced features are still in development and not yet documented. Feel free to contact the developer if you require more information.
+The example below provides a glimpse of what this package can do. The package includes advanced features such as AI-driven generation, customizable type mappers, template files, model conversion to other programming languages, and more but these advanced features are still in development and not yet documented. Feel free to contact the developer if you require more information.
 
 ## How to Use
 
@@ -12,7 +12,7 @@ Add [`df_generate_dart_models_core`](https://pub.dev/packages/df_generate_dart_m
 
 ```yaml
 dependencies:
-  df_generate_dart_models_core: 0.9.22 # Fixed version to ensure compatibility and avoid issues from frequent updates.
+  df_generate_dart_models_core: 0.9.24 # Fixed version to ensure compatibility and avoid issues from frequent updates.
 ```
 
 ### Step 2
@@ -73,6 +73,6 @@ Save the file somewhere in its own directory, for example `lib/models/model_user
 
 #### Without Visual Studio Code
 
-1. Install this tool by running `dart pub global activate df_generate_dart_models 0.14.0` in your terminal. You can replace `0.14.0` with any other version or omit it to install the latest version.
+1. Install this tool by running `dart pub global activate df_generate_dart_models` in your terminal.
 2. In your project, open a terminal at the desired folder, e.g. `cd lib/models/model_user/model_user.dart`.
 3. Run `--models-min`. This will generate the `_model_user.g.dart` file in the same directory.
