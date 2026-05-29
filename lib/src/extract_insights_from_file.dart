@@ -26,7 +26,7 @@ import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 /// annotation applied to that class.
 Future<List<ClassInsight<GenerateDartModel>>> extractInsightsFromFile(
   String filePath,
-  dynamic analysisContextCollection,
+  AnalysisContextCollection analysisContextCollection,
 ) async {
   final analyzer = DartAnnotatedClassAnalyzer(
     filePath: filePath,
@@ -77,7 +77,7 @@ GenerateDartModel _updateFromClassAnnotationField(
           fields: {
             ...?annotation.fields,
             ...?params.fieldValue.toSetValue()?.map((e) {
-              final x = DartFromRecordOnDartObjectX(e);
+              final x = DartFromRecordOnDartObjectExt(e);
               try {
                 final fieldPath = x.fieldPathFromRecord() ?? ['unknown'];
                 final fieldType = x.fieldTypeFromRecord() ?? 'dynamic';
@@ -156,17 +156,15 @@ GenerateDartModel _updateFromAnnotatedMember(
     final foreignKey = params
         .memberAnnotationFields[FieldModelFieldNames.foreignKey]
         ?.toBoolValue();
-    final children =
-        (dartObjToObject(
-                  params.memberAnnotationFields[FieldModelFieldNames.children],
-                )
-                as List?)
-            ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
-            .nonNulls
-            .toList();
-    final fallback = params
-        .memberAnnotationFields[FieldModelFieldNames.fallback]
-        ?.toListValue();
+    final children = (dartObjToObject(
+      params.memberAnnotationFields[FieldModelFieldNames.children],
+    ) as List?)
+        ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
+        .nonNulls
+        .toList();
+    final fallback = dartObjToObject(
+      params.memberAnnotationFields[FieldModelFieldNames.fallback],
+    );
     final description = params
         .memberAnnotationFields[FieldModelFieldNames.description]
         ?.toStringValue();

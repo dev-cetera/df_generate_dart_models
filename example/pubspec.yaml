@@ -1,0 +1,16 @@
+name: df_generate_dart_models_example
+homepage: https://dev-cetera.com/
+publish_to: none
+version: 0.1.0
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+dependencies:
+  df_generate_dart_models:
+    path: ..
+  # Models annotate themselves with @GenerateDartModel and the example imports
+  # types like `Model`, `DataRefModel`, and `Field` from df_generate_dart_models_core
+  # directly, so we list it as a direct dependency to satisfy
+  # `depend_on_referenced_packages`.
+  df_generate_dart_models_core: ^0.10.0
+dev_dependencies:
+  lints: ^6.0.0

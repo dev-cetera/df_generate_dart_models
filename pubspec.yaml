@@ -15,11 +15,11 @@ name: df_generate_dart_models
 homepage: https://dev-cetera.com/
 repository: https://github.com/robmllze/df_generate_dart_models
 funding:
-- https://www.patreon.com/c/robelator
-- https://github.com/sponsors/robelator
-- https://www.buymeacoffee.com/dev_cetera
+  - https://www.buymeacoffee.com/dev_cetera
+  - https://www.patreon.com/c/robelator
+  - https://github.com/sponsors/robelator
 description: A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
-version: 0.14.3
+version: 0.15.0
 topics:
   - build-runner
   - cli
@@ -35,16 +35,16 @@ environment:
 ## -----------------------------------------------------------------------------
 
 dependencies:
-  google_generative_ai: ^0.4.7
+  ai_broker: ^0.2.0
   path: ^1.9.1
 
-  df_collection: ^0.9.8
-  df_config: ^0.7.5
-  df_gen_core: ^0.7.0
-  df_generate_dart_models_core: ^0.9.23
-  df_log: ^0.3.20
-  df_string: ^0.2.10
-  df_type: ^0.14.2
+  df_collection: ^0.10.0
+  df_config: ^0.8.0
+  df_gen_core: ^0.8.0
+  df_generate_dart_models_core: ^0.10.0
+  df_log: ^0.5.0
+  df_string: ^0.3.0
+  df_type: ^0.16.0
 
 ## -----------------------------------------------------------------------------
 
@@ -57,8 +57,8 @@ dev_dependencies:
 executables:
   --models: df_generate_dart_models
   --models-min: df_generate_dart_models_min
-  --models-gemeni: df_generate_dart_models_gemeni
+  --models-ai: df_generate_dart_models_ai
   df_generate_dart_models: df_generate_dart_models
   df_generate_dart_models_min: df_generate_dart_models_min
-  df_generate_dart_models_gemeni: df_generate_dart_models_gemeni
+  df_generate_dart_models_ai: df_generate_dart_models_ai
 

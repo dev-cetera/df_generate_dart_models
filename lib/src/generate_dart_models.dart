@@ -11,9 +11,6 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-// ignore: implementation_imports
-import 'package:df_config/src/_etc/replace_data.dart';
-
 import 'package:path/path.dart' as p;
 
 import 'package:df_gen_core/df_gen_core.dart';
@@ -116,7 +113,6 @@ Future<void> generateDartModels(
 
       for (final insight in insights) {
         final output = _interpolator.interpolate(template, insight);
-        // ignore: invalid_use_of_internal_member
         final fileName = outputFileNamePattern.replaceData({
           '{file}': PathUtility.i.localBaseNameWithoutExtension(inputFilePath),
           '{class}': () {
@@ -239,14 +235,21 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     }
 
     final j = fields.map((a) {
-      final ff = fields
-          .where(
-            (b) =>
-                a.fieldPath!.join('.').startsWith('${b.fieldPath!.join('.')}.'),
-          )
-          .toList();
-      ff.sort((a, b) => b.fieldName!.compareTo(a.fieldName!));
-      return $v(ff.length > 1 ? '${ff[1].fieldName}' : 'json', a);
+      // Defensive: fields with a null fieldPath can't have a parent path
+      // computed, so skip the relationship lookup for them rather than
+      // throwing on `!`.
+      final aPath = a.fieldPath;
+      if (aPath == null) return $v('json', a);
+      final aJoined = aPath.join('.');
+      final ff = fields.where((b) {
+        final bPath = b.fieldPath;
+        if (bPath == null) return false;
+        return aJoined.startsWith('${bPath.join('.')}.');
+      }).toList();
+      // Sort by fieldName desc, tolerating null fieldNames (treat them as
+      // empty so the comparator is total and never throws).
+      ff.sort((x, y) => (y.fieldName ?? '').compareTo(x.fieldName ?? ''));
+      return $v(ff.length > 1 ? (ff[1].fieldName ?? '') : 'json', a);
     });
     return j.join('\n');
   },

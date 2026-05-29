@@ -43,11 +43,19 @@ class ModelTest extends _ModelTest {
 
   /// Constructs a new instance of [ModelTest]
   /// from optional and required parameters.
-  const ModelTest({this.users, this.checks, this.random});
+  const ModelTest({
+    this.users,
+    this.checks,
+    this.random,
+  });
 
   /// Construcs a new instance of [ModelTest],
   /// forcing all parameters to be optional.
-  const ModelTest.optional({this.users, this.checks, this.random});
+  const ModelTest.optional({
+    this.users,
+    this.checks,
+    this.random,
+  });
 
   /// Constructs a new instance of [ModelTest],
   /// and asserts that all required parameters are not null.
@@ -56,12 +64,18 @@ class ModelTest extends _ModelTest {
     List<int>? checks,
     Map<String, Map<dynamic, int>>? random,
   }) {
-    return ModelTest(users: users, checks: checks, random: random);
+    return ModelTest(
+      users: users,
+      checks: checks,
+      random: random,
+    );
   }
 
   /// Constructs a new instance of [ModelTest],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelTest.from(BaseModel another) {
+  factory ModelTest.from(
+    BaseModel another,
+  ) {
     try {
       return fromOrNull(another)!;
     } catch (e) {
@@ -74,13 +88,17 @@ class ModelTest extends _ModelTest {
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelTest? fromOrNull(BaseModel? another) {
+  static ModelTest? fromOrNull(
+    BaseModel? another,
+  ) {
     return fromJsonOrNull(another?.toJson())!;
   }
 
   /// Constructs a new instance of [ModelTest],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelTest.of(ModelTest another) {
+  factory ModelTest.of(
+    ModelTest another,
+  ) {
     try {
       return ofOrNull(another)!;
     } catch (e) {
@@ -93,14 +111,18 @@ class ModelTest extends _ModelTest {
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelTest? ofOrNull(ModelTest? other) {
+  static ModelTest? ofOrNull(
+    ModelTest? other,
+  ) {
     return fromJsonOrNull(other?.toJson());
   }
 
   /// Constructs a new instance of [ModelTest],
   /// from [jsonString], which must be a valid JSON String. Throws if the
   /// conversion fails.
-  factory ModelTest.fromJsonString(String jsonString) {
+  factory ModelTest.fromJsonString(
+    String jsonString,
+  ) {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
@@ -112,7 +134,9 @@ class ModelTest extends _ModelTest {
   /// Constructs a new instance of [ModelTest],
   /// from [jsonString], which must be a valid JSON String. Returns `null` if
   /// [jsonString] is `null` or if the conversion fails.
-  static ModelTest? fromJsonStringOrNull(String? jsonString) {
+  static ModelTest? fromJsonStringOrNull(
+    String? jsonString,
+  ) {
     try {
       if (jsonString!.isNotEmpty) {
         final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
@@ -128,7 +152,9 @@ class ModelTest extends _ModelTest {
   /// Constructs a new instance of [ModelTest],
   /// from [json], which must be a valid JSON object. Throws if the conversion
   /// fails.
-  factory ModelTest.fromJson(Map<String, dynamic>? json) {
+  factory ModelTest.fromJson(
+    Map<String, dynamic>? json,
+  ) {
     try {
       return fromJsonOrNull(json)!;
     } catch (e) {
@@ -140,7 +166,9 @@ class ModelTest extends _ModelTest {
   /// Constructs a new instance of [ModelTest],
   /// from [json], which must be a valid JSON object. Returns `null` if
   /// [json] is `null` or if the conversion fails.
-  static ModelTest? fromJsonOrNull(Map<String, dynamic>? json) {
+  static ModelTest? fromJsonOrNull(
+    Map<String, dynamic>? json,
+  ) {
     try {
       final users = letListOrNull<dynamic>(json?['users'])
           ?.map(
@@ -154,7 +182,9 @@ class ModelTest extends _ModelTest {
           ?.toList()
           .unmodifiable;
       final checks = letListOrNull<dynamic>(json?['checks'])
-          ?.map((p0) => letAsOrNull<int>(p0))
+          ?.map(
+            (p0) => letAsOrNull<int>(p0),
+          )
           .nonNulls
           .nullIfEmpty
           ?.toList()
@@ -164,7 +194,12 @@ class ModelTest extends _ModelTest {
             (p0, p1) => MapEntry(
               p0?.toString().trim().nullIfEmpty,
               letMapOrNull<dynamic, dynamic>(p1)
-                  ?.map((p0, p1) => MapEntry(p0, letAsOrNull<int>(p1)))
+                  ?.map(
+                    (p0, p1) => MapEntry(
+                      p0,
+                      letAsOrNull<int>(p1),
+                    ),
+                  )
                   .nonNulls
                   .nullIfEmpty
                   ?.unmodifiable,
@@ -173,7 +208,11 @@ class ModelTest extends _ModelTest {
           .nonNulls
           .nullIfEmpty
           ?.unmodifiable;
-      return ModelTest(users: users, checks: checks, random: random);
+      return ModelTest(
+        users: users,
+        checks: checks,
+        random: random,
+      );
     } catch (e) {
       return null;
     }
@@ -182,7 +221,9 @@ class ModelTest extends _ModelTest {
   /// Constructs a new instance of [ModelTest],
   /// from the query parameters of [uri]. Throws if the conversion
   /// fails.
-  factory ModelTest.fromUri(Uri? uri) {
+  factory ModelTest.fromUri(
+    Uri? uri,
+  ) {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
@@ -194,7 +235,9 @@ class ModelTest extends _ModelTest {
   /// Constructs a new instance of [ModelTest],
   /// from the query parameters of [uri]. Returns `null` if [uri] is `null` or
   /// if the conversion fails.
-  static ModelTest? fromUriOrNull(Uri? uri) {
+  static ModelTest? fromUriOrNull(
+    Uri? uri,
+  ) {
     try {
       if (uri != null && uri.path == CLASS_NAME) {
         return ModelTest.fromJson(uri.queryParameters);
@@ -207,24 +250,46 @@ class ModelTest extends _ModelTest {
   }
 
   @override
-  Map<String, dynamic> toJson({bool includeNulls = false}) {
+  Map<String, dynamic> toJson({
+    bool includeNulls = false,
+  }) {
     try {
       final users0 = users
-          ?.map((p0) => p0?.toJson())
+          ?.map(
+            (p0) => p0?.toJson(),
+          )
           .nonNulls
           .nullIfEmpty
           ?.toList();
-      final checks0 = checks?.map((p0) => p0).nonNulls.nullIfEmpty?.toList();
+      final checks0 = checks
+          ?.map(
+            (p0) => p0,
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList();
       final random0 = random
           ?.map(
             (p0, p1) => MapEntry(
               p0?.trim().nullIfEmpty,
-              p1?.map((p0, p1) => MapEntry(p0, p1)).nonNulls.nullIfEmpty,
+              p1
+                  ?.map(
+                    (p0, p1) => MapEntry(
+                      p0,
+                      p1,
+                    ),
+                  )
+                  .nonNulls
+                  .nullIfEmpty,
             ),
           )
           .nonNulls
           .nullIfEmpty;
-      final withNulls = {'users': users0, 'random': random0, 'checks': checks0};
+      final withNulls = {
+        'users': users0,
+        'random': random0,
+        'checks': checks0,
+      };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
       assert(false, '$ModelTest.toJson: $e');
@@ -267,7 +332,10 @@ abstract final class ModelTestFieldNames {
 extension ModelTestX on ModelTest {
   /// Creates a copy of this instance, merging another model's fields into
   /// this model's fields.
-  ModelTest mergeWith(BaseModel? other, {bool deepMerge = false}) {
+  ModelTest mergeWith(
+    BaseModel? other, {
+    bool deepMerge = false,
+  }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;

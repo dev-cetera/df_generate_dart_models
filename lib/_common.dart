@@ -1,13 +1,18 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// GENERATED - DO NOT MODIFY BY HAND
-// See: https://github.com/dev-cetera/df_generate_dart_indexes
+// Copyright © dev-cetera.com & contributors.
+//
+// The use of this source code is governed by an MIT-style license described in
+// the LICENSE file located in this project's root directory.
+//
+// See: https://opensource.org/license/mit
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-export './dart_loose_type_mappers.dart';
-export './extract_insights_from_file.dart';
-export './generate_dart_models.dart';
-export './generate_dart_models_ai.dart';
+// Internal-only umbrella import. Files under lib/src/ import this as
+// `import '/_common.dart';`. Re-export third-party APIs the package depends on
+// here so individual sources don't repeat the same imports.
+
+export 'src/_src.g.dart';
