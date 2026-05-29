@@ -13,6 +13,7 @@ void main() {
   // Timestamp regex). Adding future dialects here mirrors the production
   // change in `generate_dart_models.dart`.
   final mappers = DartCompositeTypeMappers([
+    DartStrictTypeMappers.instance,
     DartFirestoreTypeMappers.instance,
     DartCoreTypeMappers.instance,
   ]);
@@ -130,6 +131,53 @@ void main() {
     test('CamelCase-String calls toCamelCase()', () {
       final r = mapFrom('CamelCase-String', name: 't');
       expect(r, contains('toCamelCase()'));
+    });
+  });
+
+  group('STRICT- mappers (json_serializable-style direct casts)', () {
+    test('STRICT-String emits direct as cast', () {
+      expect(mapFrom('STRICT-String', name: 'v'), 'v as String?');
+    });
+
+    test('STRICT-int routes through num (JSON num→int conversion)', () {
+      expect(mapFrom('STRICT-int', name: 'v'), '(v as num?)?.toInt()');
+    });
+
+    test('STRICT-double routes through num', () {
+      expect(mapFrom('STRICT-double', name: 'v'), '(v as num?)?.toDouble()');
+    });
+
+    test('STRICT-bool casts directly (no SQLite 0/1 coercion)', () {
+      expect(mapFrom('STRICT-bool', name: 'v'), 'v as bool?');
+    });
+
+    test('STRICT-DateTime parses without defensive toString chain', () {
+      final r = mapFrom('STRICT-DateTime', name: 'v');
+      expect(r, contains('DateTime.parse(v as String)'));
+      expect(r, contains('v == null'));
+    });
+
+    test('STRICT-Model* delegates to nested fromJson with a Map cast', () {
+      final r = mapFrom('STRICT-ModelUser', name: 'v');
+      expect(r, contains('ModelUser.fromJson'));
+      expect(r, contains('v as Map<String, dynamic>'));
+    });
+
+    test('STRICT to-side passes primitives through', () {
+      expect(mapTo('STRICT-String', name: 'v'), 'v');
+      expect(mapTo('STRICT-bool', name: 'v'), 'v');
+      expect(mapTo('STRICT-int', name: 'v'), 'v');
+    });
+
+    test('STRICT to-side keeps DateTime in UTC ISO 8601', () {
+      expect(
+        mapTo('STRICT-DateTime', name: 'v'),
+        'v?.toUtc().toIso8601String()',
+      );
+    });
+
+    test('STRICT to-side calls toJson on nested models', () {
+      expect(mapTo('STRICT-ModelUser', name: 'v'), 'v?.toJson()');
     });
   });
 

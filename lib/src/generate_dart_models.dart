@@ -20,6 +20,7 @@ import 'package:df_generate_dart_models_core/df_generate_dart_models_core_utils.
 import 'dart_composite_type_mappers.dart';
 import 'dart_core_type_mappers.dart';
 import 'dart_firestore_type_mappers.dart';
+import 'dart_strict_type_mappers.dart';
 import 'extract_insights_from_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -162,6 +163,7 @@ bool _isAllowedFileName(String e) {
 /// name a dialect tries to claim. Insert future dialects at the start of
 /// the list, never at the end.
 final _defaultMappers = DartCompositeTypeMappers([
+  DartStrictTypeMappers.instance,
   DartFirestoreTypeMappers.instance,
   DartCoreTypeMappers.instance,
 ]);
