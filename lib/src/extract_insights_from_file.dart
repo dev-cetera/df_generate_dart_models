@@ -92,6 +92,11 @@ GenerateDartModel _updateFromClassAnnotationField(
                 final unique = x.uniqueFromRecord();
                 final onDelete = x.onDeleteFromRecord();
                 final sqlType = x.sqlTypeFromRecord();
+                final unknownEnumValue = x.unknownEnumValueFromRecord();
+                final includeInJson = x.includeInJsonFromRecord();
+                final includeInSqlMap = x.includeInSqlMapFromRecord();
+                final includeInFirestoreMap = x.includeInFirestoreMapFromRecord();
+                final converter = x.converterFromRecord();
                 final field = Field(
                   fieldPath: fieldPath,
                   fieldType: fieldType,
@@ -106,6 +111,11 @@ GenerateDartModel _updateFromClassAnnotationField(
                   unique: unique,
                   onDelete: onDelete,
                   sqlType: sqlType,
+                  unknownEnumValue: unknownEnumValue,
+                  includeInJson: includeInJson,
+                  includeInSqlMap: includeInSqlMap,
+                  includeInFirestoreMap: includeInFirestoreMap,
+                  converter: converter,
                 );
                 return field.toRecord;
               } catch (e) {
