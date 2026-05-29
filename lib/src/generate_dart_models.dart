@@ -165,6 +165,31 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     return insight.annotation.className ??
         insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
   },
+  '___WITH_EQUATABLE___': (insight) {
+    // EquatableMixin is opt-out via `equatable: false` on the annotation. Used
+    // by classes whose instances get embedded in const Sets inside other
+    // annotations (Dart forbids const set elements from overriding ==).
+    // Default behaviour (null/true) emits the mixin and a `props` override.
+    final equatable = insight.annotation.equatable ?? true;
+    return equatable ? 'with EquatableMixin ' : '';
+  },
+  '___EQUATABLE_OVERRIDES___': (insight) {
+    final equatable = insight.annotation.equatable ?? true;
+    if (!equatable) return '';
+    final propsList = insight.fields.map((e) => e.fieldName).join(', ');
+    return '''
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// the same value semantics across hand-construction and `fromJson`
+  /// round-trips since every field is included.
+  @override
+  List<Object?> get props => [$propsList];
+
+  /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
+  /// [EquatableMixin]'s default toString shadow it. The mixin sits after
+  /// the BaseModel chain in the linearization, so we re-override here.
+  @override
+  String toString() => toJsonString();''';
+  },
   '___SUPER_CONSTRUCTOR___': (insight) {
     return insight.annotation.shouldInherit == true
         ? insight.annotation.inheritanceConstructor?.nullIfEmpty != null

@@ -22,7 +22,7 @@ part of '___CLASS_FILE_NAME___';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// ___DESCRIPTION___
-class ___CLASS_NAME___ extends ___SUPER_CLASS_NAME___ {
+class ___CLASS_NAME___ extends ___SUPER_CLASS_NAME___ ___WITH_EQUATABLE___{
   //
   //
   //
@@ -32,6 +32,8 @@ class ___CLASS_NAME___ extends ___SUPER_CLASS_NAME___ {
 
   @override
   String get $className => CLASS_NAME;
+
+  ___EQUATABLE_OVERRIDES___
 
   ___FIELD_DECLARATIONS___
 

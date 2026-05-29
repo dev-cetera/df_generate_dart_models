@@ -125,6 +125,10 @@ GenerateDartModel _updateFromClassAnnotationField(
       return annotation.mergeWith(
         GenerateDartModel(description: params.fieldValue.toStringValue()),
       );
+    case GenerateDartModelFieldNames.equatable:
+      return annotation.mergeWith(
+        GenerateDartModel(equatable: params.fieldValue.toBoolValue()),
+      );
     default:
   }
   return GenerateDartModel.of(annotation);
