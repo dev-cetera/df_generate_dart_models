@@ -88,13 +88,15 @@ class DartPostgresTypeMappers extends TypeMappers {
   TTypeMappers<CollectionMapperEvent> get collectionToMappers => newTypeMap({
         // jsonb to-side wraps the entire Map in jsonEncode so it can be bound
         // to a jsonb column parameter directly. postgres-package rejects
-        // plain Maps for jsonb — they must arrive pre-serialised.
+        // plain Maps for jsonb — they must arrive pre-serialised. We bind
+        // ${e.name} into a local first because the template's `replaceFirst`
+        // substitution only handles one `p0` placeholder per formula.
         r'^PG_(?:jsonb|json)' + _pgTail + r'-(Map)\??$': (e) {
-          return '${e.name} != null ? jsonEncode(${e.name}!.map((${e.args}) => MapEntry(${e.hashes},)).nonNulls.nullIfEmpty) : null';
+          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => MapEntry(${e.hashes},)).nonNulls.nullIfEmpty) : null; }()';
         },
         r'^PG_(?:jsonb|json)' + _pgTail + r'-(List|Set|Iterable|Queue)\??$':
             (e) {
-          return '${e.name} != null ? jsonEncode(${e.name}!.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()) : null';
+          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()) : null; }()';
         },
         // Native arrays — Dart List binds directly via package:postgres.
         r'^PG_\w+\[\]-(List|Set|Iterable|Queue)\??$': (e) {

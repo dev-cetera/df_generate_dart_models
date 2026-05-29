@@ -74,14 +74,16 @@ class DartSqliteTypeMappers extends TypeMappers {
 
   @override
   TTypeMappers<CollectionMapperEvent> get collectionToMappers => newTypeMap({
-        // JSON columns get jsonEncode'd to a TEXT string for binding.
+        // JSON columns get jsonEncode'd to a TEXT string for binding. Local
+        // alias so the template substitution (replaceFirst on `p0`) doesn't
+        // leave a stray placeholder in the second reference.
         r'^SQLITE_(?:json|jsonb)' + _sqliteTail + r'-(Map)\??$': (e) {
-          return '${e.name} != null ? jsonEncode(${e.name}!.map((${e.args}) => MapEntry(${e.hashes},)).nonNulls.nullIfEmpty) : null';
+          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => MapEntry(${e.hashes},)).nonNulls.nullIfEmpty) : null; }()';
         },
         r'^SQLITE_(?:json|jsonb)' +
                 _sqliteTail +
                 r'-(List|Set|Iterable|Queue)\??$': (e) {
-          return '${e.name} != null ? jsonEncode(${e.name}!.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()) : null';
+          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()) : null; }()';
         },
       });
 
