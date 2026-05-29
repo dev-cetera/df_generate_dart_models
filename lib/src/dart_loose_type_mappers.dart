@@ -90,16 +90,16 @@ class DartLooseTypeMappers extends TypeMappers {
           return '${e.name}?.toString().trim().nullIfEmpty';
         },
         r'^(bool)\??$': (e) {
-          return 'letAsOrNull<bool>(${e.name})';
+          return 'letBoolOrNull(${e.name})';
         },
         r'^(int)\??$': (e) {
-          return 'letAsOrNull<int>(${e.name})';
+          return 'letIntOrNull(${e.name})';
         },
         r'^(double)\??$': (e) {
-          return 'letAsOrNull<double>(${e.name})';
+          return 'letDoubleOrNull(${e.name})';
         },
         r'^(num)\??$': (e) {
-          return 'letAsOrNull<num>(${e.name})';
+          return 'letNumOrNull(${e.name})';
         },
         r'^(Timestamp)\??$': (e) {
           return 'letAsOrNull<Timestamp>(${e.name})';

@@ -27,12 +27,20 @@ void main() {
       expect(mapFrom('String'), 'x?.toString().trim().nullIfEmpty');
     });
 
-    test('bool uses letAsOrNull', () {
-      expect(mapFrom('bool'), 'letAsOrNull<bool>(x)');
+    test('bool uses letBoolOrNull (coercive, handles SQLite int 0/1)', () {
+      expect(mapFrom('bool'), 'letBoolOrNull(x)');
     });
 
-    test('int uses letAsOrNull', () {
-      expect(mapFrom('int'), 'letAsOrNull<int>(x)');
+    test('int uses letIntOrNull (coercive, handles String-encoded ints)', () {
+      expect(mapFrom('int'), 'letIntOrNull(x)');
+    });
+
+    test('double uses letDoubleOrNull (coercive)', () {
+      expect(mapFrom('double'), 'letDoubleOrNull(x)');
+    });
+
+    test('num uses letNumOrNull (coercive)', () {
+      expect(mapFrom('num'), 'letNumOrNull(x)');
     });
 
     test('dynamic returns the value as-is', () {
@@ -102,7 +110,7 @@ void main() {
     test('Map<String,int> builds a map mapper from String/int mappers', () {
       final r = mapFrom('Map<String,int>', name: 'm');
       expect(r, contains('letMapOrNull<dynamic, dynamic>(m)'));
-      expect(r, contains('letAsOrNull<int>'));
+      expect(r, contains('letIntOrNull'));
     });
   });
 
