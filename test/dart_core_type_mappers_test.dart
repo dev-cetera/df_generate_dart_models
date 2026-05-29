@@ -486,4 +486,56 @@ void main() {
       expect(mapTo('SQLITE_blob-Uint8List', name: 'v'), 'v');
     });
   });
+
+  group('FS_ mappers (Firestore dialect family)', () {
+    test('FS_timestamp-DateTime converts Timestamp → DateTime on read', () {
+      final r = mapFrom('FS_timestamp-DateTime', name: 'v');
+      expect(r, contains('letAsOrNull<Timestamp>'));
+      expect(r, contains('a.toDate().toUtc()'));
+    });
+
+    test('FS_timestamp-DateTime converts DateTime → Timestamp on write', () {
+      final r = mapTo('FS_timestamp-DateTime', name: 'v');
+      expect(r, contains('Timestamp.fromDate'));
+      expect(r, contains('v!.toUtc()'));
+    });
+
+    test('FS_server_timestamp-DateTime emits FieldValue.serverTimestamp() on '
+        'write', () {
+      expect(
+        mapTo('FS_server_timestamp-DateTime', name: 'v'),
+        'FieldValue.serverTimestamp()',
+      );
+    });
+
+    test('FS_geopoint-GeoPoint passes through both ways', () {
+      expect(
+        mapFrom('FS_geopoint-GeoPoint', name: 'v'),
+        'letAsOrNull<GeoPoint>(v)',
+      );
+      expect(mapTo('FS_geopoint-GeoPoint', name: 'v'), 'v');
+    });
+
+    test('FS_ref-String pulls .path off DocumentReference on read', () {
+      final r = mapFrom('FS_ref-String', name: 'v');
+      expect(r, contains('letAsOrNull<DocumentReference>'));
+      expect(r, contains('a.path'));
+    });
+
+    test('FS_blob-Uint8List wraps in Blob() on write', () {
+      final r = mapTo('FS_blob-Uint8List', name: 'v');
+      expect(r, contains('Blob(v!)'));
+    });
+
+    test('FS_blob-Uint8List extracts .bytes from Blob on read', () {
+      final r = mapFrom('FS_blob-Uint8List', name: 'v');
+      expect(r, contains('letAsOrNull<Blob>'));
+      expect(r, contains('a.bytes'));
+    });
+
+    test('back-compat: bare Timestamp still resolves', () {
+      expect(mapFrom('Timestamp', name: 'v'), 'letAsOrNull<Timestamp>(v)');
+      expect(mapTo('Timestamp', name: 'v'), 'v');
+    });
+  });
 }

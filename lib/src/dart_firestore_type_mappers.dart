@@ -61,10 +61,38 @@ class DartFirestoreTypeMappers extends TypeMappers {
 
   @override
   TTypeMappers<MapperEvent> get objectFromMappers => newTypeMap({
-        // Read as native Timestamp; consumers can call `.toDate()` themselves
-        // when they need a DateTime. Strict cast — Firestore's SDK always
-        // returns Timestamp natively for ts-typed columns, so coercion isn't
-        // needed.
+        // ─── FS_ prefix family ──────────────────────────────────────────────
+        // FS_timestamp-DateTime: convert Firestore Timestamp → DateTime.
+        // Firestore stores ts in microsecond precision; .toDate() preserves
+        // the moment but drops microseconds. UTC normalisation is explicit
+        // so downstream comparisons are deterministic.
+        r'^FS_timestamp-(DateTime)\??$': (e) {
+          return '(){ final a = letAsOrNull<Timestamp>(${e.name}); return a != null ? a.toDate().toUtc() : null; }()';
+        },
+        // FS_server_timestamp-DateTime: identical to FS_timestamp on read;
+        // the divergence lives on the to-side (FieldValue.serverTimestamp).
+        r'^FS_server_timestamp-(DateTime)\??$': (e) {
+          return '(){ final a = letAsOrNull<Timestamp>(${e.name}); return a != null ? a.toDate().toUtc() : null; }()';
+        },
+        // GeoPoint passes through (Firestore SDK returns it natively).
+        r'^FS_geopoint-(GeoPoint)\??$': (e) {
+          return 'letAsOrNull<GeoPoint>(${e.name})';
+        },
+        // DocumentReference → String path. Keeping the path lets us serialise
+        // over wire later without holding the reference object.
+        r'^FS_ref-(String)\??$': (e) {
+          return '(){ final a = letAsOrNull<DocumentReference>(${e.name}); return a != null ? a.path : ${e.name}?.toString().trim().nullIfEmpty; }()';
+        },
+        // Blob (Firestore's binary type) → Uint8List.
+        r'^FS_blob-(Uint8List)\??$': (e) {
+          return '(){ final a = letAsOrNull<Blob>(${e.name}); return a != null ? a.bytes : letAsOrNull<Uint8List>(${e.name}); }()';
+        },
+
+        // ─── Back-compat: bare Timestamp ────────────────────────────────────
+        // Still emitted for models that haven't migrated to the FS_ prefix
+        // vocabulary. Read as native Timestamp; consumers call `.toDate()`
+        // themselves. Strict cast — Firestore's SDK always returns Timestamp
+        // natively for ts-typed columns.
         r'^(Timestamp)\??$': (e) {
           return 'letAsOrNull<Timestamp>(${e.name})';
         },
@@ -76,8 +104,36 @@ class DartFirestoreTypeMappers extends TypeMappers {
 
   @override
   TTypeMappers<MapperEvent> get objectToMappers => newTypeMap({
+        // ─── FS_ prefix family ──────────────────────────────────────────────
+        // DateTime → Timestamp on write. Firestore's set/update accept
+        // Timestamp.fromDate directly.
+        r'^FS_timestamp-(DateTime)\??$': (e) {
+          return '${e.name} != null ? Timestamp.fromDate(${e.name}!.toUtc()) : null';
+        },
+        // FieldValue.serverTimestamp() lets the server stamp the moment — the
+        // local DateTime is discarded on write, replaced by the server's wall
+        // clock. Use for createdAt/updatedAt fields where clock-skew matters.
+        r'^FS_server_timestamp-(DateTime)\??$': (e) {
+          return 'FieldValue.serverTimestamp()';
+        },
+        // GeoPoint passes through.
+        r'^FS_geopoint-(GeoPoint)\??$': (e) {
+          return '${e.name}';
+        },
+        // String path → DocumentReference is consumer's job at write time;
+        // we just emit the path String. Repository code typically does
+        // `firestore.doc(model.refPath)` before calling `set`.
+        r'^FS_ref-(String)\??$': (e) {
+          return '${e.name}?.trim().nullIfEmpty';
+        },
+        // Uint8List → Blob (Firestore's typed binary wrapper).
+        r'^FS_blob-(Uint8List)\??$': (e) {
+          return '${e.name} != null ? Blob(${e.name}!) : null';
+        },
+
+        // ─── Back-compat: bare Timestamp ────────────────────────────────────
         // Pass through as-is — Firestore's `set`/`update` accept Timestamp
-        // bound parameters natively. No String coercion needed.
+        // bound parameters natively.
         r'^(Timestamp)\??$': (e) {
           return '${e.name}';
         },
