@@ -21,6 +21,7 @@ import 'dart_composite_type_mappers.dart';
 import 'dart_core_type_mappers.dart';
 import 'dart_firestore_type_mappers.dart';
 import 'dart_postgres_type_mappers.dart';
+import 'dart_sqlite_type_mappers.dart';
 import 'dart_strict_type_mappers.dart';
 import 'extract_insights_from_file.dart';
 
@@ -166,6 +167,7 @@ bool _isAllowedFileName(String e) {
 final _defaultMappers = DartCompositeTypeMappers([
   DartStrictTypeMappers.instance,
   DartPostgresTypeMappers.instance,
+  DartSqliteTypeMappers.instance,
   DartFirestoreTypeMappers.instance,
   DartCoreTypeMappers.instance,
 ]);

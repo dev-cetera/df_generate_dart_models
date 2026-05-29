@@ -11,6 +11,7 @@ export './dart_composite_type_mappers.dart';
 export './dart_core_type_mappers.dart';
 export './dart_firestore_type_mappers.dart';
 export './dart_postgres_type_mappers.dart';
+export './dart_sqlite_type_mappers.dart';
 export './dart_strict_type_mappers.dart';
 export './extract_insights_from_file.dart';
 export './generate_dart_models.dart';

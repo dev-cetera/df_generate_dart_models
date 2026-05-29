@@ -15,6 +15,7 @@ void main() {
   final mappers = DartCompositeTypeMappers([
     DartStrictTypeMappers.instance,
     DartPostgresTypeMappers.instance,
+    DartSqliteTypeMappers.instance,
     DartFirestoreTypeMappers.instance,
     DartCoreTypeMappers.instance,
   ]);
@@ -407,6 +408,82 @@ void main() {
       final r = mapFrom('Color');
       expect(r, contains('a != null'));
       expect(r, isNot(contains('a is int')));
+    });
+  });
+
+  group('SQLITE_ mappers (SQLite dialect family)', () {
+    test('SQLITE_text-String forwards to standard coercion', () {
+      expect(
+        mapFrom('SQLITE_text-String', name: 'v'),
+        'v?.toString().trim().nullIfEmpty',
+      );
+    });
+
+    test('SQLITE_integer-bool forwards to letBoolOrNull (handles 0/1)', () {
+      expect(mapFrom('SQLITE_integer-bool', name: 'v'), 'letBoolOrNull(v)');
+    });
+
+    test('SQLITE_integer-bool emits 0/1 on write', () {
+      expect(
+        mapTo('SQLITE_integer-bool', name: 'v'),
+        'v == null ? null : (v! ? 1 : 0)',
+      );
+    });
+
+    test('SQLITE_integer-int forwards to letIntOrNull', () {
+      expect(mapFrom('SQLITE_integer-int', name: 'v'), 'letIntOrNull(v)');
+    });
+
+    test('SQLITE_epochs-DateTime decodes epoch seconds', () {
+      final r = mapFrom('SQLITE_epochs-DateTime', name: 'v');
+      expect(r, contains('letIntOrNull(v)'));
+      expect(r, contains('a * 1000'));
+      expect(r, contains('isUtc: true'));
+    });
+
+    test('SQLITE_epochs-DateTime emits epoch seconds on write', () {
+      expect(
+        mapTo('SQLITE_epochs-DateTime', name: 'v'),
+        'v != null ? v!.toUtc().millisecondsSinceEpoch ~/ 1000 : null',
+      );
+    });
+
+    test('SQLITE_epochms-DateTime decodes epoch ms', () {
+      final r = mapFrom('SQLITE_epochms-DateTime', name: 'v');
+      expect(r, contains('DateTime.fromMillisecondsSinceEpoch(a'));
+      expect(r, contains('isUtc: true'));
+    });
+
+    test('SQLITE_epochms-DateTime emits epoch ms on write', () {
+      expect(
+        mapTo('SQLITE_epochms-DateTime', name: 'v'),
+        'v?.toUtc().millisecondsSinceEpoch',
+      );
+    });
+
+    test('SQLITE_text-DateTime keeps ISO 8601 conversion', () {
+      final r = mapFrom('SQLITE_text-DateTime', name: 'v');
+      expect(r, contains('DateTime.tryParse'));
+    });
+
+    test('SQLITE_json-ModelXxx decodes TEXT and delegates to fromJson', () {
+      final r = mapFrom('SQLITE_json-ModelXxx', name: 'v');
+      expect(r, contains('letMapOrNull'));
+      expect(r, contains('ModelXxx.fromJson(a)'));
+    });
+
+    test('SQLITE_json-ModelXxx jsonEncodes on write', () {
+      final r = mapTo('SQLITE_json-ModelXxx', name: 'v');
+      expect(r, contains('jsonEncode'));
+      expect(r, contains('v!.toJson()'));
+    });
+
+    test('SQLITE_blob-Uint8List passes bytes through', () {
+      expect(
+        mapFrom('SQLITE_blob-Uint8List', name: 'v'),
+        'letAsOrNull<Uint8List>(v)',
+      );
+      expect(mapTo('SQLITE_blob-Uint8List', name: 'v'), 'v');
     });
   });
 }
