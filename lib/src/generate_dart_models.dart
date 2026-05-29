@@ -17,7 +17,9 @@ import 'package:df_gen_core/df_gen_core.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core_utils.dart';
 
-import 'dart_loose_type_mappers.dart';
+import 'dart_composite_type_mappers.dart';
+import 'dart_core_type_mappers.dart';
+import 'dart_firestore_type_mappers.dart';
 import 'extract_insights_from_file.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -148,6 +150,22 @@ bool _isAllowedFileName(String e) {
   return !lc.endsWith('.g.dart') && lc.endsWith('.dart');
 }
 
+/// Mapper table used by the codegen interpolators. Composes the
+/// dialect-agnostic [DartCoreTypeMappers] with [DartFirestoreTypeMappers]
+/// so models that mention `Timestamp` continue to work without any
+/// per-call wiring. Future dialect tables (Postgres, SQLite, STRICT_) will
+/// slot in here alongside the existing two.
+///
+/// Order matters: specific-vocabulary dialects come BEFORE the generic
+/// [DartCoreTypeMappers] because mapper lookup is first-match-wins and Core's
+/// catchall regex `^(\w+)\??$` would otherwise swallow any specific type
+/// name a dialect tries to claim. Insert future dialects at the start of
+/// the list, never at the end.
+final _defaultMappers = DartCompositeTypeMappers([
+  DartFirestoreTypeMappers.instance,
+  DartCoreTypeMappers.instance,
+]);
+
 final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
   '___DESCRIPTION___': (insight) {
     return insight.annotation.description ??
@@ -254,7 +272,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
       final x = field.fieldTypeCode!;
       final s = stripSpecialSyntaxFromFieldType(x);
       final b = DartTypeCodeMapper(
-        DartLooseTypeMappers.instance.fromMappers,
+        _defaultMappers.fromMappers,
       ).map(fieldName: "$a?['${parts.last}']", fieldTypeCode: s);
       return 'final $f = $b;';
     }
@@ -291,7 +309,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
       final x = e.fieldTypeCode!;
       final s = stripSpecialSyntaxFromFieldType(x);
       final a = DartTypeCodeMapper(
-        DartLooseTypeMappers.instance.toMappers,
+        _defaultMappers.toMappers,
       ).map(fieldName: f, fieldTypeCode: s);
       return 'final $f0 = $a;';
     }).join('\n');

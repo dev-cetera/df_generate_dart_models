@@ -7,7 +7,9 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-export './dart_loose_type_mappers.dart';
+export './dart_composite_type_mappers.dart';
+export './dart_core_type_mappers.dart';
+export './dart_firestore_type_mappers.dart';
 export './extract_insights_from_file.dart';
 export './generate_dart_models.dart';
 export './generate_dart_models_ai.dart';

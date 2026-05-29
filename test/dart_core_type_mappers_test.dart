@@ -8,16 +8,23 @@ import 'package:df_generate_dart_models_core/df_generate_dart_models_core_utils.
 import 'package:test/test.dart';
 
 void main() {
-  final loose = DartLooseTypeMappers.instance;
+  // Compose the same mapper set the generator wires up at runtime so the
+  // tests reflect the production behaviour (core + Firestore for the
+  // Timestamp regex). Adding future dialects here mirrors the production
+  // change in `generate_dart_models.dart`.
+  final mappers = DartCompositeTypeMappers([
+    DartFirestoreTypeMappers.instance,
+    DartCoreTypeMappers.instance,
+  ]);
 
   String mapFrom(String type, {String name = 'x'}) =>
-      DartTypeCodeMapper(loose.fromMappers).map(
+      DartTypeCodeMapper(mappers.fromMappers).map(
         fieldName: name,
         fieldTypeCode: type,
       );
 
   String mapTo(String type, {String name = 'x'}) =>
-      DartTypeCodeMapper(loose.toMappers).map(
+      DartTypeCodeMapper(mappers.toMappers).map(
         fieldName: name,
         fieldTypeCode: type,
       );

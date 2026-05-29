@@ -18,18 +18,18 @@ import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-class DartLooseTypeMappers extends TypeMappers {
+class DartCoreTypeMappers extends TypeMappers {
   //
   //
   //
 
-  static final instance = DartLooseTypeMappers._();
+  static final instance = DartCoreTypeMappers._();
 
   //
   //
   //
 
-  DartLooseTypeMappers._();
+  DartCoreTypeMappers._();
 
   //
   //
@@ -100,9 +100,6 @@ class DartLooseTypeMappers extends TypeMappers {
         },
         r'^(num)\??$': (e) {
           return 'letNumOrNull(${e.name})';
-        },
-        r'^(Timestamp)\??$': (e) {
-          return 'letAsOrNull<Timestamp>(${e.name})';
         },
         r'^(DateTime)\??$': (e) {
           // Mirror the Uri mapper: coerce to String first so a non-String JSON
@@ -233,7 +230,7 @@ class DartLooseTypeMappers extends TypeMappers {
         r'^(String)\??$': (e) {
           return '${e.name}?.trim().nullIfEmpty';
         },
-        r'^(dynamic|bool|int|double|num|Timestamp)\??$': (e) {
+        r'^(dynamic|bool|int|double|num)\??$': (e) {
           return '${e.name}';
         },
         r'^(DateTime)\??$': (e) {
