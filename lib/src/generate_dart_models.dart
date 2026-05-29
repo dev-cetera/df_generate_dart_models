@@ -20,6 +20,7 @@ import 'package:df_generate_dart_models_core/df_generate_dart_models_core_utils.
 import 'dart_composite_type_mappers.dart';
 import 'dart_core_type_mappers.dart';
 import 'dart_firestore_type_mappers.dart';
+import 'dart_postgres_type_mappers.dart';
 import 'dart_strict_type_mappers.dart';
 import 'extract_insights_from_file.dart';
 
@@ -164,6 +165,7 @@ bool _isAllowedFileName(String e) {
 /// the list, never at the end.
 final _defaultMappers = DartCompositeTypeMappers([
   DartStrictTypeMappers.instance,
+  DartPostgresTypeMappers.instance,
   DartFirestoreTypeMappers.instance,
   DartCoreTypeMappers.instance,
 ]);
@@ -271,11 +273,14 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
       if (fieldPath == null || fieldPath.isEmpty) return '';
       final parts = insight.stringCaseType.convertAll(field.fieldPath!);
       final f = field.fieldName;
+      // Pass the unstripped type code to the mapper so prefix-bearing types
+      // (LowerCase-String, PG_jsonb-Map, STRICT-int, etc.) can match their
+      // specific regexes. The strip is only used to render valid Dart for
+      // the field declaration, not to drive mapper lookup.
       final x = field.fieldTypeCode!;
-      final s = stripSpecialSyntaxFromFieldType(x);
       final b = DartTypeCodeMapper(
         _defaultMappers.fromMappers,
-      ).map(fieldName: "$a?['${parts.last}']", fieldTypeCode: s);
+      ).map(fieldName: "$a?['${parts.last}']", fieldTypeCode: x);
       return 'final $f = $b;';
     }
 
@@ -308,11 +313,12 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     return insight.fields.map((e) {
       final f = e.fieldName!;
       final f0 = '${f}0';
+      // Unstripped on the to-side too so the inverse of every prefix mapper
+      // can fire (LowerCase→toLowerCase, PG_jsonb→jsonEncode, etc.).
       final x = e.fieldTypeCode!;
-      final s = stripSpecialSyntaxFromFieldType(x);
       final a = DartTypeCodeMapper(
         _defaultMappers.toMappers,
-      ).map(fieldName: f, fieldTypeCode: s);
+      ).map(fieldName: f, fieldTypeCode: x);
       return 'final $f0 = $a;';
     }).join('\n');
   },

@@ -14,6 +14,7 @@ void main() {
   // change in `generate_dart_models.dart`.
   final mappers = DartCompositeTypeMappers([
     DartStrictTypeMappers.instance,
+    DartPostgresTypeMappers.instance,
     DartFirestoreTypeMappers.instance,
     DartCoreTypeMappers.instance,
   ]);
@@ -178,6 +179,89 @@ void main() {
 
     test('STRICT to-side calls toJson on nested models', () {
       expect(mapTo('STRICT-ModelUser', name: 'v'), 'v?.toJson()');
+    });
+  });
+
+  group('PG_ mappers (Postgres dialect family)', () {
+    test('PG_text-String forwards to the standard String coercion', () {
+      expect(
+        mapFrom('PG_text-String', name: 'v'),
+        'v?.toString().trim().nullIfEmpty',
+      );
+    });
+
+    test('PG_varchar(255)-String tolerates the size parameter', () {
+      expect(
+        mapFrom('PG_varchar(255)-String', name: 'v'),
+        'v?.toString().trim().nullIfEmpty',
+      );
+    });
+
+    test('PG_citext-String forwards like PG_text', () {
+      expect(
+        mapFrom('PG_citext-String', name: 'v'),
+        'v?.toString().trim().nullIfEmpty',
+      );
+    });
+
+    test('PG_uuid-String forwards as String', () {
+      expect(
+        mapFrom('PG_uuid-String', name: 'v'),
+        'v?.toString().trim().nullIfEmpty',
+      );
+    });
+
+    test('PG_bigint-int forwards to letIntOrNull', () {
+      expect(mapFrom('PG_bigint-int', name: 'v'), 'letIntOrNull(v)');
+    });
+
+    test('PG_boolean-bool forwards to letBoolOrNull', () {
+      expect(mapFrom('PG_boolean-bool', name: 'v'), 'letBoolOrNull(v)');
+    });
+
+    test('PG_timestamptz-DateTime forwards to the standard DateTime coercion',
+        () {
+      final r = mapFrom('PG_timestamptz-DateTime', name: 'v');
+      expect(r, contains('DateTime.tryParse'));
+      expect(r, contains('toUtc()'));
+    });
+
+    test('PG_jsonb-ModelXxx decodes via letMapOrNull then nested fromJson',
+        () {
+      final r = mapFrom('PG_jsonb-ModelBulletinPage', name: 'v');
+      expect(r, contains('letMapOrNull'));
+      expect(r, contains('ModelBulletinPage.fromJson(a)'));
+    });
+
+    test('PG_bytea-Uint8List passes bytes through (no base64) on read', () {
+      expect(
+        mapFrom('PG_bytea-Uint8List', name: 'v'),
+        'letAsOrNull<Uint8List>(v)',
+      );
+    });
+
+    test('PG_bytea-Uint8List passes raw bytes on write (no base64)', () {
+      expect(mapTo('PG_bytea-Uint8List', name: 'v'), 'v');
+    });
+
+    test('PG_jsonb-ModelXxx jsonEncodes the nested model on write', () {
+      final r = mapTo('PG_jsonb-ModelBulletinPage', name: 'v');
+      expect(r, contains('jsonEncode'));
+      expect(r, contains('v!.toJson()'));
+    });
+
+    test('PG_enum(name)-Type emits valueOf on read', () {
+      expect(
+        mapFrom('PG_enum(auth_provider_kind)-AuthProviderKindType', name: 'v'),
+        'AuthProviderKindType.values.valueOf(v?.toString())',
+      );
+    });
+
+    test('PG_enum(name)-Type emits .name on write', () {
+      expect(
+        mapTo('PG_enum(auth_provider_kind)-AuthProviderKindType', name: 'v'),
+        'v?.name',
+      );
     });
   });
 
