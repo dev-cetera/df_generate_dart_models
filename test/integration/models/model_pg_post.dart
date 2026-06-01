@@ -57,7 +57,6 @@ abstract class _ModelPostMetadata extends Model {
       fieldPath: ['status'],
       fieldType: 'PG_enum(post_status_kind)-PostStatusKindType',
       nullable: true,
-      unknownEnumValue: PostStatusKindType.draft,
     ),
     // Native Postgres array of text — Dart-side List<String>.
     Field(

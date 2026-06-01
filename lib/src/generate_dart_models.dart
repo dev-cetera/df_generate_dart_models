@@ -164,28 +164,9 @@ bool _isAllowedFileName(String e) {
 /// catchall regex `^(\w+)\??$` would otherwise swallow any specific type
 /// name a dialect tries to claim. Insert future dialects at the start of
 /// the list, never at the end.
-/// Pattern used to recognise enum-flavoured field type codes so the
-/// `unknownEnumValue` slot can append a `?? <enumLiteral>` after the
-/// generated `XxxType.values.valueOf(...)`. Mirrors the regex the mappers
-/// themselves use (`Type-?\w+|\w+-?Type|Enum-?\w+|\w+-?Enum`) but
-/// pre-strips any prefix (PG_, STRICT-, LowerCase-, etc.) so a prefixed
-/// enum type code like `PG_enum(kind)-AuthProviderType` still matches.
-final _enumTypeCodePattern = RegExp(
-  r'^(?:[A-Za-z][\w]*(?:\([^)]*\))?(?:\[\])?-)?'
-  r'(Type-?\w+|\w+-?Type|Enum-?\w+|\w+-?Enum)\??$',
-);
-
-bool _looksLikeEnumType(DartField field) {
-  final code = field.fieldTypeCode;
-  if (code == null) return false;
-  return _enumTypeCodePattern.hasMatch(code);
-}
-
 /// Renders the `fallback:` annotation value as a Dart literal expression
 /// suitable for the right-hand side of `??`. Strings get quoted; bool/num
-/// pass through; anything else gets stringified — users with exotic
-/// fallback shapes (Map literals, Symbol constants) should use a custom
-/// converter instead.
+/// pass through; anything else gets stringified.
 String _renderFallbackLiteral(Object value) {
   if (value is String) {
     final escaped = value
@@ -311,32 +292,17 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
       final f = field.fieldName;
       final rawKey = "$a?['${parts.last}']";
 
-      // converter: bypass dialect/prefix mappers entirely and emit
-      // `const ConverterClass().fromJson(value)`. Mirrors json_serializable's
-      // JsonConverter escape hatch for custom types.
-      var code = field.converter != null
-          ? 'const ${field.converter}().fromJson($rawKey)'
-          : DartTypeCodeMapper(_defaultMappers.fromMappers).map(
-              fieldName: rawKey,
-              // Pass the unstripped type code so prefix-bearing types
-              // (LowerCase-String, PG_jsonb-Map, STRICT-int, PG_text-String,
-              // etc.) match their specific regexes. The strip is only used to
-              // render valid Dart for the field declaration, not the mapper.
-              fieldTypeCode: field.fieldTypeCode!,
-            );
+      // Pass the unstripped type code so prefix-bearing types
+      // (LowerCase-String, PG_jsonb-Map, STRICT-int, PG_text-String, etc.)
+      // match their specific regexes. The strip is only used to render
+      // valid Dart for the field declaration, not the mapper.
+      var code = DartTypeCodeMapper(_defaultMappers.fromMappers).map(
+        fieldName: rawKey,
+        fieldTypeCode: field.fieldTypeCode!,
+      );
 
-      // unknownEnumValue: append `?? <Enum.value>` after the mapper output
-      // when the field type code is enum-flavoured. The mapper itself emits
-      // `XxxType.values.valueOf(...)` which returns null on unknown names —
-      // this wraps it with the user-chosen fallback.
-      if (field.unknownEnumValue != null && _looksLikeEnumType(field)) {
-        code = '$code ?? ${field.unknownEnumValue}';
-      }
-
-      // fallback: applied last so it covers null from either the mapper or
-      // the unknownEnumValue chain. Renders the literal per the Dart-side
-      // type — Strings get quoted, primitives pass through, anything else
-      // is `.toString()`'d.
+      // fallback: applied after the mapper output to provide a default
+      // when the source value is null or coercion produced null.
       if (field.fallback != null) {
         code = '$code ?? ${_renderFallbackLiteral(field.fallback!)}';
       }
@@ -373,11 +339,6 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     return insight.fields.map((e) {
       final f = e.fieldName!;
       final f0 = '${f}0';
-      // converter: emit `const ConverterClass().toJson(field)` and skip the
-      // dialect mapper. Mirrors the from-side handling above.
-      if (e.converter != null) {
-        return 'final $f0 = const ${e.converter}().toJson($f);';
-      }
       // Unstripped on the to-side too so the inverse of every prefix mapper
       // can fire (LowerCase→toLowerCase, PG_jsonb→jsonEncode, etc.).
       final x = e.fieldTypeCode!;

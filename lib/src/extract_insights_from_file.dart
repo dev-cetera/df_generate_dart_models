@@ -91,12 +91,6 @@ GenerateDartModel _updateFromClassAnnotationField(
                 final referencesColumn = x.referencesColumnFromRecord();
                 final unique = x.uniqueFromRecord();
                 final onDelete = x.onDeleteFromRecord();
-                final sqlType = x.sqlTypeFromRecord();
-                final unknownEnumValue = x.unknownEnumValueFromRecord();
-                final includeInJson = x.includeInJsonFromRecord();
-                final includeInSqlMap = x.includeInSqlMapFromRecord();
-                final includeInFirestoreMap = x.includeInFirestoreMapFromRecord();
-                final converter = x.converterFromRecord();
                 final field = Field(
                   fieldPath: fieldPath,
                   fieldType: fieldType,
@@ -110,12 +104,6 @@ GenerateDartModel _updateFromClassAnnotationField(
                   referencesColumn: referencesColumn,
                   unique: unique,
                   onDelete: onDelete,
-                  sqlType: sqlType,
-                  unknownEnumValue: unknownEnumValue,
-                  includeInJson: includeInJson,
-                  includeInSqlMap: includeInSqlMap,
-                  includeInFirestoreMap: includeInFirestoreMap,
-                  converter: converter,
                 );
                 return field.toRecord;
               } catch (e) {
@@ -205,9 +193,6 @@ GenerateDartModel _updateFromAnnotatedMember(
     final onDelete = params
         .memberAnnotationFields[FieldModelFieldNames.onDelete]
         ?.toStringValue();
-    final sqlType = params
-        .memberAnnotationFields[FieldModelFieldNames.sqlType]
-        ?.toStringValue();
     final field = DartField(
       fieldPath: a1 ?? a2,
       fieldType: b1 ?? b2,
@@ -221,7 +206,6 @@ GenerateDartModel _updateFromAnnotatedMember(
       referencesColumn: referencesColumn,
       unique: unique,
       onDelete: onDelete,
-      sqlType: sqlType,
     );
     annotation = annotation.mergeWith(
       GenerateDartModel(fields: {...?annotation.fields, field.toRecord}),

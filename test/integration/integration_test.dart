@@ -102,7 +102,8 @@ void main() {
       );
     });
 
-    test('PG_enum + unknownEnumValue wraps the valueOf result with ??', () {
+    test('PG_enum emits the bare valueOf call (no unknownEnumValue slot)',
+        () {
       expect(
         code,
         contains(
@@ -110,7 +111,6 @@ void main() {
           "(json?['auth_provider']?.toString())",
         ),
       );
-      expect(code, contains('?? AuthProviderKindType.unknown'));
     });
 
     test('PG_timestamptz uses the DateTime.tryParse chain', () {
@@ -147,9 +147,8 @@ void main() {
       expect(code, contains('jsonEncode(metadata!.toJson())'));
     });
 
-    test('PG_enum + unknownEnumValue handles the post status case too', () {
+    test('PG_enum on the post status uses the bare valueOf', () {
       expect(code, contains('PostStatusKindType.values.valueOf'));
-      expect(code, contains('?? PostStatusKindType.draft'));
     });
 
     test('native PG array decodes via letListOrNull', () {
@@ -290,23 +289,7 @@ void main() {
     });
   });
 
-  group('Per-field converter slot', () {
-    final code = _read('_model_converter_invoice.g.dart');
-
-    test('converter: bypasses dialect mappers and emits direct call', () {
-      expect(code, contains("const MoneyConverter().fromJson(json?['total'])"));
-    });
-
-    test('converter to-side calls .toJson(field)', () {
-      expect(code, contains('const MoneyConverter().toJson(total)'));
-    });
-
-    test('other fields are unaffected by the converter on one field', () {
-      expect(code, contains("id = json?['id']?.toString().trim().nullIfEmpty"));
-    });
-  });
-
-  group('Thread (includeInJson/SqlMap flags + jsonb List<Model>)', () {
+  group('Thread (jsonb List<Model> + cross-model nesting)', () {
     final code = _read('_model_thread.g.dart');
 
     test('PG_jsonb-List<Model> uses letListOrNull on read', () {

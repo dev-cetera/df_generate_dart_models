@@ -16,18 +16,18 @@
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_question_mark
 
-part of 'model_firestore_doc.dart';
+part of 'model_device_token.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generated class for [_ModelFirestoreDoc].
-class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
+/// Generated class for [_ModelDeviceToken].
+class ModelDeviceToken extends _ModelDeviceToken with EquatableMixin {
   //
   //
   //
 
   /// The runtime type of this class as a String.
-  static const CLASS_NAME = 'ModelFirestoreDoc';
+  static const CLASS_NAME = 'ModelDeviceToken';
 
   @override
   String get $className => CLASS_NAME;
@@ -36,7 +36,7 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, title, capturedAt, createdAt, location, ownerRef, thumbnail, legacyStamp];
+  List<Object?> get props => [id, accountRef, token, kind, locale, lastSeenAt, createdAt, lastLocation];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -48,234 +48,234 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
 final String? id;
 
   /// No description provided.
-final String? title;
+final String? accountRef;
 
   /// No description provided.
-final DateTime? capturedAt;
+final String? token;
+
+  /// No description provided.
+final DeviceKindType? kind;
+
+  /// No description provided.
+final String? locale;
+
+  /// No description provided.
+final DateTime? lastSeenAt;
 
   /// No description provided.
 final DateTime? createdAt;
 
   /// No description provided.
-final GeoPoint? location;
-
-  /// No description provided.
-final String? ownerRef;
-
-  /// No description provided.
-final Uint8List? thumbnail;
-
-  /// No description provided.
-final Timestamp? legacyStamp;
+final GeoPoint? lastLocation;
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc]
+  /// Constructs a new instance of [ModelDeviceToken]
   /// from optional and required parameters.
-  const ModelFirestoreDoc({
+  const ModelDeviceToken({
     required this.id,
- this.title,
- this.capturedAt,
+required this.accountRef,
+required this.token,
+required this.kind,
+ this.locale,
+ this.lastSeenAt,
  this.createdAt,
- this.location,
- this.ownerRef,
- this.thumbnail,
- this.legacyStamp,
+ this.lastLocation,
   }) ;
 
-  /// Construcs a new instance of [ModelFirestoreDoc],
+  /// Construcs a new instance of [ModelDeviceToken],
   /// forcing all parameters to be optional.
-  const ModelFirestoreDoc.optional({
+  const ModelDeviceToken.optional({
     this.id,
-this.title,
-this.capturedAt,
+this.accountRef,
+this.token,
+this.kind,
+this.locale,
+this.lastSeenAt,
 this.createdAt,
-this.location,
-this.ownerRef,
-this.thumbnail,
-this.legacyStamp,
+this.lastLocation,
   }) ;
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// and asserts that all required parameters are not null.
-  factory ModelFirestoreDoc.assertRequired({
+  factory ModelDeviceToken.assertRequired({
     String? id,
-String? title,
-DateTime? capturedAt,
+String? accountRef,
+String? token,
+DeviceKindType? kind,
+String? locale,
+DateTime? lastSeenAt,
 DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+GeoPoint? lastLocation,
   }) {
     assert(id != null);
+assert(accountRef != null);
+assert(token != null);
+assert(kind != null);
 
 
 
 
-
-
-
-    return ModelFirestoreDoc(
+    return ModelDeviceToken(
       id: id,
-title: title,
-capturedAt: capturedAt,
+accountRef: accountRef,
+token: token,
+kind: kind,
+locale: locale,
+lastSeenAt: lastSeenAt,
 createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+lastLocation: lastLocation,
     );
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelFirestoreDoc.from(
+  factory ModelDeviceToken.from(
     BaseModel another,
   ) {
     try {
       return fromOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.from: $e');
+      assert(false, '$ModelDeviceToken.from: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelFirestoreDoc? fromOrNull(
+  static ModelDeviceToken? fromOrNull(
     BaseModel? another,
   ) {
     return fromJsonOrNull(another?.toJson())!;
   }
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelFirestoreDoc.of(
-    ModelFirestoreDoc another,
+  factory ModelDeviceToken.of(
+    ModelDeviceToken another,
   ) {
     try {
       return ofOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.of: $e');
+      assert(false, '$ModelDeviceToken.of: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelFirestoreDoc? ofOrNull(
-    ModelFirestoreDoc? other,
+  static ModelDeviceToken? ofOrNull(
+    ModelDeviceToken? other,
   ) {
     return fromJsonOrNull(other?.toJson());
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from [jsonString], which must be a valid JSON String. Throws if the
   /// conversion fails.
-  factory ModelFirestoreDoc.fromJsonString(
+  factory ModelDeviceToken.fromJsonString(
     String jsonString,
   ) {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelFirestoreDoc.fromJsonString: $e');
+     assert(false, '$ModelDeviceToken.fromJsonString: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from [jsonString], which must be a valid JSON String. Returns `null` if
   /// [jsonString] is `null` or if the conversion fails.
-  static ModelFirestoreDoc? fromJsonStringOrNull(
+  static ModelDeviceToken? fromJsonStringOrNull(
     String? jsonString,
   ) {
     try {
       if (jsonString!.isNotEmpty) {
         final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelFirestoreDoc.fromJson(decoded);
+        return ModelDeviceToken.fromJson(decoded);
       } else {
-        return ModelFirestoreDoc.assertRequired();
+        return ModelDeviceToken.assertRequired();
       }
     } catch (_) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from [json], which must be a valid JSON object. Throws if the conversion
   /// fails.
-  factory ModelFirestoreDoc.fromJson(
+  factory ModelDeviceToken.fromJson(
     Map<String, dynamic>? json,
   ) {
     try {
       return fromJsonOrNull(json)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.fromJson: $e');
+      assert(false, '$ModelDeviceToken.fromJson: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from [json], which must be a valid JSON object. Returns `null` if
   /// [json] is `null` or if the conversion fails.
-  static ModelFirestoreDoc? fromJsonOrNull(
+  static ModelDeviceToken? fromJsonOrNull(
     Map<String, dynamic>? json,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final title = json?['title']?.toString().trim().nullIfEmpty;
-final capturedAt = (){ final a = letAsOrNull<Timestamp>(json?['capturedAt']); return a != null ? a.toDate().toUtc() : null; }();
+final accountRef = (){ final a = letAsOrNull<DocumentReference>(json?['accountRef']); return a != null ? a.path : json?['accountRef']?.toString().trim().nullIfEmpty; }();
+final token = json?['token']?.toString().trim().nullIfEmpty;
+final kind = DeviceKindType.values.valueOf(json?['kind']?.toString());
+final locale = json?['locale']?.toString().trim().nullIfEmpty ?? 'en';
+final lastSeenAt = (){ final a = letAsOrNull<Timestamp>(json?['lastSeenAt']); return a != null ? a.toDate().toUtc() : null; }();
 final createdAt = (){ final a = letAsOrNull<Timestamp>(json?['createdAt']); return a != null ? a.toDate().toUtc() : null; }();
-final location = letAsOrNull<GeoPoint>(json?['location']);
-final ownerRef = (){ final a = letAsOrNull<DocumentReference>(json?['ownerRef']); return a != null ? a.path : json?['ownerRef']?.toString().trim().nullIfEmpty; }();
-final thumbnail = (){ final a = letAsOrNull<Blob>(json?['thumbnail']); return a != null ? a.bytes : letAsOrNull<Uint8List>(json?['thumbnail']); }();
-final legacyStamp = letAsOrNull<Timestamp>(json?['legacyStamp']);
-      return ModelFirestoreDoc(
+final lastLocation = letAsOrNull<GeoPoint>(json?['lastLocation']);
+      return ModelDeviceToken(
         id: id,
-title: title,
-capturedAt: capturedAt,
+accountRef: accountRef,
+token: token,
+kind: kind,
+locale: locale,
+lastSeenAt: lastSeenAt,
 createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+lastLocation: lastLocation,
       );
     } catch (e) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from the query parameters of [uri]. Throws if the conversion
   /// fails.
-  factory ModelFirestoreDoc.fromUri(
+  factory ModelDeviceToken.fromUri(
     Uri? uri,
   ) {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.fromUri: $e');
+      assert(false, '$ModelDeviceToken.fromUri: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelDeviceToken],
   /// from the query parameters of [uri]. Returns `null` if [uri] is `null` or
   /// if the conversion fails.
-  static ModelFirestoreDoc? fromUriOrNull(
+  static ModelDeviceToken? fromUriOrNull(
     Uri? uri,
   ) {
     try {
       if (uri != null && uri.path == CLASS_NAME) {
-        return ModelFirestoreDoc.fromJson(uri.queryParameters);
+        return ModelDeviceToken.fromJson(uri.queryParameters);
       } else {
-        return ModelFirestoreDoc.assertRequired();
+        return ModelDeviceToken.assertRequired();
       }
     } catch (_) {
       return null;
@@ -288,19 +288,19 @@ legacyStamp: legacyStamp,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final title0 = title?.trim().nullIfEmpty;
-final capturedAt0 = capturedAt != null ? Timestamp.fromDate(capturedAt!.toUtc()) : null;
+final accountRef0 = accountRef?.trim().nullIfEmpty;
+final token0 = token?.trim().nullIfEmpty;
+final kind0 = kind?.name;
+final locale0 = locale?.trim().nullIfEmpty;
+final lastSeenAt0 = lastSeenAt != null ? Timestamp.fromDate(lastSeenAt!.toUtc()) : null;
 final createdAt0 = FieldValue.serverTimestamp();
-final location0 = location;
-final ownerRef0 = ownerRef?.trim().nullIfEmpty;
-final thumbnail0 = thumbnail != null ? Blob(thumbnail!) : null;
-final legacyStamp0 = legacyStamp;
+final lastLocation0 = lastLocation;
       final withNulls = {
-        'title': title0,'thumbnail': thumbnail0,'ownerRef': ownerRef0,'location': location0,'legacyStamp': legacyStamp0,'id': id0,'createdAt': createdAt0,'capturedAt': capturedAt0,
+        'token': token0,'locale': locale0,'lastSeenAt': lastSeenAt0,'lastLocation': lastLocation0,'kind': kind0,'id': id0,'createdAt': createdAt0,'accountRef': accountRef0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.toJson: $e');
+      assert(false, '$ModelDeviceToken.toJson: $e');
       rethrow;
     }
   }
@@ -311,17 +311,35 @@ final legacyStamp0 = legacyStamp;
 @pragma('vm:prefer-inline')
 String get id$ => id!;
 
-  /// Returns the value of the [title] field.
+  /// Returns the value of the [accountRef] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-String? get title$ => title;
+String get accountRef$ => accountRef!;
 
-  /// Returns the value of the [capturedAt] field.
+  /// Returns the value of the [token] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-DateTime? get capturedAt$ => capturedAt;
+String get token$ => token!;
+
+  /// Returns the value of the [kind] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+DeviceKindType get kind$ => kind!;
+
+  /// Returns the value of the [locale] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+String? get locale$ => locale;
+
+  /// Returns the value of the [lastSeenAt] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+DateTime? get lastSeenAt$ => lastSeenAt;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
@@ -329,117 +347,99 @@ DateTime? get capturedAt$ => capturedAt;
 @pragma('vm:prefer-inline')
 DateTime? get createdAt$ => createdAt;
 
-  /// Returns the value of the [location] field.
+  /// Returns the value of the [lastLocation] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-GeoPoint? get location$ => location;
-
-  /// Returns the value of the [ownerRef] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get ownerRef$ => ownerRef;
-
-  /// Returns the value of the [thumbnail] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uint8List? get thumbnail$ => thumbnail;
-
-  /// Returns the value of the [legacyStamp] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Timestamp? get legacyStamp$ => legacyStamp;
+GeoPoint? get lastLocation$ => lastLocation;
 
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract final class ModelFirestoreDocFieldNames {
-    /// The field name of [ModelFirestoreDoc.id].
+abstract final class ModelDeviceTokenFieldNames {
+    /// The field name of [ModelDeviceToken.id].
 static const id = 'id';
 
-  /// The field name of [ModelFirestoreDoc.title].
-static const title = 'title';
+  /// The field name of [ModelDeviceToken.accountRef].
+static const accountRef = 'accountRef';
 
-  /// The field name of [ModelFirestoreDoc.capturedAt].
-static const capturedAt = 'capturedAt';
+  /// The field name of [ModelDeviceToken.token].
+static const token = 'token';
 
-  /// The field name of [ModelFirestoreDoc.createdAt].
+  /// The field name of [ModelDeviceToken.kind].
+static const kind = 'kind';
+
+  /// The field name of [ModelDeviceToken.locale].
+static const locale = 'locale';
+
+  /// The field name of [ModelDeviceToken.lastSeenAt].
+static const lastSeenAt = 'lastSeenAt';
+
+  /// The field name of [ModelDeviceToken.createdAt].
 static const createdAt = 'createdAt';
 
-  /// The field name of [ModelFirestoreDoc.location].
-static const location = 'location';
-
-  /// The field name of [ModelFirestoreDoc.ownerRef].
-static const ownerRef = 'ownerRef';
-
-  /// The field name of [ModelFirestoreDoc.thumbnail].
-static const thumbnail = 'thumbnail';
-
-  /// The field name of [ModelFirestoreDoc.legacyStamp].
-static const legacyStamp = 'legacyStamp';
+  /// The field name of [ModelDeviceToken.lastLocation].
+static const lastLocation = 'lastLocation';
 
 }
 
-extension ModelFirestoreDocX on ModelFirestoreDoc {
+extension ModelDeviceTokenX on ModelDeviceToken {
   /// Creates a copy of this instance, merging another model's fields into
   /// this model's fields.
-  ModelFirestoreDoc mergeWith(
+  ModelDeviceToken mergeWith(
     BaseModel? other, {
     bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelFirestoreDoc.fromJson(data.cast());
+    return ModelDeviceToken.fromJson(data.cast());
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelFirestoreDoc copyWith({
+  ModelDeviceToken copyWith({
     String? id,
-String? title,
-DateTime? capturedAt,
+String? accountRef,
+String? token,
+DeviceKindType? kind,
+String? locale,
+DateTime? lastSeenAt,
 DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+GeoPoint? lastLocation,
   }) {
-    return ModelFirestoreDoc.assertRequired(
+    return ModelDeviceToken.assertRequired(
       id: id ?? this.id,
-title: title ?? this.title,
-capturedAt: capturedAt ?? this.capturedAt,
+accountRef: accountRef ?? this.accountRef,
+token: token ?? this.token,
+kind: kind ?? this.kind,
+locale: locale ?? this.locale,
+lastSeenAt: lastSeenAt ?? this.lastSeenAt,
 createdAt: createdAt ?? this.createdAt,
-location: location ?? this.location,
-ownerRef: ownerRef ?? this.ownerRef,
-thumbnail: thumbnail ?? this.thumbnail,
-legacyStamp: legacyStamp ?? this.legacyStamp,
+lastLocation: lastLocation ?? this.lastLocation,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelFirestoreDoc copyWithout({
+  ModelDeviceToken copyWithout({
     bool id = true,
-bool title = true,
-bool capturedAt = true,
+bool accountRef = true,
+bool token = true,
+bool kind = true,
+bool locale = true,
+bool lastSeenAt = true,
 bool createdAt = true,
-bool location = true,
-bool ownerRef = true,
-bool thumbnail = true,
-bool legacyStamp = true,
+bool lastLocation = true,
   }) {
-    return ModelFirestoreDoc.assertRequired(
+    return ModelDeviceToken.assertRequired(
       id: id ? this.id: null,
-title: title ? this.title: null,
-capturedAt: capturedAt ? this.capturedAt: null,
+accountRef: accountRef ? this.accountRef: null,
+token: token ? this.token: null,
+kind: kind ? this.kind: null,
+locale: locale ? this.locale: null,
+lastSeenAt: lastSeenAt ? this.lastSeenAt: null,
 createdAt: createdAt ? this.createdAt: null,
-location: location ? this.location: null,
-ownerRef: ownerRef ? this.ownerRef: null,
-thumbnail: thumbnail ? this.thumbnail: null,
-legacyStamp: legacyStamp ? this.legacyStamp: null,
+lastLocation: lastLocation ? this.lastLocation: null,
     );
   }
 }

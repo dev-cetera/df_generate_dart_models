@@ -16,18 +16,18 @@
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_question_mark
 
-part of 'model_pg_post.dart';
+part of 'model_post.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generated class for [_ModelPgPost].
-class ModelPgPost extends _ModelPgPost with EquatableMixin {
+/// Generated class for [_ModelPost].
+class ModelPost extends _ModelPost with EquatableMixin {
   //
   //
   //
 
   /// The runtime type of this class as a String.
-  static const CLASS_NAME = 'ModelPgPost';
+  static const CLASS_NAME = 'ModelPost';
 
   @override
   String get $className => CLASS_NAME;
@@ -36,7 +36,7 @@ class ModelPgPost extends _ModelPgPost with EquatableMixin {
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, authorId, title, body, status, tags, extra, metadata, createdAt, updatedAt];
+  List<Object?> get props => [id, authorId, visibility, caption, hashtags, media, location, likeCount, createdAt, updatedAt, deletedAt];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -51,22 +51,22 @@ final String? id;
 final String? authorId;
 
   /// No description provided.
-final String? title;
+final PostVisibilityType? visibility;
 
   /// No description provided.
-final String? body;
+final String? caption;
 
   /// No description provided.
-final PostStatusKindType? status;
+final List<String>? hashtags;
 
   /// No description provided.
-final List<String>? tags;
+final List<ModelMediaItem>? media;
 
   /// No description provided.
-final Map<String,dynamic>? extra;
+final ModelLocation? location;
 
   /// No description provided.
-final ModelPostMetadata? metadata;
+final int? likeCount;
 
   /// No description provided.
 final DateTime? createdAt;
@@ -74,55 +74,61 @@ final DateTime? createdAt;
   /// No description provided.
 final DateTime? updatedAt;
 
+  /// No description provided.
+final DateTime? deletedAt;
 
-  /// Constructs a new instance of [ModelPgPost]
+
+  /// Constructs a new instance of [ModelPost]
   /// from optional and required parameters.
-  const ModelPgPost({
+  const ModelPost({
     required this.id,
 required this.authorId,
-required this.title,
- this.body,
- this.status,
- this.tags,
- this.extra,
- this.metadata,
+ this.visibility,
+ this.caption,
+ this.hashtags,
+ this.media,
+ this.location,
+ this.likeCount,
 required this.createdAt,
 required this.updatedAt,
+ this.deletedAt,
   }) ;
 
-  /// Construcs a new instance of [ModelPgPost],
+  /// Construcs a new instance of [ModelPost],
   /// forcing all parameters to be optional.
-  const ModelPgPost.optional({
+  const ModelPost.optional({
     this.id,
 this.authorId,
-this.title,
-this.body,
-this.status,
-this.tags,
-this.extra,
-this.metadata,
+this.visibility,
+this.caption,
+this.hashtags,
+this.media,
+this.location,
+this.likeCount,
 this.createdAt,
 this.updatedAt,
+this.deletedAt,
   }) ;
 
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// and asserts that all required parameters are not null.
-  factory ModelPgPost.assertRequired({
+  factory ModelPost.assertRequired({
     String? id,
 String? authorId,
-String? title,
-String? body,
-PostStatusKindType? status,
-List<String>? tags,
-Map<String,dynamic>? extra,
-ModelPostMetadata? metadata,
+PostVisibilityType? visibility,
+String? caption,
+List<String>? hashtags,
+List<ModelMediaItem>? media,
+ModelLocation? location,
+int? likeCount,
 DateTime? createdAt,
 DateTime? updatedAt,
+DateTime? deletedAt,
   }) {
     assert(id != null);
 assert(authorId != null);
-assert(title != null);
+
 
 
 
@@ -130,172 +136,176 @@ assert(title != null);
 
 assert(createdAt != null);
 assert(updatedAt != null);
-    return ModelPgPost(
+
+    return ModelPost(
       id: id,
 authorId: authorId,
-title: title,
-body: body,
-status: status,
-tags: tags,
-extra: extra,
-metadata: metadata,
+visibility: visibility,
+caption: caption,
+hashtags: hashtags,
+media: media,
+location: location,
+likeCount: likeCount,
 createdAt: createdAt,
 updatedAt: updatedAt,
+deletedAt: deletedAt,
     );
   }
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelPgPost.from(
+  factory ModelPost.from(
     BaseModel another,
   ) {
     try {
       return fromOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelPgPost.from: $e');
+      assert(false, '$ModelPost.from: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelPgPost? fromOrNull(
+  static ModelPost? fromOrNull(
     BaseModel? another,
   ) {
     return fromJsonOrNull(another?.toJson())!;
   }
 
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelPgPost.of(
-    ModelPgPost another,
+  factory ModelPost.of(
+    ModelPost another,
   ) {
     try {
       return ofOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelPgPost.of: $e');
+      assert(false, '$ModelPost.of: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelPgPost? ofOrNull(
-    ModelPgPost? other,
+  static ModelPost? ofOrNull(
+    ModelPost? other,
   ) {
     return fromJsonOrNull(other?.toJson());
   }
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from [jsonString], which must be a valid JSON String. Throws if the
   /// conversion fails.
-  factory ModelPgPost.fromJsonString(
+  factory ModelPost.fromJsonString(
     String jsonString,
   ) {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelPgPost.fromJsonString: $e');
+     assert(false, '$ModelPost.fromJsonString: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from [jsonString], which must be a valid JSON String. Returns `null` if
   /// [jsonString] is `null` or if the conversion fails.
-  static ModelPgPost? fromJsonStringOrNull(
+  static ModelPost? fromJsonStringOrNull(
     String? jsonString,
   ) {
     try {
       if (jsonString!.isNotEmpty) {
         final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelPgPost.fromJson(decoded);
+        return ModelPost.fromJson(decoded);
       } else {
-        return ModelPgPost.assertRequired();
+        return ModelPost.assertRequired();
       }
     } catch (_) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from [json], which must be a valid JSON object. Throws if the conversion
   /// fails.
-  factory ModelPgPost.fromJson(
+  factory ModelPost.fromJson(
     Map<String, dynamic>? json,
   ) {
     try {
       return fromJsonOrNull(json)!;
     } catch (e) {
-      assert(false, '$ModelPgPost.fromJson: $e');
+      assert(false, '$ModelPost.fromJson: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from [json], which must be a valid JSON object. Returns `null` if
   /// [json] is `null` or if the conversion fails.
-  static ModelPgPost? fromJsonOrNull(
+  static ModelPost? fromJsonOrNull(
     Map<String, dynamic>? json,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
 final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-final title = json?['title']?.toString().trim().nullIfEmpty;
-final body = json?['body']?.toString().trim().nullIfEmpty;
-final status = PostStatusKindType.values.valueOf(json?['status']?.toString());
-final tags = letListOrNull<dynamic>(json?['tags'])?.map((p0) => p0?.toString().trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final extra = letMapOrNull<dynamic, dynamic>(json?['extra'])?.map((p0, p1) => MapEntry(p0?.toString().trim().nullIfEmpty, p1,),).nonNulls.nullIfEmpty?.unmodifiable;
-final metadata = () { final a = letMapOrNull<String, dynamic>(json?['metadata']); return a != null ? ModelPostMetadata.fromJson(a): null; }();
+final visibility = PostVisibilityType.values.valueOf(json?['visibility']?.toString()) ?? 'public';
+final caption = json?['caption']?.toString().trim().nullIfEmpty;
+final hashtags = letListOrNull<dynamic>(json?['hashtags'])?.map((p0) => p0?.toString().trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList().unmodifiable;
+final media = letListOrNull<dynamic>(json?['media'])?.map((p0) => () { final a = letMapOrNull<String, dynamic>(p0); return a != null ? ModelMediaItem.fromJson(a): null; }(),).nonNulls.nullIfEmpty?.toList().unmodifiable;
+final location = () { final a = letMapOrNull<String, dynamic>(json?['location']); return a != null ? ModelLocation.fromJson(a): null; }();
+final likeCount = letIntOrNull(json?['like_count']) ?? 0;
 final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
 final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-      return ModelPgPost(
+final deletedAt = (){ final a = json?['deleted_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      return ModelPost(
         id: id,
 authorId: authorId,
-title: title,
-body: body,
-status: status,
-tags: tags,
-extra: extra,
-metadata: metadata,
+visibility: visibility,
+caption: caption,
+hashtags: hashtags,
+media: media,
+location: location,
+likeCount: likeCount,
 createdAt: createdAt,
 updatedAt: updatedAt,
+deletedAt: deletedAt,
       );
     } catch (e) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from the query parameters of [uri]. Throws if the conversion
   /// fails.
-  factory ModelPgPost.fromUri(
+  factory ModelPost.fromUri(
     Uri? uri,
   ) {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
-      assert(false, '$ModelPgPost.fromUri: $e');
+      assert(false, '$ModelPost.fromUri: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelPgPost],
+  /// Constructs a new instance of [ModelPost],
   /// from the query parameters of [uri]. Returns `null` if [uri] is `null` or
   /// if the conversion fails.
-  static ModelPgPost? fromUriOrNull(
+  static ModelPost? fromUriOrNull(
     Uri? uri,
   ) {
     try {
       if (uri != null && uri.path == CLASS_NAME) {
-        return ModelPgPost.fromJson(uri.queryParameters);
+        return ModelPost.fromJson(uri.queryParameters);
       } else {
-        return ModelPgPost.assertRequired();
+        return ModelPost.assertRequired();
       }
     } catch (_) {
       return null;
@@ -309,20 +319,21 @@ updatedAt: updatedAt,
     try {
       final id0 = id?.trim().nullIfEmpty;
 final authorId0 = authorId?.trim().nullIfEmpty;
-final title0 = title?.trim().nullIfEmpty;
-final body0 = body?.trim().nullIfEmpty;
-final status0 = status?.name;
-final tags0 = tags?.map((p0) => p0?.trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList();
-final extra0 = (){ final a = extra; return a != null ? jsonEncode(a.map((p0, p1) => MapEntry(p0?.trim().nullIfEmpty, p1,)).nonNulls.nullIfEmpty) : null; }();
-final metadata0 = metadata != null ? jsonEncode(metadata!.toJson()) : null;
+final visibility0 = visibility?.name;
+final caption0 = caption?.trim().nullIfEmpty;
+final hashtags0 = hashtags?.map((p0) => p0?.trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList();
+final media0 = (){ final a = media; return a != null ? jsonEncode(a.map((p0) => p0?.toJson(),).nonNulls.nullIfEmpty?.toList()) : null; }();
+final location0 = location != null ? jsonEncode(location!.toJson()) : null;
+final likeCount0 = likeCount;
 final createdAt0 = createdAt?.toUtc().toIso8601String();
 final updatedAt0 = updatedAt?.toUtc().toIso8601String();
+final deletedAt0 = deletedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'updated_at': updatedAt0,'title': title0,'tags': tags0,'status': status0,'metadata': metadata0,'id': id0,'extra': extra0,'created_at': createdAt0,'body': body0,'author_id': authorId0,
+        'visibility': visibility0,'updated_at': updatedAt0,'media': media0,'location': location0,'like_count': likeCount0,'id': id0,'hashtags': hashtags0,'deleted_at': deletedAt0,'created_at': createdAt0,'caption': caption0,'author_id': authorId0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
-      assert(false, '$ModelPgPost.toJson: $e');
+      assert(false, '$ModelPost.toJson: $e');
       rethrow;
     }
   }
@@ -339,41 +350,41 @@ String get id$ => id!;
 @pragma('vm:prefer-inline')
 String get authorId$ => authorId!;
 
-  /// Returns the value of the [title] field.
+  /// Returns the value of the [visibility] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-String get title$ => title!;
+PostVisibilityType? get visibility$ => visibility;
 
-  /// Returns the value of the [body] field.
+  /// Returns the value of the [caption] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-String? get body$ => body;
+String? get caption$ => caption;
 
-  /// Returns the value of the [status] field.
+  /// Returns the value of the [hashtags] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-PostStatusKindType? get status$ => status;
+List<String>? get hashtags$ => hashtags;
 
-  /// Returns the value of the [tags] field.
+  /// Returns the value of the [media] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-List<String>? get tags$ => tags;
+List<ModelMediaItem>? get media$ => media;
 
-  /// Returns the value of the [extra] field.
+  /// Returns the value of the [location] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-Map<String,dynamic>? get extra$ => extra;
+ModelLocation? get location$ => location;
 
-  /// Returns the value of the [metadata] field.
+  /// Returns the value of the [likeCount] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-ModelPostMetadata? get metadata$ => metadata;
+int? get likeCount$ => likeCount;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
@@ -387,107 +398,120 @@ DateTime get createdAt$ => createdAt!;
 @pragma('vm:prefer-inline')
 DateTime get updatedAt$ => updatedAt!;
 
+  /// Returns the value of the [deletedAt] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+DateTime? get deletedAt$ => deletedAt;
+
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract final class ModelPgPostFieldNames {
-    /// The field name of [ModelPgPost.id].
+abstract final class ModelPostFieldNames {
+    /// The field name of [ModelPost.id].
 static const id = 'id';
 
-  /// The field name of [ModelPgPost.authorId].
+  /// The field name of [ModelPost.authorId].
 static const authorId = 'author_id';
 
-  /// The field name of [ModelPgPost.title].
-static const title = 'title';
+  /// The field name of [ModelPost.visibility].
+static const visibility = 'visibility';
 
-  /// The field name of [ModelPgPost.body].
-static const body = 'body';
+  /// The field name of [ModelPost.caption].
+static const caption = 'caption';
 
-  /// The field name of [ModelPgPost.status].
-static const status = 'status';
+  /// The field name of [ModelPost.hashtags].
+static const hashtags = 'hashtags';
 
-  /// The field name of [ModelPgPost.tags].
-static const tags = 'tags';
+  /// The field name of [ModelPost.media].
+static const media = 'media';
 
-  /// The field name of [ModelPgPost.extra].
-static const extra = 'extra';
+  /// The field name of [ModelPost.location].
+static const location = 'location';
 
-  /// The field name of [ModelPgPost.metadata].
-static const metadata = 'metadata';
+  /// The field name of [ModelPost.likeCount].
+static const likeCount = 'like_count';
 
-  /// The field name of [ModelPgPost.createdAt].
+  /// The field name of [ModelPost.createdAt].
 static const createdAt = 'created_at';
 
-  /// The field name of [ModelPgPost.updatedAt].
+  /// The field name of [ModelPost.updatedAt].
 static const updatedAt = 'updated_at';
+
+  /// The field name of [ModelPost.deletedAt].
+static const deletedAt = 'deleted_at';
 
 }
 
-extension ModelPgPostX on ModelPgPost {
+extension ModelPostX on ModelPost {
   /// Creates a copy of this instance, merging another model's fields into
   /// this model's fields.
-  ModelPgPost mergeWith(
+  ModelPost mergeWith(
     BaseModel? other, {
     bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelPgPost.fromJson(data.cast());
+    return ModelPost.fromJson(data.cast());
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelPgPost copyWith({
+  ModelPost copyWith({
     String? id,
 String? authorId,
-String? title,
-String? body,
-PostStatusKindType? status,
-List<String>? tags,
-Map<String,dynamic>? extra,
-ModelPostMetadata? metadata,
+PostVisibilityType? visibility,
+String? caption,
+List<String>? hashtags,
+List<ModelMediaItem>? media,
+ModelLocation? location,
+int? likeCount,
 DateTime? createdAt,
 DateTime? updatedAt,
+DateTime? deletedAt,
   }) {
-    return ModelPgPost.assertRequired(
+    return ModelPost.assertRequired(
       id: id ?? this.id,
 authorId: authorId ?? this.authorId,
-title: title ?? this.title,
-body: body ?? this.body,
-status: status ?? this.status,
-tags: tags ?? this.tags,
-extra: extra ?? this.extra,
-metadata: metadata ?? this.metadata,
+visibility: visibility ?? this.visibility,
+caption: caption ?? this.caption,
+hashtags: hashtags ?? this.hashtags,
+media: media ?? this.media,
+location: location ?? this.location,
+likeCount: likeCount ?? this.likeCount,
 createdAt: createdAt ?? this.createdAt,
 updatedAt: updatedAt ?? this.updatedAt,
+deletedAt: deletedAt ?? this.deletedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelPgPost copyWithout({
+  ModelPost copyWithout({
     bool id = true,
 bool authorId = true,
-bool title = true,
-bool body = true,
-bool status = true,
-bool tags = true,
-bool extra = true,
-bool metadata = true,
+bool visibility = true,
+bool caption = true,
+bool hashtags = true,
+bool media = true,
+bool location = true,
+bool likeCount = true,
 bool createdAt = true,
 bool updatedAt = true,
+bool deletedAt = true,
   }) {
-    return ModelPgPost.assertRequired(
+    return ModelPost.assertRequired(
       id: id ? this.id: null,
 authorId: authorId ? this.authorId: null,
-title: title ? this.title: null,
-body: body ? this.body: null,
-status: status ? this.status: null,
-tags: tags ? this.tags: null,
-extra: extra ? this.extra: null,
-metadata: metadata ? this.metadata: null,
+visibility: visibility ? this.visibility: null,
+caption: caption ? this.caption: null,
+hashtags: hashtags ? this.hashtags: null,
+media: media ? this.media: null,
+location: location ? this.location: null,
+likeCount: likeCount ? this.likeCount: null,
 createdAt: createdAt ? this.createdAt: null,
 updatedAt: updatedAt ? this.updatedAt: null,
+deletedAt: deletedAt ? this.deletedAt: null,
     );
   }
 }

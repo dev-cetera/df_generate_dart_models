@@ -242,7 +242,7 @@ final displayName = json?['display_name']?.toString().trim().nullIfEmpty;
 final loginCount = letIntOrNull(json?['login_count']) ?? 0;
 final isActive = letBoolOrNull(json?['is_active']) ?? true;
 final avatarBytes = letAsOrNull<Uint8List>(json?['avatar_bytes']);
-final authProvider = AuthProviderKindType.values.valueOf(json?['auth_provider']?.toString()) ?? AuthProviderKindType.unknown;
+final authProvider = AuthProviderKindType.values.valueOf(json?['auth_provider']?.toString());
 final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
 final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
       return ModelPgUser(

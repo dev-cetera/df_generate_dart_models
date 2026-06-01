@@ -53,7 +53,6 @@ part '_model_pg_user.g.dart';
       fieldPath: ['auth_provider'],
       fieldType: 'PG_enum(auth_provider_kind)-AuthProviderKindType',
       nullable: true,
-      unknownEnumValue: AuthProviderKindType.unknown,
     ),
     Field(fieldPath: ['created_at'], fieldType: 'PG_timestamptz-DateTime'),
     Field(fieldPath: ['updated_at'], fieldType: 'PG_timestamptz-DateTime'),

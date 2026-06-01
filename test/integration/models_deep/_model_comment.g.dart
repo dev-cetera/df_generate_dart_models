@@ -16,18 +16,18 @@
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_question_mark
 
-part of 'model_firestore_doc.dart';
+part of 'model_comment.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generated class for [_ModelFirestoreDoc].
-class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
+/// Generated class for [_ModelComment].
+class ModelComment extends _ModelComment with EquatableMixin {
   //
   //
   //
 
   /// The runtime type of this class as a String.
-  static const CLASS_NAME = 'ModelFirestoreDoc';
+  static const CLASS_NAME = 'ModelComment';
 
   @override
   String get $className => CLASS_NAME;
@@ -36,7 +36,7 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, title, capturedAt, createdAt, location, ownerRef, thumbnail, legacyStamp];
+  List<Object?> get props => [id, postId, authorId, parentId, body, status, likeCount, createdAt, updatedAt];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -48,234 +48,244 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
 final String? id;
 
   /// No description provided.
-final String? title;
+final String? postId;
 
   /// No description provided.
-final DateTime? capturedAt;
+final String? authorId;
+
+  /// No description provided.
+final String? parentId;
+
+  /// No description provided.
+final String? body;
+
+  /// No description provided.
+final CommentStatusType? status;
+
+  /// No description provided.
+final int? likeCount;
 
   /// No description provided.
 final DateTime? createdAt;
 
   /// No description provided.
-final GeoPoint? location;
-
-  /// No description provided.
-final String? ownerRef;
-
-  /// No description provided.
-final Uint8List? thumbnail;
-
-  /// No description provided.
-final Timestamp? legacyStamp;
+final DateTime? updatedAt;
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc]
+  /// Constructs a new instance of [ModelComment]
   /// from optional and required parameters.
-  const ModelFirestoreDoc({
+  const ModelComment({
     required this.id,
- this.title,
- this.capturedAt,
- this.createdAt,
- this.location,
- this.ownerRef,
- this.thumbnail,
- this.legacyStamp,
+required this.postId,
+required this.authorId,
+ this.parentId,
+required this.body,
+ this.status,
+ this.likeCount,
+required this.createdAt,
+required this.updatedAt,
   }) ;
 
-  /// Construcs a new instance of [ModelFirestoreDoc],
+  /// Construcs a new instance of [ModelComment],
   /// forcing all parameters to be optional.
-  const ModelFirestoreDoc.optional({
+  const ModelComment.optional({
     this.id,
-this.title,
-this.capturedAt,
+this.postId,
+this.authorId,
+this.parentId,
+this.body,
+this.status,
+this.likeCount,
 this.createdAt,
-this.location,
-this.ownerRef,
-this.thumbnail,
-this.legacyStamp,
+this.updatedAt,
   }) ;
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// and asserts that all required parameters are not null.
-  factory ModelFirestoreDoc.assertRequired({
+  factory ModelComment.assertRequired({
     String? id,
-String? title,
-DateTime? capturedAt,
+String? postId,
+String? authorId,
+String? parentId,
+String? body,
+CommentStatusType? status,
+int? likeCount,
 DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+DateTime? updatedAt,
   }) {
     assert(id != null);
+assert(postId != null);
+assert(authorId != null);
+
+assert(body != null);
 
 
-
-
-
-
-
-    return ModelFirestoreDoc(
+assert(createdAt != null);
+assert(updatedAt != null);
+    return ModelComment(
       id: id,
-title: title,
-capturedAt: capturedAt,
+postId: postId,
+authorId: authorId,
+parentId: parentId,
+body: body,
+status: status,
+likeCount: likeCount,
 createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+updatedAt: updatedAt,
     );
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelFirestoreDoc.from(
+  factory ModelComment.from(
     BaseModel another,
   ) {
     try {
       return fromOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.from: $e');
+      assert(false, '$ModelComment.from: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelFirestoreDoc? fromOrNull(
+  static ModelComment? fromOrNull(
     BaseModel? another,
   ) {
     return fromJsonOrNull(another?.toJson())!;
   }
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelFirestoreDoc.of(
-    ModelFirestoreDoc another,
+  factory ModelComment.of(
+    ModelComment another,
   ) {
     try {
       return ofOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.of: $e');
+      assert(false, '$ModelComment.of: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelFirestoreDoc? ofOrNull(
-    ModelFirestoreDoc? other,
+  static ModelComment? ofOrNull(
+    ModelComment? other,
   ) {
     return fromJsonOrNull(other?.toJson());
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from [jsonString], which must be a valid JSON String. Throws if the
   /// conversion fails.
-  factory ModelFirestoreDoc.fromJsonString(
+  factory ModelComment.fromJsonString(
     String jsonString,
   ) {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelFirestoreDoc.fromJsonString: $e');
+     assert(false, '$ModelComment.fromJsonString: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from [jsonString], which must be a valid JSON String. Returns `null` if
   /// [jsonString] is `null` or if the conversion fails.
-  static ModelFirestoreDoc? fromJsonStringOrNull(
+  static ModelComment? fromJsonStringOrNull(
     String? jsonString,
   ) {
     try {
       if (jsonString!.isNotEmpty) {
         final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelFirestoreDoc.fromJson(decoded);
+        return ModelComment.fromJson(decoded);
       } else {
-        return ModelFirestoreDoc.assertRequired();
+        return ModelComment.assertRequired();
       }
     } catch (_) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from [json], which must be a valid JSON object. Throws if the conversion
   /// fails.
-  factory ModelFirestoreDoc.fromJson(
+  factory ModelComment.fromJson(
     Map<String, dynamic>? json,
   ) {
     try {
       return fromJsonOrNull(json)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.fromJson: $e');
+      assert(false, '$ModelComment.fromJson: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from [json], which must be a valid JSON object. Returns `null` if
   /// [json] is `null` or if the conversion fails.
-  static ModelFirestoreDoc? fromJsonOrNull(
+  static ModelComment? fromJsonOrNull(
     Map<String, dynamic>? json,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final title = json?['title']?.toString().trim().nullIfEmpty;
-final capturedAt = (){ final a = letAsOrNull<Timestamp>(json?['capturedAt']); return a != null ? a.toDate().toUtc() : null; }();
-final createdAt = (){ final a = letAsOrNull<Timestamp>(json?['createdAt']); return a != null ? a.toDate().toUtc() : null; }();
-final location = letAsOrNull<GeoPoint>(json?['location']);
-final ownerRef = (){ final a = letAsOrNull<DocumentReference>(json?['ownerRef']); return a != null ? a.path : json?['ownerRef']?.toString().trim().nullIfEmpty; }();
-final thumbnail = (){ final a = letAsOrNull<Blob>(json?['thumbnail']); return a != null ? a.bytes : letAsOrNull<Uint8List>(json?['thumbnail']); }();
-final legacyStamp = letAsOrNull<Timestamp>(json?['legacyStamp']);
-      return ModelFirestoreDoc(
+final postId = json?['post_id']?.toString().trim().nullIfEmpty;
+final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
+final parentId = json?['parent_id']?.toString().trim().nullIfEmpty;
+final body = json?['body']?.toString().trim().nullIfEmpty;
+final status = CommentStatusType.values.valueOf(json?['status']?.toString()) ?? 'active';
+final likeCount = letIntOrNull(json?['like_count']) ?? 0;
+final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      return ModelComment(
         id: id,
-title: title,
-capturedAt: capturedAt,
+postId: postId,
+authorId: authorId,
+parentId: parentId,
+body: body,
+status: status,
+likeCount: likeCount,
 createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+updatedAt: updatedAt,
       );
     } catch (e) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from the query parameters of [uri]. Throws if the conversion
   /// fails.
-  factory ModelFirestoreDoc.fromUri(
+  factory ModelComment.fromUri(
     Uri? uri,
   ) {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.fromUri: $e');
+      assert(false, '$ModelComment.fromUri: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelComment],
   /// from the query parameters of [uri]. Returns `null` if [uri] is `null` or
   /// if the conversion fails.
-  static ModelFirestoreDoc? fromUriOrNull(
+  static ModelComment? fromUriOrNull(
     Uri? uri,
   ) {
     try {
       if (uri != null && uri.path == CLASS_NAME) {
-        return ModelFirestoreDoc.fromJson(uri.queryParameters);
+        return ModelComment.fromJson(uri.queryParameters);
       } else {
-        return ModelFirestoreDoc.assertRequired();
+        return ModelComment.assertRequired();
       }
     } catch (_) {
       return null;
@@ -288,19 +298,20 @@ legacyStamp: legacyStamp,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final title0 = title?.trim().nullIfEmpty;
-final capturedAt0 = capturedAt != null ? Timestamp.fromDate(capturedAt!.toUtc()) : null;
-final createdAt0 = FieldValue.serverTimestamp();
-final location0 = location;
-final ownerRef0 = ownerRef?.trim().nullIfEmpty;
-final thumbnail0 = thumbnail != null ? Blob(thumbnail!) : null;
-final legacyStamp0 = legacyStamp;
+final postId0 = postId?.trim().nullIfEmpty;
+final authorId0 = authorId?.trim().nullIfEmpty;
+final parentId0 = parentId?.trim().nullIfEmpty;
+final body0 = body?.trim().nullIfEmpty;
+final status0 = status?.name;
+final likeCount0 = likeCount;
+final createdAt0 = createdAt?.toUtc().toIso8601String();
+final updatedAt0 = updatedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'title': title0,'thumbnail': thumbnail0,'ownerRef': ownerRef0,'location': location0,'legacyStamp': legacyStamp0,'id': id0,'createdAt': createdAt0,'capturedAt': capturedAt0,
+        'updated_at': updatedAt0,'status': status0,'post_id': postId0,'parent_id': parentId0,'like_count': likeCount0,'id': id0,'created_at': createdAt0,'body': body0,'author_id': authorId0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.toJson: $e');
+      assert(false, '$ModelComment.toJson: $e');
       rethrow;
     }
   }
@@ -311,135 +322,148 @@ final legacyStamp0 = legacyStamp;
 @pragma('vm:prefer-inline')
 String get id$ => id!;
 
-  /// Returns the value of the [title] field.
+  /// Returns the value of the [postId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-String? get title$ => title;
+String get postId$ => postId!;
 
-  /// Returns the value of the [capturedAt] field.
+  /// Returns the value of the [authorId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-DateTime? get capturedAt$ => capturedAt;
+String get authorId$ => authorId!;
+
+  /// Returns the value of the [parentId] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+String? get parentId$ => parentId;
+
+  /// Returns the value of the [body] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+String get body$ => body!;
+
+  /// Returns the value of the [status] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+CommentStatusType? get status$ => status;
+
+  /// Returns the value of the [likeCount] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+int? get likeCount$ => likeCount;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-DateTime? get createdAt$ => createdAt;
+DateTime get createdAt$ => createdAt!;
 
-  /// Returns the value of the [location] field.
+  /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-GeoPoint? get location$ => location;
-
-  /// Returns the value of the [ownerRef] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get ownerRef$ => ownerRef;
-
-  /// Returns the value of the [thumbnail] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uint8List? get thumbnail$ => thumbnail;
-
-  /// Returns the value of the [legacyStamp] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Timestamp? get legacyStamp$ => legacyStamp;
+DateTime get updatedAt$ => updatedAt!;
 
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract final class ModelFirestoreDocFieldNames {
-    /// The field name of [ModelFirestoreDoc.id].
+abstract final class ModelCommentFieldNames {
+    /// The field name of [ModelComment.id].
 static const id = 'id';
 
-  /// The field name of [ModelFirestoreDoc.title].
-static const title = 'title';
+  /// The field name of [ModelComment.postId].
+static const postId = 'post_id';
 
-  /// The field name of [ModelFirestoreDoc.capturedAt].
-static const capturedAt = 'capturedAt';
+  /// The field name of [ModelComment.authorId].
+static const authorId = 'author_id';
 
-  /// The field name of [ModelFirestoreDoc.createdAt].
-static const createdAt = 'createdAt';
+  /// The field name of [ModelComment.parentId].
+static const parentId = 'parent_id';
 
-  /// The field name of [ModelFirestoreDoc.location].
-static const location = 'location';
+  /// The field name of [ModelComment.body].
+static const body = 'body';
 
-  /// The field name of [ModelFirestoreDoc.ownerRef].
-static const ownerRef = 'ownerRef';
+  /// The field name of [ModelComment.status].
+static const status = 'status';
 
-  /// The field name of [ModelFirestoreDoc.thumbnail].
-static const thumbnail = 'thumbnail';
+  /// The field name of [ModelComment.likeCount].
+static const likeCount = 'like_count';
 
-  /// The field name of [ModelFirestoreDoc.legacyStamp].
-static const legacyStamp = 'legacyStamp';
+  /// The field name of [ModelComment.createdAt].
+static const createdAt = 'created_at';
+
+  /// The field name of [ModelComment.updatedAt].
+static const updatedAt = 'updated_at';
 
 }
 
-extension ModelFirestoreDocX on ModelFirestoreDoc {
+extension ModelCommentX on ModelComment {
   /// Creates a copy of this instance, merging another model's fields into
   /// this model's fields.
-  ModelFirestoreDoc mergeWith(
+  ModelComment mergeWith(
     BaseModel? other, {
     bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelFirestoreDoc.fromJson(data.cast());
+    return ModelComment.fromJson(data.cast());
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelFirestoreDoc copyWith({
+  ModelComment copyWith({
     String? id,
-String? title,
-DateTime? capturedAt,
+String? postId,
+String? authorId,
+String? parentId,
+String? body,
+CommentStatusType? status,
+int? likeCount,
 DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+DateTime? updatedAt,
   }) {
-    return ModelFirestoreDoc.assertRequired(
+    return ModelComment.assertRequired(
       id: id ?? this.id,
-title: title ?? this.title,
-capturedAt: capturedAt ?? this.capturedAt,
+postId: postId ?? this.postId,
+authorId: authorId ?? this.authorId,
+parentId: parentId ?? this.parentId,
+body: body ?? this.body,
+status: status ?? this.status,
+likeCount: likeCount ?? this.likeCount,
 createdAt: createdAt ?? this.createdAt,
-location: location ?? this.location,
-ownerRef: ownerRef ?? this.ownerRef,
-thumbnail: thumbnail ?? this.thumbnail,
-legacyStamp: legacyStamp ?? this.legacyStamp,
+updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelFirestoreDoc copyWithout({
+  ModelComment copyWithout({
     bool id = true,
-bool title = true,
-bool capturedAt = true,
+bool postId = true,
+bool authorId = true,
+bool parentId = true,
+bool body = true,
+bool status = true,
+bool likeCount = true,
 bool createdAt = true,
-bool location = true,
-bool ownerRef = true,
-bool thumbnail = true,
-bool legacyStamp = true,
+bool updatedAt = true,
   }) {
-    return ModelFirestoreDoc.assertRequired(
+    return ModelComment.assertRequired(
       id: id ? this.id: null,
-title: title ? this.title: null,
-capturedAt: capturedAt ? this.capturedAt: null,
+postId: postId ? this.postId: null,
+authorId: authorId ? this.authorId: null,
+parentId: parentId ? this.parentId: null,
+body: body ? this.body: null,
+status: status ? this.status: null,
+likeCount: likeCount ? this.likeCount: null,
 createdAt: createdAt ? this.createdAt: null,
-location: location ? this.location: null,
-ownerRef: ownerRef ? this.ownerRef: null,
-thumbnail: thumbnail ? this.thumbnail: null,
-legacyStamp: legacyStamp ? this.legacyStamp: null,
+updatedAt: updatedAt ? this.updatedAt: null,
     );
   }
 }

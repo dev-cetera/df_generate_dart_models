@@ -16,18 +16,18 @@
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_question_mark
 
-part of 'model_firestore_doc.dart';
+part of 'model_account.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generated class for [_ModelFirestoreDoc].
-class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
+/// Generated class for [_ModelAccount].
+class ModelAccount extends _ModelAccount with EquatableMixin {
   //
   //
   //
 
   /// The runtime type of this class as a String.
-  static const CLASS_NAME = 'ModelFirestoreDoc';
+  static const CLASS_NAME = 'ModelAccount';
 
   @override
   String get $className => CLASS_NAME;
@@ -36,7 +36,7 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, title, capturedAt, createdAt, location, ownerRef, thumbnail, legacyStamp];
+  List<Object?> get props => [id, email, username, passwordHash, status, role, createdAt, updatedAt, deletedAt];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -48,234 +48,244 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
 final String? id;
 
   /// No description provided.
-final String? title;
+final String? email;
 
   /// No description provided.
-final DateTime? capturedAt;
+final String? username;
+
+  /// No description provided.
+final Uint8List? passwordHash;
+
+  /// No description provided.
+final AccountStatusType? status;
+
+  /// No description provided.
+final AccountRoleType? role;
 
   /// No description provided.
 final DateTime? createdAt;
 
   /// No description provided.
-final GeoPoint? location;
+final DateTime? updatedAt;
 
   /// No description provided.
-final String? ownerRef;
-
-  /// No description provided.
-final Uint8List? thumbnail;
-
-  /// No description provided.
-final Timestamp? legacyStamp;
+final DateTime? deletedAt;
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc]
+  /// Constructs a new instance of [ModelAccount]
   /// from optional and required parameters.
-  const ModelFirestoreDoc({
+  const ModelAccount({
     required this.id,
- this.title,
- this.capturedAt,
- this.createdAt,
- this.location,
- this.ownerRef,
- this.thumbnail,
- this.legacyStamp,
+required this.email,
+required this.username,
+ this.passwordHash,
+ this.status,
+ this.role,
+required this.createdAt,
+required this.updatedAt,
+ this.deletedAt,
   }) ;
 
-  /// Construcs a new instance of [ModelFirestoreDoc],
+  /// Construcs a new instance of [ModelAccount],
   /// forcing all parameters to be optional.
-  const ModelFirestoreDoc.optional({
+  const ModelAccount.optional({
     this.id,
-this.title,
-this.capturedAt,
+this.email,
+this.username,
+this.passwordHash,
+this.status,
+this.role,
 this.createdAt,
-this.location,
-this.ownerRef,
-this.thumbnail,
-this.legacyStamp,
+this.updatedAt,
+this.deletedAt,
   }) ;
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// and asserts that all required parameters are not null.
-  factory ModelFirestoreDoc.assertRequired({
+  factory ModelAccount.assertRequired({
     String? id,
-String? title,
-DateTime? capturedAt,
+String? email,
+String? username,
+Uint8List? passwordHash,
+AccountStatusType? status,
+AccountRoleType? role,
 DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+DateTime? updatedAt,
+DateTime? deletedAt,
   }) {
     assert(id != null);
+assert(email != null);
+assert(username != null);
 
 
 
+assert(createdAt != null);
+assert(updatedAt != null);
 
-
-
-
-    return ModelFirestoreDoc(
+    return ModelAccount(
       id: id,
-title: title,
-capturedAt: capturedAt,
+email: email,
+username: username,
+passwordHash: passwordHash,
+status: status,
+role: role,
 createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+updatedAt: updatedAt,
+deletedAt: deletedAt,
     );
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelFirestoreDoc.from(
+  factory ModelAccount.from(
     BaseModel another,
   ) {
     try {
       return fromOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.from: $e');
+      assert(false, '$ModelAccount.from: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelFirestoreDoc? fromOrNull(
+  static ModelAccount? fromOrNull(
     BaseModel? another,
   ) {
     return fromJsonOrNull(another?.toJson())!;
   }
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelFirestoreDoc.of(
-    ModelFirestoreDoc another,
+  factory ModelAccount.of(
+    ModelAccount another,
   ) {
     try {
       return ofOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.of: $e');
+      assert(false, '$ModelAccount.of: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelFirestoreDoc? ofOrNull(
-    ModelFirestoreDoc? other,
+  static ModelAccount? ofOrNull(
+    ModelAccount? other,
   ) {
     return fromJsonOrNull(other?.toJson());
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from [jsonString], which must be a valid JSON String. Throws if the
   /// conversion fails.
-  factory ModelFirestoreDoc.fromJsonString(
+  factory ModelAccount.fromJsonString(
     String jsonString,
   ) {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelFirestoreDoc.fromJsonString: $e');
+     assert(false, '$ModelAccount.fromJsonString: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from [jsonString], which must be a valid JSON String. Returns `null` if
   /// [jsonString] is `null` or if the conversion fails.
-  static ModelFirestoreDoc? fromJsonStringOrNull(
+  static ModelAccount? fromJsonStringOrNull(
     String? jsonString,
   ) {
     try {
       if (jsonString!.isNotEmpty) {
         final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelFirestoreDoc.fromJson(decoded);
+        return ModelAccount.fromJson(decoded);
       } else {
-        return ModelFirestoreDoc.assertRequired();
+        return ModelAccount.assertRequired();
       }
     } catch (_) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from [json], which must be a valid JSON object. Throws if the conversion
   /// fails.
-  factory ModelFirestoreDoc.fromJson(
+  factory ModelAccount.fromJson(
     Map<String, dynamic>? json,
   ) {
     try {
       return fromJsonOrNull(json)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.fromJson: $e');
+      assert(false, '$ModelAccount.fromJson: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from [json], which must be a valid JSON object. Returns `null` if
   /// [json] is `null` or if the conversion fails.
-  static ModelFirestoreDoc? fromJsonOrNull(
+  static ModelAccount? fromJsonOrNull(
     Map<String, dynamic>? json,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final title = json?['title']?.toString().trim().nullIfEmpty;
-final capturedAt = (){ final a = letAsOrNull<Timestamp>(json?['capturedAt']); return a != null ? a.toDate().toUtc() : null; }();
-final createdAt = (){ final a = letAsOrNull<Timestamp>(json?['createdAt']); return a != null ? a.toDate().toUtc() : null; }();
-final location = letAsOrNull<GeoPoint>(json?['location']);
-final ownerRef = (){ final a = letAsOrNull<DocumentReference>(json?['ownerRef']); return a != null ? a.path : json?['ownerRef']?.toString().trim().nullIfEmpty; }();
-final thumbnail = (){ final a = letAsOrNull<Blob>(json?['thumbnail']); return a != null ? a.bytes : letAsOrNull<Uint8List>(json?['thumbnail']); }();
-final legacyStamp = letAsOrNull<Timestamp>(json?['legacyStamp']);
-      return ModelFirestoreDoc(
+final email = json?['email']?.toString().trim().nullIfEmpty;
+final username = json?['username']?.toString().trim().nullIfEmpty;
+final passwordHash = letAsOrNull<Uint8List>(json?['password_hash']);
+final status = AccountStatusType.values.valueOf(json?['status']?.toString()) ?? 'active';
+final role = AccountRoleType.values.valueOf(json?['role']?.toString()) ?? 'user';
+final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+final deletedAt = (){ final a = json?['deleted_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      return ModelAccount(
         id: id,
-title: title,
-capturedAt: capturedAt,
+email: email,
+username: username,
+passwordHash: passwordHash,
+status: status,
+role: role,
 createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+updatedAt: updatedAt,
+deletedAt: deletedAt,
       );
     } catch (e) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from the query parameters of [uri]. Throws if the conversion
   /// fails.
-  factory ModelFirestoreDoc.fromUri(
+  factory ModelAccount.fromUri(
     Uri? uri,
   ) {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.fromUri: $e');
+      assert(false, '$ModelAccount.fromUri: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelAccount],
   /// from the query parameters of [uri]. Returns `null` if [uri] is `null` or
   /// if the conversion fails.
-  static ModelFirestoreDoc? fromUriOrNull(
+  static ModelAccount? fromUriOrNull(
     Uri? uri,
   ) {
     try {
       if (uri != null && uri.path == CLASS_NAME) {
-        return ModelFirestoreDoc.fromJson(uri.queryParameters);
+        return ModelAccount.fromJson(uri.queryParameters);
       } else {
-        return ModelFirestoreDoc.assertRequired();
+        return ModelAccount.assertRequired();
       }
     } catch (_) {
       return null;
@@ -288,19 +298,20 @@ legacyStamp: legacyStamp,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final title0 = title?.trim().nullIfEmpty;
-final capturedAt0 = capturedAt != null ? Timestamp.fromDate(capturedAt!.toUtc()) : null;
-final createdAt0 = FieldValue.serverTimestamp();
-final location0 = location;
-final ownerRef0 = ownerRef?.trim().nullIfEmpty;
-final thumbnail0 = thumbnail != null ? Blob(thumbnail!) : null;
-final legacyStamp0 = legacyStamp;
+final email0 = email?.trim().nullIfEmpty;
+final username0 = username?.trim().nullIfEmpty;
+final passwordHash0 = passwordHash;
+final status0 = status?.name;
+final role0 = role?.name;
+final createdAt0 = createdAt?.toUtc().toIso8601String();
+final updatedAt0 = updatedAt?.toUtc().toIso8601String();
+final deletedAt0 = deletedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'title': title0,'thumbnail': thumbnail0,'ownerRef': ownerRef0,'location': location0,'legacyStamp': legacyStamp0,'id': id0,'createdAt': createdAt0,'capturedAt': capturedAt0,
+        'username': username0,'updated_at': updatedAt0,'status': status0,'role': role0,'password_hash': passwordHash0,'id': id0,'email': email0,'deleted_at': deletedAt0,'created_at': createdAt0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.toJson: $e');
+      assert(false, '$ModelAccount.toJson: $e');
       rethrow;
     }
   }
@@ -311,135 +322,148 @@ final legacyStamp0 = legacyStamp;
 @pragma('vm:prefer-inline')
 String get id$ => id!;
 
-  /// Returns the value of the [title] field.
+  /// Returns the value of the [email] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-String? get title$ => title;
+String get email$ => email!;
 
-  /// Returns the value of the [capturedAt] field.
+  /// Returns the value of the [username] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-DateTime? get capturedAt$ => capturedAt;
+String get username$ => username!;
+
+  /// Returns the value of the [passwordHash] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+Uint8List? get passwordHash$ => passwordHash;
+
+  /// Returns the value of the [status] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+AccountStatusType? get status$ => status;
+
+  /// Returns the value of the [role] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+AccountRoleType? get role$ => role;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-DateTime? get createdAt$ => createdAt;
+DateTime get createdAt$ => createdAt!;
 
-  /// Returns the value of the [location] field.
+  /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-GeoPoint? get location$ => location;
+DateTime get updatedAt$ => updatedAt!;
 
-  /// Returns the value of the [ownerRef] field.
+  /// Returns the value of the [deletedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-String? get ownerRef$ => ownerRef;
-
-  /// Returns the value of the [thumbnail] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uint8List? get thumbnail$ => thumbnail;
-
-  /// Returns the value of the [legacyStamp] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Timestamp? get legacyStamp$ => legacyStamp;
+DateTime? get deletedAt$ => deletedAt;
 
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract final class ModelFirestoreDocFieldNames {
-    /// The field name of [ModelFirestoreDoc.id].
+abstract final class ModelAccountFieldNames {
+    /// The field name of [ModelAccount.id].
 static const id = 'id';
 
-  /// The field name of [ModelFirestoreDoc.title].
-static const title = 'title';
+  /// The field name of [ModelAccount.email].
+static const email = 'email';
 
-  /// The field name of [ModelFirestoreDoc.capturedAt].
-static const capturedAt = 'capturedAt';
+  /// The field name of [ModelAccount.username].
+static const username = 'username';
 
-  /// The field name of [ModelFirestoreDoc.createdAt].
-static const createdAt = 'createdAt';
+  /// The field name of [ModelAccount.passwordHash].
+static const passwordHash = 'password_hash';
 
-  /// The field name of [ModelFirestoreDoc.location].
-static const location = 'location';
+  /// The field name of [ModelAccount.status].
+static const status = 'status';
 
-  /// The field name of [ModelFirestoreDoc.ownerRef].
-static const ownerRef = 'ownerRef';
+  /// The field name of [ModelAccount.role].
+static const role = 'role';
 
-  /// The field name of [ModelFirestoreDoc.thumbnail].
-static const thumbnail = 'thumbnail';
+  /// The field name of [ModelAccount.createdAt].
+static const createdAt = 'created_at';
 
-  /// The field name of [ModelFirestoreDoc.legacyStamp].
-static const legacyStamp = 'legacyStamp';
+  /// The field name of [ModelAccount.updatedAt].
+static const updatedAt = 'updated_at';
+
+  /// The field name of [ModelAccount.deletedAt].
+static const deletedAt = 'deleted_at';
 
 }
 
-extension ModelFirestoreDocX on ModelFirestoreDoc {
+extension ModelAccountX on ModelAccount {
   /// Creates a copy of this instance, merging another model's fields into
   /// this model's fields.
-  ModelFirestoreDoc mergeWith(
+  ModelAccount mergeWith(
     BaseModel? other, {
     bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelFirestoreDoc.fromJson(data.cast());
+    return ModelAccount.fromJson(data.cast());
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelFirestoreDoc copyWith({
+  ModelAccount copyWith({
     String? id,
-String? title,
-DateTime? capturedAt,
+String? email,
+String? username,
+Uint8List? passwordHash,
+AccountStatusType? status,
+AccountRoleType? role,
 DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+DateTime? updatedAt,
+DateTime? deletedAt,
   }) {
-    return ModelFirestoreDoc.assertRequired(
+    return ModelAccount.assertRequired(
       id: id ?? this.id,
-title: title ?? this.title,
-capturedAt: capturedAt ?? this.capturedAt,
+email: email ?? this.email,
+username: username ?? this.username,
+passwordHash: passwordHash ?? this.passwordHash,
+status: status ?? this.status,
+role: role ?? this.role,
 createdAt: createdAt ?? this.createdAt,
-location: location ?? this.location,
-ownerRef: ownerRef ?? this.ownerRef,
-thumbnail: thumbnail ?? this.thumbnail,
-legacyStamp: legacyStamp ?? this.legacyStamp,
+updatedAt: updatedAt ?? this.updatedAt,
+deletedAt: deletedAt ?? this.deletedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelFirestoreDoc copyWithout({
+  ModelAccount copyWithout({
     bool id = true,
-bool title = true,
-bool capturedAt = true,
+bool email = true,
+bool username = true,
+bool passwordHash = true,
+bool status = true,
+bool role = true,
 bool createdAt = true,
-bool location = true,
-bool ownerRef = true,
-bool thumbnail = true,
-bool legacyStamp = true,
+bool updatedAt = true,
+bool deletedAt = true,
   }) {
-    return ModelFirestoreDoc.assertRequired(
+    return ModelAccount.assertRequired(
       id: id ? this.id: null,
-title: title ? this.title: null,
-capturedAt: capturedAt ? this.capturedAt: null,
+email: email ? this.email: null,
+username: username ? this.username: null,
+passwordHash: passwordHash ? this.passwordHash: null,
+status: status ? this.status: null,
+role: role ? this.role: null,
 createdAt: createdAt ? this.createdAt: null,
-location: location ? this.location: null,
-ownerRef: ownerRef ? this.ownerRef: null,
-thumbnail: thumbnail ? this.thumbnail: null,
-legacyStamp: legacyStamp ? this.legacyStamp: null,
+updatedAt: updatedAt ? this.updatedAt: null,
+deletedAt: deletedAt ? this.deletedAt: null,
     );
   }
 }

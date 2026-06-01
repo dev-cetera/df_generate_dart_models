@@ -16,18 +16,18 @@
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_question_mark
 
-part of 'model_firestore_doc.dart';
+part of 'model_profile.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generated class for [_ModelFirestoreDoc].
-class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
+/// Generated class for [_ModelProfile].
+class ModelProfile extends _ModelProfile with EquatableMixin {
   //
   //
   //
 
   /// The runtime type of this class as a String.
-  static const CLASS_NAME = 'ModelFirestoreDoc';
+  static const CLASS_NAME = 'ModelProfile';
 
   @override
   String get $className => CLASS_NAME;
@@ -36,7 +36,7 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, title, capturedAt, createdAt, location, ownerRef, thumbnail, legacyStamp];
+  List<Object?> get props => [id, accountId, displayName, bio, avatarUrl, settings, createdAt, updatedAt];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -48,234 +48,234 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
 final String? id;
 
   /// No description provided.
-final String? title;
+final String? accountId;
 
   /// No description provided.
-final DateTime? capturedAt;
+final String? displayName;
+
+  /// No description provided.
+final String? bio;
+
+  /// No description provided.
+final Uri? avatarUrl;
+
+  /// No description provided.
+final ModelProfileSettings? settings;
 
   /// No description provided.
 final DateTime? createdAt;
 
   /// No description provided.
-final GeoPoint? location;
-
-  /// No description provided.
-final String? ownerRef;
-
-  /// No description provided.
-final Uint8List? thumbnail;
-
-  /// No description provided.
-final Timestamp? legacyStamp;
+final DateTime? updatedAt;
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc]
+  /// Constructs a new instance of [ModelProfile]
   /// from optional and required parameters.
-  const ModelFirestoreDoc({
+  const ModelProfile({
     required this.id,
- this.title,
- this.capturedAt,
- this.createdAt,
- this.location,
- this.ownerRef,
- this.thumbnail,
- this.legacyStamp,
+required this.accountId,
+ this.displayName,
+ this.bio,
+ this.avatarUrl,
+ this.settings,
+required this.createdAt,
+required this.updatedAt,
   }) ;
 
-  /// Construcs a new instance of [ModelFirestoreDoc],
+  /// Construcs a new instance of [ModelProfile],
   /// forcing all parameters to be optional.
-  const ModelFirestoreDoc.optional({
+  const ModelProfile.optional({
     this.id,
-this.title,
-this.capturedAt,
+this.accountId,
+this.displayName,
+this.bio,
+this.avatarUrl,
+this.settings,
 this.createdAt,
-this.location,
-this.ownerRef,
-this.thumbnail,
-this.legacyStamp,
+this.updatedAt,
   }) ;
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// and asserts that all required parameters are not null.
-  factory ModelFirestoreDoc.assertRequired({
+  factory ModelProfile.assertRequired({
     String? id,
-String? title,
-DateTime? capturedAt,
+String? accountId,
+String? displayName,
+String? bio,
+Uri? avatarUrl,
+ModelProfileSettings? settings,
 DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+DateTime? updatedAt,
   }) {
     assert(id != null);
+assert(accountId != null);
 
 
 
 
-
-
-
-    return ModelFirestoreDoc(
+assert(createdAt != null);
+assert(updatedAt != null);
+    return ModelProfile(
       id: id,
-title: title,
-capturedAt: capturedAt,
+accountId: accountId,
+displayName: displayName,
+bio: bio,
+avatarUrl: avatarUrl,
+settings: settings,
 createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+updatedAt: updatedAt,
     );
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelFirestoreDoc.from(
+  factory ModelProfile.from(
     BaseModel another,
   ) {
     try {
       return fromOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.from: $e');
+      assert(false, '$ModelProfile.from: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelFirestoreDoc? fromOrNull(
+  static ModelProfile? fromOrNull(
     BaseModel? another,
   ) {
     return fromJsonOrNull(another?.toJson())!;
   }
 
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelFirestoreDoc.of(
-    ModelFirestoreDoc another,
+  factory ModelProfile.of(
+    ModelProfile another,
   ) {
     try {
       return ofOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.of: $e');
+      assert(false, '$ModelProfile.of: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelFirestoreDoc? ofOrNull(
-    ModelFirestoreDoc? other,
+  static ModelProfile? ofOrNull(
+    ModelProfile? other,
   ) {
     return fromJsonOrNull(other?.toJson());
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from [jsonString], which must be a valid JSON String. Throws if the
   /// conversion fails.
-  factory ModelFirestoreDoc.fromJsonString(
+  factory ModelProfile.fromJsonString(
     String jsonString,
   ) {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelFirestoreDoc.fromJsonString: $e');
+     assert(false, '$ModelProfile.fromJsonString: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from [jsonString], which must be a valid JSON String. Returns `null` if
   /// [jsonString] is `null` or if the conversion fails.
-  static ModelFirestoreDoc? fromJsonStringOrNull(
+  static ModelProfile? fromJsonStringOrNull(
     String? jsonString,
   ) {
     try {
       if (jsonString!.isNotEmpty) {
         final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelFirestoreDoc.fromJson(decoded);
+        return ModelProfile.fromJson(decoded);
       } else {
-        return ModelFirestoreDoc.assertRequired();
+        return ModelProfile.assertRequired();
       }
     } catch (_) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from [json], which must be a valid JSON object. Throws if the conversion
   /// fails.
-  factory ModelFirestoreDoc.fromJson(
+  factory ModelProfile.fromJson(
     Map<String, dynamic>? json,
   ) {
     try {
       return fromJsonOrNull(json)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.fromJson: $e');
+      assert(false, '$ModelProfile.fromJson: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from [json], which must be a valid JSON object. Returns `null` if
   /// [json] is `null` or if the conversion fails.
-  static ModelFirestoreDoc? fromJsonOrNull(
+  static ModelProfile? fromJsonOrNull(
     Map<String, dynamic>? json,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final title = json?['title']?.toString().trim().nullIfEmpty;
-final capturedAt = (){ final a = letAsOrNull<Timestamp>(json?['capturedAt']); return a != null ? a.toDate().toUtc() : null; }();
-final createdAt = (){ final a = letAsOrNull<Timestamp>(json?['createdAt']); return a != null ? a.toDate().toUtc() : null; }();
-final location = letAsOrNull<GeoPoint>(json?['location']);
-final ownerRef = (){ final a = letAsOrNull<DocumentReference>(json?['ownerRef']); return a != null ? a.path : json?['ownerRef']?.toString().trim().nullIfEmpty; }();
-final thumbnail = (){ final a = letAsOrNull<Blob>(json?['thumbnail']); return a != null ? a.bytes : letAsOrNull<Uint8List>(json?['thumbnail']); }();
-final legacyStamp = letAsOrNull<Timestamp>(json?['legacyStamp']);
-      return ModelFirestoreDoc(
+final accountId = json?['account_id']?.toString().trim().nullIfEmpty;
+final displayName = json?['display_name']?.toString().trim().nullIfEmpty;
+final bio = json?['bio']?.toString().trim().nullIfEmpty;
+final avatarUrl = #x0;
+final settings = () { final a = letMapOrNull<String, dynamic>(json?['settings']); return a != null ? ModelProfileSettings.fromJson(a): null; }();
+final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      return ModelProfile(
         id: id,
-title: title,
-capturedAt: capturedAt,
+accountId: accountId,
+displayName: displayName,
+bio: bio,
+avatarUrl: avatarUrl,
+settings: settings,
 createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+updatedAt: updatedAt,
       );
     } catch (e) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from the query parameters of [uri]. Throws if the conversion
   /// fails.
-  factory ModelFirestoreDoc.fromUri(
+  factory ModelProfile.fromUri(
     Uri? uri,
   ) {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.fromUri: $e');
+      assert(false, '$ModelProfile.fromUri: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelFirestoreDoc],
+  /// Constructs a new instance of [ModelProfile],
   /// from the query parameters of [uri]. Returns `null` if [uri] is `null` or
   /// if the conversion fails.
-  static ModelFirestoreDoc? fromUriOrNull(
+  static ModelProfile? fromUriOrNull(
     Uri? uri,
   ) {
     try {
       if (uri != null && uri.path == CLASS_NAME) {
-        return ModelFirestoreDoc.fromJson(uri.queryParameters);
+        return ModelProfile.fromJson(uri.queryParameters);
       } else {
-        return ModelFirestoreDoc.assertRequired();
+        return ModelProfile.assertRequired();
       }
     } catch (_) {
       return null;
@@ -288,19 +288,19 @@ legacyStamp: legacyStamp,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final title0 = title?.trim().nullIfEmpty;
-final capturedAt0 = capturedAt != null ? Timestamp.fromDate(capturedAt!.toUtc()) : null;
-final createdAt0 = FieldValue.serverTimestamp();
-final location0 = location;
-final ownerRef0 = ownerRef?.trim().nullIfEmpty;
-final thumbnail0 = thumbnail != null ? Blob(thumbnail!) : null;
-final legacyStamp0 = legacyStamp;
+final accountId0 = accountId?.trim().nullIfEmpty;
+final displayName0 = displayName?.trim().nullIfEmpty;
+final bio0 = bio?.trim().nullIfEmpty;
+final avatarUrl0 = #x0;
+final settings0 = settings != null ? jsonEncode(settings!.toJson()) : null;
+final createdAt0 = createdAt?.toUtc().toIso8601String();
+final updatedAt0 = updatedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'title': title0,'thumbnail': thumbnail0,'ownerRef': ownerRef0,'location': location0,'legacyStamp': legacyStamp0,'id': id0,'createdAt': createdAt0,'capturedAt': capturedAt0,
+        'updated_at': updatedAt0,'settings': settings0,'id': id0,'display_name': displayName0,'created_at': createdAt0,'bio': bio0,'avatar_url': avatarUrl0,'account_id': accountId0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
-      assert(false, '$ModelFirestoreDoc.toJson: $e');
+      assert(false, '$ModelProfile.toJson: $e');
       rethrow;
     }
   }
@@ -311,135 +311,135 @@ final legacyStamp0 = legacyStamp;
 @pragma('vm:prefer-inline')
 String get id$ => id!;
 
-  /// Returns the value of the [title] field.
+  /// Returns the value of the [accountId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-String? get title$ => title;
+String get accountId$ => accountId!;
 
-  /// Returns the value of the [capturedAt] field.
+  /// Returns the value of the [displayName] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-DateTime? get capturedAt$ => capturedAt;
+String? get displayName$ => displayName;
+
+  /// Returns the value of the [bio] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+String? get bio$ => bio;
+
+  /// Returns the value of the [avatarUrl] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+Uri? get avatarUrl$ => avatarUrl;
+
+  /// Returns the value of the [settings] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+ModelProfileSettings? get settings$ => settings;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-DateTime? get createdAt$ => createdAt;
+DateTime get createdAt$ => createdAt!;
 
-  /// Returns the value of the [location] field.
+  /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-GeoPoint? get location$ => location;
-
-  /// Returns the value of the [ownerRef] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get ownerRef$ => ownerRef;
-
-  /// Returns the value of the [thumbnail] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uint8List? get thumbnail$ => thumbnail;
-
-  /// Returns the value of the [legacyStamp] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Timestamp? get legacyStamp$ => legacyStamp;
+DateTime get updatedAt$ => updatedAt!;
 
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract final class ModelFirestoreDocFieldNames {
-    /// The field name of [ModelFirestoreDoc.id].
+abstract final class ModelProfileFieldNames {
+    /// The field name of [ModelProfile.id].
 static const id = 'id';
 
-  /// The field name of [ModelFirestoreDoc.title].
-static const title = 'title';
+  /// The field name of [ModelProfile.accountId].
+static const accountId = 'account_id';
 
-  /// The field name of [ModelFirestoreDoc.capturedAt].
-static const capturedAt = 'capturedAt';
+  /// The field name of [ModelProfile.displayName].
+static const displayName = 'display_name';
 
-  /// The field name of [ModelFirestoreDoc.createdAt].
-static const createdAt = 'createdAt';
+  /// The field name of [ModelProfile.bio].
+static const bio = 'bio';
 
-  /// The field name of [ModelFirestoreDoc.location].
-static const location = 'location';
+  /// The field name of [ModelProfile.avatarUrl].
+static const avatarUrl = 'avatar_url';
 
-  /// The field name of [ModelFirestoreDoc.ownerRef].
-static const ownerRef = 'ownerRef';
+  /// The field name of [ModelProfile.settings].
+static const settings = 'settings';
 
-  /// The field name of [ModelFirestoreDoc.thumbnail].
-static const thumbnail = 'thumbnail';
+  /// The field name of [ModelProfile.createdAt].
+static const createdAt = 'created_at';
 
-  /// The field name of [ModelFirestoreDoc.legacyStamp].
-static const legacyStamp = 'legacyStamp';
+  /// The field name of [ModelProfile.updatedAt].
+static const updatedAt = 'updated_at';
 
 }
 
-extension ModelFirestoreDocX on ModelFirestoreDoc {
+extension ModelProfileX on ModelProfile {
   /// Creates a copy of this instance, merging another model's fields into
   /// this model's fields.
-  ModelFirestoreDoc mergeWith(
+  ModelProfile mergeWith(
     BaseModel? other, {
     bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelFirestoreDoc.fromJson(data.cast());
+    return ModelProfile.fromJson(data.cast());
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelFirestoreDoc copyWith({
+  ModelProfile copyWith({
     String? id,
-String? title,
-DateTime? capturedAt,
+String? accountId,
+String? displayName,
+String? bio,
+Uri? avatarUrl,
+ModelProfileSettings? settings,
 DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+DateTime? updatedAt,
   }) {
-    return ModelFirestoreDoc.assertRequired(
+    return ModelProfile.assertRequired(
       id: id ?? this.id,
-title: title ?? this.title,
-capturedAt: capturedAt ?? this.capturedAt,
+accountId: accountId ?? this.accountId,
+displayName: displayName ?? this.displayName,
+bio: bio ?? this.bio,
+avatarUrl: avatarUrl ?? this.avatarUrl,
+settings: settings ?? this.settings,
 createdAt: createdAt ?? this.createdAt,
-location: location ?? this.location,
-ownerRef: ownerRef ?? this.ownerRef,
-thumbnail: thumbnail ?? this.thumbnail,
-legacyStamp: legacyStamp ?? this.legacyStamp,
+updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelFirestoreDoc copyWithout({
+  ModelProfile copyWithout({
     bool id = true,
-bool title = true,
-bool capturedAt = true,
+bool accountId = true,
+bool displayName = true,
+bool bio = true,
+bool avatarUrl = true,
+bool settings = true,
 bool createdAt = true,
-bool location = true,
-bool ownerRef = true,
-bool thumbnail = true,
-bool legacyStamp = true,
+bool updatedAt = true,
   }) {
-    return ModelFirestoreDoc.assertRequired(
+    return ModelProfile.assertRequired(
       id: id ? this.id: null,
-title: title ? this.title: null,
-capturedAt: capturedAt ? this.capturedAt: null,
+accountId: accountId ? this.accountId: null,
+displayName: displayName ? this.displayName: null,
+bio: bio ? this.bio: null,
+avatarUrl: avatarUrl ? this.avatarUrl: null,
+settings: settings ? this.settings: null,
 createdAt: createdAt ? this.createdAt: null,
-location: location ? this.location: null,
-ownerRef: ownerRef ? this.ownerRef: null,
-thumbnail: thumbnail ? this.thumbnail: null,
-legacyStamp: legacyStamp ? this.legacyStamp: null,
+updatedAt: updatedAt ? this.updatedAt: null,
     );
   }
 }

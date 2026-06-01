@@ -49,14 +49,12 @@ abstract class _ModelComment extends Model {
       fieldPath: ['unread_count'],
       fieldType: int,
       nullable: true,
-      includeInSqlMap: false,
     ),
     // Internal cache — never serialised over JSON wire.
     Field(
       fieldPath: ['cache_token'],
       fieldType: String,
       nullable: true,
-      includeInJson: false,
     ),
     Field(fieldPath: ['created_at'], fieldType: 'PG_timestamptz-DateTime'),
   },

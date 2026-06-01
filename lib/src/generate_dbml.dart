@@ -198,13 +198,10 @@ String _columnNameFor(
   return insight.stringCaseType.convertAll(path).join('_');
 }
 
-/// Derives the DBML column type from, in order: `sqlType:` slot,
-/// `PG_*-`/`SQLITE_*-` prefix in `fieldType`, fallback to a default per the
-/// bare Dart type.
+/// Derives the DBML column type from the `PG_*-`/`SQLITE_*-` prefix in
+/// `fieldType`, falling back to a sensible default per the bare Dart
+/// type when no dialect prefix is set.
 String _sqlTypeFor(DartField field) {
-  if (field.sqlType != null && field.sqlType!.isNotEmpty) {
-    return field.sqlType!;
-  }
   final raw = field.fieldType ?? 'dynamic';
   final dialectMatch = RegExp(
     r'^(?:PG|SQLITE)_(\w+(?:\([^)]*\))?(?:\[\])?)-',

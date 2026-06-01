@@ -16,18 +16,18 @@
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_question_mark
 
-part of 'model_converter_invoice.dart';
+part of 'model_profile.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generated class for [_ModelConverterInvoice].
-class ModelConverterInvoice extends _ModelConverterInvoice with EquatableMixin {
+/// Generated class for [_ModelProfileSettings].
+class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
   //
   //
   //
 
   /// The runtime type of this class as a String.
-  static const CLASS_NAME = 'ModelConverterInvoice';
+  static const CLASS_NAME = 'ModelProfileSettings';
 
   @override
   String get $className => CLASS_NAME;
@@ -36,7 +36,7 @@ class ModelConverterInvoice extends _ModelConverterInvoice with EquatableMixin {
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, total, note];
+  List<Object?> get props => [defaultVisibility, language, timezone, marketingOptIn];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -45,187 +45,197 @@ class ModelConverterInvoice extends _ModelConverterInvoice with EquatableMixin {
   String toString() => toJsonString();
 
     /// No description provided.
-final String? id;
+final PostVisibilityType? defaultVisibility;
 
   /// No description provided.
-final dynamic? total;
+final String? language;
 
   /// No description provided.
-final String? note;
+final String? timezone;
+
+  /// No description provided.
+final bool? marketingOptIn;
 
 
-  /// Constructs a new instance of [ModelConverterInvoice]
+  /// Constructs a new instance of [ModelProfileSettings]
   /// from optional and required parameters.
-  const ModelConverterInvoice({
-    required this.id,
- this.total,
- this.note,
+  const ModelProfileSettings({
+     this.defaultVisibility,
+ this.language,
+ this.timezone,
+ this.marketingOptIn,
   }) ;
 
-  /// Construcs a new instance of [ModelConverterInvoice],
+  /// Construcs a new instance of [ModelProfileSettings],
   /// forcing all parameters to be optional.
-  const ModelConverterInvoice.optional({
-    this.id,
-this.total,
-this.note,
+  const ModelProfileSettings.optional({
+    this.defaultVisibility,
+this.language,
+this.timezone,
+this.marketingOptIn,
   }) ;
 
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// and asserts that all required parameters are not null.
-  factory ModelConverterInvoice.assertRequired({
-    String? id,
-dynamic? total,
-String? note,
+  factory ModelProfileSettings.assertRequired({
+    PostVisibilityType? defaultVisibility,
+String? language,
+String? timezone,
+bool? marketingOptIn,
   }) {
-    assert(id != null);
+    
 
 
-    return ModelConverterInvoice(
-      id: id,
-total: total,
-note: note,
+
+    return ModelProfileSettings(
+      defaultVisibility: defaultVisibility,
+language: language,
+timezone: timezone,
+marketingOptIn: marketingOptIn,
     );
   }
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelConverterInvoice.from(
+  factory ModelProfileSettings.from(
     BaseModel another,
   ) {
     try {
       return fromOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelConverterInvoice.from: $e');
+      assert(false, '$ModelProfileSettings.from: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelConverterInvoice? fromOrNull(
+  static ModelProfileSettings? fromOrNull(
     BaseModel? another,
   ) {
     return fromJsonOrNull(another?.toJson())!;
   }
 
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelConverterInvoice.of(
-    ModelConverterInvoice another,
+  factory ModelProfileSettings.of(
+    ModelProfileSettings another,
   ) {
     try {
       return ofOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelConverterInvoice.of: $e');
+      assert(false, '$ModelProfileSettings.of: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelConverterInvoice? ofOrNull(
-    ModelConverterInvoice? other,
+  static ModelProfileSettings? ofOrNull(
+    ModelProfileSettings? other,
   ) {
     return fromJsonOrNull(other?.toJson());
   }
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from [jsonString], which must be a valid JSON String. Throws if the
   /// conversion fails.
-  factory ModelConverterInvoice.fromJsonString(
+  factory ModelProfileSettings.fromJsonString(
     String jsonString,
   ) {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelConverterInvoice.fromJsonString: $e');
+     assert(false, '$ModelProfileSettings.fromJsonString: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from [jsonString], which must be a valid JSON String. Returns `null` if
   /// [jsonString] is `null` or if the conversion fails.
-  static ModelConverterInvoice? fromJsonStringOrNull(
+  static ModelProfileSettings? fromJsonStringOrNull(
     String? jsonString,
   ) {
     try {
       if (jsonString!.isNotEmpty) {
         final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelConverterInvoice.fromJson(decoded);
+        return ModelProfileSettings.fromJson(decoded);
       } else {
-        return ModelConverterInvoice.assertRequired();
+        return ModelProfileSettings.assertRequired();
       }
     } catch (_) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from [json], which must be a valid JSON object. Throws if the conversion
   /// fails.
-  factory ModelConverterInvoice.fromJson(
+  factory ModelProfileSettings.fromJson(
     Map<String, dynamic>? json,
   ) {
     try {
       return fromJsonOrNull(json)!;
     } catch (e) {
-      assert(false, '$ModelConverterInvoice.fromJson: $e');
+      assert(false, '$ModelProfileSettings.fromJson: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from [json], which must be a valid JSON object. Returns `null` if
   /// [json] is `null` or if the conversion fails.
-  static ModelConverterInvoice? fromJsonOrNull(
+  static ModelProfileSettings? fromJsonOrNull(
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-final total = const MoneyConverter().fromJson(json?['total']);
-final note = json?['note']?.toString().trim().nullIfEmpty;
-      return ModelConverterInvoice(
-        id: id,
-total: total,
-note: note,
+      final defaultVisibility = PostVisibilityType.values.valueOf(json?['default_visibility']?.toString()) ?? 'public';
+final language = json?['language']?.toString().trim().nullIfEmpty;
+final timezone = json?['timezone']?.toString().trim().nullIfEmpty;
+final marketingOptIn = letBoolOrNull(json?['marketing_opt_in']) ?? false;
+      return ModelProfileSettings(
+        defaultVisibility: defaultVisibility,
+language: language,
+timezone: timezone,
+marketingOptIn: marketingOptIn,
       );
     } catch (e) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from the query parameters of [uri]. Throws if the conversion
   /// fails.
-  factory ModelConverterInvoice.fromUri(
+  factory ModelProfileSettings.fromUri(
     Uri? uri,
   ) {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
-      assert(false, '$ModelConverterInvoice.fromUri: $e');
+      assert(false, '$ModelProfileSettings.fromUri: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelConverterInvoice],
+  /// Constructs a new instance of [ModelProfileSettings],
   /// from the query parameters of [uri]. Returns `null` if [uri] is `null` or
   /// if the conversion fails.
-  static ModelConverterInvoice? fromUriOrNull(
+  static ModelProfileSettings? fromUriOrNull(
     Uri? uri,
   ) {
     try {
       if (uri != null && uri.path == CLASS_NAME) {
-        return ModelConverterInvoice.fromJson(uri.queryParameters);
+        return ModelProfileSettings.fromJson(uri.queryParameters);
       } else {
-        return ModelConverterInvoice.assertRequired();
+        return ModelProfileSettings.assertRequired();
       }
     } catch (_) {
       return null;
@@ -237,89 +247,103 @@ note: note,
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-final total0 = const MoneyConverter().toJson(total);
-final note0 = note?.trim().nullIfEmpty;
+      final defaultVisibility0 = defaultVisibility?.name;
+final language0 = language?.trim().nullIfEmpty;
+final timezone0 = timezone?.trim().nullIfEmpty;
+final marketingOptIn0 = marketingOptIn;
       final withNulls = {
-        'total': total0,'note': note0,'id': id0,
+        'timezone': timezone0,'marketing_opt_in': marketingOptIn0,'language': language0,'default_visibility': defaultVisibility0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
-      assert(false, '$ModelConverterInvoice.toJson: $e');
+      assert(false, '$ModelProfileSettings.toJson: $e');
       rethrow;
     }
   }
 
-    /// Returns the value of the [id] field.
+    /// Returns the value of the [defaultVisibility] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-String get id$ => id!;
+PostVisibilityType? get defaultVisibility$ => defaultVisibility;
 
-  /// Returns the value of the [total] field.
+  /// Returns the value of the [language] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-dynamic? get total$ => total;
+String? get language$ => language;
 
-  /// Returns the value of the [note] field.
+  /// Returns the value of the [timezone] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
 @pragma('vm:prefer-inline')
-String? get note$ => note;
+String? get timezone$ => timezone;
+
+  /// Returns the value of the [marketingOptIn] field.
+  /// If the field is nullable, the return value may be null; otherwise, it
+  /// will always return a non-null value.
+@pragma('vm:prefer-inline')
+bool? get marketingOptIn$ => marketingOptIn;
 
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract final class ModelConverterInvoiceFieldNames {
-    /// The field name of [ModelConverterInvoice.id].
-static const id = 'id';
+abstract final class ModelProfileSettingsFieldNames {
+    /// The field name of [ModelProfileSettings.defaultVisibility].
+static const defaultVisibility = 'default_visibility';
 
-  /// The field name of [ModelConverterInvoice.total].
-static const total = 'total';
+  /// The field name of [ModelProfileSettings.language].
+static const language = 'language';
 
-  /// The field name of [ModelConverterInvoice.note].
-static const note = 'note';
+  /// The field name of [ModelProfileSettings.timezone].
+static const timezone = 'timezone';
+
+  /// The field name of [ModelProfileSettings.marketingOptIn].
+static const marketingOptIn = 'marketing_opt_in';
 
 }
 
-extension ModelConverterInvoiceX on ModelConverterInvoice {
+extension ModelProfileSettingsX on ModelProfileSettings {
   /// Creates a copy of this instance, merging another model's fields into
   /// this model's fields.
-  ModelConverterInvoice mergeWith(
+  ModelProfileSettings mergeWith(
     BaseModel? other, {
     bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelConverterInvoice.fromJson(data.cast());
+    return ModelProfileSettings.fromJson(data.cast());
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelConverterInvoice copyWith({
-    String? id,
-dynamic? total,
-String? note,
+  ModelProfileSettings copyWith({
+    PostVisibilityType? defaultVisibility,
+String? language,
+String? timezone,
+bool? marketingOptIn,
   }) {
-    return ModelConverterInvoice.assertRequired(
-      id: id ?? this.id,
-total: total ?? this.total,
-note: note ?? this.note,
+    return ModelProfileSettings.assertRequired(
+      defaultVisibility: defaultVisibility ?? this.defaultVisibility,
+language: language ?? this.language,
+timezone: timezone ?? this.timezone,
+marketingOptIn: marketingOptIn ?? this.marketingOptIn,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelConverterInvoice copyWithout({
-    bool id = true,
-bool total = true,
-bool note = true,
+  ModelProfileSettings copyWithout({
+    bool defaultVisibility = true,
+bool language = true,
+bool timezone = true,
+bool marketingOptIn = true,
   }) {
-    return ModelConverterInvoice.assertRequired(
-      id: id ? this.id: null,
-total: total ? this.total: null,
-note: note ? this.note: null,
+    return ModelProfileSettings.assertRequired(
+      defaultVisibility: defaultVisibility ? this.defaultVisibility: null,
+language: language ? this.language: null,
+timezone: timezone ? this.timezone: null,
+marketingOptIn: marketingOptIn ? this.marketingOptIn: null,
     );
   }
 }
