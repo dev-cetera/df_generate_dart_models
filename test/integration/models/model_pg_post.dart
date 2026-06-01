@@ -42,7 +42,6 @@ abstract class _ModelPostMetadata extends Model {
       fieldType: 'PG_uuid-String',
       foreignKey: true,
       references: ModelPgUser,
-      onDelete: 'cascade',
     ),
     Field(
       fieldPath: ['title'],

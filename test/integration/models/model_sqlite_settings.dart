@@ -16,36 +16,40 @@ part '_model_sqlite_settings.g.dart';
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {
-    Field(fieldPath: ['id'], fieldType: 'SQLITE_integer-int', primaryKey: true),
-    Field(fieldPath: ['user_id'], fieldType: 'SQLITE_text-String'),
+    Field(
+      fieldPath: ['id'],
+      fieldType: FieldTypes.sqliteInteger,
+      primaryKey: true,
+    ),
+    Field(fieldPath: ['user_id'], fieldType: FieldTypes.sqliteText),
     Field(
       fieldPath: ['notifications_enabled'],
-      fieldType: 'SQLITE_integer-bool',
+      fieldType: FieldTypes.sqliteIntegerBool,
       nullable: true,
     ),
     Field(
       fieldPath: ['theme'],
-      fieldType: 'SQLITE_text-String',
+      fieldType: FieldTypes.sqliteText,
       nullable: true,
     ),
     Field(
       fieldPath: ['last_synced_at'],
-      fieldType: 'SQLITE_epochms-DateTime',
+      fieldType: FieldTypes.sqliteEpochms,
       nullable: true,
     ),
     Field(
       fieldPath: ['legacy_created_at'],
-      fieldType: 'SQLITE_text-DateTime',
+      fieldType: FieldTypes.sqliteTextDateTime,
       nullable: true,
     ),
     Field(
       fieldPath: ['preferences'],
-      fieldType: 'SQLITE_json-Map<String, dynamic>',
+      fieldType: FieldTypes.sqliteJsonMapStringDynamic,
       nullable: true,
     ),
     Field(
       fieldPath: ['avatar_cache'],
-      fieldType: 'SQLITE_blob-Uint8List',
+      fieldType: FieldTypes.sqliteBlob,
       nullable: true,
     ),
   },

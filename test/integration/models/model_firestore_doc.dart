@@ -17,37 +17,37 @@ part '_model_firestore_doc.g.dart';
 @GenerateDartModel(
   shouldInherit: true,
   fields: {
-    Field(fieldPath: ['id'], fieldType: String, primaryKey: true),
-    Field(fieldPath: ['title'], fieldType: String, nullable: true),
+    Field(fieldPath: ['id'], fieldType: FieldTypes.string, primaryKey: true),
+    Field(fieldPath: ['title'], fieldType: FieldTypes.string, nullable: true),
     Field(
       fieldPath: ['captured_at'],
-      fieldType: 'FS_timestamp-DateTime',
+      fieldType: FieldTypes.fsTimestamp,
       nullable: true,
     ),
     Field(
       fieldPath: ['createdAt'],
-      fieldType: 'FS_server_timestamp-DateTime',
+      fieldType: FieldTypes.fsServerTimestamp,
       nullable: true,
     ),
     Field(
       fieldPath: ['location'],
-      fieldType: 'FS_geopoint-GeoPoint',
+      fieldType: FieldTypes.fsGeopoint,
       nullable: true,
     ),
     Field(
       fieldPath: ['ownerRef'],
-      fieldType: 'FS_ref-String',
+      fieldType: FieldTypes.fsRef,
       nullable: true,
     ),
     Field(
       fieldPath: ['thumbnail'],
-      fieldType: 'FS_blob-Uint8List',
+      fieldType: FieldTypes.fsBlob,
       nullable: true,
     ),
     // Back-compat — bare Timestamp still resolves via DartFirestoreTypeMappers.
     Field(
       fieldPath: ['legacyStamp'],
-      fieldType: 'Timestamp',
+      fieldType: FieldTypes.timestamp,
       nullable: true,
     ),
   },

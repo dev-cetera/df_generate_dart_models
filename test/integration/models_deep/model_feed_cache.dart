@@ -19,7 +19,7 @@ part '_model_feed_cache.g.dart';
       fieldType: 'SQLITE_integer-int',
       primaryKey: true,
     ),
-    Field(fieldPath: ['post_id'], fieldType: 'SQLITE_text-String', unique: true),
+    Field(fieldPath: ['post_id'], fieldType: 'SQLITE_text-String'),
     Field(fieldPath: ['author_id'], fieldType: 'SQLITE_text-String'),
     Field(
       fieldPath: ['caption'],

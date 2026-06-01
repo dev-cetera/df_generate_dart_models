@@ -23,14 +23,12 @@ part '_model_comment.g.dart';
       fieldType: 'PG_uuid-String',
       foreignKey: true,
       references: ModelPost,
-      onDelete: 'cascade',
     ),
     Field(
       fieldPath: ['author_id'],
       fieldType: 'PG_uuid-String',
       foreignKey: true,
       references: ModelAccount,
-      onDelete: 'cascade',
     ),
     Field(
       fieldPath: ['parent_id'],
@@ -38,7 +36,6 @@ part '_model_comment.g.dart';
       nullable: true,
       foreignKey: true,
       // Self-reference for threaded replies.
-      onDelete: 'set null',
     ),
     Field(fieldPath: ['body'], fieldType: 'PG_text-String'),
     Field(

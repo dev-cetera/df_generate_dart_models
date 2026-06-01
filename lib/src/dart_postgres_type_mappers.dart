@@ -122,10 +122,16 @@ class DartPostgresTypeMappers extends TypeMappers {
           return 'letAsOrNull<Uint8List>(${e.name})';
         },
         // PG_enum(name)-XxxType — same as the bare enum mapper; the (name)
-        // is captured by the DBML pipeline, not by the runtime.
-        r'^PG_enum' + _pgTail + r'-(Type-?\w+|\w+-?Type|Enum-?\w+|\w+-?Enum)\??$':
+        // is captured by the DBML pipeline, not by the runtime. Matches the
+        // legacy `Type`/`Enum`-suffixed forms AND the analyzer-tagged
+        // `<Name>@enum` sentinel, so enum-shaped fields work regardless of
+        // class-name suffix.
+        r'^PG_enum' +
+                _pgTail +
+                r'-(?:(Type-?\w+|\w+-?Type|Enum-?\w+|\w+-?Enum)|(\w+)@enum)\??$':
             (e) {
-          final typeName = e.matchGroups?.elementAt(1);
+          final typeName = (e.matchGroups?.elementAt(1)) ??
+              (e.matchGroups?.elementAt(2));
           return '$typeName.values.valueOf(${e.name}?.toString())';
         },
 
@@ -182,8 +188,11 @@ class DartPostgresTypeMappers extends TypeMappers {
         r'^PG_bytea' + _pgTail + r'-(Uint8List)\??$': (e) {
           return '${e.name}';
         },
-        // PG_enum(name) — name comparable to the bare enum mapper.
-        r'^PG_enum' + _pgTail + r'-(Type-?\w+|\w+-?Type|Enum-?\w+|\w+-?Enum)\??$':
+        // PG_enum(name) — name comparable to the bare enum mapper. Same
+        // legacy + `@enum` sentinel handling as the from-side.
+        r'^PG_enum' +
+                _pgTail +
+                r'-(?:(Type-?\w+|\w+-?Type|Enum-?\w+|\w+-?Enum)|(\w+)@enum)\??$':
             (e) {
           return '${e.name}?.name';
         },

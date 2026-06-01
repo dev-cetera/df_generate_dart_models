@@ -200,8 +200,10 @@ String _sqlTypeFor(DartField field) {
   ).firstMatch(raw);
   if (dialectMatch != null) return dialectMatch.group(1)!;
 
-  // Defaults for bare Dart types.
-  final bare = raw.replaceAll('?', '');
+  // Defaults for bare Dart types. `@enum` sentinel (analyzer-tagged enums
+  // without a dialect prefix) is stripped before matching; bare enums lower
+  // to `text` like any other class name fallback.
+  final bare = raw.replaceAll('?', '').replaceAll('@enum', '');
   switch (bare) {
     case 'String':
       return 'text';

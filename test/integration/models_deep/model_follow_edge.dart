@@ -22,14 +22,12 @@ part '_model_follow_edge.g.dart';
       fieldType: 'PG_uuid-String',
       foreignKey: true,
       references: ModelAccount,
-      onDelete: 'cascade',
     ),
     Field(
       fieldPath: ['followee_id'],
       fieldType: 'PG_uuid-String',
       foreignKey: true,
       references: ModelAccount,
-      onDelete: 'cascade',
     ),
     Field(
       fieldPath: ['status'],

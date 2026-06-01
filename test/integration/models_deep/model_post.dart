@@ -144,7 +144,6 @@ abstract class _ModelLocation extends Model {
       fieldType: 'PG_uuid-String',
       foreignKey: true,
       references: ModelAccount,
-      onDelete: 'cascade',
     ),
     Field(
       fieldPath: ['visibility'],

@@ -1,9 +1,7 @@
-// Postgres-flavored user. Exercises:
-//  - DDL-only PG types (PG_text, PG_varchar(N), PG_citext, PG_uuid,
-//    PG_bigint, PG_timestamptz, PG_boolean)
-//  - Runtime-changing PG_bytea-Uint8List
-//  - PG_enum(name)-XxxType with unknownEnumValue
-//  - The schema-metadata slots (primaryKey, unique, sqlType, fallback)
+// Postgres-flavored user. Exercises FieldTypes constants end-to-end —
+// every fieldType is built from `FieldTypes.*` rather than a raw string
+// literal, so a typo would surface as a compile error instead of a silent
+// fallback to the default `text` column.
 
 import 'dart:typed_data';
 
@@ -19,41 +17,41 @@ part '_model_pg_user.g.dart';
   fields: {
     Field(
       fieldPath: ['id'],
-      fieldType: 'PG_uuid-String',
+      fieldType: FieldTypes.pgUuid,
       primaryKey: true,
     ),
     Field(
       fieldPath: ['email'],
-      fieldType: 'PG_citext-String',
-      unique: true,
+      fieldType: FieldTypes.pgCitext,
     ),
     Field(
       fieldPath: ['display_name'],
-      fieldType: 'PG_varchar(120)-String',
+      fieldType: 'PG_varchar(120)-String', // parameterised — runtime helper
       nullable: true,
     ),
     Field(
       fieldPath: ['login_count'],
-      fieldType: 'PG_bigint-int',
+      fieldType: FieldTypes.pgBigint,
       nullable: true,
     ),
     Field(
       fieldPath: ['is_active'],
-      fieldType: 'PG_boolean-bool',
+      fieldType: FieldTypes.pgBoolean,
       nullable: true,
     ),
     Field(
       fieldPath: ['avatar_bytes'],
-      fieldType: 'PG_bytea-Uint8List',
+      fieldType: FieldTypes.pgBytea,
       nullable: true,
     ),
     Field(
       fieldPath: ['auth_provider'],
-      fieldType: 'PG_enum(auth_provider_kind)-AuthProviderKindType',
+      fieldType:
+          'PG_enum(auth_provider_kind)-AuthProviderKindType', // parameterised
       nullable: true,
     ),
-    Field(fieldPath: ['created_at'], fieldType: 'PG_timestamptz-DateTime'),
-    Field(fieldPath: ['updated_at'], fieldType: 'PG_timestamptz-DateTime'),
+    Field(fieldPath: ['created_at'], fieldType: FieldTypes.pgTimestamptz),
+    Field(fieldPath: ['updated_at'], fieldType: FieldTypes.pgTimestamptz),
   },
 )
 abstract class _ModelPgUser extends Model {

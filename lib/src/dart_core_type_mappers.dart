@@ -209,6 +209,14 @@ class DartCoreTypeMappers extends TypeMappers {
           final typeName = e.matchGroups?.elementAt(1);
           return '$typeName.values.valueOf(${e.name}?.toString())';
         },
+        // Enum sentinel — the extractor tags analyzer-detected enums with
+        // `@enum` so we can route them through the enum codegen path
+        // regardless of class-name suffix (no longer relies on `Type`/`Enum`
+        // naming).
+        r'^(\w+)@enum\??$': (e) {
+          final typeName = e.matchGroups?.elementAt(1);
+          return '$typeName.values.valueOf(${e.name}?.toString())';
+        },
 
         // ---------------------------------------------------------------------
         // Default.
@@ -329,6 +337,10 @@ class DartCoreTypeMappers extends TypeMappers {
           return '${e.name}?.toJson()';
         },
         r'^(Enum-?\w+|\w+-?Enum)\??$': (e) {
+          return '${e.name}?.name';
+        },
+        // Enum sentinel — see the inverse mapper above.
+        r'^(\w+)@enum\??$': (e) {
           return '${e.name}?.name';
         },
 

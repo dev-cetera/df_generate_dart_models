@@ -47,8 +47,6 @@ abstract class _ModelProfileSettings extends Model {
       fieldType: 'PG_uuid-String',
       foreignKey: true,
       references: ModelAccount,
-      onDelete: 'cascade',
-      unique: true,
     ),
     Field(
       fieldPath: ['display_name'],

@@ -108,15 +108,19 @@ Future<void> generateDartModels(
   }
 
   Log.printWhite('Generating your models...');
+  String? currentFile;
+  String? currentClass;
   try {
     for (final finding in findings) {
       final inputFilePath = finding.path;
+      currentFile = inputFilePath;
       final insights = await extractInsightsFromFile(
         inputFilePath,
         analysisContextCollection,
       );
 
       for (final insight in insights) {
+        currentClass = insight.className;
         final output = _interpolator.interpolate(template, insight);
         final fileName = outputFileNamePattern.replaceData({
           '{file}': PathUtility.i.localBaseNameWithoutExtension(inputFilePath),
@@ -134,8 +138,11 @@ Future<void> generateDartModels(
         Log.printWhite('✔ Generated $fileName');
       }
     }
-  } catch (e) {
+  } catch (e, st) {
     Log.printRed('---> $e');
+    if (currentFile != null) Log.printRed('   in file: $currentFile');
+    if (currentClass != null) Log.printRed('   in class: $currentClass');
+    Log.printRed(st.toString());
     Log.printRed('✘ One or more files failed to generate!');
     exit(ExitCodes.FAILURE.code);
   }
@@ -164,6 +171,17 @@ bool _isAllowedFileName(String e) {
 /// catchall regex `^(\w+)\??$` would otherwise swallow any specific type
 /// name a dialect tries to claim. Insert future dialects at the start of
 /// the list, never at the end.
+/// Decides whether the generated class for [insight] should mix in
+/// `EquatableMixin`. The rule is inheritance-driven: classes whose
+/// annotated abstract supertype is literally `BaseModel` skip Equatable
+/// (their instances may appear in const Sets inside other annotations,
+/// and const set elements may not override `==` / `hashCode`).
+/// Everything else — `Model`, user-defined intermediate bases, or
+/// unknown supertypes — gets Equatable.
+bool _shouldEmitEquatable(ClassInsight<GenerateDartModel> insight) {
+  return insight.supertypeName != 'BaseModel';
+}
+
 final _defaultMappers = DartCompositeTypeMappers([
   DartStrictTypeMappers.instance,
   DartPostgresTypeMappers.instance,
@@ -190,16 +208,17 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
         insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
   },
   '___WITH_EQUATABLE___': (insight) {
-    // EquatableMixin is opt-out via `equatable: false` on the annotation. Used
-    // by classes whose instances get embedded in const Sets inside other
-    // annotations (Dart forbids const set elements from overriding ==).
-    // Default behaviour (null/true) emits the mixin and a `props` override.
-    final equatable = insight.annotation.equatable ?? true;
-    return equatable ? 'with EquatableMixin ' : '';
+    // Equatable is decided by the inheritance chain, not by an annotation
+    // flag: classes whose abstract base extends `BaseModel` directly opt
+    // out because their instances may appear inside const Set<Field> /
+    // const Set<dynamic> annotations elsewhere (Dart forbids const set
+    // elements from overriding == / hashCode). Everything else (extends
+    // Model, extends some user-defined base, no supertype info) gets
+    // EquatableMixin.
+    return _shouldEmitEquatable(insight) ? 'with EquatableMixin ' : '';
   },
   '___EQUATABLE_OVERRIDES___': (insight) {
-    final equatable = insight.annotation.equatable ?? true;
-    if (!equatable) return '';
+    if (!_shouldEmitEquatable(insight)) return '';
     final propsList = insight.fields.map((e) => e.fieldName).join(', ');
     return '''
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
@@ -270,12 +289,18 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
   },
   '___FROM_JSON_OR_NULL_PARAMS___': (insight) {
     final fields = insight.fields.toList();
-    String $v(String a, DartField field) {
+    String $v(DartField field) {
       final fieldPath = field.fieldPath;
       if (fieldPath == null || fieldPath.isEmpty) return '';
-      final parts = insight.stringCaseType.convertAll(field.fieldPath!);
+      // Apply the model's case-conversion to every segment so the wire keys
+      // line up (e.g. CAMEL_CASE → 'profileId' or LOWER_SNAKE_CASE →
+      // 'profile_id'). Then build a deep null-aware accessor:
+      //   json?['profile']?['id']
+      // Single-segment paths collapse to the familiar json?['x'] form.
+      final parts = insight.stringCaseType.convertAll(fieldPath);
+      final accessor = parts.map((p) => "?['$p']").join();
+      final rawKey = 'json$accessor';
       final f = field.fieldName;
-      final rawKey = "$a?['${parts.last}']";
 
       // Pass the unstripped type code so prefix-bearing types
       // (LowerCase-String, PG_jsonb-Map, STRICT-int, PG_text-String, etc.)
@@ -289,24 +314,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
       return 'final $f = $code;';
     }
 
-    final j = fields.map((a) {
-      // Defensive: fields with a null fieldPath can't have a parent path
-      // computed, so skip the relationship lookup for them rather than
-      // throwing on `!`.
-      final aPath = a.fieldPath;
-      if (aPath == null) return $v('json', a);
-      final aJoined = aPath.join('.');
-      final ff = fields.where((b) {
-        final bPath = b.fieldPath;
-        if (bPath == null) return false;
-        return aJoined.startsWith('${bPath.join('.')}.');
-      }).toList();
-      // Sort by fieldName desc, tolerating null fieldNames (treat them as
-      // empty so the comparator is total and never throws).
-      ff.sort((x, y) => (y.fieldName ?? '').compareTo(x.fieldName ?? ''));
-      return $v(ff.length > 1 ? (ff[1].fieldName ?? '') : 'json', a);
-    });
-    return j.join('\n');
+    return fields.map($v).join('\n');
   },
   '___FROM_JSON_OR_NULL_ARGS___': (insight) {
     return insight.fields.map((e) {
@@ -333,7 +341,9 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
         .where(
           (f1) =>
               f1.fieldType == 'Map<String, dynamic>' &&
+              f1.fieldPath != null &&
               fields
+                  .where((e) => e.fieldPath != null)
                   .map((e) => e.fieldPath!.join('.'))
                   .any((e) => e.startsWith('${f1.fieldPath!.join('.')}.')),
         )
@@ -341,6 +351,7 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     fields.removeWhere((e) => parents.contains(e));
     final stringCaseType = insight.stringCaseType;
     final entries = fields
+        .where((e) => e.fieldPath != null)
         .map(
           (e) => MapEntry(
             stringCaseType.convertAll(e.fieldPath!).join('.'),

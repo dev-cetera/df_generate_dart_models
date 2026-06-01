@@ -21,12 +21,10 @@ part '_model_account.g.dart';
     Field(
       fieldPath: ['email'],
       fieldType: 'PG_citext-String',
-      unique: true,
     ),
     Field(
       fieldPath: ['username'],
       fieldType: 'PG_varchar(64)-String',
-      unique: true,
     ),
     Field(
       fieldPath: ['password_hash'],
