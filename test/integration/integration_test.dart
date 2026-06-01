@@ -208,7 +208,14 @@ void main() {
 
     test('FS_timestamp-DateTime converts via Timestamp.toDate().toUtc()', () {
       expect(code, contains('letAsOrNull<Timestamp>'));
-      expect(code, contains('a.toDate().toUtc()'));
+      // `dart fix` (run post-generation) collapses the explicit
+      // `a != null ? a.toDate()...` ternary into `a?.toDate()...`; we
+      // accept either shape.
+      expect(
+        code.contains('a?.toDate().toUtc()') ||
+            code.contains('a.toDate().toUtc()'),
+        isTrue,
+      );
     });
 
     test('FS_timestamp-DateTime writes via Timestamp.fromDate', () {

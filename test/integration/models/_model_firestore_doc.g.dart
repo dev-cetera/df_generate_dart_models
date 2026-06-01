@@ -32,11 +32,20 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, title, capturedAt, createdAt, location, ownerRef, thumbnail, legacyStamp];
+  List<Object?> get props => [
+        id,
+        title,
+        capturedAt,
+        createdAt,
+        location,
+        ownerRef,
+        thumbnail,
+        legacyStamp
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,87 +53,79 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? title;
+  final String? title;
 
   /// No description provided.
-final DateTime? capturedAt;
+  final DateTime? capturedAt;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final GeoPoint? location;
+  final GeoPoint? location;
 
   /// No description provided.
-final String? ownerRef;
+  final String? ownerRef;
 
   /// No description provided.
-final Uint8List? thumbnail;
+  final Uint8List? thumbnail;
 
   /// No description provided.
-final Timestamp? legacyStamp;
-
+  final Timestamp? legacyStamp;
 
   /// Constructs a new instance of [ModelFirestoreDoc]
   /// from optional and required parameters.
   const ModelFirestoreDoc({
     required this.id,
- this.title,
- this.capturedAt,
- this.createdAt,
- this.location,
- this.ownerRef,
- this.thumbnail,
- this.legacyStamp,
-  }) ;
+    this.title,
+    this.capturedAt,
+    this.createdAt,
+    this.location,
+    this.ownerRef,
+    this.thumbnail,
+    this.legacyStamp,
+  });
 
   /// Construcs a new instance of [ModelFirestoreDoc],
   /// forcing all parameters to be optional.
   const ModelFirestoreDoc.optional({
     this.id,
-this.title,
-this.capturedAt,
-this.createdAt,
-this.location,
-this.ownerRef,
-this.thumbnail,
-this.legacyStamp,
-  }) ;
-
+    this.title,
+    this.capturedAt,
+    this.createdAt,
+    this.location,
+    this.ownerRef,
+    this.thumbnail,
+    this.legacyStamp,
+  });
 
   /// Constructs a new instance of [ModelFirestoreDoc],
   /// and asserts that all required parameters are not null.
   factory ModelFirestoreDoc.assertRequired({
     String? id,
-String? title,
-DateTime? capturedAt,
-DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+    String? title,
+    DateTime? capturedAt,
+    DateTime? createdAt,
+    GeoPoint? location,
+    String? ownerRef,
+    Uint8List? thumbnail,
+    Timestamp? legacyStamp,
   }) {
     assert(id != null);
 
-
-
-
-
-
-
     return ModelFirestoreDoc(
       id: id,
-title: title,
-capturedAt: capturedAt,
-createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+      title: title,
+      capturedAt: capturedAt,
+      createdAt: createdAt,
+      location: location,
+      ownerRef: ownerRef,
+      thumbnail: thumbnail,
+      legacyStamp: legacyStamp,
     );
   }
 
@@ -150,7 +151,6 @@ legacyStamp: legacyStamp,
   ) {
     return fromJsonOrNull(another?.toJson())!;
   }
-
 
   /// Constructs a new instance of [ModelFirestoreDoc],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -184,7 +184,7 @@ legacyStamp: legacyStamp,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelFirestoreDoc.fromJsonString: $e');
+      assert(false, '$ModelFirestoreDoc.fromJsonString: $e');
       rethrow;
     }
   }
@@ -229,22 +229,36 @@ legacyStamp: legacyStamp,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final title = json?['title']?.toString().trim().nullIfEmpty;
-final capturedAt = (){ final a = letAsOrNull<Timestamp>(json?['capturedAt']); return a != null ? a.toDate().toUtc() : null; }();
-final createdAt = (){ final a = letAsOrNull<Timestamp>(json?['createdAt']); return a != null ? a.toDate().toUtc() : null; }();
-final location = letAsOrNull<GeoPoint>(json?['location']);
-final ownerRef = (){ final a = letAsOrNull<DocumentReference>(json?['ownerRef']); return a != null ? a.path : json?['ownerRef']?.toString().trim().nullIfEmpty; }();
-final thumbnail = (){ final a = letAsOrNull<Blob>(json?['thumbnail']); return a != null ? a.bytes : letAsOrNull<Uint8List>(json?['thumbnail']); }();
-final legacyStamp = letAsOrNull<Timestamp>(json?['legacyStamp']);
+      final title = json?['title']?.toString().trim().nullIfEmpty;
+      final capturedAt = () {
+        final a = letAsOrNull<Timestamp>(json?['capturedAt']);
+        return a?.toDate().toUtc();
+      }();
+      final createdAt = () {
+        final a = letAsOrNull<Timestamp>(json?['createdAt']);
+        return a?.toDate().toUtc();
+      }();
+      final location = letAsOrNull<GeoPoint>(json?['location']);
+      final ownerRef = () {
+        final a = letAsOrNull<DocumentReference>(json?['ownerRef']);
+        return a != null
+            ? a.path
+            : json?['ownerRef']?.toString().trim().nullIfEmpty;
+      }();
+      final thumbnail = () {
+        final a = letAsOrNull<Blob>(json?['thumbnail']);
+        return a != null ? a.bytes : letAsOrNull<Uint8List>(json?['thumbnail']);
+      }();
+      final legacyStamp = letAsOrNull<Timestamp>(json?['legacyStamp']);
       return ModelFirestoreDoc(
         id: id,
-title: title,
-capturedAt: capturedAt,
-createdAt: createdAt,
-location: location,
-ownerRef: ownerRef,
-thumbnail: thumbnail,
-legacyStamp: legacyStamp,
+        title: title,
+        capturedAt: capturedAt,
+        createdAt: createdAt,
+        location: location,
+        ownerRef: ownerRef,
+        thumbnail: thumbnail,
+        legacyStamp: legacyStamp,
       );
     } catch (e) {
       return null;
@@ -288,15 +302,23 @@ legacyStamp: legacyStamp,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final title0 = title?.trim().nullIfEmpty;
-final capturedAt0 = capturedAt != null ? Timestamp.fromDate(capturedAt!.toUtc()) : null;
-final createdAt0 = FieldValue.serverTimestamp();
-final location0 = location;
-final ownerRef0 = ownerRef?.trim().nullIfEmpty;
-final thumbnail0 = thumbnail != null ? Blob(thumbnail!) : null;
-final legacyStamp0 = legacyStamp;
+      final title0 = title?.trim().nullIfEmpty;
+      final capturedAt0 =
+          capturedAt != null ? Timestamp.fromDate(capturedAt!.toUtc()) : null;
+      final createdAt0 = FieldValue.serverTimestamp();
+      final location0 = location;
+      final ownerRef0 = ownerRef?.trim().nullIfEmpty;
+      final thumbnail0 = thumbnail != null ? Blob(thumbnail!) : null;
+      final legacyStamp0 = legacyStamp;
       final withNulls = {
-        'title': title0,'thumbnail': thumbnail0,'ownerRef': ownerRef0,'location': location0,'legacyStamp': legacyStamp0,'id': id0,'createdAt': createdAt0,'capturedAt': capturedAt0,
+        'title': title0,
+        'thumbnail': thumbnail0,
+        'ownerRef': ownerRef0,
+        'location': location0,
+        'legacyStamp': legacyStamp0,
+        'id': id0,
+        'createdAt': createdAt0,
+        'capturedAt': capturedAt0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -305,83 +327,81 @@ final legacyStamp0 = legacyStamp;
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [title] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get title$ => title;
+  @pragma('vm:prefer-inline')
+  String? get title$ => title;
 
   /// Returns the value of the [capturedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get capturedAt$ => capturedAt;
+  @pragma('vm:prefer-inline')
+  DateTime? get capturedAt$ => capturedAt;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get createdAt$ => createdAt;
+  @pragma('vm:prefer-inline')
+  DateTime? get createdAt$ => createdAt;
 
   /// Returns the value of the [location] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-GeoPoint? get location$ => location;
+  @pragma('vm:prefer-inline')
+  GeoPoint? get location$ => location;
 
   /// Returns the value of the [ownerRef] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get ownerRef$ => ownerRef;
+  @pragma('vm:prefer-inline')
+  String? get ownerRef$ => ownerRef;
 
   /// Returns the value of the [thumbnail] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uint8List? get thumbnail$ => thumbnail;
+  @pragma('vm:prefer-inline')
+  Uint8List? get thumbnail$ => thumbnail;
 
   /// Returns the value of the [legacyStamp] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Timestamp? get legacyStamp$ => legacyStamp;
-
+  @pragma('vm:prefer-inline')
+  Timestamp? get legacyStamp$ => legacyStamp;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelFirestoreDocFieldNames {
-    /// The field name of [ModelFirestoreDoc.id].
-static const id = 'id';
+  /// The field name of [ModelFirestoreDoc.id].
+  static const id = 'id';
 
   /// The field name of [ModelFirestoreDoc.title].
-static const title = 'title';
+  static const title = 'title';
 
   /// The field name of [ModelFirestoreDoc.capturedAt].
-static const capturedAt = 'capturedAt';
+  static const capturedAt = 'capturedAt';
 
   /// The field name of [ModelFirestoreDoc.createdAt].
-static const createdAt = 'createdAt';
+  static const createdAt = 'createdAt';
 
   /// The field name of [ModelFirestoreDoc.location].
-static const location = 'location';
+  static const location = 'location';
 
   /// The field name of [ModelFirestoreDoc.ownerRef].
-static const ownerRef = 'ownerRef';
+  static const ownerRef = 'ownerRef';
 
   /// The field name of [ModelFirestoreDoc.thumbnail].
-static const thumbnail = 'thumbnail';
+  static const thumbnail = 'thumbnail';
 
   /// The field name of [ModelFirestoreDoc.legacyStamp].
-static const legacyStamp = 'legacyStamp';
-
+  static const legacyStamp = 'legacyStamp';
 }
 
 extension ModelFirestoreDocX on ModelFirestoreDoc {
@@ -400,46 +420,46 @@ extension ModelFirestoreDocX on ModelFirestoreDoc {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelFirestoreDoc copyWith({
     String? id,
-String? title,
-DateTime? capturedAt,
-DateTime? createdAt,
-GeoPoint? location,
-String? ownerRef,
-Uint8List? thumbnail,
-Timestamp? legacyStamp,
+    String? title,
+    DateTime? capturedAt,
+    DateTime? createdAt,
+    GeoPoint? location,
+    String? ownerRef,
+    Uint8List? thumbnail,
+    Timestamp? legacyStamp,
   }) {
     return ModelFirestoreDoc.assertRequired(
       id: id ?? this.id,
-title: title ?? this.title,
-capturedAt: capturedAt ?? this.capturedAt,
-createdAt: createdAt ?? this.createdAt,
-location: location ?? this.location,
-ownerRef: ownerRef ?? this.ownerRef,
-thumbnail: thumbnail ?? this.thumbnail,
-legacyStamp: legacyStamp ?? this.legacyStamp,
+      title: title ?? this.title,
+      capturedAt: capturedAt ?? this.capturedAt,
+      createdAt: createdAt ?? this.createdAt,
+      location: location ?? this.location,
+      ownerRef: ownerRef ?? this.ownerRef,
+      thumbnail: thumbnail ?? this.thumbnail,
+      legacyStamp: legacyStamp ?? this.legacyStamp,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelFirestoreDoc copyWithout({
     bool id = true,
-bool title = true,
-bool capturedAt = true,
-bool createdAt = true,
-bool location = true,
-bool ownerRef = true,
-bool thumbnail = true,
-bool legacyStamp = true,
+    bool title = true,
+    bool capturedAt = true,
+    bool createdAt = true,
+    bool location = true,
+    bool ownerRef = true,
+    bool thumbnail = true,
+    bool legacyStamp = true,
   }) {
     return ModelFirestoreDoc.assertRequired(
-      id: id ? this.id: null,
-title: title ? this.title: null,
-capturedAt: capturedAt ? this.capturedAt: null,
-createdAt: createdAt ? this.createdAt: null,
-location: location ? this.location: null,
-ownerRef: ownerRef ? this.ownerRef: null,
-thumbnail: thumbnail ? this.thumbnail: null,
-legacyStamp: legacyStamp ? this.legacyStamp: null,
+      id: id ? this.id : null,
+      title: title ? this.title : null,
+      capturedAt: capturedAt ? this.capturedAt : null,
+      createdAt: createdAt ? this.createdAt : null,
+      location: location ? this.location : null,
+      ownerRef: ownerRef ? this.ownerRef : null,
+      thumbnail: thumbnail ? this.thumbnail : null,
+      legacyStamp: legacyStamp ? this.legacyStamp : null,
     );
   }
 }
