@@ -170,7 +170,7 @@ GenerateDartModel _updateFromAnnotatedMember(
     final b1 = params.memberAnnotationFields[FieldModelFieldNames.fieldType]
         ?.toStringValue();
     // ignore: deprecated_member_use
-    final b2 = params.memberType.getDisplayString(withNullability: false);
+    final b2 = params.memberType.getDisplayString();
     final nullable = params
         .memberAnnotationFields[FieldModelFieldNames.nullable]
         ?.toBoolValue();
@@ -195,7 +195,7 @@ GenerateDartModel _updateFromAnnotatedMember(
     final references = params
         .memberAnnotationFields[FieldModelFieldNames.references]
         ?.toTypeValue()
-        ?.getDisplayString(withNullability: false);
+        ?.getDisplayString();
     final referencesColumn = params
         .memberAnnotationFields[FieldModelFieldNames.referencesColumn]
         ?.toStringValue();

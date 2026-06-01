@@ -27,7 +27,7 @@ void main() {
     final code = _read('_model_base.g.dart');
 
     test('String fields use the coercive trim+nullIfEmpty chain', () {
-      expect(code, contains("?.toString().trim().nullIfEmpty"));
+      expect(code, contains('?.toString().trim().nullIfEmpty'));
     });
 
     test('int field uses letIntOrNull (Phase 1 coercion fix)', () {
