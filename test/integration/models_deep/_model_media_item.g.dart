@@ -217,7 +217,7 @@ final kind = MediaKindType.values.valueOf(json?['kind']?.toString());
 final url = json?['url']?.toString().trim().nullIfEmpty;
 final thumbnailUrl = json?['thumbnail_url']?.toString().trim().nullIfEmpty;
 final details = () { final a = letMapOrNull<String, dynamic>(json?['details']); return a != null ? ModelMediaDetails.fromJson(a): null; }();
-final order = letIntOrNull(json?['order']) ?? 0;
+final order = letIntOrNull(json?['order']);
       return ModelMediaItem(
         id: id,
 kind: kind,

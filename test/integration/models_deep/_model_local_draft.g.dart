@@ -225,7 +225,7 @@ final caption = json?['caption']?.toString().trim().nullIfEmpty;
 final hashtags = letListOrNull<dynamic>(json?['hashtags'])?.map((p0) => p0?.toString().trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList().unmodifiable;
 final media = letListOrNull<dynamic>(json?['media'])?.map((p0) => () { final a = letMapOrNull<String, dynamic>(p0); return a != null ? ModelMediaItem.fromJson(a): null; }(),).nonNulls.nullIfEmpty?.toList().unmodifiable;
 final scheduledFor = (){ final a = letIntOrNull(json?['scheduled_for']); return a != null ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true) : null; }();
-final isDirty = letBoolOrNull(json?['is_dirty']) ?? true;
+final isDirty = letBoolOrNull(json?['is_dirty']);
 final updatedAt = (){ final a = letIntOrNull(json?['updated_at']); return a != null ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true) : null; }();
       return ModelLocalDraft(
         id: id,

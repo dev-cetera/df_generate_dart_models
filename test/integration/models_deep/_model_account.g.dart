@@ -240,8 +240,8 @@ deletedAt: deletedAt,
 final email = json?['email']?.toString().trim().nullIfEmpty;
 final username = json?['username']?.toString().trim().nullIfEmpty;
 final passwordHash = letAsOrNull<Uint8List>(json?['password_hash']);
-final status = AccountStatusType.values.valueOf(json?['status']?.toString()) ?? 'active';
-final role = AccountRoleType.values.valueOf(json?['role']?.toString()) ?? 'user';
+final status = AccountStatusType.values.valueOf(json?['status']?.toString());
+final role = AccountRoleType.values.valueOf(json?['role']?.toString());
 final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
 final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
 final deletedAt = (){ final a = json?['deleted_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();

@@ -230,8 +230,8 @@ avatarCache: avatarCache,
     try {
       final id = letIntOrNull(json?['id']);
 final userId = json?['user_id']?.toString().trim().nullIfEmpty;
-final notificationsEnabled = letBoolOrNull(json?['notifications_enabled']) ?? true;
-final theme = json?['theme']?.toString().trim().nullIfEmpty ?? 'system';
+final notificationsEnabled = letBoolOrNull(json?['notifications_enabled']);
+final theme = json?['theme']?.toString().trim().nullIfEmpty;
 final lastSyncedAt = (){ final a = letIntOrNull(json?['last_synced_at']); return a != null ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true) : null; }();
 final legacyCreatedAt = (){ final a = json?['legacy_created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
 final preferences = letMapOrNull<dynamic, dynamic>(json?['preferences'])?.map((p0, p1) => MapEntry(p0?.toString().trim().nullIfEmpty, p1,),).nonNulls.nullIfEmpty?.unmodifiable;

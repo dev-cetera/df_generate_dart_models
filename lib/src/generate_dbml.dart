@@ -41,9 +41,9 @@ Future<void> generateDbml(
     title: 'dev-cetera.com',
     description:
         'Generates a DBML schema file from classes annotated with '
-        '@GenerateDartModel. The annotations\' sqlType: / PG_*-/SQLITE_*- '
-        'prefixes drive column types, `references:` drives FK Ref lines, '
-        '`primaryKey`/`foreignKey`/`unique`/`onDelete` drive constraints.',
+        '@GenerateDartModel. The PG_*-/SQLITE_*- prefixes on fieldType drive '
+        'column types, `references:` drives FK Ref lines, and `primaryKey:` '
+        'drives the `[pk]` constraint.',
     example: 'generate-dbml -i lib/src/db_models -o schema.dbml',
     additional:
         'For contributions, error reports and information, visit: '
@@ -149,20 +149,12 @@ void _emitTable(
     if (field.nullable != true && field.primaryKey != true) {
       notes.add('not null');
     }
-    if (field.unique == true) notes.add('unique');
-
-    final fallback = field.fallback;
-    if (fallback != null) {
-      notes.add('default: ${_quoteDbmlValue(fallback)}');
-    }
 
     final references = _referencesNameFor(field);
     if (references != null) {
-      final targetCol = field.referencesColumn ?? 'id';
-      notes.add('ref: > $references.$targetCol');
-      if (field.onDelete != null) {
-        notes.add('on delete: ${field.onDelete}');
-      }
+      // FK target column defaults to `id` — the conventional primary key
+      // of every model in this codebase.
+      notes.add('ref: > $references.id');
     }
 
     final description = field.description;
@@ -253,11 +245,6 @@ String? _referencesNameFor(DartField field) {
   if (raw.isEmpty || raw == 'Object' || raw == 'dynamic') return null;
   final stripped = raw.startsWith('Model') ? raw.substring(5) : raw;
   return stripped.toSnakeCase() + (stripped.endsWith('s') ? '' : 's');
-}
-
-String _quoteDbmlValue(Object value) {
-  if (value is bool || value is num) return value.toString();
-  return "'${_escapeDbmlString(value.toString())}'";
 }
 
 String _escapeDbmlString(String s) =>

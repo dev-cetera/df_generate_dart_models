@@ -37,13 +37,11 @@ part '_model_account.g.dart';
       fieldPath: ['status'],
       fieldType: 'PG_enum(account_status)-AccountStatusType',
       nullable: true,
-      fallback: 'active',
     ),
     Field(
       fieldPath: ['role'],
       fieldType: 'PG_enum(account_role)-AccountRoleType',
       nullable: true,
-      fallback: 'user',
     ),
     Field(fieldPath: ['created_at'], fieldType: 'PG_timestamptz-DateTime'),
     Field(fieldPath: ['updated_at'], fieldType: 'PG_timestamptz-DateTime'),

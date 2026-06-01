@@ -207,7 +207,7 @@ createdAt: createdAt,
       final id = json?['id']?.toString().trim().nullIfEmpty;
 final followerId = json?['follower_id']?.toString().trim().nullIfEmpty;
 final followeeId = json?['followee_id']?.toString().trim().nullIfEmpty;
-final status = FollowStatusType.values.valueOf(json?['status']?.toString()) ?? 'accepted';
+final status = FollowStatusType.values.valueOf(json?['status']?.toString());
 final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
       return ModelFollowEdge(
         id: id,

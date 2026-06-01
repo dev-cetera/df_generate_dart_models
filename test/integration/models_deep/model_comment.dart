@@ -45,13 +45,11 @@ part '_model_comment.g.dart';
       fieldPath: ['status'],
       fieldType: 'PG_enum(comment_status)-CommentStatusType',
       nullable: true,
-      fallback: 'active',
     ),
     Field(
       fieldPath: ['like_count'],
       fieldType: 'PG_integer-int',
       nullable: true,
-      fallback: 0,
     ),
     Field(fieldPath: ['created_at'], fieldType: 'PG_timestamptz-DateTime'),
     Field(fieldPath: ['updated_at'], fieldType: 'PG_timestamptz-DateTime'),

@@ -239,8 +239,8 @@ updatedAt: updatedAt,
       final id = json?['id']?.toString().trim().nullIfEmpty;
 final email = json?['email']?.toString().trim().nullIfEmpty;
 final displayName = json?['display_name']?.toString().trim().nullIfEmpty;
-final loginCount = letIntOrNull(json?['login_count']) ?? 0;
-final isActive = letBoolOrNull(json?['is_active']) ?? true;
+final loginCount = letIntOrNull(json?['login_count']);
+final isActive = letBoolOrNull(json?['is_active']);
 final avatarBytes = letAsOrNull<Uint8List>(json?['avatar_bytes']);
 final authProvider = AuthProviderKindType.values.valueOf(json?['auth_provider']?.toString());
 final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();

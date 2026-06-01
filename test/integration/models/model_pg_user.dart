@@ -36,13 +36,11 @@ part '_model_pg_user.g.dart';
       fieldPath: ['login_count'],
       fieldType: 'PG_bigint-int',
       nullable: true,
-      fallback: 0,
     ),
     Field(
       fieldPath: ['is_active'],
       fieldType: 'PG_boolean-bool',
       nullable: true,
-      fallback: true,
     ),
     Field(
       fieldPath: ['avatar_bytes'],

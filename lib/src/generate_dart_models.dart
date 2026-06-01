@@ -164,21 +164,6 @@ bool _isAllowedFileName(String e) {
 /// catchall regex `^(\w+)\??$` would otherwise swallow any specific type
 /// name a dialect tries to claim. Insert future dialects at the start of
 /// the list, never at the end.
-/// Renders the `fallback:` annotation value as a Dart literal expression
-/// suitable for the right-hand side of `??`. Strings get quoted; bool/num
-/// pass through; anything else gets stringified.
-String _renderFallbackLiteral(Object value) {
-  if (value is String) {
-    final escaped = value
-        .replaceAll(r'\', r'\\')
-        .replaceAll("'", r"\'")
-        .replaceAll('\n', r'\n');
-    return "'$escaped'";
-  }
-  if (value is bool || value is num) return value.toString();
-  return value.toString();
-}
-
 final _defaultMappers = DartCompositeTypeMappers([
   DartStrictTypeMappers.instance,
   DartPostgresTypeMappers.instance,
@@ -296,16 +281,10 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
       // (LowerCase-String, PG_jsonb-Map, STRICT-int, PG_text-String, etc.)
       // match their specific regexes. The strip is only used to render
       // valid Dart for the field declaration, not the mapper.
-      var code = DartTypeCodeMapper(_defaultMappers.fromMappers).map(
+      final code = DartTypeCodeMapper(_defaultMappers.fromMappers).map(
         fieldName: rawKey,
         fieldTypeCode: field.fieldTypeCode!,
       );
-
-      // fallback: applied after the mapper output to provide a default
-      // when the source value is null or coercion produced null.
-      if (field.fallback != null) {
-        code = '$code ?? ${_renderFallbackLiteral(field.fallback!)}';
-      }
 
       return 'final $f = $code;';
     }

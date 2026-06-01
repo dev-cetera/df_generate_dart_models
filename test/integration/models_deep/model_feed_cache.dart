@@ -30,7 +30,6 @@ part '_model_feed_cache.g.dart';
       fieldPath: ['visibility'],
       fieldType: 'SQLITE_text-String',
       nullable: true,
-      fallback: 'public',
     ),
     // Nested model (defined in model_post.dart) embedded as a JSON array
     // in SQLite — cross-dialect nesting in action.
@@ -43,13 +42,11 @@ part '_model_feed_cache.g.dart';
       fieldPath: ['is_unread'],
       fieldType: 'SQLITE_integer-bool',
       nullable: true,
-      fallback: true,
     ),
     Field(
       fieldPath: ['like_count'],
       fieldType: 'SQLITE_integer-int',
       nullable: true,
-      fallback: 0,
     ),
     Field(
       fieldPath: ['fetched_at'],

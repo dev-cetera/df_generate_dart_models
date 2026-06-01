@@ -491,7 +491,8 @@ void main() {
     test('FS_timestamp-DateTime converts Timestamp → DateTime on read', () {
       final r = mapFrom('FS_timestamp-DateTime', name: 'v');
       expect(r, contains('letAsOrNull<Timestamp>'));
-      expect(r, contains('a.toDate().toUtc()'));
+      // `?.` short-circuits if the timestamp is null.
+      expect(r, contains('?.toDate().toUtc()'));
     });
 
     test('FS_timestamp-DateTime converts DateTime → Timestamp on write', () {
@@ -519,7 +520,7 @@ void main() {
     test('FS_ref-String pulls .path off DocumentReference on read', () {
       final r = mapFrom('FS_ref-String', name: 'v');
       expect(r, contains('letAsOrNull<DocumentReference>'));
-      expect(r, contains('a.path'));
+      expect(r, contains('?.path'));
     });
 
     test('FS_blob-Uint8List wraps in Blob() on write', () {
@@ -530,7 +531,7 @@ void main() {
     test('FS_blob-Uint8List extracts .bytes from Blob on read', () {
       final r = mapFrom('FS_blob-Uint8List', name: 'v');
       expect(r, contains('letAsOrNull<Blob>'));
-      expect(r, contains('a.bytes'));
+      expect(r, contains('?.bytes'));
     });
 
     test('back-compat: bare Timestamp still resolves', () {

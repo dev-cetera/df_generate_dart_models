@@ -40,7 +40,6 @@ part '_model_local_draft.g.dart';
       fieldPath: ['is_dirty'],
       fieldType: 'SQLITE_integer-bool',
       nullable: true,
-      fallback: true,
     ),
     Field(
       fieldPath: ['updated_at'],

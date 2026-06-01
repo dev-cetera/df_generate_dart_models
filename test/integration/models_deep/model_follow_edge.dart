@@ -35,7 +35,6 @@ part '_model_follow_edge.g.dart';
       fieldPath: ['status'],
       fieldType: 'PG_enum(follow_status)-FollowStatusType',
       nullable: true,
-      fallback: 'accepted',
     ),
     Field(fieldPath: ['created_at'], fieldType: 'PG_timestamptz-DateTime'),
   },

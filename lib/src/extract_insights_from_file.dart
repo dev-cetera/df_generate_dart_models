@@ -85,12 +85,8 @@ GenerateDartModel _updateFromClassAnnotationField(
                 final children = x.childrenFromRecord();
                 final primaryKey = x.primaryKeyFromRecord();
                 final foreignKey = x.foreignKeyFromRecord();
-                final fallback = x.fallbackFromRecord();
                 final description = x.descriptionFromRecord();
                 final references = x.referencesFromRecord();
-                final referencesColumn = x.referencesColumnFromRecord();
-                final unique = x.uniqueFromRecord();
-                final onDelete = x.onDeleteFromRecord();
                 final field = Field(
                   fieldPath: fieldPath,
                   fieldType: fieldType,
@@ -98,12 +94,8 @@ GenerateDartModel _updateFromClassAnnotationField(
                   children: children,
                   primaryKey: primaryKey,
                   foreignKey: foreignKey,
-                  fallback: fallback,
                   description: description,
                   references: references,
-                  referencesColumn: referencesColumn,
-                  unique: unique,
-                  onDelete: onDelete,
                 );
                 return field.toRecord;
               } catch (e) {
@@ -174,9 +166,6 @@ GenerateDartModel _updateFromAnnotatedMember(
         ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
         .nonNulls
         .toList();
-    final fallback = dartObjToObject(
-      params.memberAnnotationFields[FieldModelFieldNames.fallback],
-    );
     final description = params
         .memberAnnotationFields[FieldModelFieldNames.description]
         ?.toStringValue();
@@ -184,15 +173,6 @@ GenerateDartModel _updateFromAnnotatedMember(
         .memberAnnotationFields[FieldModelFieldNames.references]
         ?.toTypeValue()
         ?.getDisplayString();
-    final referencesColumn = params
-        .memberAnnotationFields[FieldModelFieldNames.referencesColumn]
-        ?.toStringValue();
-    final unique = params
-        .memberAnnotationFields[FieldModelFieldNames.unique]
-        ?.toBoolValue();
-    final onDelete = params
-        .memberAnnotationFields[FieldModelFieldNames.onDelete]
-        ?.toStringValue();
     final field = DartField(
       fieldPath: a1 ?? a2,
       fieldType: b1 ?? b2,
@@ -200,12 +180,8 @@ GenerateDartModel _updateFromAnnotatedMember(
       primaryKey: primaryKey,
       foreignKey: foreignKey,
       children: children,
-      fallback: fallback,
       description: description,
       references: references,
-      referencesColumn: referencesColumn,
-      unique: unique,
-      onDelete: onDelete,
     );
     annotation = annotation.mergeWith(
       GenerateDartModel(fields: {...?annotation.fields, field.toRecord}),

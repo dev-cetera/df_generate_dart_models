@@ -19,7 +19,6 @@ part '_model_profile_settings.g.dart';
       fieldPath: ['default_visibility'],
       fieldType: 'PG_enum(post_visibility)-PostVisibilityType',
       nullable: true,
-      fallback: 'public',
     ),
     Field(fieldPath: ['language'], fieldType: 'PG_text-String', nullable: true),
     Field(fieldPath: ['timezone'], fieldType: 'PG_text-String', nullable: true),
@@ -27,7 +26,6 @@ part '_model_profile_settings.g.dart';
       fieldPath: ['marketing_opt_in'],
       fieldType: 'PG_boolean-bool',
       nullable: true,
-      fallback: false,
     ),
   },
 )

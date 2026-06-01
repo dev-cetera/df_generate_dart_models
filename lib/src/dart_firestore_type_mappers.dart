@@ -65,27 +65,30 @@ class DartFirestoreTypeMappers extends TypeMappers {
         // FS_timestamp-DateTime: convert Firestore Timestamp → DateTime.
         // Firestore stores ts in microsecond precision; .toDate() preserves
         // the moment but drops microseconds. UTC normalisation is explicit
-        // so downstream comparisons are deterministic.
+        // so downstream comparisons are deterministic. `?.` short-circuits
+        // the chain so we don't need the explicit null guard.
         r'^FS_timestamp-(DateTime)\??$': (e) {
-          return '(){ final a = letAsOrNull<Timestamp>(${e.name}); return a != null ? a.toDate().toUtc() : null; }()';
+          return 'letAsOrNull<Timestamp>(${e.name})?.toDate().toUtc()';
         },
         // FS_server_timestamp-DateTime: identical to FS_timestamp on read;
         // the divergence lives on the to-side (FieldValue.serverTimestamp).
         r'^FS_server_timestamp-(DateTime)\??$': (e) {
-          return '(){ final a = letAsOrNull<Timestamp>(${e.name}); return a != null ? a.toDate().toUtc() : null; }()';
+          return 'letAsOrNull<Timestamp>(${e.name})?.toDate().toUtc()';
         },
         // GeoPoint passes through (Firestore SDK returns it natively).
         r'^FS_geopoint-(GeoPoint)\??$': (e) {
           return 'letAsOrNull<GeoPoint>(${e.name})';
         },
-        // DocumentReference → String path. Keeping the path lets us serialise
-        // over wire later without holding the reference object.
+        // DocumentReference → String path. `?.` short-circuits, then
+        // fall back to a String coercion if the value wasn't a
+        // DocumentReference (already-serialised path on the wire).
         r'^FS_ref-(String)\??$': (e) {
-          return '(){ final a = letAsOrNull<DocumentReference>(${e.name}); return a != null ? a.path : ${e.name}?.toString().trim().nullIfEmpty; }()';
+          return 'letAsOrNull<DocumentReference>(${e.name})?.path ?? ${e.name}?.toString().trim().nullIfEmpty';
         },
-        // Blob (Firestore's binary type) → Uint8List.
+        // Blob (Firestore's binary type) → Uint8List. `?.` again, with
+        // a fallback to direct Uint8List interpretation.
         r'^FS_blob-(Uint8List)\??$': (e) {
-          return '(){ final a = letAsOrNull<Blob>(${e.name}); return a != null ? a.bytes : letAsOrNull<Uint8List>(${e.name}); }()';
+          return 'letAsOrNull<Blob>(${e.name})?.bytes ?? letAsOrNull<Uint8List>(${e.name})';
         },
 
         // ─── Back-compat: bare Timestamp ────────────────────────────────────

@@ -29,7 +29,6 @@ part '_model_device_token.g.dart';
       fieldPath: ['locale'],
       fieldType: String,
       nullable: true,
-      fallback: 'en',
     ),
     Field(
       fieldPath: ['lastSeenAt'],

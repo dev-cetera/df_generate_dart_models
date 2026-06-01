@@ -254,12 +254,12 @@ deletedAt: deletedAt,
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
 final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-final visibility = PostVisibilityType.values.valueOf(json?['visibility']?.toString()) ?? 'public';
+final visibility = PostVisibilityType.values.valueOf(json?['visibility']?.toString());
 final caption = json?['caption']?.toString().trim().nullIfEmpty;
 final hashtags = letListOrNull<dynamic>(json?['hashtags'])?.map((p0) => p0?.toString().trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList().unmodifiable;
 final media = letListOrNull<dynamic>(json?['media'])?.map((p0) => () { final a = letMapOrNull<String, dynamic>(p0); return a != null ? ModelMediaItem.fromJson(a): null; }(),).nonNulls.nullIfEmpty?.toList().unmodifiable;
 final location = () { final a = letMapOrNull<String, dynamic>(json?['location']); return a != null ? ModelLocation.fromJson(a): null; }();
-final likeCount = letIntOrNull(json?['like_count']) ?? 0;
+final likeCount = letIntOrNull(json?['like_count']);
 final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
 final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
 final deletedAt = (){ final a = json?['deleted_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();

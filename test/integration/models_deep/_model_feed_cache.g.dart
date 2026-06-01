@@ -256,10 +256,10 @@ previewBlob: previewBlob,
 final postId = json?['post_id']?.toString().trim().nullIfEmpty;
 final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
 final caption = json?['caption']?.toString().trim().nullIfEmpty;
-final visibility = json?['visibility']?.toString().trim().nullIfEmpty ?? 'public';
+final visibility = json?['visibility']?.toString().trim().nullIfEmpty;
 final media = letListOrNull<dynamic>(json?['media'])?.map((p0) => () { final a = letMapOrNull<String, dynamic>(p0); return a != null ? ModelMediaItem.fromJson(a): null; }(),).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final isUnread = letBoolOrNull(json?['is_unread']) ?? true;
-final likeCount = letIntOrNull(json?['like_count']) ?? 0;
+final isUnread = letBoolOrNull(json?['is_unread']);
+final likeCount = letIntOrNull(json?['like_count']);
 final fetchedAt = (){ final a = letIntOrNull(json?['fetched_at']); return a != null ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true) : null; }();
 final expiresAt = (){ final a = letIntOrNull(json?['expires_at']); return a != null ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true) : null; }();
 final previewBlob = letAsOrNull<Uint8List>(json?['preview_blob']);

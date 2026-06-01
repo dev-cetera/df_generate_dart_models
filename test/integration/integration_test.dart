@@ -117,12 +117,6 @@ void main() {
       expect(code, contains('DateTime.tryParse(a)?.toUtc()'));
     });
 
-    test('fallback wires to ?? <literal>', () {
-      // login_count has fallback: 0
-      expect(code, contains("letIntOrNull(json?['login_count']) ?? 0"));
-      // is_active has fallback: true
-      expect(code, contains("letBoolOrNull(json?['is_active']) ?? true"));
-    });
   });
 
   group('Postgres nested model + jsonb + references', () {
@@ -196,10 +190,6 @@ void main() {
       );
     });
 
-    test('fallback applies to SQLite fields', () {
-      expect(code, contains("letBoolOrNull(json?['notifications_enabled']) ?? true"));
-      expect(code, contains("?.toString().trim().nullIfEmpty ?? 'system'"));
-    });
   });
 
   group('Firestore dialect (DartFirestoreTypeMappers)', () {
@@ -207,14 +197,10 @@ void main() {
 
     test('FS_timestamp-DateTime converts via Timestamp.toDate().toUtc()', () {
       expect(code, contains('letAsOrNull<Timestamp>'));
-      // `dart fix` (run post-generation) collapses the explicit
-      // `a != null ? a.toDate()...` ternary into `a?.toDate()...`; we
-      // accept either shape.
-      expect(
-        code.contains('a?.toDate().toUtc()') ||
-            code.contains('a.toDate().toUtc()'),
-        isTrue,
-      );
+      // The mapper now emits a single null-aware chain directly
+      // `letAsOrNull<Timestamp>(...)?.toDate().toUtc()` — no intermediate
+      // `final a = ...` binding.
+      expect(code, contains('?.toDate().toUtc()'));
     });
 
     test('FS_timestamp-DateTime writes via Timestamp.fromDate', () {
@@ -231,12 +217,12 @@ void main() {
 
     test('FS_ref-String pulls .path off DocumentReference', () {
       expect(code, contains('letAsOrNull<DocumentReference>'));
-      expect(code, contains('a.path'));
+      expect(code, contains('?.path'));
     });
 
     test('FS_blob-Uint8List unwraps Blob.bytes on read', () {
       expect(code, contains('letAsOrNull<Blob>'));
-      expect(code, contains('a.bytes'));
+      expect(code, contains('?.bytes'));
     });
 
     test('FS_blob-Uint8List wraps in Blob() on write', () {

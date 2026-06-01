@@ -237,14 +237,14 @@ createdAt: createdAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final recipientRef = (){ final a = letAsOrNull<DocumentReference>(json?['recipientRef']); return a != null ? a.path : json?['recipientRef']?.toString().trim().nullIfEmpty; }();
-final actorRef = (){ final a = letAsOrNull<DocumentReference>(json?['actorRef']); return a != null ? a.path : json?['actorRef']?.toString().trim().nullIfEmpty; }();
+final recipientRef = letAsOrNull<DocumentReference>(json?['recipientRef'])?.path ?? json?['recipientRef']?.toString().trim().nullIfEmpty;
+final actorRef = letAsOrNull<DocumentReference>(json?['actorRef'])?.path ?? json?['actorRef']?.toString().trim().nullIfEmpty;
 final kind = NotificationKindType.values.valueOf(json?['kind']?.toString());
 final title = json?['title']?.toString().trim().nullIfEmpty;
 final body = json?['body']?.toString().trim().nullIfEmpty;
 final previewMedia = () { final a = letMapOrNull<String, dynamic>(json?['previewMedia']); return a != null ? ModelMediaItem.fromJson(a): null; }();
-final readAt = (){ final a = letAsOrNull<Timestamp>(json?['readAt']); return a != null ? a.toDate().toUtc() : null; }();
-final createdAt = (){ final a = letAsOrNull<Timestamp>(json?['createdAt']); return a != null ? a.toDate().toUtc() : null; }();
+final readAt = letAsOrNull<Timestamp>(json?['readAt'])?.toDate().toUtc();
+final createdAt = letAsOrNull<Timestamp>(json?['createdAt'])?.toDate().toUtc();
       return ModelNotification(
         id: id,
 recipientRef: recipientRef,

@@ -229,12 +229,12 @@ lastLocation: lastLocation,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final accountRef = (){ final a = letAsOrNull<DocumentReference>(json?['accountRef']); return a != null ? a.path : json?['accountRef']?.toString().trim().nullIfEmpty; }();
+final accountRef = letAsOrNull<DocumentReference>(json?['accountRef'])?.path ?? json?['accountRef']?.toString().trim().nullIfEmpty;
 final token = json?['token']?.toString().trim().nullIfEmpty;
 final kind = DeviceKindType.values.valueOf(json?['kind']?.toString());
-final locale = json?['locale']?.toString().trim().nullIfEmpty ?? 'en';
-final lastSeenAt = (){ final a = letAsOrNull<Timestamp>(json?['lastSeenAt']); return a != null ? a.toDate().toUtc() : null; }();
-final createdAt = (){ final a = letAsOrNull<Timestamp>(json?['createdAt']); return a != null ? a.toDate().toUtc() : null; }();
+final locale = json?['locale']?.toString().trim().nullIfEmpty;
+final lastSeenAt = letAsOrNull<Timestamp>(json?['lastSeenAt'])?.toDate().toUtc();
+final createdAt = letAsOrNull<Timestamp>(json?['createdAt'])?.toDate().toUtc();
 final lastLocation = letAsOrNull<GeoPoint>(json?['lastLocation']);
       return ModelDeviceToken(
         id: id,

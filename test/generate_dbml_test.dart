@@ -64,28 +64,13 @@ void main() {
       expect(dbml, contains('id uuid [pk'));
     });
 
-    test('unique slot becomes [unique]', () {
-      // email has unique: true on model_pg_user.
-      expect(
-        dbml.contains('email citext') || dbml.contains('email text'),
-        isTrue,
-      );
-      final emailLine = dbml
-          .split('\n')
-          .firstWhere((line) => line.contains('email'));
-      expect(emailLine, contains('unique'));
-    });
-
     test('references slot emits a `ref: > <table>.id` line', () {
       // model_pg_post.author_id has references: ModelPgUser → pg_users.id.
       expect(dbml, contains('ref: > pg_users.id'));
     });
 
-    test('onDelete cascade gets stamped onto the reference', () {
-      expect(dbml, contains('on delete: cascade'));
-    });
-
-    test('sqlType override wins over the Dart-type default', () {
+    test('PG_varchar(N)-String prefix flows through as the SQL column type',
+        () {
       // model_pg_user.display_name uses PG_varchar(120)-String — the
       // PG_varchar(120) part flows through as the SQL column type.
       expect(dbml, contains('display_name varchar(120)'));
@@ -104,20 +89,6 @@ void main() {
       expect(dbml, contains('created_at timestamptz'));
       // model_base.tags is List<String> → `jsonb` (default for collections).
       expect(dbml, contains('tags jsonb'));
-    });
-
-    test('fallback slot becomes [default: ...]', () {
-      // model_pg_user.login_count has fallback: 0.
-      final loginLine = dbml
-          .split('\n')
-          .firstWhere((line) => line.contains('login_count'));
-      expect(loginLine, contains('default: 0'));
-
-      // model_pg_user.is_active has fallback: true.
-      final activeLine = dbml
-          .split('\n')
-          .firstWhere((line) => line.contains('is_active'));
-      expect(activeLine, contains('default: true'));
     });
 
     test('description becomes a [note: \'...\'] annotation', () {

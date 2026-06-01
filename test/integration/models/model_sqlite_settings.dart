@@ -22,13 +22,11 @@ part '_model_sqlite_settings.g.dart';
       fieldPath: ['notifications_enabled'],
       fieldType: 'SQLITE_integer-bool',
       nullable: true,
-      fallback: true,
     ),
     Field(
       fieldPath: ['theme'],
       fieldType: 'SQLITE_text-String',
       nullable: true,
-      fallback: 'system',
     ),
     Field(
       fieldPath: ['last_synced_at'],

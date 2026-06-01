@@ -230,11 +230,11 @@ legacyStamp: legacyStamp,
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
 final title = json?['title']?.toString().trim().nullIfEmpty;
-final capturedAt = (){ final a = letAsOrNull<Timestamp>(json?['capturedAt']); return a != null ? a.toDate().toUtc() : null; }();
-final createdAt = (){ final a = letAsOrNull<Timestamp>(json?['createdAt']); return a != null ? a.toDate().toUtc() : null; }();
+final capturedAt = letAsOrNull<Timestamp>(json?['capturedAt'])?.toDate().toUtc();
+final createdAt = letAsOrNull<Timestamp>(json?['createdAt'])?.toDate().toUtc();
 final location = letAsOrNull<GeoPoint>(json?['location']);
-final ownerRef = (){ final a = letAsOrNull<DocumentReference>(json?['ownerRef']); return a != null ? a.path : json?['ownerRef']?.toString().trim().nullIfEmpty; }();
-final thumbnail = (){ final a = letAsOrNull<Blob>(json?['thumbnail']); return a != null ? a.bytes : letAsOrNull<Uint8List>(json?['thumbnail']); }();
+final ownerRef = letAsOrNull<DocumentReference>(json?['ownerRef'])?.path ?? json?['ownerRef']?.toString().trim().nullIfEmpty;
+final thumbnail = letAsOrNull<Blob>(json?['thumbnail'])?.bytes ?? letAsOrNull<Uint8List>(json?['thumbnail']);
 final legacyStamp = letAsOrNull<Timestamp>(json?['legacyStamp']);
       return ModelFirestoreDoc(
         id: id,

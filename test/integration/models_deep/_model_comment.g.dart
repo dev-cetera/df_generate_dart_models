@@ -241,8 +241,8 @@ final postId = json?['post_id']?.toString().trim().nullIfEmpty;
 final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
 final parentId = json?['parent_id']?.toString().trim().nullIfEmpty;
 final body = json?['body']?.toString().trim().nullIfEmpty;
-final status = CommentStatusType.values.valueOf(json?['status']?.toString()) ?? 'active';
-final likeCount = letIntOrNull(json?['like_count']) ?? 0;
+final status = CommentStatusType.values.valueOf(json?['status']?.toString());
+final likeCount = letIntOrNull(json?['like_count']);
 final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
 final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
       return ModelComment(

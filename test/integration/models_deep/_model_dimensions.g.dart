@@ -190,7 +190,7 @@ rotation: rotation,
     try {
       final width = letIntOrNull(json?['width']);
 final height = letIntOrNull(json?['height']);
-final rotation = letIntOrNull(json?['rotation']) ?? 0;
+final rotation = letIntOrNull(json?['rotation']);
       return ModelDimensions(
         width: width,
 height: height,

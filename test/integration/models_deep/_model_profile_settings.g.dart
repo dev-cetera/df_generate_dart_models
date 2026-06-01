@@ -196,10 +196,10 @@ marketingOptIn: marketingOptIn,
     Map<String, dynamic>? json,
   ) {
     try {
-      final defaultVisibility = PostVisibilityType.values.valueOf(json?['default_visibility']?.toString()) ?? 'public';
+      final defaultVisibility = PostVisibilityType.values.valueOf(json?['default_visibility']?.toString());
 final language = json?['language']?.toString().trim().nullIfEmpty;
 final timezone = json?['timezone']?.toString().trim().nullIfEmpty;
-final marketingOptIn = letBoolOrNull(json?['marketing_opt_in']) ?? false;
+final marketingOptIn = letBoolOrNull(json?['marketing_opt_in']);
       return ModelProfileSettings(
         defaultVisibility: defaultVisibility,
 language: language,

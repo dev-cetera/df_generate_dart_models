@@ -28,7 +28,6 @@ part '_model_dimensions.g.dart';
       fieldPath: ['rotation'],
       fieldType: 'PG_integer-int',
       nullable: true,
-      fallback: 0,
     ),
   },
 )
@@ -100,7 +99,6 @@ abstract class _ModelMediaDetails extends Model {
       fieldPath: ['order'],
       fieldType: 'PG_integer-int',
       nullable: true,
-      fallback: 0,
     ),
   },
 )
@@ -152,7 +150,6 @@ abstract class _ModelLocation extends Model {
       fieldPath: ['visibility'],
       fieldType: 'PG_enum(post_visibility)-PostVisibilityType',
       nullable: true,
-      fallback: 'public',
     ),
     Field(
       fieldPath: ['caption'],
@@ -181,7 +178,6 @@ abstract class _ModelLocation extends Model {
       fieldPath: ['like_count'],
       fieldType: 'PG_integer-int',
       nullable: true,
-      fallback: 0,
     ),
     Field(fieldPath: ['created_at'], fieldType: 'PG_timestamptz-DateTime'),
     Field(fieldPath: ['updated_at'], fieldType: 'PG_timestamptz-DateTime'),
