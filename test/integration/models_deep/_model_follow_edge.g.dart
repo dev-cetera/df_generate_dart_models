@@ -32,7 +32,7 @@ class ModelFollowEdge extends _ModelFollowEdge with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
@@ -44,63 +44,61 @@ class ModelFollowEdge extends _ModelFollowEdge with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? followerId;
+  final String? followerId;
 
   /// No description provided.
-final String? followeeId;
+  final String? followeeId;
 
   /// No description provided.
-final FollowStatusType? status;
+  final FollowStatusType? status;
 
   /// No description provided.
-final DateTime? createdAt;
-
+  final DateTime? createdAt;
 
   /// Constructs a new instance of [ModelFollowEdge]
   /// from optional and required parameters.
   const ModelFollowEdge({
     required this.id,
-required this.followerId,
-required this.followeeId,
- this.status,
-required this.createdAt,
-  }) ;
+    required this.followerId,
+    required this.followeeId,
+    this.status,
+    required this.createdAt,
+  });
 
   /// Construcs a new instance of [ModelFollowEdge],
   /// forcing all parameters to be optional.
   const ModelFollowEdge.optional({
     this.id,
-this.followerId,
-this.followeeId,
-this.status,
-this.createdAt,
-  }) ;
-
+    this.followerId,
+    this.followeeId,
+    this.status,
+    this.createdAt,
+  });
 
   /// Constructs a new instance of [ModelFollowEdge],
   /// and asserts that all required parameters are not null.
   factory ModelFollowEdge.assertRequired({
     String? id,
-String? followerId,
-String? followeeId,
-FollowStatusType? status,
-DateTime? createdAt,
+    String? followerId,
+    String? followeeId,
+    FollowStatusType? status,
+    DateTime? createdAt,
   }) {
     assert(id != null);
-assert(followerId != null);
-assert(followeeId != null);
+    assert(followerId != null);
+    assert(followeeId != null);
 
-assert(createdAt != null);
+    assert(createdAt != null);
     return ModelFollowEdge(
       id: id,
-followerId: followerId,
-followeeId: followeeId,
-status: status,
-createdAt: createdAt,
+      followerId: followerId,
+      followeeId: followeeId,
+      status: status,
+      createdAt: createdAt,
     );
   }
 
@@ -127,7 +125,6 @@ createdAt: createdAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelFollowEdge],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -161,7 +158,7 @@ createdAt: createdAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelFollowEdge.fromJsonString: $e');
+      assert(false, '$ModelFollowEdge.fromJsonString: $e');
       rethrow;
     }
   }
@@ -203,16 +200,20 @@ createdAt: createdAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final followerId = json?['follower_id']?.toString().trim().nullIfEmpty;
-final followeeId = json?['followee_id']?.toString().trim().nullIfEmpty;
-final status = FollowStatusType.values.valueOf(json?['status']?.toString());
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      final followerId = json?['follower_id']?.toString().trim().nullIfEmpty;
+      final followeeId = json?['followee_id']?.toString().trim().nullIfEmpty;
+      final status =
+          FollowStatusType.values.valueOf(json?['status']?.toString());
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
       return ModelFollowEdge(
         id: id,
-followerId: followerId,
-followeeId: followeeId,
-status: status,
-createdAt: createdAt,
+        followerId: followerId,
+        followeeId: followeeId,
+        status: status,
+        createdAt: createdAt,
       );
     } catch (e) {
       return null;
@@ -253,12 +254,16 @@ createdAt: createdAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final followerId0 = followerId?.trim().nullIfEmpty;
-final followeeId0 = followeeId?.trim().nullIfEmpty;
-final status0 = status?.name;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final followerId0 = followerId?.trim().nullIfEmpty;
+      final followeeId0 = followeeId?.trim().nullIfEmpty;
+      final status0 = status?.name;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
       final withNulls = {
-        'status': status0,'id': id0,'follower_id': followerId0,'followee_id': followeeId0,'created_at': createdAt0,
+        'status': status0,
+        'id': id0,
+        'follower_id': followerId0,
+        'followee_id': followeeId0,
+        'created_at': createdAt0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -267,56 +272,54 @@ final createdAt0 = createdAt?.toUtc().toIso8601String();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [followerId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get followerId$ => followerId!;
+  @pragma('vm:prefer-inline')
+  String get followerId$ => followerId!;
 
   /// Returns the value of the [followeeId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get followeeId$ => followeeId!;
+  @pragma('vm:prefer-inline')
+  String get followeeId$ => followeeId!;
 
   /// Returns the value of the [status] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-FollowStatusType? get status$ => status;
+  @pragma('vm:prefer-inline')
+  FollowStatusType? get status$ => status;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
-
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelFollowEdgeFieldNames {
-    /// The field name of [ModelFollowEdge.id].
-static const id = 'id';
+  /// The field name of [ModelFollowEdge.id].
+  static const id = 'id';
 
   /// The field name of [ModelFollowEdge.followerId].
-static const followerId = 'follower_id';
+  static const followerId = 'follower_id';
 
   /// The field name of [ModelFollowEdge.followeeId].
-static const followeeId = 'followee_id';
+  static const followeeId = 'followee_id';
 
   /// The field name of [ModelFollowEdge.status].
-static const status = 'status';
+  static const status = 'status';
 
   /// The field name of [ModelFollowEdge.createdAt].
-static const createdAt = 'created_at';
-
+  static const createdAt = 'created_at';
 }
 
 extension ModelFollowEdgeX on ModelFollowEdge {
@@ -335,34 +338,34 @@ extension ModelFollowEdgeX on ModelFollowEdge {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelFollowEdge copyWith({
     String? id,
-String? followerId,
-String? followeeId,
-FollowStatusType? status,
-DateTime? createdAt,
+    String? followerId,
+    String? followeeId,
+    FollowStatusType? status,
+    DateTime? createdAt,
   }) {
     return ModelFollowEdge.assertRequired(
       id: id ?? this.id,
-followerId: followerId ?? this.followerId,
-followeeId: followeeId ?? this.followeeId,
-status: status ?? this.status,
-createdAt: createdAt ?? this.createdAt,
+      followerId: followerId ?? this.followerId,
+      followeeId: followeeId ?? this.followeeId,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelFollowEdge copyWithout({
     bool id = true,
-bool followerId = true,
-bool followeeId = true,
-bool status = true,
-bool createdAt = true,
+    bool followerId = true,
+    bool followeeId = true,
+    bool status = true,
+    bool createdAt = true,
   }) {
     return ModelFollowEdge.assertRequired(
-      id: id ? this.id: null,
-followerId: followerId ? this.followerId: null,
-followeeId: followeeId ? this.followeeId: null,
-status: status ? this.status: null,
-createdAt: createdAt ? this.createdAt: null,
+      id: id ? this.id : null,
+      followerId: followerId ? this.followerId : null,
+      followeeId: followeeId ? this.followeeId : null,
+      status: status ? this.status : null,
+      createdAt: createdAt ? this.createdAt : null,
     );
   }
 }

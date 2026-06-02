@@ -32,7 +32,7 @@ class ModelSmoke extends _ModelSmoke with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
@@ -44,55 +44,51 @@ class ModelSmoke extends _ModelSmoke with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? profileId;
+  final String? profileId;
 
   /// No description provided.
-final String? profileAvatar;
+  final String? profileAvatar;
 
   /// No description provided.
-final String? profileAddressCity;
-
+  final String? profileAddressCity;
 
   /// Constructs a new instance of [ModelSmoke]
   /// from optional and required parameters.
   const ModelSmoke({
     required this.id,
- this.profileId,
- this.profileAvatar,
- this.profileAddressCity,
-  }) ;
+    this.profileId,
+    this.profileAvatar,
+    this.profileAddressCity,
+  });
 
   /// Construcs a new instance of [ModelSmoke],
   /// forcing all parameters to be optional.
   const ModelSmoke.optional({
     this.id,
-this.profileId,
-this.profileAvatar,
-this.profileAddressCity,
-  }) ;
-
+    this.profileId,
+    this.profileAvatar,
+    this.profileAddressCity,
+  });
 
   /// Constructs a new instance of [ModelSmoke],
   /// and asserts that all required parameters are not null.
   factory ModelSmoke.assertRequired({
     String? id,
-String? profileId,
-String? profileAvatar,
-String? profileAddressCity,
+    String? profileId,
+    String? profileAvatar,
+    String? profileAddressCity,
   }) {
     assert(id != null);
 
-
-
     return ModelSmoke(
       id: id,
-profileId: profileId,
-profileAvatar: profileAvatar,
-profileAddressCity: profileAddressCity,
+      profileId: profileId,
+      profileAvatar: profileAvatar,
+      profileAddressCity: profileAddressCity,
     );
   }
 
@@ -119,7 +115,6 @@ profileAddressCity: profileAddressCity,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelSmoke],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -153,7 +148,7 @@ profileAddressCity: profileAddressCity,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelSmoke.fromJsonString: $e');
+      assert(false, '$ModelSmoke.fromJsonString: $e');
       rethrow;
     }
   }
@@ -195,14 +190,16 @@ profileAddressCity: profileAddressCity,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final profileId = json?['profile']?['id']?.toString().trim().nullIfEmpty;
-final profileAvatar = json?['profile']?['avatar']?.toString().trim().nullIfEmpty;
-final profileAddressCity = json?['profile']?['address']?['city']?.toString().trim().nullIfEmpty;
+      final profileId = json?['profile']?['id']?.toString().trim().nullIfEmpty;
+      final profileAvatar =
+          json?['profile']?['avatar']?.toString().trim().nullIfEmpty;
+      final profileAddressCity =
+          json?['profile']?['address']?['city']?.toString().trim().nullIfEmpty;
       return ModelSmoke(
         id: id,
-profileId: profileId,
-profileAvatar: profileAvatar,
-profileAddressCity: profileAddressCity,
+        profileId: profileId,
+        profileAvatar: profileAvatar,
+        profileAddressCity: profileAddressCity,
       );
     } catch (e) {
       return null;
@@ -243,11 +240,16 @@ profileAddressCity: profileAddressCity,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final profileId0 = profileId?.trim().nullIfEmpty;
-final profileAvatar0 = profileAvatar?.trim().nullIfEmpty;
-final profileAddressCity0 = profileAddressCity?.trim().nullIfEmpty;
+      final profileId0 = profileId?.trim().nullIfEmpty;
+      final profileAvatar0 = profileAvatar?.trim().nullIfEmpty;
+      final profileAddressCity0 = profileAddressCity?.trim().nullIfEmpty;
       final withNulls = {
-        'profile': {'id': profileId0, 'avatar': profileAvatar0, 'address': {'city': profileAddressCity0}},'id': id0,
+        'profile': {
+          'id': profileId0,
+          'avatar': profileAvatar0,
+          'address': {'city': profileAddressCity0}
+        },
+        'id': id0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -256,47 +258,45 @@ final profileAddressCity0 = profileAddressCity?.trim().nullIfEmpty;
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [profileId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get profileId$ => profileId;
+  @pragma('vm:prefer-inline')
+  String? get profileId$ => profileId;
 
   /// Returns the value of the [profileAvatar] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get profileAvatar$ => profileAvatar;
+  @pragma('vm:prefer-inline')
+  String? get profileAvatar$ => profileAvatar;
 
   /// Returns the value of the [profileAddressCity] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get profileAddressCity$ => profileAddressCity;
-
+  @pragma('vm:prefer-inline')
+  String? get profileAddressCity$ => profileAddressCity;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelSmokeFieldNames {
-    /// The field name of [ModelSmoke.id].
-static const id = 'id';
+  /// The field name of [ModelSmoke.id].
+  static const id = 'id';
 
   /// The field name of [ModelSmoke.profileId].
-static const profileId = 'profile_id';
+  static const profileId = 'profile_id';
 
   /// The field name of [ModelSmoke.profileAvatar].
-static const profileAvatar = 'profile_avatar';
+  static const profileAvatar = 'profile_avatar';
 
   /// The field name of [ModelSmoke.profileAddressCity].
-static const profileAddressCity = 'profile_address_city';
-
+  static const profileAddressCity = 'profile_address_city';
 }
 
 extension ModelSmokeX on ModelSmoke {
@@ -315,30 +315,30 @@ extension ModelSmokeX on ModelSmoke {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelSmoke copyWith({
     String? id,
-String? profileId,
-String? profileAvatar,
-String? profileAddressCity,
+    String? profileId,
+    String? profileAvatar,
+    String? profileAddressCity,
   }) {
     return ModelSmoke.assertRequired(
       id: id ?? this.id,
-profileId: profileId ?? this.profileId,
-profileAvatar: profileAvatar ?? this.profileAvatar,
-profileAddressCity: profileAddressCity ?? this.profileAddressCity,
+      profileId: profileId ?? this.profileId,
+      profileAvatar: profileAvatar ?? this.profileAvatar,
+      profileAddressCity: profileAddressCity ?? this.profileAddressCity,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelSmoke copyWithout({
     bool id = true,
-bool profileId = true,
-bool profileAvatar = true,
-bool profileAddressCity = true,
+    bool profileId = true,
+    bool profileAvatar = true,
+    bool profileAddressCity = true,
   }) {
     return ModelSmoke.assertRequired(
-      id: id ? this.id: null,
-profileId: profileId ? this.profileId: null,
-profileAvatar: profileAvatar ? this.profileAvatar: null,
-profileAddressCity: profileAddressCity ? this.profileAddressCity: null,
+      id: id ? this.id : null,
+      profileId: profileId ? this.profileId : null,
+      profileAvatar: profileAvatar ? this.profileAvatar : null,
+      profileAddressCity: profileAddressCity ? this.profileAddressCity : null,
     );
   }
 }

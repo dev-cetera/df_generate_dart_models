@@ -32,7 +32,7 @@ class ModelLocation extends _ModelLocation with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
@@ -44,55 +44,52 @@ class ModelLocation extends _ModelLocation with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final double? latitude;
+  /// No description provided.
+  final double? latitude;
 
   /// No description provided.
-final double? longitude;
+  final double? longitude;
 
   /// No description provided.
-final double? accuracyM;
+  final double? accuracyM;
 
   /// No description provided.
-final String? placeLabel;
-
+  final String? placeLabel;
 
   /// Constructs a new instance of [ModelLocation]
   /// from optional and required parameters.
   const ModelLocation({
     required this.latitude,
-required this.longitude,
- this.accuracyM,
- this.placeLabel,
-  }) ;
+    required this.longitude,
+    this.accuracyM,
+    this.placeLabel,
+  });
 
   /// Construcs a new instance of [ModelLocation],
   /// forcing all parameters to be optional.
   const ModelLocation.optional({
     this.latitude,
-this.longitude,
-this.accuracyM,
-this.placeLabel,
-  }) ;
-
+    this.longitude,
+    this.accuracyM,
+    this.placeLabel,
+  });
 
   /// Constructs a new instance of [ModelLocation],
   /// and asserts that all required parameters are not null.
   factory ModelLocation.assertRequired({
     double? latitude,
-double? longitude,
-double? accuracyM,
-String? placeLabel,
+    double? longitude,
+    double? accuracyM,
+    String? placeLabel,
   }) {
     assert(latitude != null);
-assert(longitude != null);
-
+    assert(longitude != null);
 
     return ModelLocation(
       latitude: latitude,
-longitude: longitude,
-accuracyM: accuracyM,
-placeLabel: placeLabel,
+      longitude: longitude,
+      accuracyM: accuracyM,
+      placeLabel: placeLabel,
     );
   }
 
@@ -119,7 +116,6 @@ placeLabel: placeLabel,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelLocation],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -153,7 +149,7 @@ placeLabel: placeLabel,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelLocation.fromJsonString: $e');
+      assert(false, '$ModelLocation.fromJsonString: $e');
       rethrow;
     }
   }
@@ -195,14 +191,14 @@ placeLabel: placeLabel,
   ) {
     try {
       final latitude = letDoubleOrNull(json?['latitude']);
-final longitude = letDoubleOrNull(json?['longitude']);
-final accuracyM = letDoubleOrNull(json?['accuracy_m']);
-final placeLabel = json?['place_label']?.toString().trim().nullIfEmpty;
+      final longitude = letDoubleOrNull(json?['longitude']);
+      final accuracyM = letDoubleOrNull(json?['accuracy_m']);
+      final placeLabel = json?['place_label']?.toString().trim().nullIfEmpty;
       return ModelLocation(
         latitude: latitude,
-longitude: longitude,
-accuracyM: accuracyM,
-placeLabel: placeLabel,
+        longitude: longitude,
+        accuracyM: accuracyM,
+        placeLabel: placeLabel,
       );
     } catch (e) {
       return null;
@@ -243,11 +239,14 @@ placeLabel: placeLabel,
   }) {
     try {
       final latitude0 = latitude;
-final longitude0 = longitude;
-final accuracyM0 = accuracyM;
-final placeLabel0 = placeLabel?.trim().nullIfEmpty;
+      final longitude0 = longitude;
+      final accuracyM0 = accuracyM;
+      final placeLabel0 = placeLabel?.trim().nullIfEmpty;
       final withNulls = {
-        'place_label': placeLabel0,'longitude': longitude0,'latitude': latitude0,'accuracy_m': accuracyM0,
+        'place_label': placeLabel0,
+        'longitude': longitude0,
+        'latitude': latitude0,
+        'accuracy_m': accuracyM0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -256,47 +255,45 @@ final placeLabel0 = placeLabel?.trim().nullIfEmpty;
     }
   }
 
-    /// Returns the value of the [latitude] field.
+  /// Returns the value of the [latitude] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-double get latitude$ => latitude!;
+  @pragma('vm:prefer-inline')
+  double get latitude$ => latitude!;
 
   /// Returns the value of the [longitude] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-double get longitude$ => longitude!;
+  @pragma('vm:prefer-inline')
+  double get longitude$ => longitude!;
 
   /// Returns the value of the [accuracyM] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-double? get accuracyM$ => accuracyM;
+  @pragma('vm:prefer-inline')
+  double? get accuracyM$ => accuracyM;
 
   /// Returns the value of the [placeLabel] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get placeLabel$ => placeLabel;
-
+  @pragma('vm:prefer-inline')
+  String? get placeLabel$ => placeLabel;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelLocationFieldNames {
-    /// The field name of [ModelLocation.latitude].
-static const latitude = 'latitude';
+  /// The field name of [ModelLocation.latitude].
+  static const latitude = 'latitude';
 
   /// The field name of [ModelLocation.longitude].
-static const longitude = 'longitude';
+  static const longitude = 'longitude';
 
   /// The field name of [ModelLocation.accuracyM].
-static const accuracyM = 'accuracy_m';
+  static const accuracyM = 'accuracy_m';
 
   /// The field name of [ModelLocation.placeLabel].
-static const placeLabel = 'place_label';
-
+  static const placeLabel = 'place_label';
 }
 
 extension ModelLocationX on ModelLocation {
@@ -315,30 +312,30 @@ extension ModelLocationX on ModelLocation {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelLocation copyWith({
     double? latitude,
-double? longitude,
-double? accuracyM,
-String? placeLabel,
+    double? longitude,
+    double? accuracyM,
+    String? placeLabel,
   }) {
     return ModelLocation.assertRequired(
       latitude: latitude ?? this.latitude,
-longitude: longitude ?? this.longitude,
-accuracyM: accuracyM ?? this.accuracyM,
-placeLabel: placeLabel ?? this.placeLabel,
+      longitude: longitude ?? this.longitude,
+      accuracyM: accuracyM ?? this.accuracyM,
+      placeLabel: placeLabel ?? this.placeLabel,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelLocation copyWithout({
     bool latitude = true,
-bool longitude = true,
-bool accuracyM = true,
-bool placeLabel = true,
+    bool longitude = true,
+    bool accuracyM = true,
+    bool placeLabel = true,
   }) {
     return ModelLocation.assertRequired(
-      latitude: latitude ? this.latitude: null,
-longitude: longitude ? this.longitude: null,
-accuracyM: accuracyM ? this.accuracyM: null,
-placeLabel: placeLabel ? this.placeLabel: null,
+      latitude: latitude ? this.latitude : null,
+      longitude: longitude ? this.longitude : null,
+      accuracyM: accuracyM ? this.accuracyM : null,
+      placeLabel: placeLabel ? this.placeLabel : null,
     );
   }
 }

@@ -32,11 +32,21 @@ class ModelPgUser extends _ModelPgUser with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, email, displayName, loginCount, isActive, avatarBytes, authProvider, createdAt, updatedAt];
+  List<Object?> get props => [
+        id,
+        email,
+        displayName,
+        loginCount,
+        isActive,
+        avatarBytes,
+        authProvider,
+        createdAt,
+        updatedAt
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,95 +54,89 @@ class ModelPgUser extends _ModelPgUser with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? email;
+  final String? email;
 
   /// No description provided.
-final String? displayName;
+  final String? displayName;
 
   /// No description provided.
-final int? loginCount;
+  final int? loginCount;
 
   /// No description provided.
-final bool? isActive;
+  final bool? isActive;
 
   /// No description provided.
-final Uint8List? avatarBytes;
+  final Uint8List? avatarBytes;
 
   /// No description provided.
-final AuthProviderKindType? authProvider;
+  final AuthProviderKindType? authProvider;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final DateTime? updatedAt;
-
+  final DateTime? updatedAt;
 
   /// Constructs a new instance of [ModelPgUser]
   /// from optional and required parameters.
   const ModelPgUser({
     required this.id,
-required this.email,
- this.displayName,
- this.loginCount,
- this.isActive,
- this.avatarBytes,
- this.authProvider,
-required this.createdAt,
-required this.updatedAt,
-  }) ;
+    required this.email,
+    this.displayName,
+    this.loginCount,
+    this.isActive,
+    this.avatarBytes,
+    this.authProvider,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
   /// Construcs a new instance of [ModelPgUser],
   /// forcing all parameters to be optional.
   const ModelPgUser.optional({
     this.id,
-this.email,
-this.displayName,
-this.loginCount,
-this.isActive,
-this.avatarBytes,
-this.authProvider,
-this.createdAt,
-this.updatedAt,
-  }) ;
-
+    this.email,
+    this.displayName,
+    this.loginCount,
+    this.isActive,
+    this.avatarBytes,
+    this.authProvider,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   /// Constructs a new instance of [ModelPgUser],
   /// and asserts that all required parameters are not null.
   factory ModelPgUser.assertRequired({
     String? id,
-String? email,
-String? displayName,
-int? loginCount,
-bool? isActive,
-Uint8List? avatarBytes,
-AuthProviderKindType? authProvider,
-DateTime? createdAt,
-DateTime? updatedAt,
+    String? email,
+    String? displayName,
+    int? loginCount,
+    bool? isActive,
+    Uint8List? avatarBytes,
+    AuthProviderKindType? authProvider,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     assert(id != null);
-assert(email != null);
+    assert(email != null);
 
-
-
-
-
-assert(createdAt != null);
-assert(updatedAt != null);
+    assert(createdAt != null);
+    assert(updatedAt != null);
     return ModelPgUser(
       id: id,
-email: email,
-displayName: displayName,
-loginCount: loginCount,
-isActive: isActive,
-avatarBytes: avatarBytes,
-authProvider: authProvider,
-createdAt: createdAt,
-updatedAt: updatedAt,
+      email: email,
+      displayName: displayName,
+      loginCount: loginCount,
+      isActive: isActive,
+      avatarBytes: avatarBytes,
+      authProvider: authProvider,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 
@@ -159,7 +163,6 @@ updatedAt: updatedAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelPgUser],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -193,7 +196,7 @@ updatedAt: updatedAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelPgUser.fromJsonString: $e');
+      assert(false, '$ModelPgUser.fromJsonString: $e');
       rethrow;
     }
   }
@@ -235,24 +238,31 @@ updatedAt: updatedAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final email = json?['email']?.toString().trim().nullIfEmpty;
-final displayName = json?['display_name']?.toString().trim().nullIfEmpty;
-final loginCount = letIntOrNull(json?['login_count']);
-final isActive = letBoolOrNull(json?['is_active']);
-final avatarBytes = letAsOrNull<Uint8List>(json?['avatar_bytes']);
-final authProvider = AuthProviderKindType.values.valueOf(json?['auth_provider']?.toString());
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      final email = json?['email']?.toString().trim().nullIfEmpty;
+      final displayName = json?['display_name']?.toString().trim().nullIfEmpty;
+      final loginCount = letIntOrNull(json?['login_count']);
+      final isActive = letBoolOrNull(json?['is_active']);
+      final avatarBytes = letAsOrNull<Uint8List>(json?['avatar_bytes']);
+      final authProvider = AuthProviderKindType.values
+          .valueOf(json?['auth_provider']?.toString());
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
+      final updatedAt = () {
+        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
       return ModelPgUser(
         id: id,
-email: email,
-displayName: displayName,
-loginCount: loginCount,
-isActive: isActive,
-avatarBytes: avatarBytes,
-authProvider: authProvider,
-createdAt: createdAt,
-updatedAt: updatedAt,
+        email: email,
+        displayName: displayName,
+        loginCount: loginCount,
+        isActive: isActive,
+        avatarBytes: avatarBytes,
+        authProvider: authProvider,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
       );
     } catch (e) {
       return null;
@@ -293,16 +303,24 @@ updatedAt: updatedAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final email0 = email?.trim().nullIfEmpty;
-final displayName0 = displayName?.trim().nullIfEmpty;
-final loginCount0 = loginCount;
-final isActive0 = isActive;
-final avatarBytes0 = avatarBytes;
-final authProvider0 = authProvider?.name;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
-final updatedAt0 = updatedAt?.toUtc().toIso8601String();
+      final email0 = email?.trim().nullIfEmpty;
+      final displayName0 = displayName?.trim().nullIfEmpty;
+      final loginCount0 = loginCount;
+      final isActive0 = isActive;
+      final avatarBytes0 = avatarBytes;
+      final authProvider0 = authProvider?.name;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final updatedAt0 = updatedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'updated_at': updatedAt0,'login_count': loginCount0,'is_active': isActive0,'id': id0,'email': email0,'display_name': displayName0,'created_at': createdAt0,'avatar_bytes': avatarBytes0,'auth_provider': authProvider0,
+        'updated_at': updatedAt0,
+        'login_count': loginCount0,
+        'is_active': isActive0,
+        'id': id0,
+        'email': email0,
+        'display_name': displayName0,
+        'created_at': createdAt0,
+        'avatar_bytes': avatarBytes0,
+        'auth_provider': authProvider0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -311,92 +329,90 @@ final updatedAt0 = updatedAt?.toUtc().toIso8601String();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [email] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get email$ => email!;
+  @pragma('vm:prefer-inline')
+  String get email$ => email!;
 
   /// Returns the value of the [displayName] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get displayName$ => displayName;
+  @pragma('vm:prefer-inline')
+  String? get displayName$ => displayName;
 
   /// Returns the value of the [loginCount] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int? get loginCount$ => loginCount;
+  @pragma('vm:prefer-inline')
+  int? get loginCount$ => loginCount;
 
   /// Returns the value of the [isActive] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-bool? get isActive$ => isActive;
+  @pragma('vm:prefer-inline')
+  bool? get isActive$ => isActive;
 
   /// Returns the value of the [avatarBytes] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uint8List? get avatarBytes$ => avatarBytes;
+  @pragma('vm:prefer-inline')
+  Uint8List? get avatarBytes$ => avatarBytes;
 
   /// Returns the value of the [authProvider] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-AuthProviderKindType? get authProvider$ => authProvider;
+  @pragma('vm:prefer-inline')
+  AuthProviderKindType? get authProvider$ => authProvider;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 
   /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get updatedAt$ => updatedAt!;
-
+  @pragma('vm:prefer-inline')
+  DateTime get updatedAt$ => updatedAt!;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelPgUserFieldNames {
-    /// The field name of [ModelPgUser.id].
-static const id = 'id';
+  /// The field name of [ModelPgUser.id].
+  static const id = 'id';
 
   /// The field name of [ModelPgUser.email].
-static const email = 'email';
+  static const email = 'email';
 
   /// The field name of [ModelPgUser.displayName].
-static const displayName = 'display_name';
+  static const displayName = 'display_name';
 
   /// The field name of [ModelPgUser.loginCount].
-static const loginCount = 'login_count';
+  static const loginCount = 'login_count';
 
   /// The field name of [ModelPgUser.isActive].
-static const isActive = 'is_active';
+  static const isActive = 'is_active';
 
   /// The field name of [ModelPgUser.avatarBytes].
-static const avatarBytes = 'avatar_bytes';
+  static const avatarBytes = 'avatar_bytes';
 
   /// The field name of [ModelPgUser.authProvider].
-static const authProvider = 'auth_provider';
+  static const authProvider = 'auth_provider';
 
   /// The field name of [ModelPgUser.createdAt].
-static const createdAt = 'created_at';
+  static const createdAt = 'created_at';
 
   /// The field name of [ModelPgUser.updatedAt].
-static const updatedAt = 'updated_at';
-
+  static const updatedAt = 'updated_at';
 }
 
 extension ModelPgUserX on ModelPgUser {
@@ -415,50 +431,50 @@ extension ModelPgUserX on ModelPgUser {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelPgUser copyWith({
     String? id,
-String? email,
-String? displayName,
-int? loginCount,
-bool? isActive,
-Uint8List? avatarBytes,
-AuthProviderKindType? authProvider,
-DateTime? createdAt,
-DateTime? updatedAt,
+    String? email,
+    String? displayName,
+    int? loginCount,
+    bool? isActive,
+    Uint8List? avatarBytes,
+    AuthProviderKindType? authProvider,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     return ModelPgUser.assertRequired(
       id: id ?? this.id,
-email: email ?? this.email,
-displayName: displayName ?? this.displayName,
-loginCount: loginCount ?? this.loginCount,
-isActive: isActive ?? this.isActive,
-avatarBytes: avatarBytes ?? this.avatarBytes,
-authProvider: authProvider ?? this.authProvider,
-createdAt: createdAt ?? this.createdAt,
-updatedAt: updatedAt ?? this.updatedAt,
+      email: email ?? this.email,
+      displayName: displayName ?? this.displayName,
+      loginCount: loginCount ?? this.loginCount,
+      isActive: isActive ?? this.isActive,
+      avatarBytes: avatarBytes ?? this.avatarBytes,
+      authProvider: authProvider ?? this.authProvider,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelPgUser copyWithout({
     bool id = true,
-bool email = true,
-bool displayName = true,
-bool loginCount = true,
-bool isActive = true,
-bool avatarBytes = true,
-bool authProvider = true,
-bool createdAt = true,
-bool updatedAt = true,
+    bool email = true,
+    bool displayName = true,
+    bool loginCount = true,
+    bool isActive = true,
+    bool avatarBytes = true,
+    bool authProvider = true,
+    bool createdAt = true,
+    bool updatedAt = true,
   }) {
     return ModelPgUser.assertRequired(
-      id: id ? this.id: null,
-email: email ? this.email: null,
-displayName: displayName ? this.displayName: null,
-loginCount: loginCount ? this.loginCount: null,
-isActive: isActive ? this.isActive: null,
-avatarBytes: avatarBytes ? this.avatarBytes: null,
-authProvider: authProvider ? this.authProvider: null,
-createdAt: createdAt ? this.createdAt: null,
-updatedAt: updatedAt ? this.updatedAt: null,
+      id: id ? this.id : null,
+      email: email ? this.email : null,
+      displayName: displayName ? this.displayName : null,
+      loginCount: loginCount ? this.loginCount : null,
+      isActive: isActive ? this.isActive : null,
+      avatarBytes: avatarBytes ? this.avatarBytes : null,
+      authProvider: authProvider ? this.authProvider : null,
+      createdAt: createdAt ? this.createdAt : null,
+      updatedAt: updatedAt ? this.updatedAt : null,
     );
   }
 }

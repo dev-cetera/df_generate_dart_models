@@ -32,11 +32,22 @@ class ModelPgPost extends _ModelPgPost with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, authorId, title, body, status, tags, extra, metadata, createdAt, updatedAt];
+  List<Object?> get props => [
+        id,
+        authorId,
+        title,
+        body,
+        status,
+        tags,
+        extra,
+        metadata,
+        createdAt,
+        updatedAt
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,103 +55,97 @@ class ModelPgPost extends _ModelPgPost with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? authorId;
+  final String? authorId;
 
   /// No description provided.
-final String? title;
+  final String? title;
 
   /// No description provided.
-final String? body;
+  final String? body;
 
   /// No description provided.
-final PostStatusKindType? status;
+  final PostStatusKindType? status;
 
   /// No description provided.
-final List<String>? tags;
+  final List<String>? tags;
 
   /// No description provided.
-final Map<String,dynamic>? extra;
+  final Map<String, dynamic>? extra;
 
   /// No description provided.
-final ModelPostMetadata? metadata;
+  final ModelPostMetadata? metadata;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final DateTime? updatedAt;
-
+  final DateTime? updatedAt;
 
   /// Constructs a new instance of [ModelPgPost]
   /// from optional and required parameters.
   const ModelPgPost({
     required this.id,
-required this.authorId,
-required this.title,
- this.body,
- this.status,
- this.tags,
- this.extra,
- this.metadata,
-required this.createdAt,
-required this.updatedAt,
-  }) ;
+    required this.authorId,
+    required this.title,
+    this.body,
+    this.status,
+    this.tags,
+    this.extra,
+    this.metadata,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
   /// Construcs a new instance of [ModelPgPost],
   /// forcing all parameters to be optional.
   const ModelPgPost.optional({
     this.id,
-this.authorId,
-this.title,
-this.body,
-this.status,
-this.tags,
-this.extra,
-this.metadata,
-this.createdAt,
-this.updatedAt,
-  }) ;
-
+    this.authorId,
+    this.title,
+    this.body,
+    this.status,
+    this.tags,
+    this.extra,
+    this.metadata,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   /// Constructs a new instance of [ModelPgPost],
   /// and asserts that all required parameters are not null.
   factory ModelPgPost.assertRequired({
     String? id,
-String? authorId,
-String? title,
-String? body,
-PostStatusKindType? status,
-List<String>? tags,
-Map<String,dynamic>? extra,
-ModelPostMetadata? metadata,
-DateTime? createdAt,
-DateTime? updatedAt,
+    String? authorId,
+    String? title,
+    String? body,
+    PostStatusKindType? status,
+    List<String>? tags,
+    Map<String, dynamic>? extra,
+    ModelPostMetadata? metadata,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     assert(id != null);
-assert(authorId != null);
-assert(title != null);
+    assert(authorId != null);
+    assert(title != null);
 
-
-
-
-
-assert(createdAt != null);
-assert(updatedAt != null);
+    assert(createdAt != null);
+    assert(updatedAt != null);
     return ModelPgPost(
       id: id,
-authorId: authorId,
-title: title,
-body: body,
-status: status,
-tags: tags,
-extra: extra,
-metadata: metadata,
-createdAt: createdAt,
-updatedAt: updatedAt,
+      authorId: authorId,
+      title: title,
+      body: body,
+      status: status,
+      tags: tags,
+      extra: extra,
+      metadata: metadata,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 
@@ -167,7 +172,6 @@ updatedAt: updatedAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelPgPost],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -201,7 +205,7 @@ updatedAt: updatedAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelPgPost.fromJsonString: $e');
+      assert(false, '$ModelPgPost.fromJsonString: $e');
       rethrow;
     }
   }
@@ -243,26 +247,52 @@ updatedAt: updatedAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-final title = json?['title']?.toString().trim().nullIfEmpty;
-final body = json?['body']?.toString().trim().nullIfEmpty;
-final status = PostStatusKindType.values.valueOf(json?['status']?.toString());
-final tags = letListOrNull<dynamic>(json?['tags'])?.map((p0) => p0?.toString().trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final extra = letMapOrNull<dynamic, dynamic>(json?['extra'])?.map((p0, p1) => MapEntry(p0?.toString().trim().nullIfEmpty, p1,),).nonNulls.nullIfEmpty?.unmodifiable;
-final metadata = () { final a = letMapOrNull<String, dynamic>(json?['metadata']); return a != null ? ModelPostMetadata.fromJson(a): null; }();
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
+      final title = json?['title']?.toString().trim().nullIfEmpty;
+      final body = json?['body']?.toString().trim().nullIfEmpty;
+      final status =
+          PostStatusKindType.values.valueOf(json?['status']?.toString());
+      final tags = letListOrNull<dynamic>(json?['tags'])
+          ?.map(
+            (p0) => p0?.toString().trim().nullIfEmpty,
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final extra = letMapOrNull<dynamic, dynamic>(json?['extra'])
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.toString().trim().nullIfEmpty,
+              p1,
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.unmodifiable;
+      final metadata = () {
+        final a = letMapOrNull<String, dynamic>(json?['metadata']);
+        return a != null ? ModelPostMetadata.fromJson(a) : null;
+      }();
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
+      final updatedAt = () {
+        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
       return ModelPgPost(
         id: id,
-authorId: authorId,
-title: title,
-body: body,
-status: status,
-tags: tags,
-extra: extra,
-metadata: metadata,
-createdAt: createdAt,
-updatedAt: updatedAt,
+        authorId: authorId,
+        title: title,
+        body: body,
+        status: status,
+        tags: tags,
+        extra: extra,
+        metadata: metadata,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
       );
     } catch (e) {
       return null;
@@ -303,17 +333,44 @@ updatedAt: updatedAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final authorId0 = authorId?.trim().nullIfEmpty;
-final title0 = title?.trim().nullIfEmpty;
-final body0 = body?.trim().nullIfEmpty;
-final status0 = status?.name;
-final tags0 = tags?.map((p0) => p0?.trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList();
-final extra0 = (){ final a = extra; return a != null ? jsonEncode(a.map((p0, p1) => MapEntry(p0?.trim().nullIfEmpty, p1,)).nonNulls.nullIfEmpty) : null; }();
-final metadata0 = metadata != null ? jsonEncode(metadata!.toJson()) : null;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
-final updatedAt0 = updatedAt?.toUtc().toIso8601String();
+      final authorId0 = authorId?.trim().nullIfEmpty;
+      final title0 = title?.trim().nullIfEmpty;
+      final body0 = body?.trim().nullIfEmpty;
+      final status0 = status?.name;
+      final tags0 = tags
+          ?.map(
+            (p0) => p0?.trim().nullIfEmpty,
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList();
+      final extra0 = () {
+        final a = extra;
+        return a != null
+            ? jsonEncode(a
+                .map((p0, p1) => MapEntry(
+                      p0?.trim().nullIfEmpty,
+                      p1,
+                    ))
+                .nonNulls
+                .nullIfEmpty)
+            : null;
+      }();
+      final metadata0 =
+          metadata != null ? jsonEncode(metadata!.toJson()) : null;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final updatedAt0 = updatedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'updated_at': updatedAt0,'title': title0,'tags': tags0,'status': status0,'metadata': metadata0,'id': id0,'extra': extra0,'created_at': createdAt0,'body': body0,'author_id': authorId0,
+        'updated_at': updatedAt0,
+        'title': title0,
+        'tags': tags0,
+        'status': status0,
+        'metadata': metadata0,
+        'id': id0,
+        'extra': extra0,
+        'created_at': createdAt0,
+        'body': body0,
+        'author_id': authorId0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -322,101 +379,99 @@ final updatedAt0 = updatedAt?.toUtc().toIso8601String();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [authorId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get authorId$ => authorId!;
+  @pragma('vm:prefer-inline')
+  String get authorId$ => authorId!;
 
   /// Returns the value of the [title] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get title$ => title!;
+  @pragma('vm:prefer-inline')
+  String get title$ => title!;
 
   /// Returns the value of the [body] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get body$ => body;
+  @pragma('vm:prefer-inline')
+  String? get body$ => body;
 
   /// Returns the value of the [status] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-PostStatusKindType? get status$ => status;
+  @pragma('vm:prefer-inline')
+  PostStatusKindType? get status$ => status;
 
   /// Returns the value of the [tags] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<String>? get tags$ => tags;
+  @pragma('vm:prefer-inline')
+  List<String>? get tags$ => tags;
 
   /// Returns the value of the [extra] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Map<String,dynamic>? get extra$ => extra;
+  @pragma('vm:prefer-inline')
+  Map<String, dynamic>? get extra$ => extra;
 
   /// Returns the value of the [metadata] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-ModelPostMetadata? get metadata$ => metadata;
+  @pragma('vm:prefer-inline')
+  ModelPostMetadata? get metadata$ => metadata;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 
   /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get updatedAt$ => updatedAt!;
-
+  @pragma('vm:prefer-inline')
+  DateTime get updatedAt$ => updatedAt!;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelPgPostFieldNames {
-    /// The field name of [ModelPgPost.id].
-static const id = 'id';
+  /// The field name of [ModelPgPost.id].
+  static const id = 'id';
 
   /// The field name of [ModelPgPost.authorId].
-static const authorId = 'author_id';
+  static const authorId = 'author_id';
 
   /// The field name of [ModelPgPost.title].
-static const title = 'title';
+  static const title = 'title';
 
   /// The field name of [ModelPgPost.body].
-static const body = 'body';
+  static const body = 'body';
 
   /// The field name of [ModelPgPost.status].
-static const status = 'status';
+  static const status = 'status';
 
   /// The field name of [ModelPgPost.tags].
-static const tags = 'tags';
+  static const tags = 'tags';
 
   /// The field name of [ModelPgPost.extra].
-static const extra = 'extra';
+  static const extra = 'extra';
 
   /// The field name of [ModelPgPost.metadata].
-static const metadata = 'metadata';
+  static const metadata = 'metadata';
 
   /// The field name of [ModelPgPost.createdAt].
-static const createdAt = 'created_at';
+  static const createdAt = 'created_at';
 
   /// The field name of [ModelPgPost.updatedAt].
-static const updatedAt = 'updated_at';
-
+  static const updatedAt = 'updated_at';
 }
 
 extension ModelPgPostX on ModelPgPost {
@@ -435,54 +490,54 @@ extension ModelPgPostX on ModelPgPost {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelPgPost copyWith({
     String? id,
-String? authorId,
-String? title,
-String? body,
-PostStatusKindType? status,
-List<String>? tags,
-Map<String,dynamic>? extra,
-ModelPostMetadata? metadata,
-DateTime? createdAt,
-DateTime? updatedAt,
+    String? authorId,
+    String? title,
+    String? body,
+    PostStatusKindType? status,
+    List<String>? tags,
+    Map<String, dynamic>? extra,
+    ModelPostMetadata? metadata,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     return ModelPgPost.assertRequired(
       id: id ?? this.id,
-authorId: authorId ?? this.authorId,
-title: title ?? this.title,
-body: body ?? this.body,
-status: status ?? this.status,
-tags: tags ?? this.tags,
-extra: extra ?? this.extra,
-metadata: metadata ?? this.metadata,
-createdAt: createdAt ?? this.createdAt,
-updatedAt: updatedAt ?? this.updatedAt,
+      authorId: authorId ?? this.authorId,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      status: status ?? this.status,
+      tags: tags ?? this.tags,
+      extra: extra ?? this.extra,
+      metadata: metadata ?? this.metadata,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelPgPost copyWithout({
     bool id = true,
-bool authorId = true,
-bool title = true,
-bool body = true,
-bool status = true,
-bool tags = true,
-bool extra = true,
-bool metadata = true,
-bool createdAt = true,
-bool updatedAt = true,
+    bool authorId = true,
+    bool title = true,
+    bool body = true,
+    bool status = true,
+    bool tags = true,
+    bool extra = true,
+    bool metadata = true,
+    bool createdAt = true,
+    bool updatedAt = true,
   }) {
     return ModelPgPost.assertRequired(
-      id: id ? this.id: null,
-authorId: authorId ? this.authorId: null,
-title: title ? this.title: null,
-body: body ? this.body: null,
-status: status ? this.status: null,
-tags: tags ? this.tags: null,
-extra: extra ? this.extra: null,
-metadata: metadata ? this.metadata: null,
-createdAt: createdAt ? this.createdAt: null,
-updatedAt: updatedAt ? this.updatedAt: null,
+      id: id ? this.id : null,
+      authorId: authorId ? this.authorId : null,
+      title: title ? this.title : null,
+      body: body ? this.body : null,
+      status: status ? this.status : null,
+      tags: tags ? this.tags : null,
+      extra: extra ? this.extra : null,
+      metadata: metadata ? this.metadata : null,
+      createdAt: createdAt ? this.createdAt : null,
+      updatedAt: updatedAt ? this.updatedAt : null,
     );
   }
 }

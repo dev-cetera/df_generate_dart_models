@@ -32,7 +32,7 @@ class ModelMediaItem extends _ModelMediaItem with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
@@ -44,71 +44,67 @@ class ModelMediaItem extends _ModelMediaItem with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final MediaKindType? kind;
+  final MediaKindType? kind;
 
   /// No description provided.
-final String? url;
+  final String? url;
 
   /// No description provided.
-final String? thumbnailUrl;
+  final String? thumbnailUrl;
 
   /// No description provided.
-final ModelMediaDetails? details;
+  final ModelMediaDetails? details;
 
   /// No description provided.
-final int? order;
-
+  final int? order;
 
   /// Constructs a new instance of [ModelMediaItem]
   /// from optional and required parameters.
   const ModelMediaItem({
     required this.id,
-required this.kind,
-required this.url,
- this.thumbnailUrl,
- this.details,
- this.order,
-  }) ;
+    required this.kind,
+    required this.url,
+    this.thumbnailUrl,
+    this.details,
+    this.order,
+  });
 
   /// Construcs a new instance of [ModelMediaItem],
   /// forcing all parameters to be optional.
   const ModelMediaItem.optional({
     this.id,
-this.kind,
-this.url,
-this.thumbnailUrl,
-this.details,
-this.order,
-  }) ;
-
+    this.kind,
+    this.url,
+    this.thumbnailUrl,
+    this.details,
+    this.order,
+  });
 
   /// Constructs a new instance of [ModelMediaItem],
   /// and asserts that all required parameters are not null.
   factory ModelMediaItem.assertRequired({
     String? id,
-MediaKindType? kind,
-String? url,
-String? thumbnailUrl,
-ModelMediaDetails? details,
-int? order,
+    MediaKindType? kind,
+    String? url,
+    String? thumbnailUrl,
+    ModelMediaDetails? details,
+    int? order,
   }) {
     assert(id != null);
-assert(kind != null);
-assert(url != null);
-
-
+    assert(kind != null);
+    assert(url != null);
 
     return ModelMediaItem(
       id: id,
-kind: kind,
-url: url,
-thumbnailUrl: thumbnailUrl,
-details: details,
-order: order,
+      kind: kind,
+      url: url,
+      thumbnailUrl: thumbnailUrl,
+      details: details,
+      order: order,
     );
   }
 
@@ -135,7 +131,6 @@ order: order,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelMediaItem],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -169,7 +164,7 @@ order: order,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelMediaItem.fromJsonString: $e');
+      assert(false, '$ModelMediaItem.fromJsonString: $e');
       rethrow;
     }
   }
@@ -211,18 +206,22 @@ order: order,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final kind = MediaKindType.values.valueOf(json?['kind']?.toString());
-final url = json?['url']?.toString().trim().nullIfEmpty;
-final thumbnailUrl = json?['thumbnail_url']?.toString().trim().nullIfEmpty;
-final details = () { final a = letMapOrNull<String, dynamic>(json?['details']); return a != null ? ModelMediaDetails.fromJson(a): null; }();
-final order = letIntOrNull(json?['order']);
+      final kind = MediaKindType.values.valueOf(json?['kind']?.toString());
+      final url = json?['url']?.toString().trim().nullIfEmpty;
+      final thumbnailUrl =
+          json?['thumbnail_url']?.toString().trim().nullIfEmpty;
+      final details = () {
+        final a = letMapOrNull<String, dynamic>(json?['details']);
+        return a != null ? ModelMediaDetails.fromJson(a) : null;
+      }();
+      final order = letIntOrNull(json?['order']);
       return ModelMediaItem(
         id: id,
-kind: kind,
-url: url,
-thumbnailUrl: thumbnailUrl,
-details: details,
-order: order,
+        kind: kind,
+        url: url,
+        thumbnailUrl: thumbnailUrl,
+        details: details,
+        order: order,
       );
     } catch (e) {
       return null;
@@ -263,13 +262,18 @@ order: order,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final kind0 = kind?.name;
-final url0 = url?.trim().nullIfEmpty;
-final thumbnailUrl0 = thumbnailUrl?.trim().nullIfEmpty;
-final details0 = details != null ? jsonEncode(details!.toJson()) : null;
-final order0 = order;
+      final kind0 = kind?.name;
+      final url0 = url?.trim().nullIfEmpty;
+      final thumbnailUrl0 = thumbnailUrl?.trim().nullIfEmpty;
+      final details0 = details != null ? jsonEncode(details!.toJson()) : null;
+      final order0 = order;
       final withNulls = {
-        'url': url0,'thumbnail_url': thumbnailUrl0,'order': order0,'kind': kind0,'id': id0,'details': details0,
+        'url': url0,
+        'thumbnail_url': thumbnailUrl0,
+        'order': order0,
+        'kind': kind0,
+        'id': id0,
+        'details': details0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -278,65 +282,63 @@ final order0 = order;
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [kind] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-MediaKindType get kind$ => kind!;
+  @pragma('vm:prefer-inline')
+  MediaKindType get kind$ => kind!;
 
   /// Returns the value of the [url] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get url$ => url!;
+  @pragma('vm:prefer-inline')
+  String get url$ => url!;
 
   /// Returns the value of the [thumbnailUrl] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get thumbnailUrl$ => thumbnailUrl;
+  @pragma('vm:prefer-inline')
+  String? get thumbnailUrl$ => thumbnailUrl;
 
   /// Returns the value of the [details] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-ModelMediaDetails? get details$ => details;
+  @pragma('vm:prefer-inline')
+  ModelMediaDetails? get details$ => details;
 
   /// Returns the value of the [order] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int? get order$ => order;
-
+  @pragma('vm:prefer-inline')
+  int? get order$ => order;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelMediaItemFieldNames {
-    /// The field name of [ModelMediaItem.id].
-static const id = 'id';
+  /// The field name of [ModelMediaItem.id].
+  static const id = 'id';
 
   /// The field name of [ModelMediaItem.kind].
-static const kind = 'kind';
+  static const kind = 'kind';
 
   /// The field name of [ModelMediaItem.url].
-static const url = 'url';
+  static const url = 'url';
 
   /// The field name of [ModelMediaItem.thumbnailUrl].
-static const thumbnailUrl = 'thumbnail_url';
+  static const thumbnailUrl = 'thumbnail_url';
 
   /// The field name of [ModelMediaItem.details].
-static const details = 'details';
+  static const details = 'details';
 
   /// The field name of [ModelMediaItem.order].
-static const order = 'order';
-
+  static const order = 'order';
 }
 
 extension ModelMediaItemX on ModelMediaItem {
@@ -355,38 +357,38 @@ extension ModelMediaItemX on ModelMediaItem {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelMediaItem copyWith({
     String? id,
-MediaKindType? kind,
-String? url,
-String? thumbnailUrl,
-ModelMediaDetails? details,
-int? order,
+    MediaKindType? kind,
+    String? url,
+    String? thumbnailUrl,
+    ModelMediaDetails? details,
+    int? order,
   }) {
     return ModelMediaItem.assertRequired(
       id: id ?? this.id,
-kind: kind ?? this.kind,
-url: url ?? this.url,
-thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
-details: details ?? this.details,
-order: order ?? this.order,
+      kind: kind ?? this.kind,
+      url: url ?? this.url,
+      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      details: details ?? this.details,
+      order: order ?? this.order,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelMediaItem copyWithout({
     bool id = true,
-bool kind = true,
-bool url = true,
-bool thumbnailUrl = true,
-bool details = true,
-bool order = true,
+    bool kind = true,
+    bool url = true,
+    bool thumbnailUrl = true,
+    bool details = true,
+    bool order = true,
   }) {
     return ModelMediaItem.assertRequired(
-      id: id ? this.id: null,
-kind: kind ? this.kind: null,
-url: url ? this.url: null,
-thumbnailUrl: thumbnailUrl ? this.thumbnailUrl: null,
-details: details ? this.details: null,
-order: order ? this.order: null,
+      id: id ? this.id : null,
+      kind: kind ? this.kind : null,
+      url: url ? this.url : null,
+      thumbnailUrl: thumbnailUrl ? this.thumbnailUrl : null,
+      details: details ? this.details : null,
+      order: order ? this.order : null,
     );
   }
 }

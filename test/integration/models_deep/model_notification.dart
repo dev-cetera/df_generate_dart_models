@@ -4,8 +4,7 @@
 import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 import '_enums.dart';
-import '../models/_fixtures.dart'
-    show Timestamp, FieldValue, DocumentReference;
+import '../models/_fixtures.dart' show Timestamp, FieldValue, DocumentReference;
 import 'model_post.dart' show ModelMediaItem;
 
 part '_model_notification.g.dart';

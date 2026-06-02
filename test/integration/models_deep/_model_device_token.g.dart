@@ -32,11 +32,20 @@ class ModelDeviceToken extends _ModelDeviceToken with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, accountRef, token, kind, locale, lastSeenAt, createdAt, lastLocation];
+  List<Object?> get props => [
+        id,
+        accountRef,
+        token,
+        kind,
+        locale,
+        lastSeenAt,
+        createdAt,
+        lastLocation
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,87 +53,82 @@ class ModelDeviceToken extends _ModelDeviceToken with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? accountRef;
+  final String? accountRef;
 
   /// No description provided.
-final String? token;
+  final String? token;
 
   /// No description provided.
-final DeviceKindType? kind;
+  final DeviceKindType? kind;
 
   /// No description provided.
-final String? locale;
+  final String? locale;
 
   /// No description provided.
-final DateTime? lastSeenAt;
+  final DateTime? lastSeenAt;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final GeoPoint? lastLocation;
-
+  final GeoPoint? lastLocation;
 
   /// Constructs a new instance of [ModelDeviceToken]
   /// from optional and required parameters.
   const ModelDeviceToken({
     required this.id,
-required this.accountRef,
-required this.token,
-required this.kind,
- this.locale,
- this.lastSeenAt,
- this.createdAt,
- this.lastLocation,
-  }) ;
+    required this.accountRef,
+    required this.token,
+    required this.kind,
+    this.locale,
+    this.lastSeenAt,
+    this.createdAt,
+    this.lastLocation,
+  });
 
   /// Construcs a new instance of [ModelDeviceToken],
   /// forcing all parameters to be optional.
   const ModelDeviceToken.optional({
     this.id,
-this.accountRef,
-this.token,
-this.kind,
-this.locale,
-this.lastSeenAt,
-this.createdAt,
-this.lastLocation,
-  }) ;
-
+    this.accountRef,
+    this.token,
+    this.kind,
+    this.locale,
+    this.lastSeenAt,
+    this.createdAt,
+    this.lastLocation,
+  });
 
   /// Constructs a new instance of [ModelDeviceToken],
   /// and asserts that all required parameters are not null.
   factory ModelDeviceToken.assertRequired({
     String? id,
-String? accountRef,
-String? token,
-DeviceKindType? kind,
-String? locale,
-DateTime? lastSeenAt,
-DateTime? createdAt,
-GeoPoint? lastLocation,
+    String? accountRef,
+    String? token,
+    DeviceKindType? kind,
+    String? locale,
+    DateTime? lastSeenAt,
+    DateTime? createdAt,
+    GeoPoint? lastLocation,
   }) {
     assert(id != null);
-assert(accountRef != null);
-assert(token != null);
-assert(kind != null);
-
-
-
+    assert(accountRef != null);
+    assert(token != null);
+    assert(kind != null);
 
     return ModelDeviceToken(
       id: id,
-accountRef: accountRef,
-token: token,
-kind: kind,
-locale: locale,
-lastSeenAt: lastSeenAt,
-createdAt: createdAt,
-lastLocation: lastLocation,
+      accountRef: accountRef,
+      token: token,
+      kind: kind,
+      locale: locale,
+      lastSeenAt: lastSeenAt,
+      createdAt: createdAt,
+      lastLocation: lastLocation,
     );
   }
 
@@ -151,7 +155,6 @@ lastLocation: lastLocation,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelDeviceToken],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -185,7 +188,7 @@ lastLocation: lastLocation,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelDeviceToken.fromJsonString: $e');
+      assert(false, '$ModelDeviceToken.fromJsonString: $e');
       rethrow;
     }
   }
@@ -227,22 +230,26 @@ lastLocation: lastLocation,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final accountRef = letAsOrNull<DocumentReference>(json?['accountRef'])?.path ?? json?['accountRef']?.toString().trim().nullIfEmpty;
-final token = json?['token']?.toString().trim().nullIfEmpty;
-final kind = DeviceKindType.values.valueOf(json?['kind']?.toString());
-final locale = json?['locale']?.toString().trim().nullIfEmpty;
-final lastSeenAt = letAsOrNull<Timestamp>(json?['lastSeenAt'])?.toDate().toUtc();
-final createdAt = letAsOrNull<Timestamp>(json?['createdAt'])?.toDate().toUtc();
-final lastLocation = letAsOrNull<GeoPoint>(json?['lastLocation']);
+      final accountRef =
+          letAsOrNull<DocumentReference>(json?['accountRef'])?.path ??
+              json?['accountRef']?.toString().trim().nullIfEmpty;
+      final token = json?['token']?.toString().trim().nullIfEmpty;
+      final kind = DeviceKindType.values.valueOf(json?['kind']?.toString());
+      final locale = json?['locale']?.toString().trim().nullIfEmpty;
+      final lastSeenAt =
+          letAsOrNull<Timestamp>(json?['lastSeenAt'])?.toDate().toUtc();
+      final createdAt =
+          letAsOrNull<Timestamp>(json?['createdAt'])?.toDate().toUtc();
+      final lastLocation = letAsOrNull<GeoPoint>(json?['lastLocation']);
       return ModelDeviceToken(
         id: id,
-accountRef: accountRef,
-token: token,
-kind: kind,
-locale: locale,
-lastSeenAt: lastSeenAt,
-createdAt: createdAt,
-lastLocation: lastLocation,
+        accountRef: accountRef,
+        token: token,
+        kind: kind,
+        locale: locale,
+        lastSeenAt: lastSeenAt,
+        createdAt: createdAt,
+        lastLocation: lastLocation,
       );
     } catch (e) {
       return null;
@@ -283,15 +290,23 @@ lastLocation: lastLocation,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final accountRef0 = accountRef?.trim().nullIfEmpty;
-final token0 = token?.trim().nullIfEmpty;
-final kind0 = kind?.name;
-final locale0 = locale?.trim().nullIfEmpty;
-final lastSeenAt0 = lastSeenAt != null ? Timestamp.fromDate(lastSeenAt!.toUtc()) : null;
-final createdAt0 = FieldValue.serverTimestamp();
-final lastLocation0 = lastLocation;
+      final accountRef0 = accountRef?.trim().nullIfEmpty;
+      final token0 = token?.trim().nullIfEmpty;
+      final kind0 = kind?.name;
+      final locale0 = locale?.trim().nullIfEmpty;
+      final lastSeenAt0 =
+          lastSeenAt != null ? Timestamp.fromDate(lastSeenAt!.toUtc()) : null;
+      final createdAt0 = FieldValue.serverTimestamp();
+      final lastLocation0 = lastLocation;
       final withNulls = {
-        'token': token0,'locale': locale0,'lastSeenAt': lastSeenAt0,'lastLocation': lastLocation0,'kind': kind0,'id': id0,'createdAt': createdAt0,'accountRef': accountRef0,
+        'token': token0,
+        'locale': locale0,
+        'lastSeenAt': lastSeenAt0,
+        'lastLocation': lastLocation0,
+        'kind': kind0,
+        'id': id0,
+        'createdAt': createdAt0,
+        'accountRef': accountRef0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -300,83 +315,81 @@ final lastLocation0 = lastLocation;
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [accountRef] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get accountRef$ => accountRef!;
+  @pragma('vm:prefer-inline')
+  String get accountRef$ => accountRef!;
 
   /// Returns the value of the [token] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get token$ => token!;
+  @pragma('vm:prefer-inline')
+  String get token$ => token!;
 
   /// Returns the value of the [kind] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DeviceKindType get kind$ => kind!;
+  @pragma('vm:prefer-inline')
+  DeviceKindType get kind$ => kind!;
 
   /// Returns the value of the [locale] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get locale$ => locale;
+  @pragma('vm:prefer-inline')
+  String? get locale$ => locale;
 
   /// Returns the value of the [lastSeenAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get lastSeenAt$ => lastSeenAt;
+  @pragma('vm:prefer-inline')
+  DateTime? get lastSeenAt$ => lastSeenAt;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get createdAt$ => createdAt;
+  @pragma('vm:prefer-inline')
+  DateTime? get createdAt$ => createdAt;
 
   /// Returns the value of the [lastLocation] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-GeoPoint? get lastLocation$ => lastLocation;
-
+  @pragma('vm:prefer-inline')
+  GeoPoint? get lastLocation$ => lastLocation;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelDeviceTokenFieldNames {
-    /// The field name of [ModelDeviceToken.id].
-static const id = 'id';
+  /// The field name of [ModelDeviceToken.id].
+  static const id = 'id';
 
   /// The field name of [ModelDeviceToken.accountRef].
-static const accountRef = 'accountRef';
+  static const accountRef = 'accountRef';
 
   /// The field name of [ModelDeviceToken.token].
-static const token = 'token';
+  static const token = 'token';
 
   /// The field name of [ModelDeviceToken.kind].
-static const kind = 'kind';
+  static const kind = 'kind';
 
   /// The field name of [ModelDeviceToken.locale].
-static const locale = 'locale';
+  static const locale = 'locale';
 
   /// The field name of [ModelDeviceToken.lastSeenAt].
-static const lastSeenAt = 'lastSeenAt';
+  static const lastSeenAt = 'lastSeenAt';
 
   /// The field name of [ModelDeviceToken.createdAt].
-static const createdAt = 'createdAt';
+  static const createdAt = 'createdAt';
 
   /// The field name of [ModelDeviceToken.lastLocation].
-static const lastLocation = 'lastLocation';
-
+  static const lastLocation = 'lastLocation';
 }
 
 extension ModelDeviceTokenX on ModelDeviceToken {
@@ -395,46 +408,46 @@ extension ModelDeviceTokenX on ModelDeviceToken {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelDeviceToken copyWith({
     String? id,
-String? accountRef,
-String? token,
-DeviceKindType? kind,
-String? locale,
-DateTime? lastSeenAt,
-DateTime? createdAt,
-GeoPoint? lastLocation,
+    String? accountRef,
+    String? token,
+    DeviceKindType? kind,
+    String? locale,
+    DateTime? lastSeenAt,
+    DateTime? createdAt,
+    GeoPoint? lastLocation,
   }) {
     return ModelDeviceToken.assertRequired(
       id: id ?? this.id,
-accountRef: accountRef ?? this.accountRef,
-token: token ?? this.token,
-kind: kind ?? this.kind,
-locale: locale ?? this.locale,
-lastSeenAt: lastSeenAt ?? this.lastSeenAt,
-createdAt: createdAt ?? this.createdAt,
-lastLocation: lastLocation ?? this.lastLocation,
+      accountRef: accountRef ?? this.accountRef,
+      token: token ?? this.token,
+      kind: kind ?? this.kind,
+      locale: locale ?? this.locale,
+      lastSeenAt: lastSeenAt ?? this.lastSeenAt,
+      createdAt: createdAt ?? this.createdAt,
+      lastLocation: lastLocation ?? this.lastLocation,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelDeviceToken copyWithout({
     bool id = true,
-bool accountRef = true,
-bool token = true,
-bool kind = true,
-bool locale = true,
-bool lastSeenAt = true,
-bool createdAt = true,
-bool lastLocation = true,
+    bool accountRef = true,
+    bool token = true,
+    bool kind = true,
+    bool locale = true,
+    bool lastSeenAt = true,
+    bool createdAt = true,
+    bool lastLocation = true,
   }) {
     return ModelDeviceToken.assertRequired(
-      id: id ? this.id: null,
-accountRef: accountRef ? this.accountRef: null,
-token: token ? this.token: null,
-kind: kind ? this.kind: null,
-locale: locale ? this.locale: null,
-lastSeenAt: lastSeenAt ? this.lastSeenAt: null,
-createdAt: createdAt ? this.createdAt: null,
-lastLocation: lastLocation ? this.lastLocation: null,
+      id: id ? this.id : null,
+      accountRef: accountRef ? this.accountRef : null,
+      token: token ? this.token : null,
+      kind: kind ? this.kind : null,
+      locale: locale ? this.locale : null,
+      lastSeenAt: lastSeenAt ? this.lastSeenAt : null,
+      createdAt: createdAt ? this.createdAt : null,
+      lastLocation: lastLocation ? this.lastLocation : null,
     );
   }
 }

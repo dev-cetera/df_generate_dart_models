@@ -32,11 +32,21 @@ class ModelComment extends _ModelComment with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, postId, authorId, parentId, body, status, likeCount, createdAt, updatedAt];
+  List<Object?> get props => [
+        id,
+        postId,
+        authorId,
+        parentId,
+        body,
+        status,
+        likeCount,
+        createdAt,
+        updatedAt
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,95 +54,92 @@ class ModelComment extends _ModelComment with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? postId;
+  final String? postId;
 
   /// No description provided.
-final String? authorId;
+  final String? authorId;
 
   /// No description provided.
-final String? parentId;
+  final String? parentId;
 
   /// No description provided.
-final String? body;
+  final String? body;
 
   /// No description provided.
-final CommentStatusType? status;
+  final CommentStatusType? status;
 
   /// No description provided.
-final int? likeCount;
+  final int? likeCount;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final DateTime? updatedAt;
-
+  final DateTime? updatedAt;
 
   /// Constructs a new instance of [ModelComment]
   /// from optional and required parameters.
   const ModelComment({
     required this.id,
-required this.postId,
-required this.authorId,
- this.parentId,
-required this.body,
- this.status,
- this.likeCount,
-required this.createdAt,
-required this.updatedAt,
-  }) ;
+    required this.postId,
+    required this.authorId,
+    this.parentId,
+    required this.body,
+    this.status,
+    this.likeCount,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
   /// Construcs a new instance of [ModelComment],
   /// forcing all parameters to be optional.
   const ModelComment.optional({
     this.id,
-this.postId,
-this.authorId,
-this.parentId,
-this.body,
-this.status,
-this.likeCount,
-this.createdAt,
-this.updatedAt,
-  }) ;
-
+    this.postId,
+    this.authorId,
+    this.parentId,
+    this.body,
+    this.status,
+    this.likeCount,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   /// Constructs a new instance of [ModelComment],
   /// and asserts that all required parameters are not null.
   factory ModelComment.assertRequired({
     String? id,
-String? postId,
-String? authorId,
-String? parentId,
-String? body,
-CommentStatusType? status,
-int? likeCount,
-DateTime? createdAt,
-DateTime? updatedAt,
+    String? postId,
+    String? authorId,
+    String? parentId,
+    String? body,
+    CommentStatusType? status,
+    int? likeCount,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     assert(id != null);
-assert(postId != null);
-assert(authorId != null);
+    assert(postId != null);
+    assert(authorId != null);
 
-assert(body != null);
+    assert(body != null);
 
-
-assert(createdAt != null);
-assert(updatedAt != null);
+    assert(createdAt != null);
+    assert(updatedAt != null);
     return ModelComment(
       id: id,
-postId: postId,
-authorId: authorId,
-parentId: parentId,
-body: body,
-status: status,
-likeCount: likeCount,
-createdAt: createdAt,
-updatedAt: updatedAt,
+      postId: postId,
+      authorId: authorId,
+      parentId: parentId,
+      body: body,
+      status: status,
+      likeCount: likeCount,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 
@@ -159,7 +166,6 @@ updatedAt: updatedAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelComment],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -193,7 +199,7 @@ updatedAt: updatedAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelComment.fromJsonString: $e');
+      assert(false, '$ModelComment.fromJsonString: $e');
       rethrow;
     }
   }
@@ -235,24 +241,31 @@ updatedAt: updatedAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final postId = json?['post_id']?.toString().trim().nullIfEmpty;
-final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-final parentId = json?['parent_id']?.toString().trim().nullIfEmpty;
-final body = json?['body']?.toString().trim().nullIfEmpty;
-final status = CommentStatusType.values.valueOf(json?['status']?.toString());
-final likeCount = letIntOrNull(json?['like_count']);
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      final postId = json?['post_id']?.toString().trim().nullIfEmpty;
+      final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
+      final parentId = json?['parent_id']?.toString().trim().nullIfEmpty;
+      final body = json?['body']?.toString().trim().nullIfEmpty;
+      final status =
+          CommentStatusType.values.valueOf(json?['status']?.toString());
+      final likeCount = letIntOrNull(json?['like_count']);
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
+      final updatedAt = () {
+        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
       return ModelComment(
         id: id,
-postId: postId,
-authorId: authorId,
-parentId: parentId,
-body: body,
-status: status,
-likeCount: likeCount,
-createdAt: createdAt,
-updatedAt: updatedAt,
+        postId: postId,
+        authorId: authorId,
+        parentId: parentId,
+        body: body,
+        status: status,
+        likeCount: likeCount,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
       );
     } catch (e) {
       return null;
@@ -293,16 +306,24 @@ updatedAt: updatedAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final postId0 = postId?.trim().nullIfEmpty;
-final authorId0 = authorId?.trim().nullIfEmpty;
-final parentId0 = parentId?.trim().nullIfEmpty;
-final body0 = body?.trim().nullIfEmpty;
-final status0 = status?.name;
-final likeCount0 = likeCount;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
-final updatedAt0 = updatedAt?.toUtc().toIso8601String();
+      final postId0 = postId?.trim().nullIfEmpty;
+      final authorId0 = authorId?.trim().nullIfEmpty;
+      final parentId0 = parentId?.trim().nullIfEmpty;
+      final body0 = body?.trim().nullIfEmpty;
+      final status0 = status?.name;
+      final likeCount0 = likeCount;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final updatedAt0 = updatedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'updated_at': updatedAt0,'status': status0,'post_id': postId0,'parent_id': parentId0,'like_count': likeCount0,'id': id0,'created_at': createdAt0,'body': body0,'author_id': authorId0,
+        'updated_at': updatedAt0,
+        'status': status0,
+        'post_id': postId0,
+        'parent_id': parentId0,
+        'like_count': likeCount0,
+        'id': id0,
+        'created_at': createdAt0,
+        'body': body0,
+        'author_id': authorId0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -311,92 +332,90 @@ final updatedAt0 = updatedAt?.toUtc().toIso8601String();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [postId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get postId$ => postId!;
+  @pragma('vm:prefer-inline')
+  String get postId$ => postId!;
 
   /// Returns the value of the [authorId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get authorId$ => authorId!;
+  @pragma('vm:prefer-inline')
+  String get authorId$ => authorId!;
 
   /// Returns the value of the [parentId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get parentId$ => parentId;
+  @pragma('vm:prefer-inline')
+  String? get parentId$ => parentId;
 
   /// Returns the value of the [body] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get body$ => body!;
+  @pragma('vm:prefer-inline')
+  String get body$ => body!;
 
   /// Returns the value of the [status] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-CommentStatusType? get status$ => status;
+  @pragma('vm:prefer-inline')
+  CommentStatusType? get status$ => status;
 
   /// Returns the value of the [likeCount] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int? get likeCount$ => likeCount;
+  @pragma('vm:prefer-inline')
+  int? get likeCount$ => likeCount;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 
   /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get updatedAt$ => updatedAt!;
-
+  @pragma('vm:prefer-inline')
+  DateTime get updatedAt$ => updatedAt!;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelCommentFieldNames {
-    /// The field name of [ModelComment.id].
-static const id = 'id';
+  /// The field name of [ModelComment.id].
+  static const id = 'id';
 
   /// The field name of [ModelComment.postId].
-static const postId = 'post_id';
+  static const postId = 'post_id';
 
   /// The field name of [ModelComment.authorId].
-static const authorId = 'author_id';
+  static const authorId = 'author_id';
 
   /// The field name of [ModelComment.parentId].
-static const parentId = 'parent_id';
+  static const parentId = 'parent_id';
 
   /// The field name of [ModelComment.body].
-static const body = 'body';
+  static const body = 'body';
 
   /// The field name of [ModelComment.status].
-static const status = 'status';
+  static const status = 'status';
 
   /// The field name of [ModelComment.likeCount].
-static const likeCount = 'like_count';
+  static const likeCount = 'like_count';
 
   /// The field name of [ModelComment.createdAt].
-static const createdAt = 'created_at';
+  static const createdAt = 'created_at';
 
   /// The field name of [ModelComment.updatedAt].
-static const updatedAt = 'updated_at';
-
+  static const updatedAt = 'updated_at';
 }
 
 extension ModelCommentX on ModelComment {
@@ -415,50 +434,50 @@ extension ModelCommentX on ModelComment {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelComment copyWith({
     String? id,
-String? postId,
-String? authorId,
-String? parentId,
-String? body,
-CommentStatusType? status,
-int? likeCount,
-DateTime? createdAt,
-DateTime? updatedAt,
+    String? postId,
+    String? authorId,
+    String? parentId,
+    String? body,
+    CommentStatusType? status,
+    int? likeCount,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     return ModelComment.assertRequired(
       id: id ?? this.id,
-postId: postId ?? this.postId,
-authorId: authorId ?? this.authorId,
-parentId: parentId ?? this.parentId,
-body: body ?? this.body,
-status: status ?? this.status,
-likeCount: likeCount ?? this.likeCount,
-createdAt: createdAt ?? this.createdAt,
-updatedAt: updatedAt ?? this.updatedAt,
+      postId: postId ?? this.postId,
+      authorId: authorId ?? this.authorId,
+      parentId: parentId ?? this.parentId,
+      body: body ?? this.body,
+      status: status ?? this.status,
+      likeCount: likeCount ?? this.likeCount,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelComment copyWithout({
     bool id = true,
-bool postId = true,
-bool authorId = true,
-bool parentId = true,
-bool body = true,
-bool status = true,
-bool likeCount = true,
-bool createdAt = true,
-bool updatedAt = true,
+    bool postId = true,
+    bool authorId = true,
+    bool parentId = true,
+    bool body = true,
+    bool status = true,
+    bool likeCount = true,
+    bool createdAt = true,
+    bool updatedAt = true,
   }) {
     return ModelComment.assertRequired(
-      id: id ? this.id: null,
-postId: postId ? this.postId: null,
-authorId: authorId ? this.authorId: null,
-parentId: parentId ? this.parentId: null,
-body: body ? this.body: null,
-status: status ? this.status: null,
-likeCount: likeCount ? this.likeCount: null,
-createdAt: createdAt ? this.createdAt: null,
-updatedAt: updatedAt ? this.updatedAt: null,
+      id: id ? this.id : null,
+      postId: postId ? this.postId : null,
+      authorId: authorId ? this.authorId : null,
+      parentId: parentId ? this.parentId : null,
+      body: body ? this.body : null,
+      status: status ? this.status : null,
+      likeCount: likeCount ? this.likeCount : null,
+      createdAt: createdAt ? this.createdAt : null,
+      updatedAt: updatedAt ? this.updatedAt : null,
     );
   }
 }

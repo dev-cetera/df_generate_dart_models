@@ -39,14 +39,12 @@ Future<void> generateDbml(
 
   final parser = CliParser(
     title: 'dev-cetera.com',
-    description:
-        'Generates a DBML schema file from classes annotated with '
+    description: 'Generates a DBML schema file from classes annotated with '
         '@GenerateDartModel. The PG_*-/SQLITE_*- prefixes on fieldType drive '
         'column types, `references:` drives FK Ref lines, and `primaryKey:` '
         'drives the `[pk]` constraint.',
     example: 'generate-dbml -i lib/src/db_models -o schema.dbml',
-    additional:
-        'For contributions, error reports and information, visit: '
+    additional: 'For contributions, error reports and information, visit: '
         'https://github.com/dev-cetera.',
     params: [
       DefaultFlags.HELP.flag,

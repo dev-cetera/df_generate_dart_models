@@ -32,11 +32,12 @@ class ModelLocalDraft extends _ModelLocalDraft with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, caption, hashtags, media, scheduledFor, isDirty, updatedAt];
+  List<Object?> get props =>
+      [id, caption, hashtags, media, scheduledFor, isDirty, updatedAt];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,79 +45,73 @@ class ModelLocalDraft extends _ModelLocalDraft with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final int? id;
+  /// No description provided.
+  final int? id;
 
   /// No description provided.
-final String? caption;
+  final String? caption;
 
   /// No description provided.
-final List<String>? hashtags;
+  final List<String>? hashtags;
 
   /// No description provided.
-final List<ModelMediaItem>? media;
+  final List<ModelMediaItem>? media;
 
   /// No description provided.
-final DateTime? scheduledFor;
+  final DateTime? scheduledFor;
 
   /// No description provided.
-final bool? isDirty;
+  final bool? isDirty;
 
   /// No description provided.
-final DateTime? updatedAt;
-
+  final DateTime? updatedAt;
 
   /// Constructs a new instance of [ModelLocalDraft]
   /// from optional and required parameters.
   const ModelLocalDraft({
     required this.id,
- this.caption,
- this.hashtags,
- this.media,
- this.scheduledFor,
- this.isDirty,
-required this.updatedAt,
-  }) ;
+    this.caption,
+    this.hashtags,
+    this.media,
+    this.scheduledFor,
+    this.isDirty,
+    required this.updatedAt,
+  });
 
   /// Construcs a new instance of [ModelLocalDraft],
   /// forcing all parameters to be optional.
   const ModelLocalDraft.optional({
     this.id,
-this.caption,
-this.hashtags,
-this.media,
-this.scheduledFor,
-this.isDirty,
-this.updatedAt,
-  }) ;
-
+    this.caption,
+    this.hashtags,
+    this.media,
+    this.scheduledFor,
+    this.isDirty,
+    this.updatedAt,
+  });
 
   /// Constructs a new instance of [ModelLocalDraft],
   /// and asserts that all required parameters are not null.
   factory ModelLocalDraft.assertRequired({
     int? id,
-String? caption,
-List<String>? hashtags,
-List<ModelMediaItem>? media,
-DateTime? scheduledFor,
-bool? isDirty,
-DateTime? updatedAt,
+    String? caption,
+    List<String>? hashtags,
+    List<ModelMediaItem>? media,
+    DateTime? scheduledFor,
+    bool? isDirty,
+    DateTime? updatedAt,
   }) {
     assert(id != null);
 
-
-
-
-
-assert(updatedAt != null);
+    assert(updatedAt != null);
     return ModelLocalDraft(
       id: id,
-caption: caption,
-hashtags: hashtags,
-media: media,
-scheduledFor: scheduledFor,
-isDirty: isDirty,
-updatedAt: updatedAt,
+      caption: caption,
+      hashtags: hashtags,
+      media: media,
+      scheduledFor: scheduledFor,
+      isDirty: isDirty,
+      updatedAt: updatedAt,
     );
   }
 
@@ -143,7 +138,6 @@ updatedAt: updatedAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelLocalDraft],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -177,7 +171,7 @@ updatedAt: updatedAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelLocalDraft.fromJsonString: $e');
+      assert(false, '$ModelLocalDraft.fromJsonString: $e');
       rethrow;
     }
   }
@@ -219,20 +213,47 @@ updatedAt: updatedAt,
   ) {
     try {
       final id = letIntOrNull(json?['id']);
-final caption = json?['caption']?.toString().trim().nullIfEmpty;
-final hashtags = letListOrNull<dynamic>(json?['hashtags'])?.map((p0) => p0?.toString().trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final media = letListOrNull<dynamic>(json?['media'])?.map((p0) => () { final a = letMapOrNull<String, dynamic>(p0); return a != null ? ModelMediaItem.fromJson(a): null; }(),).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final scheduledFor = (){ final a = letIntOrNull(json?['scheduled_for']); return a != null ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true) : null; }();
-final isDirty = letBoolOrNull(json?['is_dirty']);
-final updatedAt = (){ final a = letIntOrNull(json?['updated_at']); return a != null ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true) : null; }();
+      final caption = json?['caption']?.toString().trim().nullIfEmpty;
+      final hashtags = letListOrNull<dynamic>(json?['hashtags'])
+          ?.map(
+            (p0) => p0?.toString().trim().nullIfEmpty,
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final media = letListOrNull<dynamic>(json?['media'])
+          ?.map(
+            (p0) => () {
+              final a = letMapOrNull<String, dynamic>(p0);
+              return a != null ? ModelMediaItem.fromJson(a) : null;
+            }(),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final scheduledFor = () {
+        final a = letIntOrNull(json?['scheduled_for']);
+        return a != null
+            ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true)
+            : null;
+      }();
+      final isDirty = letBoolOrNull(json?['is_dirty']);
+      final updatedAt = () {
+        final a = letIntOrNull(json?['updated_at']);
+        return a != null
+            ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true)
+            : null;
+      }();
       return ModelLocalDraft(
         id: id,
-caption: caption,
-hashtags: hashtags,
-media: media,
-scheduledFor: scheduledFor,
-isDirty: isDirty,
-updatedAt: updatedAt,
+        caption: caption,
+        hashtags: hashtags,
+        media: media,
+        scheduledFor: scheduledFor,
+        isDirty: isDirty,
+        updatedAt: updatedAt,
       );
     } catch (e) {
       return null;
@@ -273,14 +294,42 @@ updatedAt: updatedAt,
   }) {
     try {
       final id0 = id;
-final caption0 = caption?.trim().nullIfEmpty;
-final hashtags0 = (){ final a = hashtags; return a != null ? jsonEncode(a.map((p0) => p0?.trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList()) : null; }();
-final media0 = (){ final a = media; return a != null ? jsonEncode(a.map((p0) => p0?.toJson(),).nonNulls.nullIfEmpty?.toList()) : null; }();
-final scheduledFor0 = scheduledFor?.toUtc().millisecondsSinceEpoch;
-final isDirty0 = isDirty == null ? null : (isDirty! ? 1 : 0);
-final updatedAt0 = updatedAt?.toUtc().millisecondsSinceEpoch;
+      final caption0 = caption?.trim().nullIfEmpty;
+      final hashtags0 = () {
+        final a = hashtags;
+        return a != null
+            ? jsonEncode(a
+                .map(
+                  (p0) => p0?.trim().nullIfEmpty,
+                )
+                .nonNulls
+                .nullIfEmpty
+                ?.toList())
+            : null;
+      }();
+      final media0 = () {
+        final a = media;
+        return a != null
+            ? jsonEncode(a
+                .map(
+                  (p0) => p0?.toJson(),
+                )
+                .nonNulls
+                .nullIfEmpty
+                ?.toList())
+            : null;
+      }();
+      final scheduledFor0 = scheduledFor?.toUtc().millisecondsSinceEpoch;
+      final isDirty0 = isDirty == null ? null : (isDirty! ? 1 : 0);
+      final updatedAt0 = updatedAt?.toUtc().millisecondsSinceEpoch;
       final withNulls = {
-        'updated_at': updatedAt0,'scheduled_for': scheduledFor0,'media': media0,'is_dirty': isDirty0,'id': id0,'hashtags': hashtags0,'caption': caption0,
+        'updated_at': updatedAt0,
+        'scheduled_for': scheduledFor0,
+        'media': media0,
+        'is_dirty': isDirty0,
+        'id': id0,
+        'hashtags': hashtags0,
+        'caption': caption0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -289,74 +338,72 @@ final updatedAt0 = updatedAt?.toUtc().millisecondsSinceEpoch;
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int get id$ => id!;
+  @pragma('vm:prefer-inline')
+  int get id$ => id!;
 
   /// Returns the value of the [caption] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get caption$ => caption;
+  @pragma('vm:prefer-inline')
+  String? get caption$ => caption;
 
   /// Returns the value of the [hashtags] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<String>? get hashtags$ => hashtags;
+  @pragma('vm:prefer-inline')
+  List<String>? get hashtags$ => hashtags;
 
   /// Returns the value of the [media] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<ModelMediaItem>? get media$ => media;
+  @pragma('vm:prefer-inline')
+  List<ModelMediaItem>? get media$ => media;
 
   /// Returns the value of the [scheduledFor] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get scheduledFor$ => scheduledFor;
+  @pragma('vm:prefer-inline')
+  DateTime? get scheduledFor$ => scheduledFor;
 
   /// Returns the value of the [isDirty] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-bool? get isDirty$ => isDirty;
+  @pragma('vm:prefer-inline')
+  bool? get isDirty$ => isDirty;
 
   /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get updatedAt$ => updatedAt!;
-
+  @pragma('vm:prefer-inline')
+  DateTime get updatedAt$ => updatedAt!;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelLocalDraftFieldNames {
-    /// The field name of [ModelLocalDraft.id].
-static const id = 'id';
+  /// The field name of [ModelLocalDraft.id].
+  static const id = 'id';
 
   /// The field name of [ModelLocalDraft.caption].
-static const caption = 'caption';
+  static const caption = 'caption';
 
   /// The field name of [ModelLocalDraft.hashtags].
-static const hashtags = 'hashtags';
+  static const hashtags = 'hashtags';
 
   /// The field name of [ModelLocalDraft.media].
-static const media = 'media';
+  static const media = 'media';
 
   /// The field name of [ModelLocalDraft.scheduledFor].
-static const scheduledFor = 'scheduled_for';
+  static const scheduledFor = 'scheduled_for';
 
   /// The field name of [ModelLocalDraft.isDirty].
-static const isDirty = 'is_dirty';
+  static const isDirty = 'is_dirty';
 
   /// The field name of [ModelLocalDraft.updatedAt].
-static const updatedAt = 'updated_at';
-
+  static const updatedAt = 'updated_at';
 }
 
 extension ModelLocalDraftX on ModelLocalDraft {
@@ -375,42 +422,42 @@ extension ModelLocalDraftX on ModelLocalDraft {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelLocalDraft copyWith({
     int? id,
-String? caption,
-List<String>? hashtags,
-List<ModelMediaItem>? media,
-DateTime? scheduledFor,
-bool? isDirty,
-DateTime? updatedAt,
+    String? caption,
+    List<String>? hashtags,
+    List<ModelMediaItem>? media,
+    DateTime? scheduledFor,
+    bool? isDirty,
+    DateTime? updatedAt,
   }) {
     return ModelLocalDraft.assertRequired(
       id: id ?? this.id,
-caption: caption ?? this.caption,
-hashtags: hashtags ?? this.hashtags,
-media: media ?? this.media,
-scheduledFor: scheduledFor ?? this.scheduledFor,
-isDirty: isDirty ?? this.isDirty,
-updatedAt: updatedAt ?? this.updatedAt,
+      caption: caption ?? this.caption,
+      hashtags: hashtags ?? this.hashtags,
+      media: media ?? this.media,
+      scheduledFor: scheduledFor ?? this.scheduledFor,
+      isDirty: isDirty ?? this.isDirty,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelLocalDraft copyWithout({
     bool id = true,
-bool caption = true,
-bool hashtags = true,
-bool media = true,
-bool scheduledFor = true,
-bool isDirty = true,
-bool updatedAt = true,
+    bool caption = true,
+    bool hashtags = true,
+    bool media = true,
+    bool scheduledFor = true,
+    bool isDirty = true,
+    bool updatedAt = true,
   }) {
     return ModelLocalDraft.assertRequired(
-      id: id ? this.id: null,
-caption: caption ? this.caption: null,
-hashtags: hashtags ? this.hashtags: null,
-media: media ? this.media: null,
-scheduledFor: scheduledFor ? this.scheduledFor: null,
-isDirty: isDirty ? this.isDirty: null,
-updatedAt: updatedAt ? this.updatedAt: null,
+      id: id ? this.id : null,
+      caption: caption ? this.caption : null,
+      hashtags: hashtags ? this.hashtags : null,
+      media: media ? this.media : null,
+      scheduledFor: scheduledFor ? this.scheduledFor : null,
+      isDirty: isDirty ? this.isDirty : null,
+      updatedAt: updatedAt ? this.updatedAt : null,
     );
   }
 }

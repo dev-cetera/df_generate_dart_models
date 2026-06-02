@@ -163,10 +163,14 @@ void main() {
 
     test('FS_server_timestamp ignores the field value at write time', () {
       // Server stamp wins — the local DateTime is discarded.
-      expect(mapTo('FS_server_timestamp-DateTime'), 'FieldValue.serverTimestamp()');
+      expect(
+        mapTo('FS_server_timestamp-DateTime'),
+        'FieldValue.serverTimestamp()',
+      );
     });
 
-    test('FS_ref-String falls through to a String coercion when no '
+    test(
+        'FS_ref-String falls through to a String coercion when no '
         'DocumentReference is provided', () {
       final r = mapFrom('FS_ref-String');
       expect(r, contains('letAsOrNull<DocumentReference>'));

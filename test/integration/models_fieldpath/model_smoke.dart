@@ -13,7 +13,11 @@ part '_model_smoke.g.dart';
   fields: {
     Field(fieldPath: ['id'], fieldType: 'String', primaryKey: true),
     Field(fieldPath: 'profile.id', fieldType: 'String', nullable: true),
-    Field(fieldPath: ['profile', 'avatar'], fieldType: 'String', nullable: true),
+    Field(
+      fieldPath: ['profile', 'avatar'],
+      fieldType: 'String',
+      nullable: true,
+    ),
     Field(
       fieldPath: 'profile.address.city',
       fieldType: 'String',

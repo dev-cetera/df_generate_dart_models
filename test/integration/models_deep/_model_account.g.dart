@@ -32,11 +32,21 @@ class ModelAccount extends _ModelAccount with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, email, username, passwordHash, status, role, createdAt, updatedAt, deletedAt];
+  List<Object?> get props => [
+        id,
+        email,
+        username,
+        passwordHash,
+        status,
+        role,
+        createdAt,
+        updatedAt,
+        deletedAt
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,95 +54,91 @@ class ModelAccount extends _ModelAccount with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? email;
+  final String? email;
 
   /// No description provided.
-final String? username;
+  final String? username;
 
   /// No description provided.
-final Uint8List? passwordHash;
+  final Uint8List? passwordHash;
 
   /// No description provided.
-final AccountStatusType? status;
+  final AccountStatusType? status;
 
   /// No description provided.
-final AccountRoleType? role;
+  final AccountRoleType? role;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final DateTime? updatedAt;
+  final DateTime? updatedAt;
 
   /// No description provided.
-final DateTime? deletedAt;
-
+  final DateTime? deletedAt;
 
   /// Constructs a new instance of [ModelAccount]
   /// from optional and required parameters.
   const ModelAccount({
     required this.id,
-required this.email,
-required this.username,
- this.passwordHash,
- this.status,
- this.role,
-required this.createdAt,
-required this.updatedAt,
- this.deletedAt,
-  }) ;
+    required this.email,
+    required this.username,
+    this.passwordHash,
+    this.status,
+    this.role,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+  });
 
   /// Construcs a new instance of [ModelAccount],
   /// forcing all parameters to be optional.
   const ModelAccount.optional({
     this.id,
-this.email,
-this.username,
-this.passwordHash,
-this.status,
-this.role,
-this.createdAt,
-this.updatedAt,
-this.deletedAt,
-  }) ;
-
+    this.email,
+    this.username,
+    this.passwordHash,
+    this.status,
+    this.role,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+  });
 
   /// Constructs a new instance of [ModelAccount],
   /// and asserts that all required parameters are not null.
   factory ModelAccount.assertRequired({
     String? id,
-String? email,
-String? username,
-Uint8List? passwordHash,
-AccountStatusType? status,
-AccountRoleType? role,
-DateTime? createdAt,
-DateTime? updatedAt,
-DateTime? deletedAt,
+    String? email,
+    String? username,
+    Uint8List? passwordHash,
+    AccountStatusType? status,
+    AccountRoleType? role,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) {
     assert(id != null);
-assert(email != null);
-assert(username != null);
+    assert(email != null);
+    assert(username != null);
 
-
-
-assert(createdAt != null);
-assert(updatedAt != null);
+    assert(createdAt != null);
+    assert(updatedAt != null);
 
     return ModelAccount(
       id: id,
-email: email,
-username: username,
-passwordHash: passwordHash,
-status: status,
-role: role,
-createdAt: createdAt,
-updatedAt: updatedAt,
-deletedAt: deletedAt,
+      email: email,
+      username: username,
+      passwordHash: passwordHash,
+      status: status,
+      role: role,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      deletedAt: deletedAt,
     );
   }
 
@@ -159,7 +165,6 @@ deletedAt: deletedAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelAccount],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -193,7 +198,7 @@ deletedAt: deletedAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelAccount.fromJsonString: $e');
+      assert(false, '$ModelAccount.fromJsonString: $e');
       rethrow;
     }
   }
@@ -235,24 +240,34 @@ deletedAt: deletedAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final email = json?['email']?.toString().trim().nullIfEmpty;
-final username = json?['username']?.toString().trim().nullIfEmpty;
-final passwordHash = letAsOrNull<Uint8List>(json?['password_hash']);
-final status = AccountStatusType.values.valueOf(json?['status']?.toString());
-final role = AccountRoleType.values.valueOf(json?['role']?.toString());
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-final deletedAt = (){ final a = json?['deleted_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      final email = json?['email']?.toString().trim().nullIfEmpty;
+      final username = json?['username']?.toString().trim().nullIfEmpty;
+      final passwordHash = letAsOrNull<Uint8List>(json?['password_hash']);
+      final status =
+          AccountStatusType.values.valueOf(json?['status']?.toString());
+      final role = AccountRoleType.values.valueOf(json?['role']?.toString());
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
+      final updatedAt = () {
+        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
+      final deletedAt = () {
+        final a = json?['deleted_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
       return ModelAccount(
         id: id,
-email: email,
-username: username,
-passwordHash: passwordHash,
-status: status,
-role: role,
-createdAt: createdAt,
-updatedAt: updatedAt,
-deletedAt: deletedAt,
+        email: email,
+        username: username,
+        passwordHash: passwordHash,
+        status: status,
+        role: role,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        deletedAt: deletedAt,
       );
     } catch (e) {
       return null;
@@ -293,16 +308,24 @@ deletedAt: deletedAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final email0 = email?.trim().nullIfEmpty;
-final username0 = username?.trim().nullIfEmpty;
-final passwordHash0 = passwordHash;
-final status0 = status?.name;
-final role0 = role?.name;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
-final updatedAt0 = updatedAt?.toUtc().toIso8601String();
-final deletedAt0 = deletedAt?.toUtc().toIso8601String();
+      final email0 = email?.trim().nullIfEmpty;
+      final username0 = username?.trim().nullIfEmpty;
+      final passwordHash0 = passwordHash;
+      final status0 = status?.name;
+      final role0 = role?.name;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final updatedAt0 = updatedAt?.toUtc().toIso8601String();
+      final deletedAt0 = deletedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'username': username0,'updated_at': updatedAt0,'status': status0,'role': role0,'password_hash': passwordHash0,'id': id0,'email': email0,'deleted_at': deletedAt0,'created_at': createdAt0,
+        'username': username0,
+        'updated_at': updatedAt0,
+        'status': status0,
+        'role': role0,
+        'password_hash': passwordHash0,
+        'id': id0,
+        'email': email0,
+        'deleted_at': deletedAt0,
+        'created_at': createdAt0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -311,92 +334,90 @@ final deletedAt0 = deletedAt?.toUtc().toIso8601String();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [email] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get email$ => email!;
+  @pragma('vm:prefer-inline')
+  String get email$ => email!;
 
   /// Returns the value of the [username] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get username$ => username!;
+  @pragma('vm:prefer-inline')
+  String get username$ => username!;
 
   /// Returns the value of the [passwordHash] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uint8List? get passwordHash$ => passwordHash;
+  @pragma('vm:prefer-inline')
+  Uint8List? get passwordHash$ => passwordHash;
 
   /// Returns the value of the [status] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-AccountStatusType? get status$ => status;
+  @pragma('vm:prefer-inline')
+  AccountStatusType? get status$ => status;
 
   /// Returns the value of the [role] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-AccountRoleType? get role$ => role;
+  @pragma('vm:prefer-inline')
+  AccountRoleType? get role$ => role;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 
   /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get updatedAt$ => updatedAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get updatedAt$ => updatedAt!;
 
   /// Returns the value of the [deletedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get deletedAt$ => deletedAt;
-
+  @pragma('vm:prefer-inline')
+  DateTime? get deletedAt$ => deletedAt;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelAccountFieldNames {
-    /// The field name of [ModelAccount.id].
-static const id = 'id';
+  /// The field name of [ModelAccount.id].
+  static const id = 'id';
 
   /// The field name of [ModelAccount.email].
-static const email = 'email';
+  static const email = 'email';
 
   /// The field name of [ModelAccount.username].
-static const username = 'username';
+  static const username = 'username';
 
   /// The field name of [ModelAccount.passwordHash].
-static const passwordHash = 'password_hash';
+  static const passwordHash = 'password_hash';
 
   /// The field name of [ModelAccount.status].
-static const status = 'status';
+  static const status = 'status';
 
   /// The field name of [ModelAccount.role].
-static const role = 'role';
+  static const role = 'role';
 
   /// The field name of [ModelAccount.createdAt].
-static const createdAt = 'created_at';
+  static const createdAt = 'created_at';
 
   /// The field name of [ModelAccount.updatedAt].
-static const updatedAt = 'updated_at';
+  static const updatedAt = 'updated_at';
 
   /// The field name of [ModelAccount.deletedAt].
-static const deletedAt = 'deleted_at';
-
+  static const deletedAt = 'deleted_at';
 }
 
 extension ModelAccountX on ModelAccount {
@@ -415,50 +436,50 @@ extension ModelAccountX on ModelAccount {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelAccount copyWith({
     String? id,
-String? email,
-String? username,
-Uint8List? passwordHash,
-AccountStatusType? status,
-AccountRoleType? role,
-DateTime? createdAt,
-DateTime? updatedAt,
-DateTime? deletedAt,
+    String? email,
+    String? username,
+    Uint8List? passwordHash,
+    AccountStatusType? status,
+    AccountRoleType? role,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) {
     return ModelAccount.assertRequired(
       id: id ?? this.id,
-email: email ?? this.email,
-username: username ?? this.username,
-passwordHash: passwordHash ?? this.passwordHash,
-status: status ?? this.status,
-role: role ?? this.role,
-createdAt: createdAt ?? this.createdAt,
-updatedAt: updatedAt ?? this.updatedAt,
-deletedAt: deletedAt ?? this.deletedAt,
+      email: email ?? this.email,
+      username: username ?? this.username,
+      passwordHash: passwordHash ?? this.passwordHash,
+      status: status ?? this.status,
+      role: role ?? this.role,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelAccount copyWithout({
     bool id = true,
-bool email = true,
-bool username = true,
-bool passwordHash = true,
-bool status = true,
-bool role = true,
-bool createdAt = true,
-bool updatedAt = true,
-bool deletedAt = true,
+    bool email = true,
+    bool username = true,
+    bool passwordHash = true,
+    bool status = true,
+    bool role = true,
+    bool createdAt = true,
+    bool updatedAt = true,
+    bool deletedAt = true,
   }) {
     return ModelAccount.assertRequired(
-      id: id ? this.id: null,
-email: email ? this.email: null,
-username: username ? this.username: null,
-passwordHash: passwordHash ? this.passwordHash: null,
-status: status ? this.status: null,
-role: role ? this.role: null,
-createdAt: createdAt ? this.createdAt: null,
-updatedAt: updatedAt ? this.updatedAt: null,
-deletedAt: deletedAt ? this.deletedAt: null,
+      id: id ? this.id : null,
+      email: email ? this.email : null,
+      username: username ? this.username : null,
+      passwordHash: passwordHash ? this.passwordHash : null,
+      status: status ? this.status : null,
+      role: role ? this.role : null,
+      createdAt: createdAt ? this.createdAt : null,
+      updatedAt: updatedAt ? this.updatedAt : null,
+      deletedAt: deletedAt ? this.deletedAt : null,
     );
   }
 }

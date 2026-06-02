@@ -36,8 +36,7 @@ class _Sentinel extends TypeMappers {
       newTypeMap({});
 
   @override
-  TTypeMappers<CollectionMapperEvent> get collectionToMappers =>
-      newTypeMap({});
+  TTypeMappers<CollectionMapperEvent> get collectionToMappers => newTypeMap({});
 
   @override
   TTypeMappers<MapperEvent> get objectFromMappers => newTypeMap({

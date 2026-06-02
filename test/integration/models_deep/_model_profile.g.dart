@@ -32,11 +32,20 @@ class ModelProfile extends _ModelProfile with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, accountId, displayName, bio, avatarUrl, settings, createdAt, updatedAt];
+  List<Object?> get props => [
+        id,
+        accountId,
+        displayName,
+        bio,
+        avatarUrl,
+        settings,
+        createdAt,
+        updatedAt
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,87 +53,82 @@ class ModelProfile extends _ModelProfile with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? accountId;
+  final String? accountId;
 
   /// No description provided.
-final String? displayName;
+  final String? displayName;
 
   /// No description provided.
-final String? bio;
+  final String? bio;
 
   /// No description provided.
-final Uri? avatarUrl;
+  final Uri? avatarUrl;
 
   /// No description provided.
-final ModelProfileSettings? settings;
+  final ModelProfileSettings? settings;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final DateTime? updatedAt;
-
+  final DateTime? updatedAt;
 
   /// Constructs a new instance of [ModelProfile]
   /// from optional and required parameters.
   const ModelProfile({
     required this.id,
-required this.accountId,
- this.displayName,
- this.bio,
- this.avatarUrl,
- this.settings,
-required this.createdAt,
-required this.updatedAt,
-  }) ;
+    required this.accountId,
+    this.displayName,
+    this.bio,
+    this.avatarUrl,
+    this.settings,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
   /// Construcs a new instance of [ModelProfile],
   /// forcing all parameters to be optional.
   const ModelProfile.optional({
     this.id,
-this.accountId,
-this.displayName,
-this.bio,
-this.avatarUrl,
-this.settings,
-this.createdAt,
-this.updatedAt,
-  }) ;
-
+    this.accountId,
+    this.displayName,
+    this.bio,
+    this.avatarUrl,
+    this.settings,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   /// Constructs a new instance of [ModelProfile],
   /// and asserts that all required parameters are not null.
   factory ModelProfile.assertRequired({
     String? id,
-String? accountId,
-String? displayName,
-String? bio,
-Uri? avatarUrl,
-ModelProfileSettings? settings,
-DateTime? createdAt,
-DateTime? updatedAt,
+    String? accountId,
+    String? displayName,
+    String? bio,
+    Uri? avatarUrl,
+    ModelProfileSettings? settings,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     assert(id != null);
-assert(accountId != null);
+    assert(accountId != null);
 
-
-
-
-assert(createdAt != null);
-assert(updatedAt != null);
+    assert(createdAt != null);
+    assert(updatedAt != null);
     return ModelProfile(
       id: id,
-accountId: accountId,
-displayName: displayName,
-bio: bio,
-avatarUrl: avatarUrl,
-settings: settings,
-createdAt: createdAt,
-updatedAt: updatedAt,
+      accountId: accountId,
+      displayName: displayName,
+      bio: bio,
+      avatarUrl: avatarUrl,
+      settings: settings,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 
@@ -151,7 +155,6 @@ updatedAt: updatedAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelProfile],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -185,7 +188,7 @@ updatedAt: updatedAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelProfile.fromJsonString: $e');
+      assert(false, '$ModelProfile.fromJsonString: $e');
       rethrow;
     }
   }
@@ -227,22 +230,31 @@ updatedAt: updatedAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final accountId = json?['account_id']?.toString().trim().nullIfEmpty;
-final displayName = json?['display_name']?.toString().trim().nullIfEmpty;
-final bio = json?['bio']?.toString().trim().nullIfEmpty;
-final avatarUrl = #x0;
-final settings = () { final a = letMapOrNull<String, dynamic>(json?['settings']); return a != null ? ModelProfileSettings.fromJson(a): null; }();
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      final accountId = json?['account_id']?.toString().trim().nullIfEmpty;
+      final displayName = json?['display_name']?.toString().trim().nullIfEmpty;
+      final bio = json?['bio']?.toString().trim().nullIfEmpty;
+      final avatarUrl = #x0;
+      final settings = () {
+        final a = letMapOrNull<String, dynamic>(json?['settings']);
+        return a != null ? ModelProfileSettings.fromJson(a) : null;
+      }();
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
+      final updatedAt = () {
+        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
       return ModelProfile(
         id: id,
-accountId: accountId,
-displayName: displayName,
-bio: bio,
-avatarUrl: avatarUrl,
-settings: settings,
-createdAt: createdAt,
-updatedAt: updatedAt,
+        accountId: accountId,
+        displayName: displayName,
+        bio: bio,
+        avatarUrl: avatarUrl,
+        settings: settings,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
       );
     } catch (e) {
       return null;
@@ -283,15 +295,23 @@ updatedAt: updatedAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final accountId0 = accountId?.trim().nullIfEmpty;
-final displayName0 = displayName?.trim().nullIfEmpty;
-final bio0 = bio?.trim().nullIfEmpty;
-final avatarUrl0 = #x0;
-final settings0 = settings != null ? jsonEncode(settings!.toJson()) : null;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
-final updatedAt0 = updatedAt?.toUtc().toIso8601String();
+      final accountId0 = accountId?.trim().nullIfEmpty;
+      final displayName0 = displayName?.trim().nullIfEmpty;
+      final bio0 = bio?.trim().nullIfEmpty;
+      final avatarUrl0 = #x0;
+      final settings0 =
+          settings != null ? jsonEncode(settings!.toJson()) : null;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final updatedAt0 = updatedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'updated_at': updatedAt0,'settings': settings0,'id': id0,'display_name': displayName0,'created_at': createdAt0,'bio': bio0,'avatar_url': avatarUrl0,'account_id': accountId0,
+        'updated_at': updatedAt0,
+        'settings': settings0,
+        'id': id0,
+        'display_name': displayName0,
+        'created_at': createdAt0,
+        'bio': bio0,
+        'avatar_url': avatarUrl0,
+        'account_id': accountId0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -300,83 +320,81 @@ final updatedAt0 = updatedAt?.toUtc().toIso8601String();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [accountId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get accountId$ => accountId!;
+  @pragma('vm:prefer-inline')
+  String get accountId$ => accountId!;
 
   /// Returns the value of the [displayName] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get displayName$ => displayName;
+  @pragma('vm:prefer-inline')
+  String? get displayName$ => displayName;
 
   /// Returns the value of the [bio] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get bio$ => bio;
+  @pragma('vm:prefer-inline')
+  String? get bio$ => bio;
 
   /// Returns the value of the [avatarUrl] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uri? get avatarUrl$ => avatarUrl;
+  @pragma('vm:prefer-inline')
+  Uri? get avatarUrl$ => avatarUrl;
 
   /// Returns the value of the [settings] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-ModelProfileSettings? get settings$ => settings;
+  @pragma('vm:prefer-inline')
+  ModelProfileSettings? get settings$ => settings;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 
   /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get updatedAt$ => updatedAt!;
-
+  @pragma('vm:prefer-inline')
+  DateTime get updatedAt$ => updatedAt!;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelProfileFieldNames {
-    /// The field name of [ModelProfile.id].
-static const id = 'id';
+  /// The field name of [ModelProfile.id].
+  static const id = 'id';
 
   /// The field name of [ModelProfile.accountId].
-static const accountId = 'account_id';
+  static const accountId = 'account_id';
 
   /// The field name of [ModelProfile.displayName].
-static const displayName = 'display_name';
+  static const displayName = 'display_name';
 
   /// The field name of [ModelProfile.bio].
-static const bio = 'bio';
+  static const bio = 'bio';
 
   /// The field name of [ModelProfile.avatarUrl].
-static const avatarUrl = 'avatar_url';
+  static const avatarUrl = 'avatar_url';
 
   /// The field name of [ModelProfile.settings].
-static const settings = 'settings';
+  static const settings = 'settings';
 
   /// The field name of [ModelProfile.createdAt].
-static const createdAt = 'created_at';
+  static const createdAt = 'created_at';
 
   /// The field name of [ModelProfile.updatedAt].
-static const updatedAt = 'updated_at';
-
+  static const updatedAt = 'updated_at';
 }
 
 extension ModelProfileX on ModelProfile {
@@ -395,46 +413,46 @@ extension ModelProfileX on ModelProfile {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelProfile copyWith({
     String? id,
-String? accountId,
-String? displayName,
-String? bio,
-Uri? avatarUrl,
-ModelProfileSettings? settings,
-DateTime? createdAt,
-DateTime? updatedAt,
+    String? accountId,
+    String? displayName,
+    String? bio,
+    Uri? avatarUrl,
+    ModelProfileSettings? settings,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     return ModelProfile.assertRequired(
       id: id ?? this.id,
-accountId: accountId ?? this.accountId,
-displayName: displayName ?? this.displayName,
-bio: bio ?? this.bio,
-avatarUrl: avatarUrl ?? this.avatarUrl,
-settings: settings ?? this.settings,
-createdAt: createdAt ?? this.createdAt,
-updatedAt: updatedAt ?? this.updatedAt,
+      accountId: accountId ?? this.accountId,
+      displayName: displayName ?? this.displayName,
+      bio: bio ?? this.bio,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+      settings: settings ?? this.settings,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelProfile copyWithout({
     bool id = true,
-bool accountId = true,
-bool displayName = true,
-bool bio = true,
-bool avatarUrl = true,
-bool settings = true,
-bool createdAt = true,
-bool updatedAt = true,
+    bool accountId = true,
+    bool displayName = true,
+    bool bio = true,
+    bool avatarUrl = true,
+    bool settings = true,
+    bool createdAt = true,
+    bool updatedAt = true,
   }) {
     return ModelProfile.assertRequired(
-      id: id ? this.id: null,
-accountId: accountId ? this.accountId: null,
-displayName: displayName ? this.displayName: null,
-bio: bio ? this.bio: null,
-avatarUrl: avatarUrl ? this.avatarUrl: null,
-settings: settings ? this.settings: null,
-createdAt: createdAt ? this.createdAt: null,
-updatedAt: updatedAt ? this.updatedAt: null,
+      id: id ? this.id : null,
+      accountId: accountId ? this.accountId : null,
+      displayName: displayName ? this.displayName : null,
+      bio: bio ? this.bio : null,
+      avatarUrl: avatarUrl ? this.avatarUrl : null,
+      settings: settings ? this.settings : null,
+      createdAt: createdAt ? this.createdAt : null,
+      updatedAt: updatedAt ? this.updatedAt : null,
     );
   }
 }

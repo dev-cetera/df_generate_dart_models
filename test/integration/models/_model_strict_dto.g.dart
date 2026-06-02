@@ -32,11 +32,12 @@ class ModelStrictDto extends _ModelStrictDto with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, name, count, ratio, active, createdAt, homepage, avatar];
+  List<Object?> get props =>
+      [id, name, count, ratio, active, createdAt, homepage, avatar];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,87 +45,83 @@ class ModelStrictDto extends _ModelStrictDto with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? name;
+  final String? name;
 
   /// No description provided.
-final int? count;
+  final int? count;
 
   /// No description provided.
-final double? ratio;
+  final double? ratio;
 
   /// No description provided.
-final bool? active;
+  final bool? active;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final Uri? homepage;
+  final Uri? homepage;
 
   /// No description provided.
-final Uint8List? avatar;
-
+  final Uint8List? avatar;
 
   /// Constructs a new instance of [ModelStrictDto]
   /// from optional and required parameters.
   const ModelStrictDto({
     required this.id,
-required this.name,
-required this.count,
- this.ratio,
- this.active,
-required this.createdAt,
- this.homepage,
- this.avatar,
-  }) ;
+    required this.name,
+    required this.count,
+    this.ratio,
+    this.active,
+    required this.createdAt,
+    this.homepage,
+    this.avatar,
+  });
 
   /// Construcs a new instance of [ModelStrictDto],
   /// forcing all parameters to be optional.
   const ModelStrictDto.optional({
     this.id,
-this.name,
-this.count,
-this.ratio,
-this.active,
-this.createdAt,
-this.homepage,
-this.avatar,
-  }) ;
-
+    this.name,
+    this.count,
+    this.ratio,
+    this.active,
+    this.createdAt,
+    this.homepage,
+    this.avatar,
+  });
 
   /// Constructs a new instance of [ModelStrictDto],
   /// and asserts that all required parameters are not null.
   factory ModelStrictDto.assertRequired({
     String? id,
-String? name,
-int? count,
-double? ratio,
-bool? active,
-DateTime? createdAt,
-Uri? homepage,
-Uint8List? avatar,
+    String? name,
+    int? count,
+    double? ratio,
+    bool? active,
+    DateTime? createdAt,
+    Uri? homepage,
+    Uint8List? avatar,
   }) {
     assert(id != null);
-assert(name != null);
-assert(count != null);
+    assert(name != null);
+    assert(count != null);
 
-
-assert(createdAt != null);
-
+    assert(createdAt != null);
 
     return ModelStrictDto(
       id: id,
-name: name,
-count: count,
-ratio: ratio,
-active: active,
-createdAt: createdAt,
-homepage: homepage,
-avatar: avatar,
+      name: name,
+      count: count,
+      ratio: ratio,
+      active: active,
+      createdAt: createdAt,
+      homepage: homepage,
+      avatar: avatar,
     );
   }
 
@@ -151,7 +148,6 @@ avatar: avatar,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelStrictDto],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -185,7 +181,7 @@ avatar: avatar,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelStrictDto.fromJsonString: $e');
+      assert(false, '$ModelStrictDto.fromJsonString: $e');
       rethrow;
     }
   }
@@ -227,22 +223,28 @@ avatar: avatar,
   ) {
     try {
       final id = json?['id'] as String?;
-final name = json?['name'] as String?;
-final count = (json?['count'] as num?)?.toInt();
-final ratio = (json?['ratio'] as num?)?.toDouble();
-final active = json?['active'] as bool?;
-final createdAt = json?['createdAt'] == null ? null : DateTime.parse(json?['createdAt'] as String).toUtc();
-final homepage = json?['homepage'] == null ? null : Uri.parse(json?['homepage'] as String);
-final avatar = json?['avatar'] == null ? null : base64Decode(json?['avatar'] as String);
+      final name = json?['name'] as String?;
+      final count = (json?['count'] as num?)?.toInt();
+      final ratio = (json?['ratio'] as num?)?.toDouble();
+      final active = json?['active'] as bool?;
+      final createdAt = json?['createdAt'] == null
+          ? null
+          : DateTime.parse(json?['createdAt'] as String).toUtc();
+      final homepage = json?['homepage'] == null
+          ? null
+          : Uri.parse(json?['homepage'] as String);
+      final avatar = json?['avatar'] == null
+          ? null
+          : base64Decode(json?['avatar'] as String);
       return ModelStrictDto(
         id: id,
-name: name,
-count: count,
-ratio: ratio,
-active: active,
-createdAt: createdAt,
-homepage: homepage,
-avatar: avatar,
+        name: name,
+        count: count,
+        ratio: ratio,
+        active: active,
+        createdAt: createdAt,
+        homepage: homepage,
+        avatar: avatar,
       );
     } catch (e) {
       return null;
@@ -283,15 +285,22 @@ avatar: avatar,
   }) {
     try {
       final id0 = id;
-final name0 = name;
-final count0 = count;
-final ratio0 = ratio;
-final active0 = active;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
-final homepage0 = homepage?.toString();
-final avatar0 = avatar != null ? base64Encode(avatar!) : null;
+      final name0 = name;
+      final count0 = count;
+      final ratio0 = ratio;
+      final active0 = active;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final homepage0 = homepage?.toString();
+      final avatar0 = avatar != null ? base64Encode(avatar!) : null;
       final withNulls = {
-        'ratio': ratio0,'name': name0,'id': id0,'homepage': homepage0,'createdAt': createdAt0,'count': count0,'avatar': avatar0,'active': active0,
+        'ratio': ratio0,
+        'name': name0,
+        'id': id0,
+        'homepage': homepage0,
+        'createdAt': createdAt0,
+        'count': count0,
+        'avatar': avatar0,
+        'active': active0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -300,83 +309,81 @@ final avatar0 = avatar != null ? base64Encode(avatar!) : null;
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [name] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get name$ => name!;
+  @pragma('vm:prefer-inline')
+  String get name$ => name!;
 
   /// Returns the value of the [count] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int get count$ => count!;
+  @pragma('vm:prefer-inline')
+  int get count$ => count!;
 
   /// Returns the value of the [ratio] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-double? get ratio$ => ratio;
+  @pragma('vm:prefer-inline')
+  double? get ratio$ => ratio;
 
   /// Returns the value of the [active] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-bool? get active$ => active;
+  @pragma('vm:prefer-inline')
+  bool? get active$ => active;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 
   /// Returns the value of the [homepage] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uri? get homepage$ => homepage;
+  @pragma('vm:prefer-inline')
+  Uri? get homepage$ => homepage;
 
   /// Returns the value of the [avatar] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uint8List? get avatar$ => avatar;
-
+  @pragma('vm:prefer-inline')
+  Uint8List? get avatar$ => avatar;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelStrictDtoFieldNames {
-    /// The field name of [ModelStrictDto.id].
-static const id = 'id';
+  /// The field name of [ModelStrictDto.id].
+  static const id = 'id';
 
   /// The field name of [ModelStrictDto.name].
-static const name = 'name';
+  static const name = 'name';
 
   /// The field name of [ModelStrictDto.count].
-static const count = 'count';
+  static const count = 'count';
 
   /// The field name of [ModelStrictDto.ratio].
-static const ratio = 'ratio';
+  static const ratio = 'ratio';
 
   /// The field name of [ModelStrictDto.active].
-static const active = 'active';
+  static const active = 'active';
 
   /// The field name of [ModelStrictDto.createdAt].
-static const createdAt = 'createdAt';
+  static const createdAt = 'createdAt';
 
   /// The field name of [ModelStrictDto.homepage].
-static const homepage = 'homepage';
+  static const homepage = 'homepage';
 
   /// The field name of [ModelStrictDto.avatar].
-static const avatar = 'avatar';
-
+  static const avatar = 'avatar';
 }
 
 extension ModelStrictDtoX on ModelStrictDto {
@@ -395,46 +402,46 @@ extension ModelStrictDtoX on ModelStrictDto {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelStrictDto copyWith({
     String? id,
-String? name,
-int? count,
-double? ratio,
-bool? active,
-DateTime? createdAt,
-Uri? homepage,
-Uint8List? avatar,
+    String? name,
+    int? count,
+    double? ratio,
+    bool? active,
+    DateTime? createdAt,
+    Uri? homepage,
+    Uint8List? avatar,
   }) {
     return ModelStrictDto.assertRequired(
       id: id ?? this.id,
-name: name ?? this.name,
-count: count ?? this.count,
-ratio: ratio ?? this.ratio,
-active: active ?? this.active,
-createdAt: createdAt ?? this.createdAt,
-homepage: homepage ?? this.homepage,
-avatar: avatar ?? this.avatar,
+      name: name ?? this.name,
+      count: count ?? this.count,
+      ratio: ratio ?? this.ratio,
+      active: active ?? this.active,
+      createdAt: createdAt ?? this.createdAt,
+      homepage: homepage ?? this.homepage,
+      avatar: avatar ?? this.avatar,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelStrictDto copyWithout({
     bool id = true,
-bool name = true,
-bool count = true,
-bool ratio = true,
-bool active = true,
-bool createdAt = true,
-bool homepage = true,
-bool avatar = true,
+    bool name = true,
+    bool count = true,
+    bool ratio = true,
+    bool active = true,
+    bool createdAt = true,
+    bool homepage = true,
+    bool avatar = true,
   }) {
     return ModelStrictDto.assertRequired(
-      id: id ? this.id: null,
-name: name ? this.name: null,
-count: count ? this.count: null,
-ratio: ratio ? this.ratio: null,
-active: active ? this.active: null,
-createdAt: createdAt ? this.createdAt: null,
-homepage: homepage ? this.homepage: null,
-avatar: avatar ? this.avatar: null,
+      id: id ? this.id : null,
+      name: name ? this.name : null,
+      count: count ? this.count : null,
+      ratio: ratio ? this.ratio : null,
+      active: active ? this.active : null,
+      createdAt: createdAt ? this.createdAt : null,
+      homepage: homepage ? this.homepage : null,
+      avatar: avatar ? this.avatar : null,
     );
   }
 }

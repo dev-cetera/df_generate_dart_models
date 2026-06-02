@@ -32,11 +32,22 @@ class ModelBase extends _ModelBase with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, name, count, ratio, active, createdAt, homepage, big, tags, metadata];
+  List<Object?> get props => [
+        id,
+        name,
+        count,
+        ratio,
+        active,
+        createdAt,
+        homepage,
+        big,
+        tags,
+        metadata
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,103 +55,94 @@ class ModelBase extends _ModelBase with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? name;
+  final String? name;
 
   /// No description provided.
-final int? count;
+  final int? count;
 
   /// No description provided.
-final double? ratio;
+  final double? ratio;
 
   /// No description provided.
-final bool? active;
+  final bool? active;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final Uri? homepage;
+  final Uri? homepage;
 
   /// No description provided.
-final BigInt? big;
+  final BigInt? big;
 
   /// No description provided.
-final List<String>? tags;
+  final List<String>? tags;
 
   /// No description provided.
-final Map<String,dynamic>? metadata;
-
+  final Map<String, dynamic>? metadata;
 
   /// Constructs a new instance of [ModelBase]
   /// from optional and required parameters.
   const ModelBase({
     required this.id,
-required this.name,
- this.count,
- this.ratio,
- this.active,
- this.createdAt,
- this.homepage,
- this.big,
- this.tags,
- this.metadata,
-  }) ;
+    required this.name,
+    this.count,
+    this.ratio,
+    this.active,
+    this.createdAt,
+    this.homepage,
+    this.big,
+    this.tags,
+    this.metadata,
+  });
 
   /// Construcs a new instance of [ModelBase],
   /// forcing all parameters to be optional.
   const ModelBase.optional({
     this.id,
-this.name,
-this.count,
-this.ratio,
-this.active,
-this.createdAt,
-this.homepage,
-this.big,
-this.tags,
-this.metadata,
-  }) ;
-
+    this.name,
+    this.count,
+    this.ratio,
+    this.active,
+    this.createdAt,
+    this.homepage,
+    this.big,
+    this.tags,
+    this.metadata,
+  });
 
   /// Constructs a new instance of [ModelBase],
   /// and asserts that all required parameters are not null.
   factory ModelBase.assertRequired({
     String? id,
-String? name,
-int? count,
-double? ratio,
-bool? active,
-DateTime? createdAt,
-Uri? homepage,
-BigInt? big,
-List<String>? tags,
-Map<String,dynamic>? metadata,
+    String? name,
+    int? count,
+    double? ratio,
+    bool? active,
+    DateTime? createdAt,
+    Uri? homepage,
+    BigInt? big,
+    List<String>? tags,
+    Map<String, dynamic>? metadata,
   }) {
     assert(id != null);
-assert(name != null);
-
-
-
-
-
-
-
+    assert(name != null);
 
     return ModelBase(
       id: id,
-name: name,
-count: count,
-ratio: ratio,
-active: active,
-createdAt: createdAt,
-homepage: homepage,
-big: big,
-tags: tags,
-metadata: metadata,
+      name: name,
+      count: count,
+      ratio: ratio,
+      active: active,
+      createdAt: createdAt,
+      homepage: homepage,
+      big: big,
+      tags: tags,
+      metadata: metadata,
     );
   }
 
@@ -167,7 +169,6 @@ metadata: metadata,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelBase],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -201,7 +202,7 @@ metadata: metadata,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelBase.fromJsonString: $e');
+      assert(false, '$ModelBase.fromJsonString: $e');
       rethrow;
     }
   }
@@ -243,26 +244,51 @@ metadata: metadata,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final name = json?['name']?.toString().trim().nullIfEmpty;
-final count = letIntOrNull(json?['count']);
-final ratio = letDoubleOrNull(json?['ratio']);
-final active = letBoolOrNull(json?['active']);
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-final homepage = (){ final a = json?['homepage']?.toString().trim().nullIfEmpty; return a != null ? Uri.tryParse(a): null; }();
-final big = (){ final a = json?['big']?.toString().trim().nullIfEmpty; return a != null ? BigInt.tryParse(a): null; }();
-final tags = letListOrNull<dynamic>(json?['tags'])?.map((p0) => p0?.toString().trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final metadata = letMapOrNull<dynamic, dynamic>(json?['metadata'])?.map((p0, p1) => MapEntry(p0?.toString().trim().nullIfEmpty, p1,),).nonNulls.nullIfEmpty?.unmodifiable;
+      final name = json?['name']?.toString().trim().nullIfEmpty;
+      final count = letIntOrNull(json?['count']);
+      final ratio = letDoubleOrNull(json?['ratio']);
+      final active = letBoolOrNull(json?['active']);
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
+      final homepage = () {
+        final a = json?['homepage']?.toString().trim().nullIfEmpty;
+        return a != null ? Uri.tryParse(a) : null;
+      }();
+      final big = () {
+        final a = json?['big']?.toString().trim().nullIfEmpty;
+        return a != null ? BigInt.tryParse(a) : null;
+      }();
+      final tags = letListOrNull<dynamic>(json?['tags'])
+          ?.map(
+            (p0) => p0?.toString().trim().nullIfEmpty,
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final metadata = letMapOrNull<dynamic, dynamic>(json?['metadata'])
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.toString().trim().nullIfEmpty,
+              p1,
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.unmodifiable;
       return ModelBase(
         id: id,
-name: name,
-count: count,
-ratio: ratio,
-active: active,
-createdAt: createdAt,
-homepage: homepage,
-big: big,
-tags: tags,
-metadata: metadata,
+        name: name,
+        count: count,
+        ratio: ratio,
+        active: active,
+        createdAt: createdAt,
+        homepage: homepage,
+        big: big,
+        tags: tags,
+        metadata: metadata,
       );
     } catch (e) {
       return null;
@@ -303,17 +329,40 @@ metadata: metadata,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final name0 = name?.trim().nullIfEmpty;
-final count0 = count;
-final ratio0 = ratio;
-final active0 = active;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
-final homepage0 = homepage?.toString();
-final big0 = big?.toString();
-final tags0 = tags?.map((p0) => p0?.trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList();
-final metadata0 = metadata?.map((p0, p1) => MapEntry(p0?.trim().nullIfEmpty, p1,),).nonNulls.nullIfEmpty;
+      final name0 = name?.trim().nullIfEmpty;
+      final count0 = count;
+      final ratio0 = ratio;
+      final active0 = active;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final homepage0 = homepage?.toString();
+      final big0 = big?.toString();
+      final tags0 = tags
+          ?.map(
+            (p0) => p0?.trim().nullIfEmpty,
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList();
+      final metadata0 = metadata
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.trim().nullIfEmpty,
+              p1,
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty;
       final withNulls = {
-        'tags': tags0,'ratio': ratio0,'name': name0,'metadata': metadata0,'id': id0,'homepage': homepage0,'created_at': createdAt0,'count': count0,'big': big0,'active': active0,
+        'tags': tags0,
+        'ratio': ratio0,
+        'name': name0,
+        'metadata': metadata0,
+        'id': id0,
+        'homepage': homepage0,
+        'created_at': createdAt0,
+        'count': count0,
+        'big': big0,
+        'active': active0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -322,101 +371,99 @@ final metadata0 = metadata?.map((p0, p1) => MapEntry(p0?.trim().nullIfEmpty, p1,
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [name] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get name$ => name!;
+  @pragma('vm:prefer-inline')
+  String get name$ => name!;
 
   /// Returns the value of the [count] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int? get count$ => count;
+  @pragma('vm:prefer-inline')
+  int? get count$ => count;
 
   /// Returns the value of the [ratio] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-double? get ratio$ => ratio;
+  @pragma('vm:prefer-inline')
+  double? get ratio$ => ratio;
 
   /// Returns the value of the [active] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-bool? get active$ => active;
+  @pragma('vm:prefer-inline')
+  bool? get active$ => active;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get createdAt$ => createdAt;
+  @pragma('vm:prefer-inline')
+  DateTime? get createdAt$ => createdAt;
 
   /// Returns the value of the [homepage] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uri? get homepage$ => homepage;
+  @pragma('vm:prefer-inline')
+  Uri? get homepage$ => homepage;
 
   /// Returns the value of the [big] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-BigInt? get big$ => big;
+  @pragma('vm:prefer-inline')
+  BigInt? get big$ => big;
 
   /// Returns the value of the [tags] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<String>? get tags$ => tags;
+  @pragma('vm:prefer-inline')
+  List<String>? get tags$ => tags;
 
   /// Returns the value of the [metadata] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Map<String,dynamic>? get metadata$ => metadata;
-
+  @pragma('vm:prefer-inline')
+  Map<String, dynamic>? get metadata$ => metadata;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelBaseFieldNames {
-    /// The field name of [ModelBase.id].
-static const id = 'id';
+  /// The field name of [ModelBase.id].
+  static const id = 'id';
 
   /// The field name of [ModelBase.name].
-static const name = 'name';
+  static const name = 'name';
 
   /// The field name of [ModelBase.count].
-static const count = 'count';
+  static const count = 'count';
 
   /// The field name of [ModelBase.ratio].
-static const ratio = 'ratio';
+  static const ratio = 'ratio';
 
   /// The field name of [ModelBase.active].
-static const active = 'active';
+  static const active = 'active';
 
   /// The field name of [ModelBase.createdAt].
-static const createdAt = 'created_at';
+  static const createdAt = 'created_at';
 
   /// The field name of [ModelBase.homepage].
-static const homepage = 'homepage';
+  static const homepage = 'homepage';
 
   /// The field name of [ModelBase.big].
-static const big = 'big';
+  static const big = 'big';
 
   /// The field name of [ModelBase.tags].
-static const tags = 'tags';
+  static const tags = 'tags';
 
   /// The field name of [ModelBase.metadata].
-static const metadata = 'metadata';
-
+  static const metadata = 'metadata';
 }
 
 extension ModelBaseX on ModelBase {
@@ -435,54 +482,54 @@ extension ModelBaseX on ModelBase {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelBase copyWith({
     String? id,
-String? name,
-int? count,
-double? ratio,
-bool? active,
-DateTime? createdAt,
-Uri? homepage,
-BigInt? big,
-List<String>? tags,
-Map<String,dynamic>? metadata,
+    String? name,
+    int? count,
+    double? ratio,
+    bool? active,
+    DateTime? createdAt,
+    Uri? homepage,
+    BigInt? big,
+    List<String>? tags,
+    Map<String, dynamic>? metadata,
   }) {
     return ModelBase.assertRequired(
       id: id ?? this.id,
-name: name ?? this.name,
-count: count ?? this.count,
-ratio: ratio ?? this.ratio,
-active: active ?? this.active,
-createdAt: createdAt ?? this.createdAt,
-homepage: homepage ?? this.homepage,
-big: big ?? this.big,
-tags: tags ?? this.tags,
-metadata: metadata ?? this.metadata,
+      name: name ?? this.name,
+      count: count ?? this.count,
+      ratio: ratio ?? this.ratio,
+      active: active ?? this.active,
+      createdAt: createdAt ?? this.createdAt,
+      homepage: homepage ?? this.homepage,
+      big: big ?? this.big,
+      tags: tags ?? this.tags,
+      metadata: metadata ?? this.metadata,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelBase copyWithout({
     bool id = true,
-bool name = true,
-bool count = true,
-bool ratio = true,
-bool active = true,
-bool createdAt = true,
-bool homepage = true,
-bool big = true,
-bool tags = true,
-bool metadata = true,
+    bool name = true,
+    bool count = true,
+    bool ratio = true,
+    bool active = true,
+    bool createdAt = true,
+    bool homepage = true,
+    bool big = true,
+    bool tags = true,
+    bool metadata = true,
   }) {
     return ModelBase.assertRequired(
-      id: id ? this.id: null,
-name: name ? this.name: null,
-count: count ? this.count: null,
-ratio: ratio ? this.ratio: null,
-active: active ? this.active: null,
-createdAt: createdAt ? this.createdAt: null,
-homepage: homepage ? this.homepage: null,
-big: big ? this.big: null,
-tags: tags ? this.tags: null,
-metadata: metadata ? this.metadata: null,
+      id: id ? this.id : null,
+      name: name ? this.name : null,
+      count: count ? this.count : null,
+      ratio: ratio ? this.ratio : null,
+      active: active ? this.active : null,
+      createdAt: createdAt ? this.createdAt : null,
+      homepage: homepage ? this.homepage : null,
+      big: big ? this.big : null,
+      tags: tags ? this.tags : null,
+      metadata: metadata ? this.metadata : null,
     );
   }
 }

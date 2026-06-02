@@ -32,11 +32,12 @@ class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [defaultVisibility, language, timezone, marketingOptIn];
+  List<Object?> get props =>
+      [defaultVisibility, language, timezone, marketingOptIn];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,55 +45,49 @@ class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final PostVisibilityType? defaultVisibility;
+  /// No description provided.
+  final PostVisibilityType? defaultVisibility;
 
   /// No description provided.
-final String? language;
+  final String? language;
 
   /// No description provided.
-final String? timezone;
+  final String? timezone;
 
   /// No description provided.
-final bool? marketingOptIn;
-
+  final bool? marketingOptIn;
 
   /// Constructs a new instance of [ModelProfileSettings]
   /// from optional and required parameters.
   const ModelProfileSettings({
-     this.defaultVisibility,
- this.language,
- this.timezone,
- this.marketingOptIn,
-  }) ;
+    this.defaultVisibility,
+    this.language,
+    this.timezone,
+    this.marketingOptIn,
+  });
 
   /// Construcs a new instance of [ModelProfileSettings],
   /// forcing all parameters to be optional.
   const ModelProfileSettings.optional({
     this.defaultVisibility,
-this.language,
-this.timezone,
-this.marketingOptIn,
-  }) ;
-
+    this.language,
+    this.timezone,
+    this.marketingOptIn,
+  });
 
   /// Constructs a new instance of [ModelProfileSettings],
   /// and asserts that all required parameters are not null.
   factory ModelProfileSettings.assertRequired({
     PostVisibilityType? defaultVisibility,
-String? language,
-String? timezone,
-bool? marketingOptIn,
+    String? language,
+    String? timezone,
+    bool? marketingOptIn,
   }) {
-    
-
-
-
     return ModelProfileSettings(
       defaultVisibility: defaultVisibility,
-language: language,
-timezone: timezone,
-marketingOptIn: marketingOptIn,
+      language: language,
+      timezone: timezone,
+      marketingOptIn: marketingOptIn,
     );
   }
 
@@ -119,7 +114,6 @@ marketingOptIn: marketingOptIn,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelProfileSettings],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -153,7 +147,7 @@ marketingOptIn: marketingOptIn,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelProfileSettings.fromJsonString: $e');
+      assert(false, '$ModelProfileSettings.fromJsonString: $e');
       rethrow;
     }
   }
@@ -194,15 +188,16 @@ marketingOptIn: marketingOptIn,
     Map<String, dynamic>? json,
   ) {
     try {
-      final defaultVisibility = PostVisibilityType.values.valueOf(json?['default_visibility']?.toString());
-final language = json?['language']?.toString().trim().nullIfEmpty;
-final timezone = json?['timezone']?.toString().trim().nullIfEmpty;
-final marketingOptIn = letBoolOrNull(json?['marketing_opt_in']);
+      final defaultVisibility = PostVisibilityType.values
+          .valueOf(json?['default_visibility']?.toString());
+      final language = json?['language']?.toString().trim().nullIfEmpty;
+      final timezone = json?['timezone']?.toString().trim().nullIfEmpty;
+      final marketingOptIn = letBoolOrNull(json?['marketing_opt_in']);
       return ModelProfileSettings(
         defaultVisibility: defaultVisibility,
-language: language,
-timezone: timezone,
-marketingOptIn: marketingOptIn,
+        language: language,
+        timezone: timezone,
+        marketingOptIn: marketingOptIn,
       );
     } catch (e) {
       return null;
@@ -243,11 +238,14 @@ marketingOptIn: marketingOptIn,
   }) {
     try {
       final defaultVisibility0 = defaultVisibility?.name;
-final language0 = language?.trim().nullIfEmpty;
-final timezone0 = timezone?.trim().nullIfEmpty;
-final marketingOptIn0 = marketingOptIn;
+      final language0 = language?.trim().nullIfEmpty;
+      final timezone0 = timezone?.trim().nullIfEmpty;
+      final marketingOptIn0 = marketingOptIn;
       final withNulls = {
-        'timezone': timezone0,'marketing_opt_in': marketingOptIn0,'language': language0,'default_visibility': defaultVisibility0,
+        'timezone': timezone0,
+        'marketing_opt_in': marketingOptIn0,
+        'language': language0,
+        'default_visibility': defaultVisibility0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -256,47 +254,45 @@ final marketingOptIn0 = marketingOptIn;
     }
   }
 
-    /// Returns the value of the [defaultVisibility] field.
+  /// Returns the value of the [defaultVisibility] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-PostVisibilityType? get defaultVisibility$ => defaultVisibility;
+  @pragma('vm:prefer-inline')
+  PostVisibilityType? get defaultVisibility$ => defaultVisibility;
 
   /// Returns the value of the [language] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get language$ => language;
+  @pragma('vm:prefer-inline')
+  String? get language$ => language;
 
   /// Returns the value of the [timezone] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get timezone$ => timezone;
+  @pragma('vm:prefer-inline')
+  String? get timezone$ => timezone;
 
   /// Returns the value of the [marketingOptIn] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-bool? get marketingOptIn$ => marketingOptIn;
-
+  @pragma('vm:prefer-inline')
+  bool? get marketingOptIn$ => marketingOptIn;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelProfileSettingsFieldNames {
-    /// The field name of [ModelProfileSettings.defaultVisibility].
-static const defaultVisibility = 'default_visibility';
+  /// The field name of [ModelProfileSettings.defaultVisibility].
+  static const defaultVisibility = 'default_visibility';
 
   /// The field name of [ModelProfileSettings.language].
-static const language = 'language';
+  static const language = 'language';
 
   /// The field name of [ModelProfileSettings.timezone].
-static const timezone = 'timezone';
+  static const timezone = 'timezone';
 
   /// The field name of [ModelProfileSettings.marketingOptIn].
-static const marketingOptIn = 'marketing_opt_in';
-
+  static const marketingOptIn = 'marketing_opt_in';
 }
 
 extension ModelProfileSettingsX on ModelProfileSettings {
@@ -315,30 +311,30 @@ extension ModelProfileSettingsX on ModelProfileSettings {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelProfileSettings copyWith({
     PostVisibilityType? defaultVisibility,
-String? language,
-String? timezone,
-bool? marketingOptIn,
+    String? language,
+    String? timezone,
+    bool? marketingOptIn,
   }) {
     return ModelProfileSettings.assertRequired(
       defaultVisibility: defaultVisibility ?? this.defaultVisibility,
-language: language ?? this.language,
-timezone: timezone ?? this.timezone,
-marketingOptIn: marketingOptIn ?? this.marketingOptIn,
+      language: language ?? this.language,
+      timezone: timezone ?? this.timezone,
+      marketingOptIn: marketingOptIn ?? this.marketingOptIn,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelProfileSettings copyWithout({
     bool defaultVisibility = true,
-bool language = true,
-bool timezone = true,
-bool marketingOptIn = true,
+    bool language = true,
+    bool timezone = true,
+    bool marketingOptIn = true,
   }) {
     return ModelProfileSettings.assertRequired(
-      defaultVisibility: defaultVisibility ? this.defaultVisibility: null,
-language: language ? this.language: null,
-timezone: timezone ? this.timezone: null,
-marketingOptIn: marketingOptIn ? this.marketingOptIn: null,
+      defaultVisibility: defaultVisibility ? this.defaultVisibility : null,
+      language: language ? this.language : null,
+      timezone: timezone ? this.timezone : null,
+      marketingOptIn: marketingOptIn ? this.marketingOptIn : null,
     );
   }
 }

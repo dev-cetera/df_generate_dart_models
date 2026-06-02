@@ -227,8 +227,7 @@ void main() {
       expect(r, contains('toUtc()'));
     });
 
-    test('PG_jsonb-ModelXxx decodes via letMapOrNull then nested fromJson',
-        () {
+    test('PG_jsonb-ModelXxx decodes via letMapOrNull then nested fromJson', () {
       final r = mapFrom('PG_jsonb-ModelBulletinPage', name: 'v');
       expect(r, contains('letMapOrNull'));
       expect(r, contains('ModelBulletinPage.fromJson(a)'));
@@ -347,7 +346,9 @@ void main() {
   group('Tier 2 Flutter geometry types', () {
     test('Offset uses dx/dy map', () {
       expect(
-          mapFrom('Offset'), contains("Offset(letAsOrNull<double>(a['dx'])"),);
+        mapFrom('Offset'),
+        contains("Offset(letAsOrNull<double>(a['dx'])"),
+      );
       expect(mapTo('Offset'), "x != null ? {'dx': x!.dx, 'dy': x!.dy} : null");
     });
 
@@ -501,7 +502,8 @@ void main() {
       expect(r, contains('v!.toUtc()'));
     });
 
-    test('FS_server_timestamp-DateTime emits FieldValue.serverTimestamp() on '
+    test(
+        'FS_server_timestamp-DateTime emits FieldValue.serverTimestamp() on '
         'write', () {
       expect(
         mapTo('FS_server_timestamp-DateTime', name: 'v'),

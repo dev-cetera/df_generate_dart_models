@@ -32,7 +32,7 @@ class ModelPostMetadata extends _ModelPostMetadata with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
@@ -44,47 +44,44 @@ class ModelPostMetadata extends _ModelPostMetadata with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? format;
+  /// No description provided.
+  final String? format;
 
   /// No description provided.
-final int? wordCount;
+  final int? wordCount;
 
   /// No description provided.
-final String? language;
-
+  final String? language;
 
   /// Constructs a new instance of [ModelPostMetadata]
   /// from optional and required parameters.
   const ModelPostMetadata({
     required this.format,
- this.wordCount,
- this.language,
-  }) ;
+    this.wordCount,
+    this.language,
+  });
 
   /// Construcs a new instance of [ModelPostMetadata],
   /// forcing all parameters to be optional.
   const ModelPostMetadata.optional({
     this.format,
-this.wordCount,
-this.language,
-  }) ;
-
+    this.wordCount,
+    this.language,
+  });
 
   /// Constructs a new instance of [ModelPostMetadata],
   /// and asserts that all required parameters are not null.
   factory ModelPostMetadata.assertRequired({
     String? format,
-int? wordCount,
-String? language,
+    int? wordCount,
+    String? language,
   }) {
     assert(format != null);
 
-
     return ModelPostMetadata(
       format: format,
-wordCount: wordCount,
-language: language,
+      wordCount: wordCount,
+      language: language,
     );
   }
 
@@ -111,7 +108,6 @@ language: language,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelPostMetadata],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -145,7 +141,7 @@ language: language,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelPostMetadata.fromJsonString: $e');
+      assert(false, '$ModelPostMetadata.fromJsonString: $e');
       rethrow;
     }
   }
@@ -187,12 +183,12 @@ language: language,
   ) {
     try {
       final format = json?['format']?.toString().trim().nullIfEmpty;
-final wordCount = letIntOrNull(json?['word_count']);
-final language = json?['language']?.toString().trim().nullIfEmpty;
+      final wordCount = letIntOrNull(json?['word_count']);
+      final language = json?['language']?.toString().trim().nullIfEmpty;
       return ModelPostMetadata(
         format: format,
-wordCount: wordCount,
-language: language,
+        wordCount: wordCount,
+        language: language,
       );
     } catch (e) {
       return null;
@@ -233,10 +229,12 @@ language: language,
   }) {
     try {
       final format0 = format?.trim().nullIfEmpty;
-final wordCount0 = wordCount;
-final language0 = language?.trim().nullIfEmpty;
+      final wordCount0 = wordCount;
+      final language0 = language?.trim().nullIfEmpty;
       final withNulls = {
-        'word_count': wordCount0,'language': language0,'format': format0,
+        'word_count': wordCount0,
+        'language': language0,
+        'format': format0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -245,38 +243,36 @@ final language0 = language?.trim().nullIfEmpty;
     }
   }
 
-    /// Returns the value of the [format] field.
+  /// Returns the value of the [format] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get format$ => format!;
+  @pragma('vm:prefer-inline')
+  String get format$ => format!;
 
   /// Returns the value of the [wordCount] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int? get wordCount$ => wordCount;
+  @pragma('vm:prefer-inline')
+  int? get wordCount$ => wordCount;
 
   /// Returns the value of the [language] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get language$ => language;
-
+  @pragma('vm:prefer-inline')
+  String? get language$ => language;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelPostMetadataFieldNames {
-    /// The field name of [ModelPostMetadata.format].
-static const format = 'format';
+  /// The field name of [ModelPostMetadata.format].
+  static const format = 'format';
 
   /// The field name of [ModelPostMetadata.wordCount].
-static const wordCount = 'word_count';
+  static const wordCount = 'word_count';
 
   /// The field name of [ModelPostMetadata.language].
-static const language = 'language';
-
+  static const language = 'language';
 }
 
 extension ModelPostMetadataX on ModelPostMetadata {
@@ -295,26 +291,26 @@ extension ModelPostMetadataX on ModelPostMetadata {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelPostMetadata copyWith({
     String? format,
-int? wordCount,
-String? language,
+    int? wordCount,
+    String? language,
   }) {
     return ModelPostMetadata.assertRequired(
       format: format ?? this.format,
-wordCount: wordCount ?? this.wordCount,
-language: language ?? this.language,
+      wordCount: wordCount ?? this.wordCount,
+      language: language ?? this.language,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelPostMetadata copyWithout({
     bool format = true,
-bool wordCount = true,
-bool language = true,
+    bool wordCount = true,
+    bool language = true,
   }) {
     return ModelPostMetadata.assertRequired(
-      format: format ? this.format: null,
-wordCount: wordCount ? this.wordCount: null,
-language: language ? this.language: null,
+      format: format ? this.format : null,
+      wordCount: wordCount ? this.wordCount : null,
+      language: language ? this.language : null,
     );
   }
 }

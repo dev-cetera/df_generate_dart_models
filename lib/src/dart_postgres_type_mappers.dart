@@ -130,22 +130,22 @@ class DartPostgresTypeMappers extends TypeMappers {
                 _pgTail +
                 r'-(?:(Type-?\w+|\w+-?Type|Enum-?\w+|\w+-?Enum)|(\w+)@enum)\??$':
             (e) {
-          final typeName = (e.matchGroups?.elementAt(1)) ??
-              (e.matchGroups?.elementAt(2));
+          final typeName =
+              (e.matchGroups?.elementAt(1)) ?? (e.matchGroups?.elementAt(2));
           return '$typeName.values.valueOf(${e.name}?.toString())';
         },
 
         // ─── DDL-only ───────────────────────────────────────────────────────
         // All of these forward to the same code [DartCoreTypeMappers] uses
         // for the bare Dart type. The prefix only exists for schema export.
-        r'^PG_(?:text|varchar|char|citext|name|xml|uuid|inet|cidr|macaddr|macaddr8|tsvector|tsquery|money|pg_lsn|bit|oid)'
-                + _pgTail +
-                r'-(String)\??$': (e) {
+        r'^PG_(?:text|varchar|char|citext|name|xml|uuid|inet|cidr|macaddr|macaddr8|tsvector|tsquery|money|pg_lsn|bit|oid)' +
+            _pgTail +
+            r'-(String)\??$': (e) {
           return '${e.name}?.toString().trim().nullIfEmpty';
         },
-        r'^PG_(?:smallint|integer|bigint|int2|int4|int8|smallserial|serial|bigserial)'
-                + _pgTail +
-                r'-(int)\??$': (e) {
+        r'^PG_(?:smallint|integer|bigint|int2|int4|int8|smallserial|serial|bigserial)' +
+            _pgTail +
+            r'-(int)\??$': (e) {
           return 'letIntOrNull(${e.name})';
         },
         r'^PG_(?:real|float4|float8|double)' + _pgTail + r'-(double)\??$': (e) {
@@ -162,9 +162,8 @@ class DartPostgresTypeMappers extends TypeMappers {
         r'^PG_boolean' + _pgTail + r'-(bool)\??$': (e) {
           return 'letBoolOrNull(${e.name})';
         },
-        r'^PG_(?:timestamp|timestamptz|date)' +
-                _pgTail +
-                r'-(DateTime)\??$': (e) {
+        r'^PG_(?:timestamp|timestamptz|date)' + _pgTail + r'-(DateTime)\??$':
+            (e) {
           return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }()';
         },
         r'^PG_interval' + _pgTail + r'-(Duration)\??$': (e) {
@@ -198,22 +197,21 @@ class DartPostgresTypeMappers extends TypeMappers {
         },
 
         // ─── DDL-only — same code Core emits for the bare type ───────────
-        r'^PG_(?:text|varchar|char|citext|name|xml|uuid|inet|cidr|macaddr|macaddr8|tsvector|tsquery|money|pg_lsn|bit|oid)'
-                + _pgTail +
-                r'-(String)\??$': (e) {
+        r'^PG_(?:text|varchar|char|citext|name|xml|uuid|inet|cidr|macaddr|macaddr8|tsvector|tsquery|money|pg_lsn|bit|oid)' +
+            _pgTail +
+            r'-(String)\??$': (e) {
           return '${e.name}?.trim().nullIfEmpty';
         },
-        r'^PG_(?:smallint|integer|bigint|int2|int4|int8|smallserial|serial|bigserial|real|float4|float8|double|boolean)'
-                + _pgTail +
-                r'-(int|double|bool)\??$': (e) {
+        r'^PG_(?:smallint|integer|bigint|int2|int4|int8|smallserial|serial|bigserial|real|float4|float8|double|boolean)' +
+            _pgTail +
+            r'-(int|double|bool)\??$': (e) {
           return '${e.name}';
         },
         r'^PG_numeric' + _pgTail + r'-(String|double)\??$': (e) {
           return '${e.name}';
         },
-        r'^PG_(?:timestamp|timestamptz|date)' +
-                _pgTail +
-                r'-(DateTime)\??$': (e) {
+        r'^PG_(?:timestamp|timestamptz|date)' + _pgTail + r'-(DateTime)\??$':
+            (e) {
           return '${e.name}?.toUtc().toIso8601String()';
         },
         r'^PG_interval' + _pgTail + r'-(Duration)\??$': (e) {

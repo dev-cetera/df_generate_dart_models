@@ -52,8 +52,7 @@ class DartFirestoreTypeMappers extends TypeMappers {
   //
 
   @override
-  TTypeMappers<CollectionMapperEvent> get collectionToMappers =>
-      newTypeMap({});
+  TTypeMappers<CollectionMapperEvent> get collectionToMappers => newTypeMap({});
 
   //
   //

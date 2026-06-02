@@ -111,7 +111,10 @@ class PaymentModel {
     // Special string-case types — base.
     Field(fieldPath: ['trimmed'], fieldType: 'Trimmed-String', nullable: true),
     Field(
-        fieldPath: ['noSpaces'], fieldType: 'NoSpaces-String', nullable: true,),
+      fieldPath: ['noSpaces'],
+      fieldType: 'NoSpaces-String',
+      nullable: true,
+    ),
     Field(
       fieldPath: ['searchable'],
       fieldType: 'Searchable-String',
@@ -143,7 +146,10 @@ class PaymentModel {
     ),
     Field(fieldPath: ['camel'], fieldType: 'CamelCase-String', nullable: true),
     Field(
-        fieldPath: ['pascal'], fieldType: 'PascalCase-String', nullable: true,),
+      fieldPath: ['pascal'],
+      fieldType: 'PascalCase-String',
+      nullable: true,
+    ),
 
     // Trimmed case conversions.
     Field(
@@ -192,7 +198,10 @@ class PaymentModel {
     Field(fieldPath: ['flags'], fieldType: Set<bool>, nullable: true),
     Field(fieldPath: ['scores'], fieldType: Iterable<int>, nullable: true),
     Field(
-        fieldPath: ['lookup'], fieldType: Map<String, double>, nullable: true,),
+      fieldPath: ['lookup'],
+      fieldType: Map<String, double>,
+      nullable: true,
+    ),
 
     // Queue (from-side was missing — verifies the asymmetry fix).
     Field(fieldPath: ['todo'], fieldType: Queue<String>, nullable: true),

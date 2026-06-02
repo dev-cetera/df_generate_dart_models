@@ -16,8 +16,8 @@ import 'package:test/test.dart';
 /// Runs the DBML generator against [modelsDir] and returns the emitted
 /// .dbml content as a single string.
 Future<String> _runDbml(String modelsDir, {String? outputName}) async {
-  final out = outputName ??
-      'test_dbml_${DateTime.now().microsecondsSinceEpoch}.dbml';
+  final out =
+      outputName ?? 'test_dbml_${DateTime.now().microsecondsSinceEpoch}.dbml';
   final outPath = '${Directory.systemTemp.path}/$out';
   await generateDbml(['--input', modelsDir, '--output', outPath]);
   final f = File(outPath);
@@ -43,9 +43,8 @@ void main() {
       // annotations yield two tables). The actual count is what the
       // models/ directory holds — keep this assertion loose-greater-than
       // so adding/removing a model doesn't force a magic-number update.
-      final tableMatches = RegExp(r'^Table \w+ \{', multiLine: true)
-          .allMatches(dbml)
-          .length;
+      final tableMatches =
+          RegExp(r'^Table \w+ \{', multiLine: true).allMatches(dbml).length;
       expect(tableMatches, greaterThanOrEqualTo(8));
     });
 
@@ -109,9 +108,8 @@ void main() {
     test('PG_jsonb-Map column type derives to `jsonb`', () {
       // model_pg_post.extra is PG_jsonb-Map<String, dynamic>.
       // After the strip → `jsonb`.
-      final extraLine = dbml
-          .split('\n')
-          .firstWhere((line) => line.contains(' extra '));
+      final extraLine =
+          dbml.split('\n').firstWhere((line) => line.contains(' extra '));
       expect(extraLine, contains('jsonb'));
     });
 

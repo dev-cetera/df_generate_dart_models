@@ -32,11 +32,23 @@ class ModelFeedCache extends _ModelFeedCache with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, postId, authorId, caption, visibility, media, isUnread, likeCount, fetchedAt, expiresAt, previewBlob];
+  List<Object?> get props => [
+        id,
+        postId,
+        authorId,
+        caption,
+        visibility,
+        media,
+        isUnread,
+        likeCount,
+        fetchedAt,
+        expiresAt,
+        previewBlob
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,111 +56,104 @@ class ModelFeedCache extends _ModelFeedCache with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final int? id;
+  /// No description provided.
+  final int? id;
 
   /// No description provided.
-final String? postId;
+  final String? postId;
 
   /// No description provided.
-final String? authorId;
+  final String? authorId;
 
   /// No description provided.
-final String? caption;
+  final String? caption;
 
   /// No description provided.
-final String? visibility;
+  final String? visibility;
 
   /// No description provided.
-final List<ModelMediaItem>? media;
+  final List<ModelMediaItem>? media;
 
   /// No description provided.
-final bool? isUnread;
+  final bool? isUnread;
 
   /// No description provided.
-final int? likeCount;
+  final int? likeCount;
 
   /// No description provided.
-final DateTime? fetchedAt;
+  final DateTime? fetchedAt;
 
   /// No description provided.
-final DateTime? expiresAt;
+  final DateTime? expiresAt;
 
   /// No description provided.
-final Uint8List? previewBlob;
-
+  final Uint8List? previewBlob;
 
   /// Constructs a new instance of [ModelFeedCache]
   /// from optional and required parameters.
   const ModelFeedCache({
     required this.id,
-required this.postId,
-required this.authorId,
- this.caption,
- this.visibility,
- this.media,
- this.isUnread,
- this.likeCount,
-required this.fetchedAt,
- this.expiresAt,
- this.previewBlob,
-  }) ;
+    required this.postId,
+    required this.authorId,
+    this.caption,
+    this.visibility,
+    this.media,
+    this.isUnread,
+    this.likeCount,
+    required this.fetchedAt,
+    this.expiresAt,
+    this.previewBlob,
+  });
 
   /// Construcs a new instance of [ModelFeedCache],
   /// forcing all parameters to be optional.
   const ModelFeedCache.optional({
     this.id,
-this.postId,
-this.authorId,
-this.caption,
-this.visibility,
-this.media,
-this.isUnread,
-this.likeCount,
-this.fetchedAt,
-this.expiresAt,
-this.previewBlob,
-  }) ;
-
+    this.postId,
+    this.authorId,
+    this.caption,
+    this.visibility,
+    this.media,
+    this.isUnread,
+    this.likeCount,
+    this.fetchedAt,
+    this.expiresAt,
+    this.previewBlob,
+  });
 
   /// Constructs a new instance of [ModelFeedCache],
   /// and asserts that all required parameters are not null.
   factory ModelFeedCache.assertRequired({
     int? id,
-String? postId,
-String? authorId,
-String? caption,
-String? visibility,
-List<ModelMediaItem>? media,
-bool? isUnread,
-int? likeCount,
-DateTime? fetchedAt,
-DateTime? expiresAt,
-Uint8List? previewBlob,
+    String? postId,
+    String? authorId,
+    String? caption,
+    String? visibility,
+    List<ModelMediaItem>? media,
+    bool? isUnread,
+    int? likeCount,
+    DateTime? fetchedAt,
+    DateTime? expiresAt,
+    Uint8List? previewBlob,
   }) {
     assert(id != null);
-assert(postId != null);
-assert(authorId != null);
+    assert(postId != null);
+    assert(authorId != null);
 
-
-
-
-
-assert(fetchedAt != null);
-
+    assert(fetchedAt != null);
 
     return ModelFeedCache(
       id: id,
-postId: postId,
-authorId: authorId,
-caption: caption,
-visibility: visibility,
-media: media,
-isUnread: isUnread,
-likeCount: likeCount,
-fetchedAt: fetchedAt,
-expiresAt: expiresAt,
-previewBlob: previewBlob,
+      postId: postId,
+      authorId: authorId,
+      caption: caption,
+      visibility: visibility,
+      media: media,
+      isUnread: isUnread,
+      likeCount: likeCount,
+      fetchedAt: fetchedAt,
+      expiresAt: expiresAt,
+      previewBlob: previewBlob,
     );
   }
 
@@ -175,7 +180,6 @@ previewBlob: previewBlob,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelFeedCache],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -209,7 +213,7 @@ previewBlob: previewBlob,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelFeedCache.fromJsonString: $e');
+      assert(false, '$ModelFeedCache.fromJsonString: $e');
       rethrow;
     }
   }
@@ -251,28 +255,48 @@ previewBlob: previewBlob,
   ) {
     try {
       final id = letIntOrNull(json?['id']);
-final postId = json?['post_id']?.toString().trim().nullIfEmpty;
-final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-final caption = json?['caption']?.toString().trim().nullIfEmpty;
-final visibility = json?['visibility']?.toString().trim().nullIfEmpty;
-final media = letListOrNull<dynamic>(json?['media'])?.map((p0) => () { final a = letMapOrNull<String, dynamic>(p0); return a != null ? ModelMediaItem.fromJson(a): null; }(),).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final isUnread = letBoolOrNull(json?['is_unread']);
-final likeCount = letIntOrNull(json?['like_count']);
-final fetchedAt = (){ final a = letIntOrNull(json?['fetched_at']); return a != null ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true) : null; }();
-final expiresAt = (){ final a = letIntOrNull(json?['expires_at']); return a != null ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true) : null; }();
-final previewBlob = letAsOrNull<Uint8List>(json?['preview_blob']);
+      final postId = json?['post_id']?.toString().trim().nullIfEmpty;
+      final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
+      final caption = json?['caption']?.toString().trim().nullIfEmpty;
+      final visibility = json?['visibility']?.toString().trim().nullIfEmpty;
+      final media = letListOrNull<dynamic>(json?['media'])
+          ?.map(
+            (p0) => () {
+              final a = letMapOrNull<String, dynamic>(p0);
+              return a != null ? ModelMediaItem.fromJson(a) : null;
+            }(),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final isUnread = letBoolOrNull(json?['is_unread']);
+      final likeCount = letIntOrNull(json?['like_count']);
+      final fetchedAt = () {
+        final a = letIntOrNull(json?['fetched_at']);
+        return a != null
+            ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true)
+            : null;
+      }();
+      final expiresAt = () {
+        final a = letIntOrNull(json?['expires_at']);
+        return a != null
+            ? DateTime.fromMillisecondsSinceEpoch(a, isUtc: true)
+            : null;
+      }();
+      final previewBlob = letAsOrNull<Uint8List>(json?['preview_blob']);
       return ModelFeedCache(
         id: id,
-postId: postId,
-authorId: authorId,
-caption: caption,
-visibility: visibility,
-media: media,
-isUnread: isUnread,
-likeCount: likeCount,
-fetchedAt: fetchedAt,
-expiresAt: expiresAt,
-previewBlob: previewBlob,
+        postId: postId,
+        authorId: authorId,
+        caption: caption,
+        visibility: visibility,
+        media: media,
+        isUnread: isUnread,
+        likeCount: likeCount,
+        fetchedAt: fetchedAt,
+        expiresAt: expiresAt,
+        previewBlob: previewBlob,
       );
     } catch (e) {
       return null;
@@ -313,18 +337,39 @@ previewBlob: previewBlob,
   }) {
     try {
       final id0 = id;
-final postId0 = postId?.trim().nullIfEmpty;
-final authorId0 = authorId?.trim().nullIfEmpty;
-final caption0 = caption?.trim().nullIfEmpty;
-final visibility0 = visibility?.trim().nullIfEmpty;
-final media0 = (){ final a = media; return a != null ? jsonEncode(a.map((p0) => p0?.toJson(),).nonNulls.nullIfEmpty?.toList()) : null; }();
-final isUnread0 = isUnread == null ? null : (isUnread! ? 1 : 0);
-final likeCount0 = likeCount;
-final fetchedAt0 = fetchedAt?.toUtc().millisecondsSinceEpoch;
-final expiresAt0 = expiresAt?.toUtc().millisecondsSinceEpoch;
-final previewBlob0 = previewBlob;
+      final postId0 = postId?.trim().nullIfEmpty;
+      final authorId0 = authorId?.trim().nullIfEmpty;
+      final caption0 = caption?.trim().nullIfEmpty;
+      final visibility0 = visibility?.trim().nullIfEmpty;
+      final media0 = () {
+        final a = media;
+        return a != null
+            ? jsonEncode(a
+                .map(
+                  (p0) => p0?.toJson(),
+                )
+                .nonNulls
+                .nullIfEmpty
+                ?.toList())
+            : null;
+      }();
+      final isUnread0 = isUnread == null ? null : (isUnread! ? 1 : 0);
+      final likeCount0 = likeCount;
+      final fetchedAt0 = fetchedAt?.toUtc().millisecondsSinceEpoch;
+      final expiresAt0 = expiresAt?.toUtc().millisecondsSinceEpoch;
+      final previewBlob0 = previewBlob;
       final withNulls = {
-        'visibility': visibility0,'preview_blob': previewBlob0,'post_id': postId0,'media': media0,'like_count': likeCount0,'is_unread': isUnread0,'id': id0,'fetched_at': fetchedAt0,'expires_at': expiresAt0,'caption': caption0,'author_id': authorId0,
+        'visibility': visibility0,
+        'preview_blob': previewBlob0,
+        'post_id': postId0,
+        'media': media0,
+        'like_count': likeCount0,
+        'is_unread': isUnread0,
+        'id': id0,
+        'fetched_at': fetchedAt0,
+        'expires_at': expiresAt0,
+        'caption': caption0,
+        'author_id': authorId0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -333,110 +378,108 @@ final previewBlob0 = previewBlob;
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int get id$ => id!;
+  @pragma('vm:prefer-inline')
+  int get id$ => id!;
 
   /// Returns the value of the [postId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get postId$ => postId!;
+  @pragma('vm:prefer-inline')
+  String get postId$ => postId!;
 
   /// Returns the value of the [authorId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get authorId$ => authorId!;
+  @pragma('vm:prefer-inline')
+  String get authorId$ => authorId!;
 
   /// Returns the value of the [caption] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get caption$ => caption;
+  @pragma('vm:prefer-inline')
+  String? get caption$ => caption;
 
   /// Returns the value of the [visibility] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get visibility$ => visibility;
+  @pragma('vm:prefer-inline')
+  String? get visibility$ => visibility;
 
   /// Returns the value of the [media] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<ModelMediaItem>? get media$ => media;
+  @pragma('vm:prefer-inline')
+  List<ModelMediaItem>? get media$ => media;
 
   /// Returns the value of the [isUnread] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-bool? get isUnread$ => isUnread;
+  @pragma('vm:prefer-inline')
+  bool? get isUnread$ => isUnread;
 
   /// Returns the value of the [likeCount] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int? get likeCount$ => likeCount;
+  @pragma('vm:prefer-inline')
+  int? get likeCount$ => likeCount;
 
   /// Returns the value of the [fetchedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get fetchedAt$ => fetchedAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get fetchedAt$ => fetchedAt!;
 
   /// Returns the value of the [expiresAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get expiresAt$ => expiresAt;
+  @pragma('vm:prefer-inline')
+  DateTime? get expiresAt$ => expiresAt;
 
   /// Returns the value of the [previewBlob] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Uint8List? get previewBlob$ => previewBlob;
-
+  @pragma('vm:prefer-inline')
+  Uint8List? get previewBlob$ => previewBlob;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelFeedCacheFieldNames {
-    /// The field name of [ModelFeedCache.id].
-static const id = 'id';
+  /// The field name of [ModelFeedCache.id].
+  static const id = 'id';
 
   /// The field name of [ModelFeedCache.postId].
-static const postId = 'post_id';
+  static const postId = 'post_id';
 
   /// The field name of [ModelFeedCache.authorId].
-static const authorId = 'author_id';
+  static const authorId = 'author_id';
 
   /// The field name of [ModelFeedCache.caption].
-static const caption = 'caption';
+  static const caption = 'caption';
 
   /// The field name of [ModelFeedCache.visibility].
-static const visibility = 'visibility';
+  static const visibility = 'visibility';
 
   /// The field name of [ModelFeedCache.media].
-static const media = 'media';
+  static const media = 'media';
 
   /// The field name of [ModelFeedCache.isUnread].
-static const isUnread = 'is_unread';
+  static const isUnread = 'is_unread';
 
   /// The field name of [ModelFeedCache.likeCount].
-static const likeCount = 'like_count';
+  static const likeCount = 'like_count';
 
   /// The field name of [ModelFeedCache.fetchedAt].
-static const fetchedAt = 'fetched_at';
+  static const fetchedAt = 'fetched_at';
 
   /// The field name of [ModelFeedCache.expiresAt].
-static const expiresAt = 'expires_at';
+  static const expiresAt = 'expires_at';
 
   /// The field name of [ModelFeedCache.previewBlob].
-static const previewBlob = 'preview_blob';
-
+  static const previewBlob = 'preview_blob';
 }
 
 extension ModelFeedCacheX on ModelFeedCache {
@@ -455,58 +498,58 @@ extension ModelFeedCacheX on ModelFeedCache {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelFeedCache copyWith({
     int? id,
-String? postId,
-String? authorId,
-String? caption,
-String? visibility,
-List<ModelMediaItem>? media,
-bool? isUnread,
-int? likeCount,
-DateTime? fetchedAt,
-DateTime? expiresAt,
-Uint8List? previewBlob,
+    String? postId,
+    String? authorId,
+    String? caption,
+    String? visibility,
+    List<ModelMediaItem>? media,
+    bool? isUnread,
+    int? likeCount,
+    DateTime? fetchedAt,
+    DateTime? expiresAt,
+    Uint8List? previewBlob,
   }) {
     return ModelFeedCache.assertRequired(
       id: id ?? this.id,
-postId: postId ?? this.postId,
-authorId: authorId ?? this.authorId,
-caption: caption ?? this.caption,
-visibility: visibility ?? this.visibility,
-media: media ?? this.media,
-isUnread: isUnread ?? this.isUnread,
-likeCount: likeCount ?? this.likeCount,
-fetchedAt: fetchedAt ?? this.fetchedAt,
-expiresAt: expiresAt ?? this.expiresAt,
-previewBlob: previewBlob ?? this.previewBlob,
+      postId: postId ?? this.postId,
+      authorId: authorId ?? this.authorId,
+      caption: caption ?? this.caption,
+      visibility: visibility ?? this.visibility,
+      media: media ?? this.media,
+      isUnread: isUnread ?? this.isUnread,
+      likeCount: likeCount ?? this.likeCount,
+      fetchedAt: fetchedAt ?? this.fetchedAt,
+      expiresAt: expiresAt ?? this.expiresAt,
+      previewBlob: previewBlob ?? this.previewBlob,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelFeedCache copyWithout({
     bool id = true,
-bool postId = true,
-bool authorId = true,
-bool caption = true,
-bool visibility = true,
-bool media = true,
-bool isUnread = true,
-bool likeCount = true,
-bool fetchedAt = true,
-bool expiresAt = true,
-bool previewBlob = true,
+    bool postId = true,
+    bool authorId = true,
+    bool caption = true,
+    bool visibility = true,
+    bool media = true,
+    bool isUnread = true,
+    bool likeCount = true,
+    bool fetchedAt = true,
+    bool expiresAt = true,
+    bool previewBlob = true,
   }) {
     return ModelFeedCache.assertRequired(
-      id: id ? this.id: null,
-postId: postId ? this.postId: null,
-authorId: authorId ? this.authorId: null,
-caption: caption ? this.caption: null,
-visibility: visibility ? this.visibility: null,
-media: media ? this.media: null,
-isUnread: isUnread ? this.isUnread: null,
-likeCount: likeCount ? this.likeCount: null,
-fetchedAt: fetchedAt ? this.fetchedAt: null,
-expiresAt: expiresAt ? this.expiresAt: null,
-previewBlob: previewBlob ? this.previewBlob: null,
+      id: id ? this.id : null,
+      postId: postId ? this.postId : null,
+      authorId: authorId ? this.authorId : null,
+      caption: caption ? this.caption : null,
+      visibility: visibility ? this.visibility : null,
+      media: media ? this.media : null,
+      isUnread: isUnread ? this.isUnread : null,
+      likeCount: likeCount ? this.likeCount : null,
+      fetchedAt: fetchedAt ? this.fetchedAt : null,
+      expiresAt: expiresAt ? this.expiresAt : null,
+      previewBlob: previewBlob ? this.previewBlob : null,
     );
   }
 }

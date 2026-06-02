@@ -32,11 +32,12 @@ class ModelThread extends _ModelThread with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, creatorId, title, comments, unreadCount, cacheToken, createdAt];
+  List<Object?> get props =>
+      [id, creatorId, title, comments, unreadCount, cacheToken, createdAt];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,79 +45,75 @@ class ModelThread extends _ModelThread with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? creatorId;
+  final String? creatorId;
 
   /// No description provided.
-final String? title;
+  final String? title;
 
   /// No description provided.
-final List<ModelComment>? comments;
+  final List<ModelComment>? comments;
 
   /// No description provided.
-final int? unreadCount;
+  final int? unreadCount;
 
   /// No description provided.
-final String? cacheToken;
+  final String? cacheToken;
 
   /// No description provided.
-final DateTime? createdAt;
-
+  final DateTime? createdAt;
 
   /// Constructs a new instance of [ModelThread]
   /// from optional and required parameters.
   const ModelThread({
     required this.id,
-required this.creatorId,
-required this.title,
- this.comments,
- this.unreadCount,
- this.cacheToken,
-required this.createdAt,
-  }) ;
+    required this.creatorId,
+    required this.title,
+    this.comments,
+    this.unreadCount,
+    this.cacheToken,
+    required this.createdAt,
+  });
 
   /// Construcs a new instance of [ModelThread],
   /// forcing all parameters to be optional.
   const ModelThread.optional({
     this.id,
-this.creatorId,
-this.title,
-this.comments,
-this.unreadCount,
-this.cacheToken,
-this.createdAt,
-  }) ;
-
+    this.creatorId,
+    this.title,
+    this.comments,
+    this.unreadCount,
+    this.cacheToken,
+    this.createdAt,
+  });
 
   /// Constructs a new instance of [ModelThread],
   /// and asserts that all required parameters are not null.
   factory ModelThread.assertRequired({
     String? id,
-String? creatorId,
-String? title,
-List<ModelComment>? comments,
-int? unreadCount,
-String? cacheToken,
-DateTime? createdAt,
+    String? creatorId,
+    String? title,
+    List<ModelComment>? comments,
+    int? unreadCount,
+    String? cacheToken,
+    DateTime? createdAt,
   }) {
     assert(id != null);
-assert(creatorId != null);
-assert(title != null);
+    assert(creatorId != null);
+    assert(title != null);
 
-
-
-assert(createdAt != null);
+    assert(createdAt != null);
     return ModelThread(
       id: id,
-creatorId: creatorId,
-title: title,
-comments: comments,
-unreadCount: unreadCount,
-cacheToken: cacheToken,
-createdAt: createdAt,
+      creatorId: creatorId,
+      title: title,
+      comments: comments,
+      unreadCount: unreadCount,
+      cacheToken: cacheToken,
+      createdAt: createdAt,
     );
   }
 
@@ -143,7 +140,6 @@ createdAt: createdAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelThread],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -177,7 +173,7 @@ createdAt: createdAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelThread.fromJsonString: $e');
+      assert(false, '$ModelThread.fromJsonString: $e');
       rethrow;
     }
   }
@@ -219,20 +215,33 @@ createdAt: createdAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final creatorId = json?['creator_id']?.toString().trim().nullIfEmpty;
-final title = json?['title']?.toString().trim().nullIfEmpty;
-final comments = letListOrNull<dynamic>(json?['comments'])?.map((p0) => () { final a = letMapOrNull<String, dynamic>(p0); return a != null ? ModelComment.fromJson(a): null; }(),).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final unreadCount = letIntOrNull(json?['unread_count']);
-final cacheToken = json?['cache_token']?.toString().trim().nullIfEmpty;
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      final creatorId = json?['creator_id']?.toString().trim().nullIfEmpty;
+      final title = json?['title']?.toString().trim().nullIfEmpty;
+      final comments = letListOrNull<dynamic>(json?['comments'])
+          ?.map(
+            (p0) => () {
+              final a = letMapOrNull<String, dynamic>(p0);
+              return a != null ? ModelComment.fromJson(a) : null;
+            }(),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final unreadCount = letIntOrNull(json?['unread_count']);
+      final cacheToken = json?['cache_token']?.toString().trim().nullIfEmpty;
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
       return ModelThread(
         id: id,
-creatorId: creatorId,
-title: title,
-comments: comments,
-unreadCount: unreadCount,
-cacheToken: cacheToken,
-createdAt: createdAt,
+        creatorId: creatorId,
+        title: title,
+        comments: comments,
+        unreadCount: unreadCount,
+        cacheToken: cacheToken,
+        createdAt: createdAt,
       );
     } catch (e) {
       return null;
@@ -273,14 +282,31 @@ createdAt: createdAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final creatorId0 = creatorId?.trim().nullIfEmpty;
-final title0 = title?.trim().nullIfEmpty;
-final comments0 = (){ final a = comments; return a != null ? jsonEncode(a.map((p0) => p0?.toJson(),).nonNulls.nullIfEmpty?.toList()) : null; }();
-final unreadCount0 = unreadCount;
-final cacheToken0 = cacheToken?.trim().nullIfEmpty;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final creatorId0 = creatorId?.trim().nullIfEmpty;
+      final title0 = title?.trim().nullIfEmpty;
+      final comments0 = () {
+        final a = comments;
+        return a != null
+            ? jsonEncode(a
+                .map(
+                  (p0) => p0?.toJson(),
+                )
+                .nonNulls
+                .nullIfEmpty
+                ?.toList())
+            : null;
+      }();
+      final unreadCount0 = unreadCount;
+      final cacheToken0 = cacheToken?.trim().nullIfEmpty;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
       final withNulls = {
-        'unread_count': unreadCount0,'title': title0,'id': id0,'creator_id': creatorId0,'created_at': createdAt0,'comments': comments0,'cache_token': cacheToken0,
+        'unread_count': unreadCount0,
+        'title': title0,
+        'id': id0,
+        'creator_id': creatorId0,
+        'created_at': createdAt0,
+        'comments': comments0,
+        'cache_token': cacheToken0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -289,74 +315,72 @@ final createdAt0 = createdAt?.toUtc().toIso8601String();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [creatorId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get creatorId$ => creatorId!;
+  @pragma('vm:prefer-inline')
+  String get creatorId$ => creatorId!;
 
   /// Returns the value of the [title] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get title$ => title!;
+  @pragma('vm:prefer-inline')
+  String get title$ => title!;
 
   /// Returns the value of the [comments] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<ModelComment>? get comments$ => comments;
+  @pragma('vm:prefer-inline')
+  List<ModelComment>? get comments$ => comments;
 
   /// Returns the value of the [unreadCount] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int? get unreadCount$ => unreadCount;
+  @pragma('vm:prefer-inline')
+  int? get unreadCount$ => unreadCount;
 
   /// Returns the value of the [cacheToken] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get cacheToken$ => cacheToken;
+  @pragma('vm:prefer-inline')
+  String? get cacheToken$ => cacheToken;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
-
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelThreadFieldNames {
-    /// The field name of [ModelThread.id].
-static const id = 'id';
+  /// The field name of [ModelThread.id].
+  static const id = 'id';
 
   /// The field name of [ModelThread.creatorId].
-static const creatorId = 'creator_id';
+  static const creatorId = 'creator_id';
 
   /// The field name of [ModelThread.title].
-static const title = 'title';
+  static const title = 'title';
 
   /// The field name of [ModelThread.comments].
-static const comments = 'comments';
+  static const comments = 'comments';
 
   /// The field name of [ModelThread.unreadCount].
-static const unreadCount = 'unread_count';
+  static const unreadCount = 'unread_count';
 
   /// The field name of [ModelThread.cacheToken].
-static const cacheToken = 'cache_token';
+  static const cacheToken = 'cache_token';
 
   /// The field name of [ModelThread.createdAt].
-static const createdAt = 'created_at';
-
+  static const createdAt = 'created_at';
 }
 
 extension ModelThreadX on ModelThread {
@@ -375,42 +399,42 @@ extension ModelThreadX on ModelThread {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelThread copyWith({
     String? id,
-String? creatorId,
-String? title,
-List<ModelComment>? comments,
-int? unreadCount,
-String? cacheToken,
-DateTime? createdAt,
+    String? creatorId,
+    String? title,
+    List<ModelComment>? comments,
+    int? unreadCount,
+    String? cacheToken,
+    DateTime? createdAt,
   }) {
     return ModelThread.assertRequired(
       id: id ?? this.id,
-creatorId: creatorId ?? this.creatorId,
-title: title ?? this.title,
-comments: comments ?? this.comments,
-unreadCount: unreadCount ?? this.unreadCount,
-cacheToken: cacheToken ?? this.cacheToken,
-createdAt: createdAt ?? this.createdAt,
+      creatorId: creatorId ?? this.creatorId,
+      title: title ?? this.title,
+      comments: comments ?? this.comments,
+      unreadCount: unreadCount ?? this.unreadCount,
+      cacheToken: cacheToken ?? this.cacheToken,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelThread copyWithout({
     bool id = true,
-bool creatorId = true,
-bool title = true,
-bool comments = true,
-bool unreadCount = true,
-bool cacheToken = true,
-bool createdAt = true,
+    bool creatorId = true,
+    bool title = true,
+    bool comments = true,
+    bool unreadCount = true,
+    bool cacheToken = true,
+    bool createdAt = true,
   }) {
     return ModelThread.assertRequired(
-      id: id ? this.id: null,
-creatorId: creatorId ? this.creatorId: null,
-title: title ? this.title: null,
-comments: comments ? this.comments: null,
-unreadCount: unreadCount ? this.unreadCount: null,
-cacheToken: cacheToken ? this.cacheToken: null,
-createdAt: createdAt ? this.createdAt: null,
+      id: id ? this.id : null,
+      creatorId: creatorId ? this.creatorId : null,
+      title: title ? this.title : null,
+      comments: comments ? this.comments : null,
+      unreadCount: unreadCount ? this.unreadCount : null,
+      cacheToken: cacheToken ? this.cacheToken : null,
+      createdAt: createdAt ? this.createdAt : null,
     );
   }
 }

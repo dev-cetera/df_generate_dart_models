@@ -32,11 +32,23 @@ class ModelPost extends _ModelPost with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, authorId, visibility, caption, hashtags, media, location, likeCount, createdAt, updatedAt, deletedAt];
+  List<Object?> get props => [
+        id,
+        authorId,
+        visibility,
+        caption,
+        hashtags,
+        media,
+        location,
+        likeCount,
+        createdAt,
+        updatedAt,
+        deletedAt
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,111 +56,104 @@ class ModelPost extends _ModelPost with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? authorId;
+  final String? authorId;
 
   /// No description provided.
-final PostVisibilityType? visibility;
+  final PostVisibilityType? visibility;
 
   /// No description provided.
-final String? caption;
+  final String? caption;
 
   /// No description provided.
-final List<String>? hashtags;
+  final List<String>? hashtags;
 
   /// No description provided.
-final List<ModelMediaItem>? media;
+  final List<ModelMediaItem>? media;
 
   /// No description provided.
-final ModelLocation? location;
+  final ModelLocation? location;
 
   /// No description provided.
-final int? likeCount;
+  final int? likeCount;
 
   /// No description provided.
-final DateTime? createdAt;
+  final DateTime? createdAt;
 
   /// No description provided.
-final DateTime? updatedAt;
+  final DateTime? updatedAt;
 
   /// No description provided.
-final DateTime? deletedAt;
-
+  final DateTime? deletedAt;
 
   /// Constructs a new instance of [ModelPost]
   /// from optional and required parameters.
   const ModelPost({
     required this.id,
-required this.authorId,
- this.visibility,
- this.caption,
- this.hashtags,
- this.media,
- this.location,
- this.likeCount,
-required this.createdAt,
-required this.updatedAt,
- this.deletedAt,
-  }) ;
+    required this.authorId,
+    this.visibility,
+    this.caption,
+    this.hashtags,
+    this.media,
+    this.location,
+    this.likeCount,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+  });
 
   /// Construcs a new instance of [ModelPost],
   /// forcing all parameters to be optional.
   const ModelPost.optional({
     this.id,
-this.authorId,
-this.visibility,
-this.caption,
-this.hashtags,
-this.media,
-this.location,
-this.likeCount,
-this.createdAt,
-this.updatedAt,
-this.deletedAt,
-  }) ;
-
+    this.authorId,
+    this.visibility,
+    this.caption,
+    this.hashtags,
+    this.media,
+    this.location,
+    this.likeCount,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+  });
 
   /// Constructs a new instance of [ModelPost],
   /// and asserts that all required parameters are not null.
   factory ModelPost.assertRequired({
     String? id,
-String? authorId,
-PostVisibilityType? visibility,
-String? caption,
-List<String>? hashtags,
-List<ModelMediaItem>? media,
-ModelLocation? location,
-int? likeCount,
-DateTime? createdAt,
-DateTime? updatedAt,
-DateTime? deletedAt,
+    String? authorId,
+    PostVisibilityType? visibility,
+    String? caption,
+    List<String>? hashtags,
+    List<ModelMediaItem>? media,
+    ModelLocation? location,
+    int? likeCount,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) {
     assert(id != null);
-assert(authorId != null);
+    assert(authorId != null);
 
-
-
-
-
-
-assert(createdAt != null);
-assert(updatedAt != null);
+    assert(createdAt != null);
+    assert(updatedAt != null);
 
     return ModelPost(
       id: id,
-authorId: authorId,
-visibility: visibility,
-caption: caption,
-hashtags: hashtags,
-media: media,
-location: location,
-likeCount: likeCount,
-createdAt: createdAt,
-updatedAt: updatedAt,
-deletedAt: deletedAt,
+      authorId: authorId,
+      visibility: visibility,
+      caption: caption,
+      hashtags: hashtags,
+      media: media,
+      location: location,
+      likeCount: likeCount,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      deletedAt: deletedAt,
     );
   }
 
@@ -175,7 +180,6 @@ deletedAt: deletedAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelPost],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -209,7 +213,7 @@ deletedAt: deletedAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelPost.fromJsonString: $e');
+      assert(false, '$ModelPost.fromJsonString: $e');
       rethrow;
     }
   }
@@ -251,28 +255,58 @@ deletedAt: deletedAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-final visibility = PostVisibilityType.values.valueOf(json?['visibility']?.toString());
-final caption = json?['caption']?.toString().trim().nullIfEmpty;
-final hashtags = letListOrNull<dynamic>(json?['hashtags'])?.map((p0) => p0?.toString().trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final media = letListOrNull<dynamic>(json?['media'])?.map((p0) => () { final a = letMapOrNull<String, dynamic>(p0); return a != null ? ModelMediaItem.fromJson(a): null; }(),).nonNulls.nullIfEmpty?.toList().unmodifiable;
-final location = () { final a = letMapOrNull<String, dynamic>(json?['location']); return a != null ? ModelLocation.fromJson(a): null; }();
-final likeCount = letIntOrNull(json?['like_count']);
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-final updatedAt = (){ final a = json?['updated_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
-final deletedAt = (){ final a = json?['deleted_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
+      final visibility =
+          PostVisibilityType.values.valueOf(json?['visibility']?.toString());
+      final caption = json?['caption']?.toString().trim().nullIfEmpty;
+      final hashtags = letListOrNull<dynamic>(json?['hashtags'])
+          ?.map(
+            (p0) => p0?.toString().trim().nullIfEmpty,
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final media = letListOrNull<dynamic>(json?['media'])
+          ?.map(
+            (p0) => () {
+              final a = letMapOrNull<String, dynamic>(p0);
+              return a != null ? ModelMediaItem.fromJson(a) : null;
+            }(),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList()
+          .unmodifiable;
+      final location = () {
+        final a = letMapOrNull<String, dynamic>(json?['location']);
+        return a != null ? ModelLocation.fromJson(a) : null;
+      }();
+      final likeCount = letIntOrNull(json?['like_count']);
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
+      final updatedAt = () {
+        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
+      final deletedAt = () {
+        final a = json?['deleted_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
       return ModelPost(
         id: id,
-authorId: authorId,
-visibility: visibility,
-caption: caption,
-hashtags: hashtags,
-media: media,
-location: location,
-likeCount: likeCount,
-createdAt: createdAt,
-updatedAt: updatedAt,
-deletedAt: deletedAt,
+        authorId: authorId,
+        visibility: visibility,
+        caption: caption,
+        hashtags: hashtags,
+        media: media,
+        location: location,
+        likeCount: likeCount,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        deletedAt: deletedAt,
       );
     } catch (e) {
       return null;
@@ -313,18 +347,46 @@ deletedAt: deletedAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final authorId0 = authorId?.trim().nullIfEmpty;
-final visibility0 = visibility?.name;
-final caption0 = caption?.trim().nullIfEmpty;
-final hashtags0 = hashtags?.map((p0) => p0?.trim().nullIfEmpty,).nonNulls.nullIfEmpty?.toList();
-final media0 = (){ final a = media; return a != null ? jsonEncode(a.map((p0) => p0?.toJson(),).nonNulls.nullIfEmpty?.toList()) : null; }();
-final location0 = location != null ? jsonEncode(location!.toJson()) : null;
-final likeCount0 = likeCount;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
-final updatedAt0 = updatedAt?.toUtc().toIso8601String();
-final deletedAt0 = deletedAt?.toUtc().toIso8601String();
+      final authorId0 = authorId?.trim().nullIfEmpty;
+      final visibility0 = visibility?.name;
+      final caption0 = caption?.trim().nullIfEmpty;
+      final hashtags0 = hashtags
+          ?.map(
+            (p0) => p0?.trim().nullIfEmpty,
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.toList();
+      final media0 = () {
+        final a = media;
+        return a != null
+            ? jsonEncode(a
+                .map(
+                  (p0) => p0?.toJson(),
+                )
+                .nonNulls
+                .nullIfEmpty
+                ?.toList())
+            : null;
+      }();
+      final location0 =
+          location != null ? jsonEncode(location!.toJson()) : null;
+      final likeCount0 = likeCount;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final updatedAt0 = updatedAt?.toUtc().toIso8601String();
+      final deletedAt0 = deletedAt?.toUtc().toIso8601String();
       final withNulls = {
-        'visibility': visibility0,'updated_at': updatedAt0,'media': media0,'location': location0,'like_count': likeCount0,'id': id0,'hashtags': hashtags0,'deleted_at': deletedAt0,'created_at': createdAt0,'caption': caption0,'author_id': authorId0,
+        'visibility': visibility0,
+        'updated_at': updatedAt0,
+        'media': media0,
+        'location': location0,
+        'like_count': likeCount0,
+        'id': id0,
+        'hashtags': hashtags0,
+        'deleted_at': deletedAt0,
+        'created_at': createdAt0,
+        'caption': caption0,
+        'author_id': authorId0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -333,110 +395,108 @@ final deletedAt0 = deletedAt?.toUtc().toIso8601String();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [authorId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get authorId$ => authorId!;
+  @pragma('vm:prefer-inline')
+  String get authorId$ => authorId!;
 
   /// Returns the value of the [visibility] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-PostVisibilityType? get visibility$ => visibility;
+  @pragma('vm:prefer-inline')
+  PostVisibilityType? get visibility$ => visibility;
 
   /// Returns the value of the [caption] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get caption$ => caption;
+  @pragma('vm:prefer-inline')
+  String? get caption$ => caption;
 
   /// Returns the value of the [hashtags] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<String>? get hashtags$ => hashtags;
+  @pragma('vm:prefer-inline')
+  List<String>? get hashtags$ => hashtags;
 
   /// Returns the value of the [media] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-List<ModelMediaItem>? get media$ => media;
+  @pragma('vm:prefer-inline')
+  List<ModelMediaItem>? get media$ => media;
 
   /// Returns the value of the [location] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-ModelLocation? get location$ => location;
+  @pragma('vm:prefer-inline')
+  ModelLocation? get location$ => location;
 
   /// Returns the value of the [likeCount] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int? get likeCount$ => likeCount;
+  @pragma('vm:prefer-inline')
+  int? get likeCount$ => likeCount;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 
   /// Returns the value of the [updatedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get updatedAt$ => updatedAt!;
+  @pragma('vm:prefer-inline')
+  DateTime get updatedAt$ => updatedAt!;
 
   /// Returns the value of the [deletedAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get deletedAt$ => deletedAt;
-
+  @pragma('vm:prefer-inline')
+  DateTime? get deletedAt$ => deletedAt;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelPostFieldNames {
-    /// The field name of [ModelPost.id].
-static const id = 'id';
+  /// The field name of [ModelPost.id].
+  static const id = 'id';
 
   /// The field name of [ModelPost.authorId].
-static const authorId = 'author_id';
+  static const authorId = 'author_id';
 
   /// The field name of [ModelPost.visibility].
-static const visibility = 'visibility';
+  static const visibility = 'visibility';
 
   /// The field name of [ModelPost.caption].
-static const caption = 'caption';
+  static const caption = 'caption';
 
   /// The field name of [ModelPost.hashtags].
-static const hashtags = 'hashtags';
+  static const hashtags = 'hashtags';
 
   /// The field name of [ModelPost.media].
-static const media = 'media';
+  static const media = 'media';
 
   /// The field name of [ModelPost.location].
-static const location = 'location';
+  static const location = 'location';
 
   /// The field name of [ModelPost.likeCount].
-static const likeCount = 'like_count';
+  static const likeCount = 'like_count';
 
   /// The field name of [ModelPost.createdAt].
-static const createdAt = 'created_at';
+  static const createdAt = 'created_at';
 
   /// The field name of [ModelPost.updatedAt].
-static const updatedAt = 'updated_at';
+  static const updatedAt = 'updated_at';
 
   /// The field name of [ModelPost.deletedAt].
-static const deletedAt = 'deleted_at';
-
+  static const deletedAt = 'deleted_at';
 }
 
 extension ModelPostX on ModelPost {
@@ -455,58 +515,58 @@ extension ModelPostX on ModelPost {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelPost copyWith({
     String? id,
-String? authorId,
-PostVisibilityType? visibility,
-String? caption,
-List<String>? hashtags,
-List<ModelMediaItem>? media,
-ModelLocation? location,
-int? likeCount,
-DateTime? createdAt,
-DateTime? updatedAt,
-DateTime? deletedAt,
+    String? authorId,
+    PostVisibilityType? visibility,
+    String? caption,
+    List<String>? hashtags,
+    List<ModelMediaItem>? media,
+    ModelLocation? location,
+    int? likeCount,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) {
     return ModelPost.assertRequired(
       id: id ?? this.id,
-authorId: authorId ?? this.authorId,
-visibility: visibility ?? this.visibility,
-caption: caption ?? this.caption,
-hashtags: hashtags ?? this.hashtags,
-media: media ?? this.media,
-location: location ?? this.location,
-likeCount: likeCount ?? this.likeCount,
-createdAt: createdAt ?? this.createdAt,
-updatedAt: updatedAt ?? this.updatedAt,
-deletedAt: deletedAt ?? this.deletedAt,
+      authorId: authorId ?? this.authorId,
+      visibility: visibility ?? this.visibility,
+      caption: caption ?? this.caption,
+      hashtags: hashtags ?? this.hashtags,
+      media: media ?? this.media,
+      location: location ?? this.location,
+      likeCount: likeCount ?? this.likeCount,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelPost copyWithout({
     bool id = true,
-bool authorId = true,
-bool visibility = true,
-bool caption = true,
-bool hashtags = true,
-bool media = true,
-bool location = true,
-bool likeCount = true,
-bool createdAt = true,
-bool updatedAt = true,
-bool deletedAt = true,
+    bool authorId = true,
+    bool visibility = true,
+    bool caption = true,
+    bool hashtags = true,
+    bool media = true,
+    bool location = true,
+    bool likeCount = true,
+    bool createdAt = true,
+    bool updatedAt = true,
+    bool deletedAt = true,
   }) {
     return ModelPost.assertRequired(
-      id: id ? this.id: null,
-authorId: authorId ? this.authorId: null,
-visibility: visibility ? this.visibility: null,
-caption: caption ? this.caption: null,
-hashtags: hashtags ? this.hashtags: null,
-media: media ? this.media: null,
-location: location ? this.location: null,
-likeCount: likeCount ? this.likeCount: null,
-createdAt: createdAt ? this.createdAt: null,
-updatedAt: updatedAt ? this.updatedAt: null,
-deletedAt: deletedAt ? this.deletedAt: null,
+      id: id ? this.id : null,
+      authorId: authorId ? this.authorId : null,
+      visibility: visibility ? this.visibility : null,
+      caption: caption ? this.caption : null,
+      hashtags: hashtags ? this.hashtags : null,
+      media: media ? this.media : null,
+      location: location ? this.location : null,
+      likeCount: likeCount ? this.likeCount : null,
+      createdAt: createdAt ? this.createdAt : null,
+      updatedAt: updatedAt ? this.updatedAt : null,
+      deletedAt: deletedAt ? this.deletedAt : null,
     );
   }
 }

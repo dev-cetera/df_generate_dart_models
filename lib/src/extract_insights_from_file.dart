@@ -51,7 +51,8 @@ Future<List<ClassInsight<GenerateDartModel>>> extractInsightsFromFile(
       final fullPathName = params.fullFilePath;
       final fileName = p.basename(fullPathName);
       final dirPath = p.dirname(fullPathName);
-      final supertypeName = _extractSupertypeName(fullPathName, params.className);
+      final supertypeName =
+          _extractSupertypeName(fullPathName, params.className);
       final insight = ClassInsight<GenerateDartModel>(
         className: params.className,
         annotation: temp,
@@ -257,9 +258,9 @@ String? _extractSupertypeName(String fullPathName, String className) {
     // The `extends` clause is optional (a class without it has no specific
     // supertype to inherit from); we only return a name when it's present.
     final pattern = RegExp(
-      r'(?:^|\n)\s*(?:abstract\s+)?(?:base\s+|final\s+|sealed\s+|interface\s+|mixin\s+)?class\s+'
-      + RegExp.escape(className) +
-      r'\b(?:<[^>]*>)?\s+extends\s+([A-Za-z_][\w]*)',
+      r'(?:^|\n)\s*(?:abstract\s+)?(?:base\s+|final\s+|sealed\s+|interface\s+|mixin\s+)?class\s+' +
+          RegExp.escape(className) +
+          r'\b(?:<[^>]*>)?\s+extends\s+([A-Za-z_][\w]*)',
     );
     final match = pattern.firstMatch(src);
     return match?.group(1);

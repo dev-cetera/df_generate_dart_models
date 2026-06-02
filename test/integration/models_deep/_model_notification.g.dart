@@ -32,11 +32,21 @@ class ModelNotification extends _ModelNotification with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props => [id, recipientRef, actorRef, kind, title, body, previewMedia, readAt, createdAt];
+  List<Object?> get props => [
+        id,
+        recipientRef,
+        actorRef,
+        kind,
+        title,
+        body,
+        previewMedia,
+        readAt,
+        createdAt
+      ];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -44,95 +54,90 @@ class ModelNotification extends _ModelNotification with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? recipientRef;
+  final String? recipientRef;
 
   /// No description provided.
-final String? actorRef;
+  final String? actorRef;
 
   /// No description provided.
-final NotificationKindType? kind;
+  final NotificationKindType? kind;
 
   /// No description provided.
-final String? title;
+  final String? title;
 
   /// No description provided.
-final String? body;
+  final String? body;
 
   /// No description provided.
-final ModelMediaItem? previewMedia;
+  final ModelMediaItem? previewMedia;
 
   /// No description provided.
-final DateTime? readAt;
+  final DateTime? readAt;
 
   /// No description provided.
-final DateTime? createdAt;
-
+  final DateTime? createdAt;
 
   /// Constructs a new instance of [ModelNotification]
   /// from optional and required parameters.
   const ModelNotification({
     required this.id,
-required this.recipientRef,
- this.actorRef,
-required this.kind,
-required this.title,
- this.body,
- this.previewMedia,
- this.readAt,
- this.createdAt,
-  }) ;
+    required this.recipientRef,
+    this.actorRef,
+    required this.kind,
+    required this.title,
+    this.body,
+    this.previewMedia,
+    this.readAt,
+    this.createdAt,
+  });
 
   /// Construcs a new instance of [ModelNotification],
   /// forcing all parameters to be optional.
   const ModelNotification.optional({
     this.id,
-this.recipientRef,
-this.actorRef,
-this.kind,
-this.title,
-this.body,
-this.previewMedia,
-this.readAt,
-this.createdAt,
-  }) ;
-
+    this.recipientRef,
+    this.actorRef,
+    this.kind,
+    this.title,
+    this.body,
+    this.previewMedia,
+    this.readAt,
+    this.createdAt,
+  });
 
   /// Constructs a new instance of [ModelNotification],
   /// and asserts that all required parameters are not null.
   factory ModelNotification.assertRequired({
     String? id,
-String? recipientRef,
-String? actorRef,
-NotificationKindType? kind,
-String? title,
-String? body,
-ModelMediaItem? previewMedia,
-DateTime? readAt,
-DateTime? createdAt,
+    String? recipientRef,
+    String? actorRef,
+    NotificationKindType? kind,
+    String? title,
+    String? body,
+    ModelMediaItem? previewMedia,
+    DateTime? readAt,
+    DateTime? createdAt,
   }) {
     assert(id != null);
-assert(recipientRef != null);
+    assert(recipientRef != null);
 
-assert(kind != null);
-assert(title != null);
-
-
-
+    assert(kind != null);
+    assert(title != null);
 
     return ModelNotification(
       id: id,
-recipientRef: recipientRef,
-actorRef: actorRef,
-kind: kind,
-title: title,
-body: body,
-previewMedia: previewMedia,
-readAt: readAt,
-createdAt: createdAt,
+      recipientRef: recipientRef,
+      actorRef: actorRef,
+      kind: kind,
+      title: title,
+      body: body,
+      previewMedia: previewMedia,
+      readAt: readAt,
+      createdAt: createdAt,
     );
   }
 
@@ -159,7 +164,6 @@ createdAt: createdAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelNotification],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -193,7 +197,7 @@ createdAt: createdAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelNotification.fromJsonString: $e');
+      assert(false, '$ModelNotification.fromJsonString: $e');
       rethrow;
     }
   }
@@ -235,24 +239,33 @@ createdAt: createdAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final recipientRef = letAsOrNull<DocumentReference>(json?['recipientRef'])?.path ?? json?['recipientRef']?.toString().trim().nullIfEmpty;
-final actorRef = letAsOrNull<DocumentReference>(json?['actorRef'])?.path ?? json?['actorRef']?.toString().trim().nullIfEmpty;
-final kind = NotificationKindType.values.valueOf(json?['kind']?.toString());
-final title = json?['title']?.toString().trim().nullIfEmpty;
-final body = json?['body']?.toString().trim().nullIfEmpty;
-final previewMedia = () { final a = letMapOrNull<String, dynamic>(json?['previewMedia']); return a != null ? ModelMediaItem.fromJson(a): null; }();
-final readAt = letAsOrNull<Timestamp>(json?['readAt'])?.toDate().toUtc();
-final createdAt = letAsOrNull<Timestamp>(json?['createdAt'])?.toDate().toUtc();
+      final recipientRef =
+          letAsOrNull<DocumentReference>(json?['recipientRef'])?.path ??
+              json?['recipientRef']?.toString().trim().nullIfEmpty;
+      final actorRef =
+          letAsOrNull<DocumentReference>(json?['actorRef'])?.path ??
+              json?['actorRef']?.toString().trim().nullIfEmpty;
+      final kind =
+          NotificationKindType.values.valueOf(json?['kind']?.toString());
+      final title = json?['title']?.toString().trim().nullIfEmpty;
+      final body = json?['body']?.toString().trim().nullIfEmpty;
+      final previewMedia = () {
+        final a = letMapOrNull<String, dynamic>(json?['previewMedia']);
+        return a != null ? ModelMediaItem.fromJson(a) : null;
+      }();
+      final readAt = letAsOrNull<Timestamp>(json?['readAt'])?.toDate().toUtc();
+      final createdAt =
+          letAsOrNull<Timestamp>(json?['createdAt'])?.toDate().toUtc();
       return ModelNotification(
         id: id,
-recipientRef: recipientRef,
-actorRef: actorRef,
-kind: kind,
-title: title,
-body: body,
-previewMedia: previewMedia,
-readAt: readAt,
-createdAt: createdAt,
+        recipientRef: recipientRef,
+        actorRef: actorRef,
+        kind: kind,
+        title: title,
+        body: body,
+        previewMedia: previewMedia,
+        readAt: readAt,
+        createdAt: createdAt,
       );
     } catch (e) {
       return null;
@@ -293,16 +306,25 @@ createdAt: createdAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final recipientRef0 = recipientRef?.trim().nullIfEmpty;
-final actorRef0 = actorRef?.trim().nullIfEmpty;
-final kind0 = kind?.name;
-final title0 = title?.trim().nullIfEmpty;
-final body0 = body?.trim().nullIfEmpty;
-final previewMedia0 = previewMedia?.toJson();
-final readAt0 = readAt != null ? Timestamp.fromDate(readAt!.toUtc()) : null;
-final createdAt0 = FieldValue.serverTimestamp();
+      final recipientRef0 = recipientRef?.trim().nullIfEmpty;
+      final actorRef0 = actorRef?.trim().nullIfEmpty;
+      final kind0 = kind?.name;
+      final title0 = title?.trim().nullIfEmpty;
+      final body0 = body?.trim().nullIfEmpty;
+      final previewMedia0 = previewMedia?.toJson();
+      final readAt0 =
+          readAt != null ? Timestamp.fromDate(readAt!.toUtc()) : null;
+      final createdAt0 = FieldValue.serverTimestamp();
       final withNulls = {
-        'title': title0,'recipientRef': recipientRef0,'readAt': readAt0,'previewMedia': previewMedia0,'kind': kind0,'id': id0,'createdAt': createdAt0,'body': body0,'actorRef': actorRef0,
+        'title': title0,
+        'recipientRef': recipientRef0,
+        'readAt': readAt0,
+        'previewMedia': previewMedia0,
+        'kind': kind0,
+        'id': id0,
+        'createdAt': createdAt0,
+        'body': body0,
+        'actorRef': actorRef0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -311,92 +333,90 @@ final createdAt0 = FieldValue.serverTimestamp();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [recipientRef] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get recipientRef$ => recipientRef!;
+  @pragma('vm:prefer-inline')
+  String get recipientRef$ => recipientRef!;
 
   /// Returns the value of the [actorRef] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get actorRef$ => actorRef;
+  @pragma('vm:prefer-inline')
+  String? get actorRef$ => actorRef;
 
   /// Returns the value of the [kind] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-NotificationKindType get kind$ => kind!;
+  @pragma('vm:prefer-inline')
+  NotificationKindType get kind$ => kind!;
 
   /// Returns the value of the [title] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get title$ => title!;
+  @pragma('vm:prefer-inline')
+  String get title$ => title!;
 
   /// Returns the value of the [body] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get body$ => body;
+  @pragma('vm:prefer-inline')
+  String? get body$ => body;
 
   /// Returns the value of the [previewMedia] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-ModelMediaItem? get previewMedia$ => previewMedia;
+  @pragma('vm:prefer-inline')
+  ModelMediaItem? get previewMedia$ => previewMedia;
 
   /// Returns the value of the [readAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get readAt$ => readAt;
+  @pragma('vm:prefer-inline')
+  DateTime? get readAt$ => readAt;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime? get createdAt$ => createdAt;
-
+  @pragma('vm:prefer-inline')
+  DateTime? get createdAt$ => createdAt;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelNotificationFieldNames {
-    /// The field name of [ModelNotification.id].
-static const id = 'id';
+  /// The field name of [ModelNotification.id].
+  static const id = 'id';
 
   /// The field name of [ModelNotification.recipientRef].
-static const recipientRef = 'recipientRef';
+  static const recipientRef = 'recipientRef';
 
   /// The field name of [ModelNotification.actorRef].
-static const actorRef = 'actorRef';
+  static const actorRef = 'actorRef';
 
   /// The field name of [ModelNotification.kind].
-static const kind = 'kind';
+  static const kind = 'kind';
 
   /// The field name of [ModelNotification.title].
-static const title = 'title';
+  static const title = 'title';
 
   /// The field name of [ModelNotification.body].
-static const body = 'body';
+  static const body = 'body';
 
   /// The field name of [ModelNotification.previewMedia].
-static const previewMedia = 'previewMedia';
+  static const previewMedia = 'previewMedia';
 
   /// The field name of [ModelNotification.readAt].
-static const readAt = 'readAt';
+  static const readAt = 'readAt';
 
   /// The field name of [ModelNotification.createdAt].
-static const createdAt = 'createdAt';
-
+  static const createdAt = 'createdAt';
 }
 
 extension ModelNotificationX on ModelNotification {
@@ -415,50 +435,50 @@ extension ModelNotificationX on ModelNotification {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelNotification copyWith({
     String? id,
-String? recipientRef,
-String? actorRef,
-NotificationKindType? kind,
-String? title,
-String? body,
-ModelMediaItem? previewMedia,
-DateTime? readAt,
-DateTime? createdAt,
+    String? recipientRef,
+    String? actorRef,
+    NotificationKindType? kind,
+    String? title,
+    String? body,
+    ModelMediaItem? previewMedia,
+    DateTime? readAt,
+    DateTime? createdAt,
   }) {
     return ModelNotification.assertRequired(
       id: id ?? this.id,
-recipientRef: recipientRef ?? this.recipientRef,
-actorRef: actorRef ?? this.actorRef,
-kind: kind ?? this.kind,
-title: title ?? this.title,
-body: body ?? this.body,
-previewMedia: previewMedia ?? this.previewMedia,
-readAt: readAt ?? this.readAt,
-createdAt: createdAt ?? this.createdAt,
+      recipientRef: recipientRef ?? this.recipientRef,
+      actorRef: actorRef ?? this.actorRef,
+      kind: kind ?? this.kind,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      previewMedia: previewMedia ?? this.previewMedia,
+      readAt: readAt ?? this.readAt,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelNotification copyWithout({
     bool id = true,
-bool recipientRef = true,
-bool actorRef = true,
-bool kind = true,
-bool title = true,
-bool body = true,
-bool previewMedia = true,
-bool readAt = true,
-bool createdAt = true,
+    bool recipientRef = true,
+    bool actorRef = true,
+    bool kind = true,
+    bool title = true,
+    bool body = true,
+    bool previewMedia = true,
+    bool readAt = true,
+    bool createdAt = true,
   }) {
     return ModelNotification.assertRequired(
-      id: id ? this.id: null,
-recipientRef: recipientRef ? this.recipientRef: null,
-actorRef: actorRef ? this.actorRef: null,
-kind: kind ? this.kind: null,
-title: title ? this.title: null,
-body: body ? this.body: null,
-previewMedia: previewMedia ? this.previewMedia: null,
-readAt: readAt ? this.readAt: null,
-createdAt: createdAt ? this.createdAt: null,
+      id: id ? this.id : null,
+      recipientRef: recipientRef ? this.recipientRef : null,
+      actorRef: actorRef ? this.actorRef : null,
+      kind: kind ? this.kind : null,
+      title: title ? this.title : null,
+      body: body ? this.body : null,
+      previewMedia: previewMedia ? this.previewMedia : null,
+      readAt: readAt ? this.readAt : null,
+      createdAt: createdAt ? this.createdAt : null,
     );
   }
 }

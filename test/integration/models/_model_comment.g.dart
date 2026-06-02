@@ -32,7 +32,7 @@ class ModelComment extends _ModelComment with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
@@ -44,63 +44,61 @@ class ModelComment extends _ModelComment with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final String? authorId;
+  final String? authorId;
 
   /// No description provided.
-final String? body;
+  final String? body;
 
   /// No description provided.
-final String? parentId;
+  final String? parentId;
 
   /// No description provided.
-final DateTime? createdAt;
-
+  final DateTime? createdAt;
 
   /// Constructs a new instance of [ModelComment]
   /// from optional and required parameters.
   const ModelComment({
     required this.id,
-required this.authorId,
-required this.body,
- this.parentId,
-required this.createdAt,
-  }) ;
+    required this.authorId,
+    required this.body,
+    this.parentId,
+    required this.createdAt,
+  });
 
   /// Construcs a new instance of [ModelComment],
   /// forcing all parameters to be optional.
   const ModelComment.optional({
     this.id,
-this.authorId,
-this.body,
-this.parentId,
-this.createdAt,
-  }) ;
-
+    this.authorId,
+    this.body,
+    this.parentId,
+    this.createdAt,
+  });
 
   /// Constructs a new instance of [ModelComment],
   /// and asserts that all required parameters are not null.
   factory ModelComment.assertRequired({
     String? id,
-String? authorId,
-String? body,
-String? parentId,
-DateTime? createdAt,
+    String? authorId,
+    String? body,
+    String? parentId,
+    DateTime? createdAt,
   }) {
     assert(id != null);
-assert(authorId != null);
-assert(body != null);
+    assert(authorId != null);
+    assert(body != null);
 
-assert(createdAt != null);
+    assert(createdAt != null);
     return ModelComment(
       id: id,
-authorId: authorId,
-body: body,
-parentId: parentId,
-createdAt: createdAt,
+      authorId: authorId,
+      body: body,
+      parentId: parentId,
+      createdAt: createdAt,
     );
   }
 
@@ -127,7 +125,6 @@ createdAt: createdAt,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelComment],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -161,7 +158,7 @@ createdAt: createdAt,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelComment.fromJsonString: $e');
+      assert(false, '$ModelComment.fromJsonString: $e');
       rethrow;
     }
   }
@@ -203,16 +200,19 @@ createdAt: createdAt,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-final body = json?['body']?.toString().trim().nullIfEmpty;
-final parentId = json?['parent_id']?.toString().trim().nullIfEmpty;
-final createdAt = (){ final a = json?['created_at']?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }();
+      final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
+      final body = json?['body']?.toString().trim().nullIfEmpty;
+      final parentId = json?['parent_id']?.toString().trim().nullIfEmpty;
+      final createdAt = () {
+        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+      }();
       return ModelComment(
         id: id,
-authorId: authorId,
-body: body,
-parentId: parentId,
-createdAt: createdAt,
+        authorId: authorId,
+        body: body,
+        parentId: parentId,
+        createdAt: createdAt,
       );
     } catch (e) {
       return null;
@@ -253,12 +253,16 @@ createdAt: createdAt,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final authorId0 = authorId?.trim().nullIfEmpty;
-final body0 = body?.trim().nullIfEmpty;
-final parentId0 = parentId?.trim().nullIfEmpty;
-final createdAt0 = createdAt?.toUtc().toIso8601String();
+      final authorId0 = authorId?.trim().nullIfEmpty;
+      final body0 = body?.trim().nullIfEmpty;
+      final parentId0 = parentId?.trim().nullIfEmpty;
+      final createdAt0 = createdAt?.toUtc().toIso8601String();
       final withNulls = {
-        'parent_id': parentId0,'id': id0,'created_at': createdAt0,'body': body0,'author_id': authorId0,
+        'parent_id': parentId0,
+        'id': id0,
+        'created_at': createdAt0,
+        'body': body0,
+        'author_id': authorId0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -267,56 +271,54 @@ final createdAt0 = createdAt?.toUtc().toIso8601String();
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [authorId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get authorId$ => authorId!;
+  @pragma('vm:prefer-inline')
+  String get authorId$ => authorId!;
 
   /// Returns the value of the [body] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get body$ => body!;
+  @pragma('vm:prefer-inline')
+  String get body$ => body!;
 
   /// Returns the value of the [parentId] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String? get parentId$ => parentId;
+  @pragma('vm:prefer-inline')
+  String? get parentId$ => parentId;
 
   /// Returns the value of the [createdAt] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-DateTime get createdAt$ => createdAt!;
-
+  @pragma('vm:prefer-inline')
+  DateTime get createdAt$ => createdAt!;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelCommentFieldNames {
-    /// The field name of [ModelComment.id].
-static const id = 'id';
+  /// The field name of [ModelComment.id].
+  static const id = 'id';
 
   /// The field name of [ModelComment.authorId].
-static const authorId = 'author_id';
+  static const authorId = 'author_id';
 
   /// The field name of [ModelComment.body].
-static const body = 'body';
+  static const body = 'body';
 
   /// The field name of [ModelComment.parentId].
-static const parentId = 'parent_id';
+  static const parentId = 'parent_id';
 
   /// The field name of [ModelComment.createdAt].
-static const createdAt = 'created_at';
-
+  static const createdAt = 'created_at';
 }
 
 extension ModelCommentX on ModelComment {
@@ -335,34 +337,34 @@ extension ModelCommentX on ModelComment {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelComment copyWith({
     String? id,
-String? authorId,
-String? body,
-String? parentId,
-DateTime? createdAt,
+    String? authorId,
+    String? body,
+    String? parentId,
+    DateTime? createdAt,
   }) {
     return ModelComment.assertRequired(
       id: id ?? this.id,
-authorId: authorId ?? this.authorId,
-body: body ?? this.body,
-parentId: parentId ?? this.parentId,
-createdAt: createdAt ?? this.createdAt,
+      authorId: authorId ?? this.authorId,
+      body: body ?? this.body,
+      parentId: parentId ?? this.parentId,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelComment copyWithout({
     bool id = true,
-bool authorId = true,
-bool body = true,
-bool parentId = true,
-bool createdAt = true,
+    bool authorId = true,
+    bool body = true,
+    bool parentId = true,
+    bool createdAt = true,
   }) {
     return ModelComment.assertRequired(
-      id: id ? this.id: null,
-authorId: authorId ? this.authorId: null,
-body: body ? this.body: null,
-parentId: parentId ? this.parentId: null,
-createdAt: createdAt ? this.createdAt: null,
+      id: id ? this.id : null,
+      authorId: authorId ? this.authorId : null,
+      body: body ? this.body : null,
+      parentId: parentId ? this.parentId : null,
+      createdAt: createdAt ? this.createdAt : null,
     );
   }
 }

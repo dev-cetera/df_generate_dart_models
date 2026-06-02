@@ -32,7 +32,7 @@ class ModelDimensions extends _ModelDimensions with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
@@ -44,47 +44,45 @@ class ModelDimensions extends _ModelDimensions with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final int? width;
+  /// No description provided.
+  final int? width;
 
   /// No description provided.
-final int? height;
+  final int? height;
 
   /// No description provided.
-final int? rotation;
-
+  final int? rotation;
 
   /// Constructs a new instance of [ModelDimensions]
   /// from optional and required parameters.
   const ModelDimensions({
     required this.width,
-required this.height,
- this.rotation,
-  }) ;
+    required this.height,
+    this.rotation,
+  });
 
   /// Construcs a new instance of [ModelDimensions],
   /// forcing all parameters to be optional.
   const ModelDimensions.optional({
     this.width,
-this.height,
-this.rotation,
-  }) ;
-
+    this.height,
+    this.rotation,
+  });
 
   /// Constructs a new instance of [ModelDimensions],
   /// and asserts that all required parameters are not null.
   factory ModelDimensions.assertRequired({
     int? width,
-int? height,
-int? rotation,
+    int? height,
+    int? rotation,
   }) {
     assert(width != null);
-assert(height != null);
+    assert(height != null);
 
     return ModelDimensions(
       width: width,
-height: height,
-rotation: rotation,
+      height: height,
+      rotation: rotation,
     );
   }
 
@@ -111,7 +109,6 @@ rotation: rotation,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelDimensions],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -145,7 +142,7 @@ rotation: rotation,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelDimensions.fromJsonString: $e');
+      assert(false, '$ModelDimensions.fromJsonString: $e');
       rethrow;
     }
   }
@@ -187,12 +184,12 @@ rotation: rotation,
   ) {
     try {
       final width = letIntOrNull(json?['width']);
-final height = letIntOrNull(json?['height']);
-final rotation = letIntOrNull(json?['rotation']);
+      final height = letIntOrNull(json?['height']);
+      final rotation = letIntOrNull(json?['rotation']);
       return ModelDimensions(
         width: width,
-height: height,
-rotation: rotation,
+        height: height,
+        rotation: rotation,
       );
     } catch (e) {
       return null;
@@ -233,10 +230,12 @@ rotation: rotation,
   }) {
     try {
       final width0 = width;
-final height0 = height;
-final rotation0 = rotation;
+      final height0 = height;
+      final rotation0 = rotation;
       final withNulls = {
-        'width': width0,'rotation': rotation0,'height': height0,
+        'width': width0,
+        'rotation': rotation0,
+        'height': height0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -245,38 +244,36 @@ final rotation0 = rotation;
     }
   }
 
-    /// Returns the value of the [width] field.
+  /// Returns the value of the [width] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int get width$ => width!;
+  @pragma('vm:prefer-inline')
+  int get width$ => width!;
 
   /// Returns the value of the [height] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int get height$ => height!;
+  @pragma('vm:prefer-inline')
+  int get height$ => height!;
 
   /// Returns the value of the [rotation] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-int? get rotation$ => rotation;
-
+  @pragma('vm:prefer-inline')
+  int? get rotation$ => rotation;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelDimensionsFieldNames {
-    /// The field name of [ModelDimensions.width].
-static const width = 'width';
+  /// The field name of [ModelDimensions.width].
+  static const width = 'width';
 
   /// The field name of [ModelDimensions.height].
-static const height = 'height';
+  static const height = 'height';
 
   /// The field name of [ModelDimensions.rotation].
-static const rotation = 'rotation';
-
+  static const rotation = 'rotation';
 }
 
 extension ModelDimensionsX on ModelDimensions {
@@ -295,26 +292,26 @@ extension ModelDimensionsX on ModelDimensions {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelDimensions copyWith({
     int? width,
-int? height,
-int? rotation,
+    int? height,
+    int? rotation,
   }) {
     return ModelDimensions.assertRequired(
       width: width ?? this.width,
-height: height ?? this.height,
-rotation: rotation ?? this.rotation,
+      height: height ?? this.height,
+      rotation: rotation ?? this.rotation,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelDimensions copyWithout({
     bool width = true,
-bool height = true,
-bool rotation = true,
+    bool height = true,
+    bool rotation = true,
   }) {
     return ModelDimensions.assertRequired(
-      width: width ? this.width: null,
-height: height ? this.height: null,
-rotation: rotation ? this.rotation: null,
+      width: width ? this.width : null,
+      height: height ? this.height : null,
+      rotation: rotation ? this.rotation : null,
     );
   }
 }

@@ -102,8 +102,7 @@ void main() {
       );
     });
 
-    test('PG_enum emits the bare valueOf call (no unknownEnumValue slot)',
-        () {
+    test('PG_enum emits the bare valueOf call (no unknownEnumValue slot)', () {
       expect(
         code,
         contains(
@@ -116,7 +115,6 @@ void main() {
     test('PG_timestamptz uses the DateTime.tryParse chain', () {
       expect(code, contains('DateTime.tryParse(a)?.toUtc()'));
     });
-
   });
 
   group('Postgres nested model + jsonb + references', () {
@@ -127,7 +125,10 @@ void main() {
     });
 
     test('jsonb-Model decodes via letMapOrNull then ModelXxx.fromJson', () {
-      expect(code, contains("letMapOrNull<String, dynamic>(json?['metadata'])"));
+      expect(
+        code,
+        contains("letMapOrNull<String, dynamic>(json?['metadata'])"),
+      );
       expect(code, contains('ModelPostMetadata.fromJson(a)'));
     });
 
@@ -189,7 +190,6 @@ void main() {
         contains("letAsOrNull<Uint8List>(json?['avatar_cache'])"),
       );
     });
-
   });
 
   group('Firestore dialect (DartFirestoreTypeMappers)', () {
@@ -207,7 +207,8 @@ void main() {
       expect(code, contains('Timestamp.fromDate(capturedAt!.toUtc())'));
     });
 
-    test('FS_server_timestamp-DateTime writes FieldValue.serverTimestamp()', () {
+    test('FS_server_timestamp-DateTime writes FieldValue.serverTimestamp()',
+        () {
       expect(code, contains('FieldValue.serverTimestamp()'));
     });
 

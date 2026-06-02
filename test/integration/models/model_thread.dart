@@ -18,7 +18,11 @@ part '_model_comment.g.dart';
     Field(fieldPath: ['id'], fieldType: 'PG_uuid-String', primaryKey: true),
     Field(fieldPath: ['author_id'], fieldType: 'PG_uuid-String'),
     Field(fieldPath: ['body'], fieldType: 'PG_text-String'),
-    Field(fieldPath: ['parent_id'], fieldType: 'PG_uuid-String', nullable: true),
+    Field(
+      fieldPath: ['parent_id'],
+      fieldType: 'PG_uuid-String',
+      nullable: true,
+    ),
     Field(fieldPath: ['created_at'], fieldType: 'PG_timestamptz-DateTime'),
   },
 )

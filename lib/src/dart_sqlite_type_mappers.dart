@@ -81,8 +81,8 @@ class DartSqliteTypeMappers extends TypeMappers {
           return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => MapEntry(${e.hashes},)).nonNulls.nullIfEmpty) : null; }()';
         },
         r'^SQLITE_(?:json|jsonb)' +
-                _sqliteTail +
-                r'-(List|Set|Iterable|Queue)\??$': (e) {
+            _sqliteTail +
+            r'-(List|Set|Iterable|Queue)\??$': (e) {
           return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()) : null; }()';
         },
       });
@@ -111,16 +111,16 @@ class DartSqliteTypeMappers extends TypeMappers {
           return '(){ final a = letDoubleOrNull(${e.name}); return a != null ? DateTime.fromMillisecondsSinceEpoch(((a - 2440587.5) * 86400000).round(), isUtc: true) : null; }()';
         },
         // JSON column with a nested model — same shape as PG_jsonb.
-        r'^SQLITE_(?:json|jsonb)' + _sqliteTail + r'-(Model-?\w+|\w+-?Model)\??$':
-            (e) {
+        r'^SQLITE_(?:json|jsonb)' +
+            _sqliteTail +
+            r'-(Model-?\w+|\w+-?Model)\??$': (e) {
           final typeName = e.matchGroups?.elementAt(1);
           return '() { final a = letMapOrNull<String, dynamic>(${e.name}); return a != null ? $typeName.fromJson(a): null; }()';
         },
 
         // ─── DDL-only — forward to Core's behaviour for the bare type ────
-        r'^SQLITE_(?:text|varchar|char|clob)' +
-                _sqliteTail +
-                r'-(String)\??$': (e) {
+        r'^SQLITE_(?:text|varchar|char|clob)' + _sqliteTail + r'-(String)\??$':
+            (e) {
           return '${e.name}?.toString().trim().nullIfEmpty';
         },
         r'^SQLITE_integer' + _sqliteTail + r'-(int)\??$': (e) {
@@ -163,15 +163,15 @@ class DartSqliteTypeMappers extends TypeMappers {
         r'^SQLITE_julianday' + _sqliteTail + r'-(DateTime)\??$': (e) {
           return '${e.name} != null ? (${e.name}!.toUtc().millisecondsSinceEpoch / 86400000) + 2440587.5 : null';
         },
-        r'^SQLITE_(?:json|jsonb)' + _sqliteTail + r'-(Model-?\w+|\w+-?Model)\??$':
-            (e) {
+        r'^SQLITE_(?:json|jsonb)' +
+            _sqliteTail +
+            r'-(Model-?\w+|\w+-?Model)\??$': (e) {
           return '${e.name} != null ? jsonEncode(${e.name}!.toJson()) : null';
         },
 
         // ─── DDL-only ────────────────────────────────────────────────────
-        r'^SQLITE_(?:text|varchar|char|clob)' +
-                _sqliteTail +
-                r'-(String)\??$': (e) {
+        r'^SQLITE_(?:text|varchar|char|clob)' + _sqliteTail + r'-(String)\??$':
+            (e) {
           return '${e.name}?.trim().nullIfEmpty';
         },
         r'^SQLITE_integer' + _sqliteTail + r'-(int)\??$': (e) {

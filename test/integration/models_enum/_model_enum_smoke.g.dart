@@ -32,7 +32,7 @@ class ModelEnumSmoke extends _ModelEnumSmoke with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
-    /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
@@ -44,47 +44,44 @@ class ModelEnumSmoke extends _ModelEnumSmoke with EquatableMixin {
   @override
   String toString() => toJsonString();
 
-    /// No description provided.
-final String? id;
+  /// No description provided.
+  final String? id;
 
   /// No description provided.
-final Visibility? visibility;
+  final Visibility? visibility;
 
   /// No description provided.
-final AccountStatusType? status;
-
+  final AccountStatusType? status;
 
   /// Constructs a new instance of [ModelEnumSmoke]
   /// from optional and required parameters.
   const ModelEnumSmoke({
     required this.id,
- this.visibility,
- this.status,
-  }) ;
+    this.visibility,
+    this.status,
+  });
 
   /// Construcs a new instance of [ModelEnumSmoke],
   /// forcing all parameters to be optional.
   const ModelEnumSmoke.optional({
     this.id,
-this.visibility,
-this.status,
-  }) ;
-
+    this.visibility,
+    this.status,
+  });
 
   /// Constructs a new instance of [ModelEnumSmoke],
   /// and asserts that all required parameters are not null.
   factory ModelEnumSmoke.assertRequired({
     String? id,
-Visibility? visibility,
-AccountStatusType? status,
+    Visibility? visibility,
+    AccountStatusType? status,
   }) {
     assert(id != null);
 
-
     return ModelEnumSmoke(
       id: id,
-visibility: visibility,
-status: status,
+      visibility: visibility,
+      status: status,
     );
   }
 
@@ -111,7 +108,6 @@ status: status,
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
-
 
   /// Constructs a new instance of [ModelEnumSmoke],
   /// from the fields of [another] instance. Throws if the conversion fails.
@@ -145,7 +141,7 @@ status: status,
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-     assert(false, '$ModelEnumSmoke.fromJsonString: $e');
+      assert(false, '$ModelEnumSmoke.fromJsonString: $e');
       rethrow;
     }
   }
@@ -187,12 +183,14 @@ status: status,
   ) {
     try {
       final id = json?['id']?.toString().trim().nullIfEmpty;
-final visibility = Visibility.values.valueOf(json?['visibility']?.toString());
-final status = AccountStatusType.values.valueOf(json?['status']?.toString());
+      final visibility =
+          Visibility.values.valueOf(json?['visibility']?.toString());
+      final status =
+          AccountStatusType.values.valueOf(json?['status']?.toString());
       return ModelEnumSmoke(
         id: id,
-visibility: visibility,
-status: status,
+        visibility: visibility,
+        status: status,
       );
     } catch (e) {
       return null;
@@ -233,10 +231,12 @@ status: status,
   }) {
     try {
       final id0 = id?.trim().nullIfEmpty;
-final visibility0 = visibility?.name;
-final status0 = status?.name;
+      final visibility0 = visibility?.name;
+      final status0 = status?.name;
       final withNulls = {
-        'visibility': visibility0,'status': status0,'id': id0,
+        'visibility': visibility0,
+        'status': status0,
+        'id': id0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
@@ -245,38 +245,36 @@ final status0 = status?.name;
     }
   }
 
-    /// Returns the value of the [id] field.
+  /// Returns the value of the [id] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-String get id$ => id!;
+  @pragma('vm:prefer-inline')
+  String get id$ => id!;
 
   /// Returns the value of the [visibility] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-Visibility? get visibility$ => visibility;
+  @pragma('vm:prefer-inline')
+  Visibility? get visibility$ => visibility;
 
   /// Returns the value of the [status] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
-@pragma('vm:prefer-inline')
-AccountStatusType? get status$ => status;
-
+  @pragma('vm:prefer-inline')
+  AccountStatusType? get status$ => status;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 abstract final class ModelEnumSmokeFieldNames {
-    /// The field name of [ModelEnumSmoke.id].
-static const id = 'id';
+  /// The field name of [ModelEnumSmoke.id].
+  static const id = 'id';
 
   /// The field name of [ModelEnumSmoke.visibility].
-static const visibility = 'visibility';
+  static const visibility = 'visibility';
 
   /// The field name of [ModelEnumSmoke.status].
-static const status = 'status';
-
+  static const status = 'status';
 }
 
 extension ModelEnumSmokeX on ModelEnumSmoke {
@@ -295,26 +293,26 @@ extension ModelEnumSmokeX on ModelEnumSmoke {
   /// Creates a copy of this instance, replacing the specified fields.
   ModelEnumSmoke copyWith({
     String? id,
-Visibility? visibility,
-AccountStatusType? status,
+    Visibility? visibility,
+    AccountStatusType? status,
   }) {
     return ModelEnumSmoke.assertRequired(
       id: id ?? this.id,
-visibility: visibility ?? this.visibility,
-status: status ?? this.status,
+      visibility: visibility ?? this.visibility,
+      status: status ?? this.status,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
   ModelEnumSmoke copyWithout({
     bool id = true,
-bool visibility = true,
-bool status = true,
+    bool visibility = true,
+    bool status = true,
   }) {
     return ModelEnumSmoke.assertRequired(
-      id: id ? this.id: null,
-visibility: visibility ? this.visibility: null,
-status: status ? this.status: null,
+      id: id ? this.id : null,
+      visibility: visibility ? this.visibility : null,
+      status: status ? this.status : null,
     );
   }
 }
