@@ -124,7 +124,8 @@ createdAt: createdAt,
   static ModelFollowEdge? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -171,13 +172,10 @@ createdAt: createdAt,
   static ModelFollowEdge? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelFollowEdge.fromJson(decoded);
-      } else {
-        return ModelFollowEdge.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelFollowEdge.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -241,12 +239,9 @@ createdAt: createdAt,
   static ModelFollowEdge? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelFollowEdge.fromJson(uri.queryParameters);
-      } else {
-        return ModelFollowEdge.assertRequired();
-      }
+      return ModelFollowEdge.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

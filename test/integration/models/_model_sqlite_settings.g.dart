@@ -148,7 +148,8 @@ avatarCache: avatarCache,
   static ModelSqliteSettings? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -195,13 +196,10 @@ avatarCache: avatarCache,
   static ModelSqliteSettings? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelSqliteSettings.fromJson(decoded);
-      } else {
-        return ModelSqliteSettings.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelSqliteSettings.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -271,12 +269,9 @@ avatarCache: avatarCache,
   static ModelSqliteSettings? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelSqliteSettings.fromJson(uri.queryParameters);
-      } else {
-        return ModelSqliteSettings.assertRequired();
-      }
+      return ModelSqliteSettings.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

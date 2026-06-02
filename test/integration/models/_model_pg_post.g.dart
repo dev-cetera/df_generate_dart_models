@@ -164,7 +164,8 @@ updatedAt: updatedAt,
   static ModelPgPost? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -211,13 +212,10 @@ updatedAt: updatedAt,
   static ModelPgPost? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelPgPost.fromJson(decoded);
-      } else {
-        return ModelPgPost.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelPgPost.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -291,12 +289,9 @@ updatedAt: updatedAt,
   static ModelPgPost? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelPgPost.fromJson(uri.queryParameters);
-      } else {
-        return ModelPgPost.assertRequired();
-      }
+      return ModelPgPost.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

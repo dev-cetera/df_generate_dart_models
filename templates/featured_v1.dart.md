@@ -81,7 +81,8 @@ class ___CLASS_NAME___ extends ___SUPER_CLASS_NAME___ ___WITH_EQUATABLE___{
   static ___CLASS_NAME___? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -128,13 +129,10 @@ class ___CLASS_NAME___ extends ___SUPER_CLASS_NAME___ ___WITH_EQUATABLE___{
   static ___CLASS_NAME___? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ___CLASS_NAME___.fromJson(decoded);
-      } else {
-        return ___CLASS_NAME___.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ___CLASS_NAME___.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -190,12 +188,9 @@ class ___CLASS_NAME___ extends ___SUPER_CLASS_NAME___ ___WITH_EQUATABLE___{
   static ___CLASS_NAME___? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ___CLASS_NAME___.fromJson(uri.queryParameters);
-      } else {
-        return ___CLASS_NAME___.assertRequired();
-      }
+      return ___CLASS_NAME___.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

@@ -124,7 +124,8 @@ createdAt: createdAt,
   static ModelComment? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -171,13 +172,10 @@ createdAt: createdAt,
   static ModelComment? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelComment.fromJson(decoded);
-      } else {
-        return ModelComment.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelComment.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -241,12 +239,9 @@ createdAt: createdAt,
   static ModelComment? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelComment.fromJson(uri.queryParameters);
-      } else {
-        return ModelComment.assertRequired();
-      }
+      return ModelComment.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

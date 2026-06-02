@@ -116,7 +116,8 @@ placeLabel: placeLabel,
   static ModelLocation? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -163,13 +164,10 @@ placeLabel: placeLabel,
   static ModelLocation? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelLocation.fromJson(decoded);
-      } else {
-        return ModelLocation.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelLocation.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -231,12 +229,9 @@ placeLabel: placeLabel,
   static ModelLocation? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelLocation.fromJson(uri.queryParameters);
-      } else {
-        return ModelLocation.assertRequired();
-      }
+      return ModelLocation.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

@@ -124,7 +124,8 @@ altText: altText,
   static ModelMediaDetails? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -171,13 +172,10 @@ altText: altText,
   static ModelMediaDetails? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelMediaDetails.fromJson(decoded);
-      } else {
-        return ModelMediaDetails.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelMediaDetails.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -241,12 +239,9 @@ altText: altText,
   static ModelMediaDetails? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelMediaDetails.fromJson(uri.queryParameters);
-      } else {
-        return ModelMediaDetails.assertRequired();
-      }
+      return ModelMediaDetails.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

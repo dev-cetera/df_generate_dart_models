@@ -140,7 +140,8 @@ updatedAt: updatedAt,
   static ModelLocalDraft? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -187,13 +188,10 @@ updatedAt: updatedAt,
   static ModelLocalDraft? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelLocalDraft.fromJson(decoded);
-      } else {
-        return ModelLocalDraft.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelLocalDraft.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -261,12 +259,9 @@ updatedAt: updatedAt,
   static ModelLocalDraft? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelLocalDraft.fromJson(uri.queryParameters);
-      } else {
-        return ModelLocalDraft.assertRequired();
-      }
+      return ModelLocalDraft.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

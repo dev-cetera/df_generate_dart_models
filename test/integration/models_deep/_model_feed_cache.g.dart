@@ -172,7 +172,8 @@ previewBlob: previewBlob,
   static ModelFeedCache? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -219,13 +220,10 @@ previewBlob: previewBlob,
   static ModelFeedCache? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelFeedCache.fromJson(decoded);
-      } else {
-        return ModelFeedCache.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelFeedCache.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -301,12 +299,9 @@ previewBlob: previewBlob,
   static ModelFeedCache? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelFeedCache.fromJson(uri.queryParameters);
-      } else {
-        return ModelFeedCache.assertRequired();
-      }
+      return ModelFeedCache.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

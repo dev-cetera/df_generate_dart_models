@@ -172,7 +172,8 @@ deletedAt: deletedAt,
   static ModelPost? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -219,13 +220,10 @@ deletedAt: deletedAt,
   static ModelPost? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelPost.fromJson(decoded);
-      } else {
-        return ModelPost.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelPost.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -301,12 +299,9 @@ deletedAt: deletedAt,
   static ModelPost? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelPost.fromJson(uri.queryParameters);
-      } else {
-        return ModelPost.assertRequired();
-      }
+      return ModelPost.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

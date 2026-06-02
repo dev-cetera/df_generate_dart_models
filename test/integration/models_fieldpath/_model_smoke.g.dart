@@ -116,7 +116,8 @@ profileAddressCity: profileAddressCity,
   static ModelSmoke? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -163,13 +164,10 @@ profileAddressCity: profileAddressCity,
   static ModelSmoke? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelSmoke.fromJson(decoded);
-      } else {
-        return ModelSmoke.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelSmoke.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -231,12 +229,9 @@ profileAddressCity: profileAddressCity,
   static ModelSmoke? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelSmoke.fromJson(uri.queryParameters);
-      } else {
-        return ModelSmoke.assertRequired();
-      }
+      return ModelSmoke.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

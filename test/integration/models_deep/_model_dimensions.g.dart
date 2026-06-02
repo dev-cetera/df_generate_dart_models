@@ -108,7 +108,8 @@ rotation: rotation,
   static ModelDimensions? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -155,13 +156,10 @@ rotation: rotation,
   static ModelDimensions? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelDimensions.fromJson(decoded);
-      } else {
-        return ModelDimensions.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelDimensions.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -221,12 +219,9 @@ rotation: rotation,
   static ModelDimensions? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelDimensions.fromJson(uri.queryParameters);
-      } else {
-        return ModelDimensions.assertRequired();
-      }
+      return ModelDimensions.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

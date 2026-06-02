@@ -164,7 +164,8 @@ metadata: metadata,
   static ModelBase? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -211,13 +212,10 @@ metadata: metadata,
   static ModelBase? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelBase.fromJson(decoded);
-      } else {
-        return ModelBase.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelBase.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -291,12 +289,9 @@ metadata: metadata,
   static ModelBase? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelBase.fromJson(uri.queryParameters);
-      } else {
-        return ModelBase.assertRequired();
-      }
+      return ModelBase.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

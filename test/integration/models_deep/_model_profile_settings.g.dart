@@ -116,7 +116,8 @@ marketingOptIn: marketingOptIn,
   static ModelProfileSettings? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -163,13 +164,10 @@ marketingOptIn: marketingOptIn,
   static ModelProfileSettings? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelProfileSettings.fromJson(decoded);
-      } else {
-        return ModelProfileSettings.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelProfileSettings.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -231,12 +229,9 @@ marketingOptIn: marketingOptIn,
   static ModelProfileSettings? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelProfileSettings.fromJson(uri.queryParameters);
-      } else {
-        return ModelProfileSettings.assertRequired();
-      }
+      return ModelProfileSettings.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

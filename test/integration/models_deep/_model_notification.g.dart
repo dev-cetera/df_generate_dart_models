@@ -156,7 +156,8 @@ createdAt: createdAt,
   static ModelNotification? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -203,13 +204,10 @@ createdAt: createdAt,
   static ModelNotification? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelNotification.fromJson(decoded);
-      } else {
-        return ModelNotification.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelNotification.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -281,12 +279,9 @@ createdAt: createdAt,
   static ModelNotification? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelNotification.fromJson(uri.queryParameters);
-      } else {
-        return ModelNotification.assertRequired();
-      }
+      return ModelNotification.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

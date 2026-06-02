@@ -108,7 +108,8 @@ status: status,
   static ModelEnumSmoke? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -155,13 +156,10 @@ status: status,
   static ModelEnumSmoke? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelEnumSmoke.fromJson(decoded);
-      } else {
-        return ModelEnumSmoke.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelEnumSmoke.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -221,12 +219,9 @@ status: status,
   static ModelEnumSmoke? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelEnumSmoke.fromJson(uri.queryParameters);
-      } else {
-        return ModelEnumSmoke.assertRequired();
-      }
+      return ModelEnumSmoke.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

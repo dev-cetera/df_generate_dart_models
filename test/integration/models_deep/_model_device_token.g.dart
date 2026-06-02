@@ -148,7 +148,8 @@ lastLocation: lastLocation,
   static ModelDeviceToken? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -195,13 +196,10 @@ lastLocation: lastLocation,
   static ModelDeviceToken? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelDeviceToken.fromJson(decoded);
-      } else {
-        return ModelDeviceToken.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelDeviceToken.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -271,12 +269,9 @@ lastLocation: lastLocation,
   static ModelDeviceToken? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelDeviceToken.fromJson(uri.queryParameters);
-      } else {
-        return ModelDeviceToken.assertRequired();
-      }
+      return ModelDeviceToken.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

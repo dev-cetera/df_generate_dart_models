@@ -156,7 +156,8 @@ deletedAt: deletedAt,
   static ModelAccount? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -203,13 +204,10 @@ deletedAt: deletedAt,
   static ModelAccount? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelAccount.fromJson(decoded);
-      } else {
-        return ModelAccount.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelAccount.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -281,12 +279,9 @@ deletedAt: deletedAt,
   static ModelAccount? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelAccount.fromJson(uri.queryParameters);
-      } else {
-        return ModelAccount.assertRequired();
-      }
+      return ModelAccount.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

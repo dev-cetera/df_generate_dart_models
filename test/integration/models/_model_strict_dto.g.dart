@@ -148,7 +148,8 @@ avatar: avatar,
   static ModelStrictDto? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -195,13 +196,10 @@ avatar: avatar,
   static ModelStrictDto? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelStrictDto.fromJson(decoded);
-      } else {
-        return ModelStrictDto.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelStrictDto.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -271,12 +269,9 @@ avatar: avatar,
   static ModelStrictDto? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelStrictDto.fromJson(uri.queryParameters);
-      } else {
-        return ModelStrictDto.assertRequired();
-      }
+      return ModelStrictDto.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

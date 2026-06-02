@@ -108,7 +108,8 @@ language: language,
   static ModelPostMetadata? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -155,13 +156,10 @@ language: language,
   static ModelPostMetadata? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelPostMetadata.fromJson(decoded);
-      } else {
-        return ModelPostMetadata.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelPostMetadata.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -221,12 +219,9 @@ language: language,
   static ModelPostMetadata? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelPostMetadata.fromJson(uri.queryParameters);
-      } else {
-        return ModelPostMetadata.assertRequired();
-      }
+      return ModelPostMetadata.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }

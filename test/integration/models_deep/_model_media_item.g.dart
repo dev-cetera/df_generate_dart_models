@@ -132,7 +132,8 @@ order: order,
   static ModelMediaItem? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
 
@@ -179,13 +180,10 @@ order: order,
   static ModelMediaItem? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelMediaItem.fromJson(decoded);
-      } else {
-        return ModelMediaItem.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelMediaItem.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -251,12 +249,9 @@ order: order,
   static ModelMediaItem? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelMediaItem.fromJson(uri.queryParameters);
-      } else {
-        return ModelMediaItem.assertRequired();
-      }
+      return ModelMediaItem.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }
