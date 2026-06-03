@@ -19,7 +19,18 @@ String _read(String name) {
         'generator? `dart run bin/df_generate_dart_models.dart '
         '-i test/integration/models -t templates/featured_v1.dart.md`');
   }
-  return f.readAsStringSync();
+  return _unwrap(f.readAsStringSync());
+}
+
+/// Unwraps Dart-formatter line continuations so substring assertions can match
+/// semantic expressions regardless of how the formatter chose to break them.
+/// Joins each newline+indent into a single space, then strips whitespace before
+/// `.` so chained-method calls like `foo\n    .bar` read as `foo.bar`.
+String _unwrap(String s) {
+  s = s.replaceAll(RegExp(r'\n[ \t]*'), ' ');
+  s = s.replaceAll(RegExp(r' +\.'), '.');
+  s = s.replaceAll(RegExp(r' +'), ' ');
+  return s;
 }
 
 void main() {
