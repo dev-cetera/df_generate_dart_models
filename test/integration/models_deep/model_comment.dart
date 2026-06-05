@@ -10,6 +10,7 @@ import 'model_post.dart';
 part '_model_comment.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

@@ -19,6 +19,7 @@ part '_model_dimensions.g.dart';
 
 // Bottom of the chain — a literal width/height pair.
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {
@@ -37,6 +38,7 @@ abstract class _ModelDimensions extends Model {
 
 // Mid-tier — media-specific metadata. Embeds ModelDimensions.
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {
@@ -72,6 +74,7 @@ abstract class _ModelMediaDetails extends Model {
 
 // Item — appears as List<ModelMediaItem> inside ModelPostMedia/Post.
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {
@@ -108,6 +111,7 @@ abstract class _ModelMediaItem extends Model {
 
 // jsonb location embedded directly on the post.
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {
@@ -131,6 +135,7 @@ abstract class _ModelLocation extends Model {
 
 // Top of the post chain.
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

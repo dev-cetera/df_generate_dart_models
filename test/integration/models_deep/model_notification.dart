@@ -10,6 +10,7 @@ import 'model_post.dart' show ModelMediaItem;
 part '_model_notification.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   shouldInherit: true,
   fields: {
     Field(fieldPath: ['id'], fieldType: String, primaryKey: true),

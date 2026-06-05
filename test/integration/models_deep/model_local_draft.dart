@@ -8,6 +8,7 @@ import 'model_post.dart'; // ModelMediaItem cross-dialect nesting
 part '_model_local_draft.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

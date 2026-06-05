@@ -9,6 +9,7 @@ import '../models/_fixtures.dart'
 part '_model_device_token.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   shouldInherit: true,
   fields: {
     Field(fieldPath: ['id'], fieldType: String, primaryKey: true),

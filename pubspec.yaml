@@ -19,7 +19,7 @@ funding:
   - https://www.patreon.com/c/robelator
   - https://github.com/sponsors/robelator
 description: A tool for generating data models and classes from annotations, offering greater flexibility than json_serializable or freezed.
-version: 0.15.0
+version: 0.16.0
 topics:
   - build-runner
   - cli
@@ -42,7 +42,7 @@ dependencies:
   df_collection: ^0.10.0
   df_config: ^0.8.0
   df_gen_core: ^0.8.0
-  df_generate_dart_models_core: ^0.10.0
+  df_generate_dart_models_core: ^0.11.0
   df_log: ^0.5.1
   df_string: ^0.3.0
   df_type: ^0.16.0

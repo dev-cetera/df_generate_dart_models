@@ -9,6 +9,7 @@ import 'model_account.dart';
 part '_model_follow_edge.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

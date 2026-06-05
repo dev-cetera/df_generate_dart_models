@@ -13,6 +13,7 @@ import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 part '_model_strict_dto.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   shouldInherit: true,
   fields: {
     Field(fieldPath: ['id'], fieldType: 'STRICT-String', primaryKey: true),

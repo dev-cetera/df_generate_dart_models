@@ -201,7 +201,10 @@ class DartCoreTypeMappers extends TypeMappers {
           final typeName = e.matchGroups?.elementAt(1);
           return '$typeName.values.valueOf(${e.name}?.toString())';
         },
-        r'^(Model-?\w+|\w+-?Model)\??$': (e) {
+        r'^(Model-?\w+|\w+-?Model|Res-?\w+|\w+-?Res|Req-?\w+|\w+-?Req|Entry-?\w+|\w+-?Entry|Spec-?\w+|\w+-?Spec)\??$':
+            (
+          e,
+        ) {
           final typeName = e.matchGroups?.elementAt(1);
           return '() { final a = letMapOrNull<String, dynamic>(${e.name}); return a != null ? $typeName.fromJson(a): null; }()';
         },
@@ -333,7 +336,10 @@ class DartCoreTypeMappers extends TypeMappers {
         r'^(DataRefModel)\??$': (e) {
           return '${e.name}?.path';
         },
-        r'^(Model-?\w+|\w+-?Model)\??$': (e) {
+        r'^(Model-?\w+|\w+-?Model|Res-?\w+|\w+-?Res|Req-?\w+|\w+-?Req|Entry-?\w+|\w+-?Entry|Spec-?\w+|\w+-?Spec)\??$':
+            (
+          e,
+        ) {
           return '${e.name}?.toJson()';
         },
         r'^(Enum-?\w+|\w+-?Enum)\??$': (e) {

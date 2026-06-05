@@ -8,6 +8,7 @@ import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 part '_model_smoke.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

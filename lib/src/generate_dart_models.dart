@@ -207,6 +207,23 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
     return insight.annotation.className ??
         insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
   },
+  '___TABLE_NAME___': (insight) {
+    // Mirrors the DBML emitter's resolution so a model's static `tableName`
+    // const always matches the table it wires to in the schema. Explicit
+    // `tableName:` wins; otherwise strip the `Model` marker and snake-case.
+    final explicit = insight.annotation.tableName;
+    if (explicit != null && explicit.isNotEmpty) return explicit;
+    final raw = insight.annotation.className ??
+        insight.className.replaceFirst(RegExp(r'^[_$]+'), '');
+    final stripped = raw == 'Model'
+        ? raw
+        : raw.startsWith('Model') && raw.length > 5
+            ? raw.substring(5)
+            : raw.endsWith('Model') && raw.length > 5
+                ? raw.substring(0, raw.length - 5)
+                : raw;
+    return stripped.toSnakeCase();
+  },
   '___WITH_EQUATABLE___': (insight) {
     // Equatable is decided by the inheritance chain, not by an annotation
     // flag: classes whose abstract base extends `BaseModel` directly opt
@@ -414,6 +431,35 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
         '',
       ].join('\n');
     }).join('\n');
+  },
+  '___FIELD_NAMES_VALUES___': (insight) {
+    // List of every declared field-name constant in declaration order. Mirrors
+    // enum `values` semantics so consumers can iterate without reflection.
+    return insight.fields.map((e) => e.fieldName).join(', ');
+  },
+  '___PRIMARY_KEY_DECL___': (insight) {
+    // Emit a non-nullable declaration when we have a primary key so the
+    // `unnecessary_nullable_for_final_variable_declarations` lint stays
+    // quiet, and a nullable declaration when there's nothing to point at.
+    // First-match-wins; composite keys are a DBML-layer concern.
+    final pk = insight.fields.where((e) => e.primaryKey == true).firstOrNull;
+    return pk == null
+        ? 'static const String? \$primaryKey = null'
+        : 'static const String \$primaryKey = ${pk.fieldName}';
+  },
+  '___FOREIGN_KEYS_MAP___': (insight) {
+    // Map of foreign-key field-name constants to the referenced class name.
+    // A field qualifies if either `foreignKey: true` OR `references: SomeType`
+    // is set. `references` may be a String literal (`'ModelUser'`) or a Dart
+    // Type literal — either way `.toString()` yields the type display name.
+    final entries = insight.fields
+        .where((e) => e.foreignKey == true || e.references != null)
+        .map((e) {
+      final ref = e.references?.toString().trim();
+      if (ref == null || ref.isEmpty || ref == 'null') return null;
+      return '${e.fieldName}: \'$ref\'';
+    }).whereType<String>();
+    return entries.isEmpty ? '{}' : '{${entries.join(', ')}}';
   },
   '___COPY_WITH_PARAMS___': (insight) {
     return insight.fields.map((e) {

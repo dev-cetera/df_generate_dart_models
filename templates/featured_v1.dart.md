@@ -33,6 +33,12 @@ class ___CLASS_NAME___ extends ___SUPER_CLASS_NAME___ ___WITH_EQUATABLE___{
   @override
   String get $className => CLASS_NAME;
 
+  /// The database table name this model maps to, mirroring `tableName:` on
+  /// the annotation. When the annotation omits `tableName:`, this is derived
+  /// from the class name (Model prefix/suffix stripped, snake-cased) — no
+  /// automatic pluralisation.
+  static const tableName = '___TABLE_NAME___';
+
   ___EQUATABLE_OVERRIDES___
 
   ___FIELD_DECLARATIONS___
@@ -219,6 +225,17 @@ class ___CLASS_NAME___ extends ___SUPER_CLASS_NAME___ ___WITH_EQUATABLE___{
 
 abstract final class ___CLASS_NAME___FieldNames {
   ___FIELD_NAMES___
+
+  /// Every declared field-name constant in declaration order. Mirrors
+  /// `enum.values` so consumers can iterate the schema without reflection.
+  static const List<String> $values = [___FIELD_NAMES_VALUES___];
+
+  /// The field marked `primaryKey: true`, or `null` if none was declared.
+  ___PRIMARY_KEY_DECL___;
+
+  /// Foreign-key fields mapped to the referenced class name (as a String).
+  /// Empty when no field uses `foreignKey:` / `references:`.
+  static const Map<String, String> $foreignKeys = ___FOREIGN_KEYS_MAP___;
 }
 
 extension ___CLASS_NAME___X on ___CLASS_NAME___ {

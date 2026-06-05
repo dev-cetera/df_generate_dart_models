@@ -15,6 +15,7 @@ import '_fixtures.dart';
 part '_model_firestore_doc.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   shouldInherit: true,
   fields: {
     Field(fieldPath: ['id'], fieldType: FieldTypes.string, primaryKey: true),

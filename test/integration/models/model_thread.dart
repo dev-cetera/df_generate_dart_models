@@ -12,6 +12,7 @@ part '_model_thread.g.dart';
 part '_model_comment.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {
@@ -31,6 +32,7 @@ abstract class _ModelComment extends Model {
 }
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

@@ -32,6 +32,12 @@ class ModelLocalDraft extends _ModelLocalDraft with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
+  /// The database table name this model maps to, mirroring `tableName:` on
+  /// the annotation. When the annotation omits `tableName:`, this is derived
+  /// from the class name (Model prefix/suffix stripped, snake-cased) — no
+  /// automatic pluralisation.
+  static const tableName = 'local_draft';
+
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
@@ -404,6 +410,25 @@ abstract final class ModelLocalDraftFieldNames {
 
   /// The field name of [ModelLocalDraft.updatedAt].
   static const updatedAt = 'updated_at';
+
+  /// Every declared field-name constant in declaration order. Mirrors
+  /// `enum.values` so consumers can iterate the schema without reflection.
+  static const List<String> $values = [
+    id,
+    caption,
+    hashtags,
+    media,
+    scheduledFor,
+    isDirty,
+    updatedAt
+  ];
+
+  /// The field marked `primaryKey: true`, or `null` if none was declared.
+  static const String $primaryKey = id;
+
+  /// Foreign-key fields mapped to the referenced class name (as a String).
+  /// Empty when no field uses `foreignKey:` / `references:`.
+  static const Map<String, String> $foreignKeys = {};
 }
 
 extension ModelLocalDraftX on ModelLocalDraft {

@@ -15,6 +15,7 @@ enum Visibility { publicVis, friends, privateVis }
 enum AccountStatusType { active, suspended, deleted }
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

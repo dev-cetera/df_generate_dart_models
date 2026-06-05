@@ -16,18 +16,19 @@
 // ignore_for_file: unnecessary_null_comparison
 // ignore_for_file: unnecessary_question_mark
 
-part of 'model_profile.dart';
+part of 'model_envelope.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// Generated class for [_ModelProfileSettings].
-class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
+/// Generated class for [_ModelEnvelopeMapValues].
+class ModelEnvelopeMapValues extends _ModelEnvelopeMapValues
+    with EquatableMixin {
   //
   //
   //
 
   /// The runtime type of this class as a String.
-  static const CLASS_NAME = 'ModelProfileSettings';
+  static const CLASS_NAME = 'ModelEnvelopeMapValues';
 
   @override
   String get $className => CLASS_NAME;
@@ -36,14 +37,13 @@ class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
   /// automatic pluralisation.
-  static const tableName = 'profile_settings';
+  static const tableName = 'envelope_map_values';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
   @override
-  List<Object?> get props =>
-      [defaultVisibility, language, timezone, marketingOptIn];
+  List<Object?> get props => [tickedBy, counts];
 
   /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
   /// [EquatableMixin]'s default toString shadow it. The mixin sits after
@@ -52,187 +52,189 @@ class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
   String toString() => toJsonString();
 
   /// No description provided.
-  final PostVisibilityType? defaultVisibility;
+  final Map<String, DateTime>? tickedBy;
 
   /// No description provided.
-  final String? language;
+  final Map<String, int>? counts;
 
-  /// No description provided.
-  final String? timezone;
-
-  /// No description provided.
-  final bool? marketingOptIn;
-
-  /// Constructs a new instance of [ModelProfileSettings]
+  /// Constructs a new instance of [ModelEnvelopeMapValues]
   /// from optional and required parameters.
-  const ModelProfileSettings({
-    this.defaultVisibility,
-    this.language,
-    this.timezone,
-    this.marketingOptIn,
+  const ModelEnvelopeMapValues({
+    this.tickedBy,
+    this.counts,
   });
 
-  /// Construcs a new instance of [ModelProfileSettings],
+  /// Construcs a new instance of [ModelEnvelopeMapValues],
   /// forcing all parameters to be optional.
-  const ModelProfileSettings.optional({
-    this.defaultVisibility,
-    this.language,
-    this.timezone,
-    this.marketingOptIn,
+  const ModelEnvelopeMapValues.optional({
+    this.tickedBy,
+    this.counts,
   });
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// and asserts that all required parameters are not null.
-  factory ModelProfileSettings.assertRequired({
-    PostVisibilityType? defaultVisibility,
-    String? language,
-    String? timezone,
-    bool? marketingOptIn,
+  factory ModelEnvelopeMapValues.assertRequired({
+    Map<String, DateTime>? tickedBy,
+    Map<String, int>? counts,
   }) {
-    return ModelProfileSettings(
-      defaultVisibility: defaultVisibility,
-      language: language,
-      timezone: timezone,
-      marketingOptIn: marketingOptIn,
+    return ModelEnvelopeMapValues(
+      tickedBy: tickedBy,
+      counts: counts,
     );
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelProfileSettings.from(
+  factory ModelEnvelopeMapValues.from(
     BaseModel another,
   ) {
     try {
       return fromOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelProfileSettings.from: $e');
+      assert(false, '$ModelEnvelopeMapValues.from: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelProfileSettings? fromOrNull(
+  static ModelEnvelopeMapValues? fromOrNull(
     BaseModel? another,
   ) {
     if (another == null) return null;
     return fromJsonOrNull(another.toJson());
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from the fields of [another] instance. Throws if the conversion fails.
-  factory ModelProfileSettings.of(
-    ModelProfileSettings another,
+  factory ModelEnvelopeMapValues.of(
+    ModelEnvelopeMapValues another,
   ) {
     try {
       return ofOrNull(another)!;
     } catch (e) {
-      assert(false, '$ModelProfileSettings.of: $e');
+      assert(false, '$ModelEnvelopeMapValues.of: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from the fields of [another] instance. Returns `null` if [another] is
   /// `null` or if the conversion fails.
   @pragma('vm:prefer-inline')
-  static ModelProfileSettings? ofOrNull(
-    ModelProfileSettings? other,
+  static ModelEnvelopeMapValues? ofOrNull(
+    ModelEnvelopeMapValues? other,
   ) {
     return fromJsonOrNull(other?.toJson());
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from [jsonString], which must be a valid JSON String. Throws if the
   /// conversion fails.
-  factory ModelProfileSettings.fromJsonString(
+  factory ModelEnvelopeMapValues.fromJsonString(
     String jsonString,
   ) {
     try {
       return fromJsonStringOrNull(jsonString)!;
     } catch (e) {
-      assert(false, '$ModelProfileSettings.fromJsonString: $e');
+      assert(false, '$ModelEnvelopeMapValues.fromJsonString: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from [jsonString], which must be a valid JSON String. Returns `null` if
   /// [jsonString] is `null` or if the conversion fails.
-  static ModelProfileSettings? fromJsonStringOrNull(
+  static ModelEnvelopeMapValues? fromJsonStringOrNull(
     String? jsonString,
   ) {
     if (jsonString == null || jsonString.isEmpty) return null;
     try {
       final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-      return ModelProfileSettings.fromJsonOrNull(decoded);
+      return ModelEnvelopeMapValues.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from [json], which must be a valid JSON object. Throws if the conversion
   /// fails.
-  factory ModelProfileSettings.fromJson(
+  factory ModelEnvelopeMapValues.fromJson(
     Map<String, dynamic>? json,
   ) {
     try {
       return fromJsonOrNull(json)!;
     } catch (e) {
-      assert(false, '$ModelProfileSettings.fromJson: $e');
+      assert(false, '$ModelEnvelopeMapValues.fromJson: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from [json], which must be a valid JSON object. Returns `null` if
   /// [json] is `null` or if the conversion fails.
-  static ModelProfileSettings? fromJsonOrNull(
+  static ModelEnvelopeMapValues? fromJsonOrNull(
     Map<String, dynamic>? json,
   ) {
     try {
-      final defaultVisibility = PostVisibilityType.values
-          .valueOf(json?['default_visibility']?.toString());
-      final language = json?['language']?.toString().trim().nullIfEmpty;
-      final timezone = json?['timezone']?.toString().trim().nullIfEmpty;
-      final marketingOptIn = letBoolOrNull(json?['marketing_opt_in']);
-      return ModelProfileSettings(
-        defaultVisibility: defaultVisibility,
-        language: language,
-        timezone: timezone,
-        marketingOptIn: marketingOptIn,
+      final tickedBy = letMapOrNull<dynamic, dynamic>(json?['ticked_by'])
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.toString().trim().nullIfEmpty,
+              () {
+                final a = p1?.toString().trim().nullIfEmpty;
+                return a != null ? DateTime.tryParse(a)?.toUtc() : null;
+              }(),
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.unmodifiable;
+      final counts = letMapOrNull<dynamic, dynamic>(json?['counts'])
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.toString().trim().nullIfEmpty,
+              letIntOrNull(p1),
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty
+          ?.unmodifiable;
+      return ModelEnvelopeMapValues(
+        tickedBy: tickedBy,
+        counts: counts,
       );
     } catch (e) {
       return null;
     }
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from the query parameters of [uri]. Throws if the conversion
   /// fails.
-  factory ModelProfileSettings.fromUri(
+  factory ModelEnvelopeMapValues.fromUri(
     Uri? uri,
   ) {
     try {
       return fromUriOrNull(uri)!;
     } catch (e) {
-      assert(false, '$ModelProfileSettings.fromUri: $e');
+      assert(false, '$ModelEnvelopeMapValues.fromUri: $e');
       rethrow;
     }
   }
 
-  /// Constructs a new instance of [ModelProfileSettings],
+  /// Constructs a new instance of [ModelEnvelopeMapValues],
   /// from the query parameters of [uri]. Returns `null` if [uri] is `null` or
   /// if the conversion fails.
-  static ModelProfileSettings? fromUriOrNull(
+  static ModelEnvelopeMapValues? fromUriOrNull(
     Uri? uri,
   ) {
     if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      return ModelProfileSettings.fromJsonOrNull(uri.queryParameters);
+      return ModelEnvelopeMapValues.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }
@@ -243,71 +245,60 @@ class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final defaultVisibility0 = defaultVisibility?.name;
-      final language0 = language?.trim().nullIfEmpty;
-      final timezone0 = timezone?.trim().nullIfEmpty;
-      final marketingOptIn0 = marketingOptIn;
+      final tickedBy0 = tickedBy
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.trim().nullIfEmpty,
+              p1?.toUtc().toIso8601String(),
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty;
+      final counts0 = counts
+          ?.map(
+            (p0, p1) => MapEntry(
+              p0?.trim().nullIfEmpty,
+              p1,
+            ),
+          )
+          .nonNulls
+          .nullIfEmpty;
       final withNulls = {
-        'timezone': timezone0,
-        'marketing_opt_in': marketingOptIn0,
-        'language': language0,
-        'default_visibility': defaultVisibility0,
+        'ticked_by': tickedBy0,
+        'counts': counts0,
       };
       return includeNulls ? withNulls : withNulls.nonNulls;
     } catch (e) {
-      assert(false, '$ModelProfileSettings.toJson: $e');
+      assert(false, '$ModelEnvelopeMapValues.toJson: $e');
       rethrow;
     }
   }
 
-  /// Returns the value of the [defaultVisibility] field.
+  /// Returns the value of the [tickedBy] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
   @pragma('vm:prefer-inline')
-  PostVisibilityType? get defaultVisibility$ => defaultVisibility;
+  Map<String, DateTime>? get tickedBy$ => tickedBy;
 
-  /// Returns the value of the [language] field.
+  /// Returns the value of the [counts] field.
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
   @pragma('vm:prefer-inline')
-  String? get language$ => language;
-
-  /// Returns the value of the [timezone] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-  @pragma('vm:prefer-inline')
-  String? get timezone$ => timezone;
-
-  /// Returns the value of the [marketingOptIn] field.
-  /// If the field is nullable, the return value may be null; otherwise, it
-  /// will always return a non-null value.
-  @pragma('vm:prefer-inline')
-  bool? get marketingOptIn$ => marketingOptIn;
+  Map<String, int>? get counts$ => counts;
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-abstract final class ModelProfileSettingsFieldNames {
-  /// The field name of [ModelProfileSettings.defaultVisibility].
-  static const defaultVisibility = 'default_visibility';
+abstract final class ModelEnvelopeMapValuesFieldNames {
+  /// The field name of [ModelEnvelopeMapValues.tickedBy].
+  static const tickedBy = 'ticked_by';
 
-  /// The field name of [ModelProfileSettings.language].
-  static const language = 'language';
-
-  /// The field name of [ModelProfileSettings.timezone].
-  static const timezone = 'timezone';
-
-  /// The field name of [ModelProfileSettings.marketingOptIn].
-  static const marketingOptIn = 'marketing_opt_in';
+  /// The field name of [ModelEnvelopeMapValues.counts].
+  static const counts = 'counts';
 
   /// Every declared field-name constant in declaration order. Mirrors
   /// `enum.values` so consumers can iterate the schema without reflection.
-  static const List<String> $values = [
-    defaultVisibility,
-    language,
-    timezone,
-    marketingOptIn
-  ];
+  static const List<String> $values = [tickedBy, counts];
 
   /// The field marked `primaryKey: true`, or `null` if none was declared.
   static const String? $primaryKey = null;
@@ -317,46 +308,38 @@ abstract final class ModelProfileSettingsFieldNames {
   static const Map<String, String> $foreignKeys = {};
 }
 
-extension ModelProfileSettingsX on ModelProfileSettings {
+extension ModelEnvelopeMapValuesX on ModelEnvelopeMapValues {
   /// Creates a copy of this instance, merging another model's fields into
   /// this model's fields.
-  ModelProfileSettings mergeWith(
+  ModelEnvelopeMapValues mergeWith(
     BaseModel? other, {
     bool deepMerge = false,
   }) {
     final a = toJson();
     final b = other?.toJson() ?? {};
     final data = (deepMerge ? mergeDataDeep(a, b) : {...a, ...b}) as Map;
-    return ModelProfileSettings.fromJson(data.cast());
+    return ModelEnvelopeMapValues.fromJson(data.cast());
   }
 
   /// Creates a copy of this instance, replacing the specified fields.
-  ModelProfileSettings copyWith({
-    PostVisibilityType? defaultVisibility,
-    String? language,
-    String? timezone,
-    bool? marketingOptIn,
+  ModelEnvelopeMapValues copyWith({
+    Map<String, DateTime>? tickedBy,
+    Map<String, int>? counts,
   }) {
-    return ModelProfileSettings.assertRequired(
-      defaultVisibility: defaultVisibility ?? this.defaultVisibility,
-      language: language ?? this.language,
-      timezone: timezone ?? this.timezone,
-      marketingOptIn: marketingOptIn ?? this.marketingOptIn,
+    return ModelEnvelopeMapValues.assertRequired(
+      tickedBy: tickedBy ?? this.tickedBy,
+      counts: counts ?? this.counts,
     );
   }
 
   /// Creates a copy of this instance, removing the specified fields.
-  ModelProfileSettings copyWithout({
-    bool defaultVisibility = true,
-    bool language = true,
-    bool timezone = true,
-    bool marketingOptIn = true,
+  ModelEnvelopeMapValues copyWithout({
+    bool tickedBy = true,
+    bool counts = true,
   }) {
-    return ModelProfileSettings.assertRequired(
-      defaultVisibility: defaultVisibility ? this.defaultVisibility : null,
-      language: language ? this.language : null,
-      timezone: timezone ? this.timezone : null,
-      marketingOptIn: marketingOptIn ? this.marketingOptIn : null,
+    return ModelEnvelopeMapValues.assertRequired(
+      tickedBy: tickedBy ? this.tickedBy : null,
+      counts: counts ? this.counts : null,
     );
   }
 }

@@ -140,6 +140,14 @@ GenerateDartModel _updateFromClassAnnotationField(
       return annotation.mergeWith(
         GenerateDartModel(description: params.fieldValue.toStringValue()),
       );
+    case GenerateDartModelFieldNames.tableName:
+      return annotation.mergeWith(
+        GenerateDartModel(tableName: params.fieldValue.toStringValue()),
+      );
+    case GenerateDartModelFieldNames.schema:
+      return annotation.mergeWith(
+        GenerateDartModel(schema: params.fieldValue.toStringValue()),
+      );
     default:
   }
   return GenerateDartModel.of(annotation);

@@ -16,6 +16,7 @@ part '_model_post_metadata.g.dart';
 
 // A small inner model embedded as jsonb on the post.
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {
@@ -29,6 +30,7 @@ abstract class _ModelPostMetadata extends Model {
 }
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

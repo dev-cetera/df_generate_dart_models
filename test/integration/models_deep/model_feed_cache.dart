@@ -11,6 +11,7 @@ import 'model_post.dart'; // for ModelMediaItem cross-dialect nesting
 part '_model_feed_cache.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

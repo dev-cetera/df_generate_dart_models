@@ -12,6 +12,7 @@ import '_fixtures.dart';
 part '_model_pg_user.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

@@ -21,7 +21,7 @@ part of 'model_all_types.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Comprehensive fixture exercising every mapper.
-class ModelAllTypes extends _ModelAllTypes {
+class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
   //
   //
   //
@@ -31,6 +31,71 @@ class ModelAllTypes extends _ModelAllTypes {
 
   @override
   String get $className => CLASS_NAME;
+
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// the same value semantics across hand-construction and `fromJson`
+  /// round-trips since every field is included.
+  @override
+  List<Object?> get props => [
+        anyValue,
+        name,
+        active,
+        count,
+        ratio,
+        amount,
+        createdAt,
+        interval,
+        homepage,
+        themeColor,
+        stamp,
+        ownerRef,
+        payment,
+        shade,
+        bigCount,
+        blob,
+        regex,
+        origin,
+        canvasSize,
+        bounds,
+        padding,
+        anchor,
+        corner,
+        trimmed,
+        noSpaces,
+        searchable,
+        lower,
+        upper,
+        lowerSnake,
+        upperSnake,
+        lowerKebab,
+        upperKebab,
+        camel,
+        pascal,
+        tLower,
+        tUpper,
+        tLowerSnake,
+        tUpperSnake,
+        tLowerKebab,
+        tUpperKebab,
+        tCamel,
+        tPascal,
+        tags,
+        flags,
+        scores,
+        lookup,
+        todo,
+        matrix,
+        groupedColors,
+        nestedMap,
+        users,
+        localized
+      ];
+
+  /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
+  /// [EquatableMixin]'s default toString shadow it. The mixin sits after
+  /// the BaseModel chain in the linearization, so we re-override here.
+  @override
+  String toString() => toJsonString();
 
   /// No description provided.
   final dynamic? anyValue;
@@ -191,7 +256,7 @@ class ModelAllTypes extends _ModelAllTypes {
   /// Constructs a new instance of [ModelAllTypes]
   /// from optional and required parameters.
   const ModelAllTypes({
-    required this.anyValue,
+    this.anyValue,
     this.name,
     this.active,
     this.count,
@@ -358,8 +423,6 @@ class ModelAllTypes extends _ModelAllTypes {
     List<ModelUser>? users,
     Map<String, String>? localized,
   }) {
-    assert(anyValue != null);
-
     return ModelAllTypes(
       anyValue: anyValue,
       name: name,
@@ -436,7 +499,8 @@ class ModelAllTypes extends _ModelAllTypes {
   static ModelAllTypes? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
   /// Constructs a new instance of [ModelAllTypes],
@@ -482,13 +546,10 @@ class ModelAllTypes extends _ModelAllTypes {
   static ModelAllTypes? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelAllTypes.fromJson(decoded);
-      } else {
-        return ModelAllTypes.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelAllTypes.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -517,10 +578,10 @@ class ModelAllTypes extends _ModelAllTypes {
     try {
       final anyValue = json?['anyValue'];
       final name = json?['name']?.toString().trim().nullIfEmpty;
-      final active = letAsOrNull<bool>(json?['active']);
-      final count = letAsOrNull<int>(json?['count']);
-      final ratio = letAsOrNull<double>(json?['ratio']);
-      final amount = letAsOrNull<num>(json?['amount']);
+      final active = letBoolOrNull(json?['active']);
+      final count = letIntOrNull(json?['count']);
+      final ratio = letDoubleOrNull(json?['ratio']);
+      final amount = letNumOrNull(json?['amount']);
       final createdAt = () {
         final a = json?['createdAt']?.toString().trim().nullIfEmpty;
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
@@ -615,24 +676,71 @@ class ModelAllTypes extends _ModelAllTypes {
             : null;
       }();
       final trimmed = json?['trimmed']?.toString().trim().nullIfEmpty;
-      final noSpaces = json?['noSpaces']?.toString().trim().nullIfEmpty;
-      final searchable = json?['searchable']?.toString().trim().nullIfEmpty;
-      final lower = json?['lower']?.toString().trim().nullIfEmpty;
-      final upper = json?['upper']?.toString().trim().nullIfEmpty;
-      final lowerSnake = json?['lowerSnake']?.toString().trim().nullIfEmpty;
-      final upperSnake = json?['upperSnake']?.toString().trim().nullIfEmpty;
-      final lowerKebab = json?['lowerKebab']?.toString().trim().nullIfEmpty;
-      final upperKebab = json?['upperKebab']?.toString().trim().nullIfEmpty;
-      final camel = json?['camel']?.toString().trim().nullIfEmpty;
-      final pascal = json?['pascal']?.toString().trim().nullIfEmpty;
-      final tLower = json?['tLower']?.toString().trim().nullIfEmpty;
-      final tUpper = json?['tUpper']?.toString().trim().nullIfEmpty;
-      final tLowerSnake = json?['tLowerSnake']?.toString().trim().nullIfEmpty;
-      final tUpperSnake = json?['tUpperSnake']?.toString().trim().nullIfEmpty;
-      final tLowerKebab = json?['tLowerKebab']?.toString().trim().nullIfEmpty;
-      final tUpperKebab = json?['tUpperKebab']?.toString().trim().nullIfEmpty;
-      final tCamel = json?['tCamel']?.toString().trim().nullIfEmpty;
-      final tPascal = json?['tPascal']?.toString().trim().nullIfEmpty;
+      final noSpaces =
+          json?['noSpaces']?.toString().trim().nullIfEmpty?.replaceAll(' ', '');
+      final searchable = json?['searchable']
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toLowerCase()
+          .replaceAll(RegExp(r'[^\w]'), '')
+          .nullIfEmpty;
+      final lower =
+          json?['lower']?.toString().trim().nullIfEmpty?.toLowerCase();
+      final upper =
+          json?['upper']?.toString().trim().nullIfEmpty?.toUpperCase();
+      final lowerSnake = json?['lowerSnake']
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toLowerSnakeCase();
+      final upperSnake = json?['upperSnake']
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toUpperSnakeCase();
+      final lowerKebab = json?['lowerKebab']
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toLowerKebabCase();
+      final upperKebab = json?['upperKebab']
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toUpperKebabCase();
+      final camel =
+          json?['camel']?.toString().trim().nullIfEmpty?.toCamelCase();
+      final pascal =
+          json?['pascal']?.toString().trim().nullIfEmpty?.toPascalCase();
+      final tLower =
+          json?['tLower']?.toString().trim().nullIfEmpty?.toLowerCase();
+      final tUpper =
+          json?['tUpper']?.toString().trim().nullIfEmpty?.toUpperCase();
+      final tLowerSnake = json?['tLowerSnake']
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toLowerSnakeCase();
+      final tUpperSnake = json?['tUpperSnake']
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toUpperSnakeCase();
+      final tLowerKebab = json?['tLowerKebab']
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toLowerKebabCase();
+      final tUpperKebab = json?['tUpperKebab']
+          ?.toString()
+          .trim()
+          .nullIfEmpty
+          ?.toUpperKebabCase();
+      final tCamel =
+          json?['tCamel']?.toString().trim().nullIfEmpty?.toCamelCase();
+      final tPascal =
+          json?['tPascal']?.toString().trim().nullIfEmpty?.toPascalCase();
       final tags = letListOrNull<dynamic>(json?['tags'])
           ?.map(
             (p0) => p0?.toString().trim().nullIfEmpty,
@@ -643,7 +751,7 @@ class ModelAllTypes extends _ModelAllTypes {
           .unmodifiable;
       final flags = letSetOrNull<dynamic>(json?['flags'])
           ?.map(
-            (p0) => letAsOrNull<bool>(p0),
+            (p0) => letBoolOrNull(p0),
           )
           .nonNulls
           .nullIfEmpty
@@ -651,7 +759,7 @@ class ModelAllTypes extends _ModelAllTypes {
           .unmodifiable;
       final scores = letIterableOrNull<dynamic>(json?['scores'])
           ?.map(
-            (p0) => letAsOrNull<int>(p0),
+            (p0) => letIntOrNull(p0),
           )
           .nonNulls
           .nullIfEmpty;
@@ -659,7 +767,7 @@ class ModelAllTypes extends _ModelAllTypes {
           ?.map(
             (p0, p1) => MapEntry(
               p0?.toString().trim().nullIfEmpty,
-              letAsOrNull<double>(p1),
+              letDoubleOrNull(p1),
             ),
           )
           .nonNulls
@@ -678,7 +786,7 @@ class ModelAllTypes extends _ModelAllTypes {
           ?.map(
             (p0) => letListOrNull<dynamic>(p0)
                 ?.map(
-                  (p0) => letAsOrNull<int>(p0),
+                  (p0) => letIntOrNull(p0),
                 )
                 .nonNulls
                 .nullIfEmpty
@@ -696,7 +804,7 @@ class ModelAllTypes extends _ModelAllTypes {
                   p0?.toString().trim().nullIfEmpty,
                   letListOrNull<dynamic>(p1)
                       ?.map(
-                        (p0) => letAsOrNull<int>(p0),
+                        (p0) => letIntOrNull(p0),
                       )
                       .nonNulls
                       .nullIfEmpty
@@ -715,7 +823,7 @@ class ModelAllTypes extends _ModelAllTypes {
                   ?.map(
                     (p0, p1) => MapEntry(
                       p0?.toString().trim().nullIfEmpty,
-                      letAsOrNull<int>(p1),
+                      letIntOrNull(p1),
                     ),
                   )
                   .nonNulls
@@ -826,12 +934,9 @@ class ModelAllTypes extends _ModelAllTypes {
   static ModelAllTypes? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelAllTypes.fromJson(uri.queryParameters);
-      } else {
-        return ModelAllTypes.assertRequired();
-      }
+      return ModelAllTypes.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }
@@ -883,24 +988,29 @@ class ModelAllTypes extends _ModelAllTypes {
       final anchor0 = anchor != null ? {'x': anchor!.x, 'y': anchor!.y} : null;
       final corner0 = corner != null ? {'x': corner!.x, 'y': corner!.y} : null;
       final trimmed0 = trimmed?.trim().nullIfEmpty;
-      final noSpaces0 = noSpaces?.trim().nullIfEmpty;
-      final searchable0 = searchable?.trim().nullIfEmpty;
-      final lower0 = lower?.trim().nullIfEmpty;
-      final upper0 = upper?.trim().nullIfEmpty;
-      final lowerSnake0 = lowerSnake?.trim().nullIfEmpty;
-      final upperSnake0 = upperSnake?.trim().nullIfEmpty;
-      final lowerKebab0 = lowerKebab?.trim().nullIfEmpty;
-      final upperKebab0 = upperKebab?.trim().nullIfEmpty;
-      final camel0 = camel?.trim().nullIfEmpty;
-      final pascal0 = pascal?.trim().nullIfEmpty;
-      final tLower0 = tLower?.trim().nullIfEmpty;
-      final tUpper0 = tUpper?.trim().nullIfEmpty;
-      final tLowerSnake0 = tLowerSnake?.trim().nullIfEmpty;
-      final tUpperSnake0 = tUpperSnake?.trim().nullIfEmpty;
-      final tLowerKebab0 = tLowerKebab?.trim().nullIfEmpty;
-      final tUpperKebab0 = tUpperKebab?.trim().nullIfEmpty;
-      final tCamel0 = tCamel?.trim().nullIfEmpty;
-      final tPascal0 = tPascal?.trim().nullIfEmpty;
+      final noSpaces0 = noSpaces?.trim().nullIfEmpty?.replaceAll(' ', '');
+      final searchable0 = searchable
+          ?.trim()
+          .nullIfEmpty
+          ?.toLowerCase()
+          .replaceAll(RegExp(r'[^\w]'), '')
+          .nullIfEmpty;
+      final lower0 = lower?.trim().nullIfEmpty?.toLowerCase();
+      final upper0 = upper?.trim().nullIfEmpty?.toUpperCase();
+      final lowerSnake0 = lowerSnake?.trim().nullIfEmpty?.toLowerSnakeCase();
+      final upperSnake0 = upperSnake?.trim().nullIfEmpty?.toUpperSnakeCase();
+      final lowerKebab0 = lowerKebab?.trim().nullIfEmpty?.toLowerKebabCase();
+      final upperKebab0 = upperKebab?.trim().nullIfEmpty?.toUpperKebabCase();
+      final camel0 = camel?.trim().nullIfEmpty?.toCamelCase();
+      final pascal0 = pascal?.trim().nullIfEmpty?.toPascalCase();
+      final tLower0 = tLower?.trim().nullIfEmpty?.toLowerCase();
+      final tUpper0 = tUpper?.trim().nullIfEmpty?.toUpperCase();
+      final tLowerSnake0 = tLowerSnake?.trim().nullIfEmpty?.toLowerSnakeCase();
+      final tUpperSnake0 = tUpperSnake?.trim().nullIfEmpty?.toUpperSnakeCase();
+      final tLowerKebab0 = tLowerKebab?.trim().nullIfEmpty?.toLowerKebabCase();
+      final tUpperKebab0 = tUpperKebab?.trim().nullIfEmpty?.toUpperKebabCase();
+      final tCamel0 = tCamel?.trim().nullIfEmpty?.toCamelCase();
+      final tPascal0 = tPascal?.trim().nullIfEmpty?.toPascalCase();
       final tags0 = tags
           ?.map(
             (p0) => p0?.trim().nullIfEmpty,
@@ -1064,7 +1174,7 @@ class ModelAllTypes extends _ModelAllTypes {
   /// If the field is nullable, the return value may be null; otherwise, it
   /// will always return a non-null value.
   @pragma('vm:prefer-inline')
-  dynamic get anyValue$ => anyValue!;
+  dynamic? get anyValue$ => anyValue;
 
   /// Returns the value of the [name] field.
   /// If the field is nullable, the return value may be null; otherwise, it
@@ -1531,6 +1641,70 @@ abstract final class ModelAllTypesFieldNames {
 
   /// The field name of [ModelAllTypes.localized].
   static const localized = 'localized';
+
+  /// Every declared field-name constant in declaration order. Mirrors
+  /// `enum.values` so consumers can iterate the schema without reflection.
+  static const List<String> $values = [
+    anyValue,
+    name,
+    active,
+    count,
+    ratio,
+    amount,
+    createdAt,
+    interval,
+    homepage,
+    themeColor,
+    stamp,
+    ownerRef,
+    payment,
+    shade,
+    bigCount,
+    blob,
+    regex,
+    origin,
+    canvasSize,
+    bounds,
+    padding,
+    anchor,
+    corner,
+    trimmed,
+    noSpaces,
+    searchable,
+    lower,
+    upper,
+    lowerSnake,
+    upperSnake,
+    lowerKebab,
+    upperKebab,
+    camel,
+    pascal,
+    tLower,
+    tUpper,
+    tLowerSnake,
+    tUpperSnake,
+    tLowerKebab,
+    tUpperKebab,
+    tCamel,
+    tPascal,
+    tags,
+    flags,
+    scores,
+    lookup,
+    todo,
+    matrix,
+    groupedColors,
+    nestedMap,
+    users,
+    localized
+  ];
+
+  /// The field marked `primaryKey: true`, or `null` if none was declared.
+  static const String? $primaryKey = null;
+
+  /// Foreign-key fields mapped to the referenced class name (as a String).
+  /// Empty when no field uses `foreignKey:` / `references:`.
+  static const Map<String, String> $foreignKeys = {};
 }
 
 extension ModelAllTypesX on ModelAllTypes {

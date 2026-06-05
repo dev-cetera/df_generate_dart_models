@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.16.0]
+
+- Released @ 6/2026 (UTC)
+- New: `tableName:` annotation slot — explicit override for the DBML table name; falls back to stripping the `Model` marker (prefix *or* suffix) from the class and snake-casing. No automatic English pluralisation. `ModelUser` → `user`, `HelloModel` → `hello`, `ModelModel` → `model`
+- New: `schema:` annotation slot acts as the DBML emission gate. Models without `schema:` are skipped (nested/embedded children drop out naturally). Distinct schema values produce one `<schema>.dbml` file each — multi-schema projects supported out of the box
+- New: `static const tableName` emitted on every generated class — runtime introspection without the annotation handshake (`ModelUser.tableName`)
+- New: `XxxFieldNames.$values` / `$primaryKey` / `$foreignKeys` — surface declaration-order field names, the primary key, and the foreign-key → referenced-class map without reflection
+- New: `references:` accepts a `String` literal (`references: 'ModelUser'`) in addition to a Type literal — lets cross-package references skip the import chain
+- New: FK target column now resolves to the parent's actual primary-key column (e.g. `permissions.key`) instead of hardcoded `.id`; FK target table honours the parent's explicit `tableName:`
+- New: DBML emitter's `--output` is now treated as the directory for per-schema files (a `*.dbml` value uses its parent dir — old ergonomics still work)
+- Fix: default template URL is now version-pinned (`v$version`) — old binaries no longer pull `main` template changes silently. Falls back to `main` only for dev checkouts
+- Fix: no-pluralisation rule replaces the previous naive English heuristic that produced `activitys` / `contact_address` / etc.
+- Pulls in df_generate_dart_models_core 0.11.0
+
 ## [0.15.0]
 
 - Released @ 6/2026 (UTC)

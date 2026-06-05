@@ -12,6 +12,7 @@ part '_model_profile.g.dart';
 part '_model_profile_settings.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {
@@ -34,6 +35,7 @@ abstract class _ModelProfileSettings extends Model {
 }
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

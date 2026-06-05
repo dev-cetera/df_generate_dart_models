@@ -10,6 +10,7 @@ import '_enums.dart';
 part '_model_account.g.dart';
 
 @GenerateDartModel(
+  schema: 'test',
   keyStringCase: 'LOWER_SNAKE_CASE',
   shouldInherit: true,
   fields: {

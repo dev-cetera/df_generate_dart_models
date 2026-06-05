@@ -21,7 +21,7 @@ part of 'model_user.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Generated class for [_ModelUser].
-class ModelUser extends _ModelUser {
+class ModelUser extends _ModelUser with EquatableMixin {
   //
   //
   //
@@ -31,6 +31,18 @@ class ModelUser extends _ModelUser {
 
   @override
   String get $className => CLASS_NAME;
+
+  /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
+  /// the same value semantics across hand-construction and `fromJson`
+  /// round-trips since every field is included.
+  @override
+  List<Object?> get props => [ref, firstName, lastName];
+
+  /// Preserves [BaseModel]'s JSON pretty-print toString rather than letting
+  /// [EquatableMixin]'s default toString shadow it. The mixin sits after
+  /// the BaseModel chain in the linearization, so we re-override here.
+  @override
+  String toString() => toJsonString();
 
   /// No description provided.
   final DataRefModel? ref;
@@ -93,7 +105,8 @@ class ModelUser extends _ModelUser {
   static ModelUser? fromOrNull(
     BaseModel? another,
   ) {
-    return fromJsonOrNull(another?.toJson())!;
+    if (another == null) return null;
+    return fromJsonOrNull(another.toJson());
   }
 
   /// Constructs a new instance of [ModelUser],
@@ -139,13 +152,10 @@ class ModelUser extends _ModelUser {
   static ModelUser? fromJsonStringOrNull(
     String? jsonString,
   ) {
+    if (jsonString == null || jsonString.isEmpty) return null;
     try {
-      if (jsonString!.isNotEmpty) {
-        final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
-        return ModelUser.fromJson(decoded);
-      } else {
-        return ModelUser.assertRequired();
-      }
+      final decoded = letMapOrNull<String, dynamic>(jsonDecode(jsonString));
+      return ModelUser.fromJsonOrNull(decoded);
     } catch (_) {
       return null;
     }
@@ -205,12 +215,9 @@ class ModelUser extends _ModelUser {
   static ModelUser? fromUriOrNull(
     Uri? uri,
   ) {
+    if (uri == null || uri.path != CLASS_NAME) return null;
     try {
-      if (uri != null && uri.path == CLASS_NAME) {
-        return ModelUser.fromJson(uri.queryParameters);
-      } else {
-        return ModelUser.assertRequired();
-      }
+      return ModelUser.fromJsonOrNull(uri.queryParameters);
     } catch (_) {
       return null;
     }
@@ -266,6 +273,17 @@ abstract final class ModelUserFieldNames {
 
   /// The field name of [ModelUser.lastName].
   static const lastName = 'lastName';
+
+  /// Every declared field-name constant in declaration order. Mirrors
+  /// `enum.values` so consumers can iterate the schema without reflection.
+  static const List<String> $values = [ref, firstName, lastName];
+
+  /// The field marked `primaryKey: true`, or `null` if none was declared.
+  static const String $primaryKey = ref;
+
+  /// Foreign-key fields mapped to the referenced class name (as a String).
+  /// Empty when no field uses `foreignKey:` / `references:`.
+  static const Map<String, String> $foreignKeys = {};
 }
 
 extension ModelUserX on ModelUser {
