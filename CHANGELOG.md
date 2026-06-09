@@ -1,6 +1,11 @@
 # Changelog
 
-## [0.16.0]
+## [0.16.2]
+
+- Released @ 6/2026 (UTC)
+- Fix: `df_generate_dbml` was built into `bin/` but missing from the `executables:` block, so `dart pub global activate` did not install it as a CLI. Adding it (plus a `--dbml` alias) makes `df_generate_dbml` available globally
+
+## [0.16.1]
 
 - Released @ 6/2026 (UTC)
 - New: `tableName:` annotation slot — explicit override for the DBML table name; falls back to stripping the `Model` marker (prefix *or* suffix) from the class and snake-casing. No automatic English pluralisation. `ModelUser` → `user`, `HelloModel` → `hello`, `ModelModel` → `model`
