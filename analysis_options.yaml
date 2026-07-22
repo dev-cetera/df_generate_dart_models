@@ -33,7 +33,7 @@ analyzer:
     strict-raw-types: true
   exclude:
     - build/**
-    # - '**.g.dart'
+    - '**.g.dart'
 
   errors:
     always_declare_return_types: error

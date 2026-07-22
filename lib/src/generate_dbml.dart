@@ -512,7 +512,8 @@ void _emitEnumBlock(_EnumInfo e, StringBuffer buf) {
   if (e.variants.isEmpty) {
     buf.writeln('  // TODO: variants for `${e.dartName}` were not resolvable;');
     buf.writeln(
-        '  // fill them in or re-run with the enum source on the path.');
+      '  // fill them in or re-run with the enum source on the path.',
+    );
     buf.writeln('  unknown');
   } else {
     for (final v in e.variants) {
