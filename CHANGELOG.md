@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.17.1]
+
+- fix: exclude generated .g.dart from analysis in example too
+
+
 ## [0.17.0]
 
 - Released @ 7/2026 (UTC)
