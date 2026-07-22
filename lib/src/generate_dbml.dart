@@ -88,8 +88,10 @@ Future<void> generateDbml(
       );
 
   final allInsights = <ClassInsight<GenerateDartModel>>[];
+  final scannedFiles = <String>[];
   try {
     await for (final finding in stream) {
+      scannedFiles.add(finding.path);
       final insights = await extractInsightsFromFile(
         finding.path,
         analysisContextCollection,
@@ -100,6 +102,15 @@ Future<void> generateDbml(
     Log.printRed('Failed while reading: $e');
     exit(ExitCodes.FAILURE.code);
   }
+
+  // Resolve every Dart enum reachable from the scanned files so we can
+  // emit real `Enum "<name>" { ... }` blocks plus `enum(<name>)` column
+  // types in the DBML — instead of letting enum-typed columns silently
+  // fall through to `text`.
+  final reachableEnums = await resolveReachableEnums(
+    scannedFiles,
+    analysisContextCollection,
+  );
 
   // Only models that declare `schema:` get DBML output — that's the gate.
   // Nested / embedded models (e.g. jsonb-only child shapes) don't carry a
@@ -167,9 +178,20 @@ Future<void> generateDbml(
     buffer.writeln('// Schema: $schema');
     buffer.writeln();
 
+    // Discover every Dart enum referenced (by `@enum` tag or by the explicit
+    // `PG_enum(<name>)-XxxEnum` prefix) on any field in this schema and emit
+    // a DBML `Enum "<name>" { ... }` block. The block names use the
+    // snake_cased Dart name when the PG prefix didn't supply an explicit
+    // name, so the column type `enum(user_role_type)` resolves cleanly.
+    final usedEnums = _collectUsedEnums(insights, reachableEnums);
+    for (final e in usedEnums) {
+      _emitEnumBlock(e, buffer);
+      buffer.writeln();
+    }
+
     final refLines = <String>[];
     for (final insight in insights) {
-      _emitTable(insight, buffer, refLines, pkByTable, tableByClass);
+      _emitTable(insight, buffer, refLines, pkByTable, tableByClass, usedEnums);
       buffer.writeln();
     }
     for (final line in refLines) {
@@ -201,14 +223,16 @@ void _emitTable(
   List<String> refLines,
   Map<String, String> pkByTable,
   Map<String, String> tableByClass,
+  List<_EnumInfo> enums,
 ) {
   final tableName = _tableNameFor(insight);
+  final enumDbmlByDart = {for (final e in enums) e.dartName: e.dbmlName};
 
   buffer.writeln('Table $tableName {');
 
   for (final field in insight.fields) {
     final columnName = _columnNameFor(insight, field);
-    final sqlType = _sqlTypeFor(field);
+    final sqlType = _sqlTypeFor(field, enumDbmlByDart);
     final notes = <String>[];
 
     if (field.primaryKey == true) notes.add('pk');
@@ -279,17 +303,31 @@ String _columnNameFor(
 /// Derives the DBML column type from the `PG_*-`/`SQLITE_*-` prefix in
 /// `fieldType`, falling back to a sensible default per the bare Dart
 /// type when no dialect prefix is set.
-String _sqlTypeFor(DartField field) {
+String _sqlTypeFor(DartField field, Map<String, String> enumDbmlByDart) {
   final raw = field.fieldType ?? 'dynamic';
   final dialectMatch = RegExp(
     r'^(?:PG|SQLITE)_(\w+(?:\([^)]*\))?(?:\[\])?)-',
   ).firstMatch(raw);
   if (dialectMatch != null) return dialectMatch.group(1)!;
 
-  // Defaults for bare Dart types. `@enum` sentinel (analyzer-tagged enums
-  // without a dialect prefix) is stripped before matching; bare enums lower
-  // to `text` like any other class name fallback.
-  final bare = raw.replaceAll('?', '').replaceAll('@enum', '');
+  // Enum detection runs BEFORE the bare-name fallback so analyzer-tagged
+  // enums (`UserRoleType@enum`) and bare enum Type literals
+  // (`UserRoleType` when reachable enums confirm it) both round-trip as
+  // proper `enum(<dbml_name>)` columns instead of falling through to `text`.
+  final cleaned = raw.replaceAll('?', '');
+  if (cleaned.endsWith('@enum')) {
+    final dartName = cleaned.substring(0, cleaned.length - '@enum'.length);
+    final dbmlName = enumDbmlByDart[dartName] ?? _dbmlEnumNameFor(dartName);
+    return 'enum($dbmlName)';
+  }
+  if (enumDbmlByDart.containsKey(cleaned)) {
+    return 'enum(${enumDbmlByDart[cleaned]})';
+  }
+
+  // Defaults for bare Dart types. `@enum` sentinel is now handled above —
+  // strip it defensively in case any other code path leaves it on the
+  // raw string.
+  final bare = cleaned.replaceAll('@enum', '');
   switch (bare) {
     case 'String':
       return 'text';
@@ -373,4 +411,113 @@ extension _ClassInsightExtension on ClassInsight<GenerateDartModel> {
     return StringCaseType.values.valueOf(annotation.keyStringCase) ??
         StringCaseType.CAMEL_CASE;
   }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+/// One DBML enum we plan to emit at the top of the schema. Carries both the
+/// snake-cased DBML identifier (`user_role_type`) used in column types and
+/// the original Dart name (`UserRoleType`) used to look up variants in
+/// [resolveReachableEnums]'s result.
+class _EnumInfo {
+  _EnumInfo({
+    required this.dbmlName,
+    required this.dartName,
+    required this.variants,
+  });
+  final String dbmlName;
+  final String dartName;
+  final List<String> variants;
+}
+
+/// Walks every field across the schema's models, finds every distinct enum
+/// referenced (either via the `@enum` sentinel that the extractor adds to
+/// analyzer-detected enum Type literals, or via the explicit
+/// `PG_enum(<name>)-XxxEnum` prefix vocabulary), and looks each one up in
+/// [reachable] for its variants. Variants missing from [reachable] still
+/// produce an entry — the block just gets an empty body for the user to
+/// fill in.
+List<_EnumInfo> _collectUsedEnums(
+  Iterable<ClassInsight<GenerateDartModel>> insights,
+  Map<String, List<String>> reachable,
+) {
+  // dbmlName → _EnumInfo. We key on dbmlName so the explicit PG name (which
+  // may differ from the snake_cased Dart name) wins when both forms appear.
+  final out = <String, _EnumInfo>{};
+
+  void register(String dartName, String dbmlName) {
+    if (out.containsKey(dbmlName)) return;
+    final variants = reachable[dartName] ?? const <String>[];
+    out[dbmlName] = _EnumInfo(
+      dbmlName: dbmlName,
+      dartName: dartName,
+      variants: variants,
+    );
+  }
+
+  for (final insight in insights) {
+    for (final field in insight.fields) {
+      final raw = (field.fieldType ?? '').replaceAll('?', '');
+      if (raw.isEmpty) continue;
+
+      // 1) `PG_enum(<dbml_name>)-<DartTypeName>` — explicit DBML name set
+      //    via the prefix vocabulary; wins over any inference.
+      final pgEnumMatch = RegExp(
+        r'^PG_enum\(([^)]+)\)-(\w+)$',
+      ).firstMatch(raw);
+      if (pgEnumMatch != null) {
+        register(pgEnumMatch.group(2)!, pgEnumMatch.group(1)!);
+        continue;
+      }
+
+      // 2) Analyzer sentinel: `UserRoleType@enum`.
+      if (raw.endsWith('@enum')) {
+        final dartName = raw.substring(0, raw.length - '@enum'.length);
+        register(dartName, _dbmlEnumNameFor(dartName));
+        continue;
+      }
+
+      // 3) Bare Dart Type name that resolves to a real enum in the
+      //    analyzer-reachable set. Catches the case where the user wrote
+      //    `fieldType: UserRoleType` and the extractor's `@enum`-tagging
+      //    path didn't fire (legacy String-form annotation slots).
+      if (reachable.containsKey(raw)) {
+        register(raw, _dbmlEnumNameFor(raw));
+      }
+    }
+  }
+  // Stable order so successive runs produce a clean diff.
+  final list = out.values.toList()
+    ..sort((a, b) => a.dbmlName.compareTo(b.dbmlName));
+  return list;
+}
+
+/// snake-cases a Dart enum class name into the DBML enum identifier and
+/// strips a trailing `_enum` suffix so a reverse-then-forward round-trip
+/// (where the reverse generator appends `Enum` to the Dart class name) lands
+/// on the original DBML name instead of drifting to `<name>_enum`.
+String _dbmlEnumNameFor(String dartName) {
+  final snake = dartName.toSnakeCase();
+  if (snake.endsWith('_enum') && snake.length > '_enum'.length) {
+    return snake.substring(0, snake.length - '_enum'.length);
+  }
+  return snake;
+}
+
+/// Emits one `Enum "<name>" { ... }` block. Empty-variant enums (analyzer
+/// couldn't resolve the type) still produce a block with a placeholder
+/// comment so the schema is syntactically valid DBML.
+void _emitEnumBlock(_EnumInfo e, StringBuffer buf) {
+  buf.writeln('Enum "${_escapeDbmlString(e.dbmlName)}" {');
+  if (e.variants.isEmpty) {
+    buf.writeln('  // TODO: variants for `${e.dartName}` were not resolvable;');
+    buf.writeln(
+        '  // fill them in or re-run with the enum source on the path.');
+    buf.writeln('  unknown');
+  } else {
+    for (final v in e.variants) {
+      buf.writeln('  $v');
+    }
+  }
+  buf.writeln('}');
 }

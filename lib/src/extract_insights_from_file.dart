@@ -13,7 +13,9 @@
 
 import 'dart:io' show File;
 
-import 'package:analyzer/dart/element/element.dart' show EnumElement;
+import 'package:analyzer/dart/analysis/results.dart' show LibraryElementResult;
+import 'package:analyzer/dart/element/element.dart'
+    show EnumElement, LibraryElement;
 import 'package:analyzer/dart/element/type.dart' show InterfaceType;
 import 'package:analyzer/dart/constant/value.dart' show DartObject;
 import 'package:path/path.dart' as p;
@@ -275,4 +277,79 @@ String? _extractSupertypeName(String fullPathName, String className) {
   } catch (_) {
     return null;
   }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+/// Resolves every Dart enum declared in or reachable from the given source
+/// files into a `dartName → variants` map. Used by the DBML emitter to turn
+/// `@enum`-tagged field types (`UserRoleType@enum`) into proper DBML
+/// `Enum "<name>" { ... }` blocks plus `enum(<name>)` column types instead
+/// of the silent `text` fallback.
+///
+/// We walk each annotated file's resolved library and recurse through the
+/// libraries it imports/exports. That picks up enums declared elsewhere
+/// (e.g. `enums.dart`, `_fixtures.dart`) without needing the caller to
+/// thread a separate list of "enum-bearing" paths.
+Future<Map<String, List<String>>> resolveReachableEnums(
+  Iterable<String> filePaths,
+  AnalysisContextCollection analysisContextCollection,
+) async {
+  final result = <String, List<String>>{};
+  final visited = <String>{};
+
+  Future<void> walk(String path) async {
+    final normalized = p.normalize(p.absolute(path));
+    if (!visited.add(normalized)) return;
+    try {
+      final ctx = analysisContextCollection.contextFor(normalized);
+      final libResult = await ctx.currentSession.getLibraryByUri(
+        Uri.file(normalized).toString(),
+      );
+      if (libResult is! LibraryElementResult) return;
+      final lib = libResult.element;
+      for (final enumEl in lib.enums) {
+        final dartName = enumEl.displayName;
+        if (dartName.isEmpty) continue;
+        if (result.containsKey(dartName)) continue;
+        final variants = enumEl.fields
+            .where((f) => f.isEnumConstant)
+            .map((f) => f.displayName)
+            .where((n) => n.isNotEmpty)
+            .toList();
+        result[dartName] = variants;
+      }
+      // Recurse into imported + exported libraries — only files within the
+      // same analysis context (i.e. local sources, not the pub cache) get
+      // walked, because we'd end up scanning the entire SDK otherwise.
+      // analyzer 13 moved imports off LibraryElement onto LibraryFragment;
+      // collect them across every fragment of this library.
+      final reachable = <LibraryElement>{
+        ...lib.fragments.expand((f) => f.importedLibraries),
+        ...lib.exportedLibraries,
+      };
+      for (final imported in reachable) {
+        final src = imported.firstFragment.source;
+        final srcUri = src.uri;
+        if (!srcUri.isScheme('file')) continue;
+        final srcPath = srcUri.toFilePath();
+        // Skip pub-cache / SDK paths so we don't crawl the world.
+        if (srcPath.contains('${p.separator}.pub-cache${p.separator}')) {
+          continue;
+        }
+        if (srcPath.contains('${p.separator}pub.dartlang.org${p.separator}')) {
+          continue;
+        }
+        await walk(srcPath);
+      }
+    } catch (_) {
+      // Best-effort: a single file failing to resolve doesn't sink the
+      // whole DBML emission. The fallback is `text` for that enum.
+    }
+  }
+
+  for (final path in filePaths) {
+    await walk(path);
+  }
+  return result;
 }

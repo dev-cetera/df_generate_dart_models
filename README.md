@@ -60,6 +60,49 @@ This writes the generated part file (e.g. `_model_user.g.dart`) next to it.
 
 A [VS Code extension](https://marketplace.visualstudio.com/items?itemName=Dev-Cetera.dev-cetera-df-support-commands) is also available — right-click the folder and pick `🔹 Generate Dart Models (Minimal)`.
 
+## Generate models from an existing DBML schema
+
+If you already have a [DBML](https://dbml.dbdiagram.io) file, you can go the other direction — generate annotated Dart models from it. The reverse generator runs the forward codegen automatically, so a single command takes you from `.dbml` to ready-to-use `Model*` classes:
+
+```sh
+df_generate_dart_models_from_dbml -i schema.dbml -o lib/src/db_models --dialect postgres
+```
+
+- `--dialect postgres|sqlite|generic` controls the type-prefix vocabulary. Postgres-flavoured columns (`jsonb`, `bytea`, `enum(name)`, `timestamptz`, …) become `PG_*-` field types so the existing PG mappers fire at runtime.
+- Declared `Enum {…}` blocks become real Dart enums in a shared `dbml_enums.dart`, referenced by Type literal from each model.
+- `Ref:` lines (and inline `[ref: > table.col]` notes) become `references:` + `foreignKey:` annotations.
+- Right-click a `.dbml` file in VS Code and pick `🔹 Generate Dart Models from DBML` to run the same pipeline.
+
+Pass `--no-codegen` if you only want the annotation source files without the matching `_*.g.dart`.
+
+## Generate a DBML schema from your models
+
+The inverse path also ships in the same package:
+
+```sh
+df_generate_dbml -i lib/src/db_models -o schema/
+```
+
+Walks every `@GenerateDartModel`-annotated file under the input directory, groups them by `schema:` value, and writes one `<schema>.dbml` per distinct schema. Enum-typed fields produce `Enum "<name>" { … }` blocks and `enum(<name>)` columns automatically — the variants are resolved via the analyzer, so no side-config is needed.
+
+## Generate SQL `CREATE TABLE` from your models
+
+The DBML emitter is the bridge to SQL. [`dbml2sql`](https://dbml.dbdiagram.io/cli) (a Node CLI) converts the `.dbml` to dialect-specific `CREATE TABLE` statements — including `CREATE TYPE … AS ENUM` for declared enums, foreign-key constraints, composite primary keys, and `NOT NULL`. End-to-end:
+
+```sh
+# 1) Models → DBML (round-trips through this package).
+df_generate_dbml -i lib/src/db_models -o schema/
+
+# 2) DBML → SQL (one-time install of dbml2sql).
+npm install -g @dbml/cli
+
+dbml2sql --postgres schema/app.dbml > schema/app.postgres.sql
+dbml2sql --mysql    schema/app.dbml > schema/app.mysql.sql
+dbml2sql --mssql    schema/app.dbml > schema/app.mssql.sql
+```
+
+Because the `PG_*-` / `SQLITE_*-` prefixes on your `fieldType` strings drive the DBML column types directly (`PG_varchar(120)-String` → `varchar(120)`, `PG_jsonb-Map` → `jsonb`, `PG_bytea-Uint8List` → `bytea`, an enum-typed field → `enum(<name>)`), the resulting SQL matches the Postgres / SQLite dialect you've already pinned in your Dart models — no separate migration spec needed.
+
 <!-- END _README_CONTENT -->
 
 ---

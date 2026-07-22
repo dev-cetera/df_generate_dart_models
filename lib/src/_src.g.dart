@@ -17,3 +17,4 @@ export './extract_insights_from_file.dart';
 export './generate_dbml.dart';
 export './generate_dart_models.dart';
 export './generate_dart_models_ai.dart';
+export './generate_dart_models_from_dbml.dart';

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0]
+
+- Released @ 7/2026 (UTC)
+- New: `df_generate_dart_models_from_dbml` command (alias `--models-from-dbml`) — the inverse of `df_generate_dbml`. Reads a DBML schema (Tables, `enum` blocks, inline/standalone `Ref:`s, notes) and emits one annotated `@GenerateDartModel` abstract class per table, then runs the forward `df_generate_dart_models` codegen automatically (pass `--no-codegen` to stop after the annotation files)
+- New: `--dialect` (postgres | sqlite | generic) controls the emitted `fieldType` vocabulary; foreign keys become `references:`/`foreignKey:`, DBML enums round-trip into Dart enums, and a shared `dbml_enums.dart` sidecar is written when any enum is present
+- New: out-of-tree runs bootstrap a minimal pub workspace (with a local `df_generate_dart_models_core` override when a sibling checkout is found) so the forward codegen can resolve
+
 ## [0.16.2]
 
 - Released @ 6/2026 (UTC)
