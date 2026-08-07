@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.19.3]
+
+- fix: `df_generate_dart_models_from_dbml` round-trip fidelity: quoted array column types (`"uuid[]"`, `"text[]"`) are now parsed (were silently dropped) and emit a typed `List<E>`; `jsonb`/`json` columns map to a plain nested `Map<String, dynamic>` (the `PG_jsonb-Map` marker JSON-encoded the value to a String, breaking the wire shape + round-trips); and `$` in a note is escaped so it isn't treated as Dart interpolation.
+
 ## [0.19.2]
 
 - fix: `df_generate_dart_models_from_dbml` now preserves DBML enum value casing verbatim (`PENDING`, not `pending`). Since the model layer serialises enums via `.name`, camel-casing the value silently changed the persisted/wire value; enum constants are now emitted exactly as declared in the DBML `enum {...}` block.

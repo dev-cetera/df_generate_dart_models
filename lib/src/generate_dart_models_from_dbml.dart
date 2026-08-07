@@ -688,9 +688,26 @@ _MappedType _mapColumnType(
 /// default).
 String _pgTypeFor(String baseName, String baseTail, String arrayTail) {
   // Native array variants ─ Postgres has true array columns; the
-  // PG_<type>[]-List mapper handles them.
+  // PG_<type>[]-List<E> mapper handles them. Derive the element Dart type so
+  // the generated field is `List<String>` / `List<int>` etc. rather than a
+  // raw `List` (which trips strict-raw-types).
   if (arrayTail == '[]') {
-    return 'PG_$baseName[]-List';
+    const intTypes = {
+      'smallint', 'integer', 'int', 'int2', 'int4', 'int8', 'bigint',
+      'serial', 'bigserial', 'smallserial',
+    };
+    const doubleTypes = {'real', 'double', 'float4', 'float8'};
+    const dateTypes = {'timestamptz', 'timestamp', 'date'};
+    final elem = intTypes.contains(baseName)
+        ? 'int'
+        : doubleTypes.contains(baseName)
+            ? 'double'
+            : baseName == 'boolean' || baseName == 'bool'
+                ? 'bool'
+                : dateTypes.contains(baseName)
+                    ? 'DateTime'
+                    : 'String';
+    return 'PG_$baseName[]-List<$elem>';
   }
   switch (baseName) {
     case 'text':
@@ -748,7 +765,13 @@ String _pgTypeFor(String baseName, String baseTail, String arrayTail) {
       return 'PG_bytea-Uint8List';
     case 'json':
     case 'jsonb':
-      return 'PG_$baseName-Map';
+      // Emit a plain typed `Map<String, dynamic>` rather than the
+      // `PG_jsonb-Map` marker: the marker makes `toJson` JSON-*encode* the
+      // value into a String (breaking the nested-object wire shape and
+      // round-trips), whereas a plain Map stays nested. The forward DBML
+      // emitter still maps `Map<...>` back to `jsonb`, so the column type
+      // round-trips.
+      return 'Map<String, dynamic>';
     default:
       // Unknown — fall back to text so the column still round-trips.
       return 'PG_text-String';
@@ -1172,8 +1195,10 @@ _ParsedColumn? _parseColumn(String line) {
   // the notes block. Walking left-to-right avoids confusing the array `[]`
   // with the notes `[...]` — the previous indexOf('[') approach swallowed
   // `text[]` as an empty notes block.
+  // The type may be quoted — hand-authored DBML quotes array types
+  // (`"uuid[]"`, `"text[]"`) since bare `type[]` isn't universally accepted.
   final head = RegExp(
-    r'^"?([A-Za-z_]\w*)"?\s+([A-Za-z_]\w*(?:\s*\([^)]*\))?(?:\s*\[\s*\])?)\s*',
+    r'^"?([A-Za-z_]\w*)"?\s+"?([A-Za-z_]\w*(?:\s*\([^)]*\))?(?:\s*\[\s*\])?)"?\s*',
   ).firstMatch(line);
   if (head == null) return null;
 
@@ -1476,7 +1501,10 @@ String _toDartIdentifier(String value) {
   return reserved.contains(camel) ? '${camel}_' : camel;
 }
 
-String _escape(String s) =>
-    s.replaceAll(r'\', r'\\').replaceAll("'", r"\'").replaceAll('\n', ' ');
+String _escape(String s) => s
+    .replaceAll(r'\', r'\\')
+    .replaceAll(r'$', r'\$') // else `$id` / `${...}` in a note interpolates
+    .replaceAll("'", r"\'")
+    .replaceAll('\n', ' ');
 
 String _unescape(String s) => s.replaceAll(r"\'", "'").replaceAll(r'\\', r'\');
