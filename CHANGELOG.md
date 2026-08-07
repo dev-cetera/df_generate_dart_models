@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.19.0]
+
+- feat: `df_generate_dart_models_from_dbml` (the reverse generator) now captures column `default:` values into `Field.columnDefault` and full `indexes { ... }` blocks into `GenerateDartModel.indexes` (columns, `unique`, `name`, `note`). Combined with 0.18.0's forward emitter, a DBML → model → DBML round-trip is now byte-exact for defaults, indexes, table/column notes, and enum types.
+
 ## [0.18.0]
 
 - feat: `df_generate_dbml` now emits column `default:` values (from `Field.columnDefault`), `indexes { ... }` blocks (from `GenerateDartModel.indexes`), and a table-level `note:` (from the model `description`), so a hand-authored schema's defaults, indexes, and notes can round-trip through the models.

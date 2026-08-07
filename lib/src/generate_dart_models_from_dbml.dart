@@ -301,6 +301,23 @@ Future<void> generateDartModelsFromDbml(List<String> args) async {
     if (table.note != null && table.note!.isNotEmpty) {
       buffer.writeln('  description: \'${_escape(table.note!)}\',');
     }
+    if (table.indexes.isNotEmpty) {
+      buffer.writeln('  indexes: [');
+      for (final idx in table.indexes) {
+        buffer.writeln('    {');
+        final cols = idx.columns.map((c) => "'${_escape(c)}'").join(', ');
+        buffer.writeln("      'columns': [$cols],");
+        if (idx.unique) buffer.writeln("      'unique': true,");
+        if (idx.name != null && idx.name!.isNotEmpty) {
+          buffer.writeln("      'name': '${_escape(idx.name!)}',");
+        }
+        if (idx.note != null && idx.note!.isNotEmpty) {
+          buffer.writeln("      'note': '${_escape(idx.note!)}',");
+        }
+        buffer.writeln('    },');
+      }
+      buffer.writeln('  ],');
+    }
     buffer.writeln('  fields: {');
     for (final col in table.columns) {
       _emitFieldLine(
@@ -566,6 +583,9 @@ void _emitFieldLine(
     final refName = classRef ?? refTable;
     buf.writeln('      references: \'${_escape(refName)}\',');
     buf.writeln('      foreignKey: true,');
+  }
+  if (col.columnDefault != null && col.columnDefault!.isNotEmpty) {
+    buf.writeln('      columnDefault: \'${_escape(col.columnDefault!)}\',');
   }
   if (col.note != null && col.note!.isNotEmpty) {
     buf.writeln('      description: \'${_escape(col.note!)}\',');
@@ -889,9 +909,32 @@ class _ParsedDbml {
 }
 
 class _ParsedTable {
-  _ParsedTable({required this.name, required this.columns, this.note});
+  _ParsedTable({
+    required this.name,
+    required this.columns,
+    this.note,
+    this.indexes = const [],
+  });
   final String name;
   final List<_ParsedColumn> columns;
+  final String? note;
+
+  /// Parsed `indexes { ... }` entries. Round-tripped into
+  /// `GenerateDartModel.indexes` so the forward generator re-emits them.
+  final List<_ParsedIndex> indexes;
+}
+
+/// One entry from a DBML `indexes { ... }` block.
+class _ParsedIndex {
+  _ParsedIndex({
+    required this.columns,
+    this.unique = false,
+    this.name,
+    this.note,
+  });
+  final List<String> columns;
+  final bool unique;
+  final String? name;
   final String? note;
 }
 
@@ -902,6 +945,7 @@ class _ParsedColumn {
     this.primaryKey = false,
     this.nullable = true,
     this.note,
+    this.columnDefault,
     this.inlineRef,
     this.inlineEnumName,
   });
@@ -910,6 +954,10 @@ class _ParsedColumn {
   bool primaryKey;
   bool nullable;
   String? note;
+
+  /// The raw DBML `default:` token (already carrying its own quoting /
+  /// backticks), round-tripped into `Field.columnDefault`.
+  String? columnDefault;
   _InlineRef? inlineRef;
   // For `pgenum` columns where the enum name is captured separately
   // (e.g. `status pgenum [enum: job_status]`).
@@ -991,6 +1039,7 @@ _ParsedDbml _parseDbml(String source) {
     if (tableMatch != null) {
       final name = _stripSchemaPrefix(tableMatch.group(1)!);
       final columns = <_ParsedColumn>[];
+      final tableIndexes = <_ParsedIndex>[];
       String? tableNote;
       i++;
       while (i < cleaned.length && cleaned[i] != '}') {
@@ -1003,10 +1052,13 @@ _ParsedDbml _parseDbml(String source) {
           i++;
           continue;
         }
-        // `indexes { ... }` block — skip its body.
+        // `indexes { ... }` block — parse each entry so it round-trips into
+        // `GenerateDartModel.indexes`.
         if (RegExp(r'^indexes\s*\{').hasMatch(l)) {
           i++;
           while (i < cleaned.length && cleaned[i] != '}') {
+            final idx = _parseIndexLine(cleaned[i]);
+            if (idx != null) tableIndexes.add(idx);
             i++;
           }
           if (i < cleaned.length) i++; // consume the `}`
@@ -1018,7 +1070,12 @@ _ParsedDbml _parseDbml(String source) {
       }
       if (i < cleaned.length) i++; // consume the closing `}`
       tables.add(
-        _ParsedTable(name: name, columns: columns, note: tableNote),
+        _ParsedTable(
+          name: name,
+          columns: columns,
+          note: tableNote,
+          indexes: tableIndexes,
+        ),
       );
       continue;
     }
@@ -1107,6 +1164,7 @@ _ParsedColumn? _parseColumn(String line) {
   String? note;
   _InlineRef? inlineRef;
   String? inlineEnumName;
+  String? columnDefault;
 
   if (notesBody != null) {
     final parts = _splitNotes(notesBody);
@@ -1122,10 +1180,13 @@ _ParsedColumn? _parseColumn(String line) {
       } else if (pLower == 'null' || pLower == 'nullable') {
         // Explicit — redundant since nullable defaults to true, but harmless.
         nullable = true;
-      } else if (pLower == 'unique' ||
-          pLower == 'increment' ||
-          pLower.startsWith('default:')) {
+      } else if (pLower == 'unique' || pLower == 'increment') {
         // Tolerated but not used by the model layer.
+      } else if (pLower.startsWith('default:')) {
+        // Capture the raw DBML default token verbatim (it already carries its
+        // own quoting / backticks) so the forward generator can re-emit it.
+        final v = p0.substring('default:'.length).trim();
+        if (v.isNotEmpty) columnDefault = v;
       } else {
         final noteMatch =
             RegExp(r"^note:\s*'((?:[^'\\]|\\.)*)'\s*$", caseSensitive: false)
@@ -1165,9 +1226,62 @@ _ParsedColumn? _parseColumn(String line) {
     primaryKey: primaryKey,
     nullable: nullable,
     note: note,
+    columnDefault: columnDefault,
     inlineRef: inlineRef,
     inlineEnumName: inlineEnumName,
   );
+}
+
+/// Parses a single line from a DBML `indexes { ... }` block into a
+/// [_ParsedIndex]. Handles both the single-column (`col [..]`) and
+/// composite (`(a, b) [..]`) forms, and the `[unique, name: '..', note: '..']`
+/// settings.
+_ParsedIndex? _parseIndexLine(String line) {
+  final l = line.trim();
+  if (l.isEmpty) return null;
+  final bracketIdx = l.indexOf('[');
+  final colsPart = (bracketIdx >= 0 ? l.substring(0, bracketIdx) : l).trim();
+  final closeIdx = l.lastIndexOf(']');
+  final settingsPart = (bracketIdx >= 0 && closeIdx > bracketIdx)
+      ? l.substring(bracketIdx + 1, closeIdx).trim()
+      : '';
+
+  final cols = <String>[];
+  final paren = RegExp(r'^\((.*)\)$').firstMatch(colsPart);
+  if (paren != null) {
+    cols.addAll(
+      paren.group(1)!.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty),
+    );
+  } else if (colsPart.isNotEmpty) {
+    cols.add(colsPart);
+  }
+  if (cols.isEmpty) return null;
+
+  var unique = false;
+  String? name;
+  String? note;
+  for (final raw in _splitNotes(settingsPart)) {
+    final p = raw.trim();
+    if (p.toLowerCase() == 'unique') {
+      unique = true;
+      continue;
+    }
+    final nameM =
+        RegExp(r"^name:\s*'((?:[^'\\]|\\.)*)'\s*$", caseSensitive: false)
+            .firstMatch(p);
+    if (nameM != null) {
+      name = _unescape(nameM.group(1)!);
+      continue;
+    }
+    final noteM =
+        RegExp(r"^note:\s*'((?:[^'\\]|\\.)*)'\s*$", caseSensitive: false)
+            .firstMatch(p);
+    if (noteM != null) {
+      note = _unescape(noteM.group(1)!);
+      continue;
+    }
+  }
+  return _ParsedIndex(columns: cols, unique: unique, name: name, note: note);
 }
 
 /// Splits the bracketed `[a, b, note: 'x,y', ref: > t.c]` tail on commas
