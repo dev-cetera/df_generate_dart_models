@@ -283,7 +283,9 @@ void _emitTable(
 /// Single-column indexes render bare (`col [..]`); multi-column render
 /// parenthesised (`(a, b) [..]`).
 void _emitIndexes(
-    ClassInsight<GenerateDartModel> insight, StringBuffer buffer) {
+  ClassInsight<GenerateDartModel> insight,
+  StringBuffer buffer,
+) {
   final indexes = insight.annotation.indexes;
   if (indexes == null || indexes.isEmpty) return;
   buffer.writeln();
