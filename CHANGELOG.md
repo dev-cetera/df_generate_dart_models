@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.19.1]
+
+- fix: `df_generate_dart_models_from_dbml` round-trip fidelity — table notes are now matched case-insensitively (`note:`/`Note:`); multi-line `'''...'''` table notes are captured (and no longer mis-parsed as phantom columns); composite `[pk]` index settings, enum-array column types (`weekday_kind[]`), and `note:` values written in any quote style (`'...'`, `"..."`, `'''...'''`) are all preserved. A DBML → model → DBML round-trip now retains the full schema semantics (types, defaults, indexes, notes), re-emitted in the generator's canonical style.
+
 ## [0.19.0]
 
 - feat: `df_generate_dart_models_from_dbml` (the reverse generator) now captures column `default:` values into `Field.columnDefault` and full `indexes { ... }` blocks into `GenerateDartModel.indexes` (columns, `unique`, `name`, `note`). Combined with 0.18.0's forward emitter, a DBML → model → DBML round-trip is now byte-exact for defaults, indexes, table/column notes, and enum types.

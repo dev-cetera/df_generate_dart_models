@@ -293,6 +293,7 @@ void _emitIndexes(ClassInsight<GenerateDartModel> insight, StringBuffer buffer) 
     if (cols.isEmpty) continue;
     final colPart = cols.length == 1 ? cols.first : '(${cols.join(', ')})';
     final settings = <String>[];
+    if (idx['pk'] == true) settings.add('pk');
     if (idx['unique'] == true) settings.add('unique');
     final name = idx['name'];
     if (name != null) settings.add("name: '${_escapeDbmlString('$name')}'");

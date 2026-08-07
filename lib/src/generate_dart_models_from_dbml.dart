@@ -307,6 +307,7 @@ Future<void> generateDartModelsFromDbml(List<String> args) async {
         buffer.writeln('    {');
         final cols = idx.columns.map((c) => "'${_escape(c)}'").join(', ');
         buffer.writeln("      'columns': [$cols],");
+        if (idx.pk) buffer.writeln("      'pk': true,");
         if (idx.unique) buffer.writeln("      'unique': true,");
         if (idx.name != null && idx.name!.isNotEmpty) {
           buffer.writeln("      'name': '${_escape(idx.name!)}',");
@@ -636,16 +637,21 @@ _MappedType _mapColumnType(
   }
   if (enumKey != null) {
     final enumDartName = _enumClassNameFor(enumKey);
+    if (isArray) {
+      // Enum array (`weekday_kind[]`). Emit the explicit
+      // `PG_enum(<name>)[]-List<XxxEnum>` String form so the forward emitter
+      // renders the column type back as `<name>[]` rather than dropping the
+      // array marker.
+      return _MappedType(
+        fieldType: 'PG_enum($enumKey)[]-List<$enumDartName>',
+        useStringLiteral: true,
+      );
+    }
     // Emit the field type as a bare Dart Type literal pointing at the
     // generated `enum XxxEnum`. The Core mapper's `^(Enum-?\w+|\w+-?Enum)\??$`
-    // regex matches it on the from-side and emits `values.valueOf(...)` —
-    // exactly the right enum runtime handling for every dialect. We
-    // deliberately *don't* use the `PG_enum(<name>)-XxxEnum` String form here
-    // — that would force the field to be quoted and obscure the link to the
-    // real Dart enum at the call site. The PG enum-name parameter is only
-    // needed for DDL emission; we accept that re-emitting DBML from these
-    // models would write the column as `text` rather than the
-    // `enum(<name>)` form the input had.
+    // regex matches it on the from-side and emits `values.valueOf(...)`. The
+    // forward DBML emitter re-derives the DBML enum name by snake-casing and
+    // stripping the `_enum` suffix, so `WeekdayKindEnum` → `weekday_kind`.
     return _MappedType(
       fieldType: enumDartName,
       useStringLiteral: false,
@@ -929,11 +935,13 @@ class _ParsedIndex {
   _ParsedIndex({
     required this.columns,
     this.unique = false,
+    this.pk = false,
     this.name,
     this.note,
   });
   final List<String> columns;
   final bool unique;
+  final bool pk;
   final String? name;
   final String? note;
 }
@@ -1044,9 +1052,33 @@ _ParsedDbml _parseDbml(String source) {
       i++;
       while (i < cleaned.length && cleaned[i] != '}') {
         final l = cleaned[i];
-        // `Note: '...'` block inside a table.
+        // Multi-line `note: '''...'''` block — capture the whole thing
+        // (normalised to a single line) and, crucially, skip its interior so
+        // prose/CHECK lines aren't mis-parsed as columns.
+        final mlOpen =
+            RegExp(r"^note:\s*'''(.*)$", caseSensitive: false).firstMatch(l);
+        if (mlOpen != null) {
+          final noteLines = <String>[];
+          final firstRest = mlOpen.group(1)!;
+          if (firstRest.contains("'''")) {
+            noteLines.add(firstRest.replaceAll("'''", '').trim());
+          } else {
+            if (firstRest.trim().isNotEmpty) noteLines.add(firstRest.trim());
+            i++;
+            while (i < cleaned.length && !cleaned[i].contains("'''")) {
+              noteLines.add(cleaned[i].trim());
+              i++;
+            }
+          }
+          tableNote = noteLines.where((e) => e.isNotEmpty).join(' ');
+          i++; // consume the closing `'''` line
+          continue;
+        }
+        // Single-line `note: '...'` / `Note: '...'` block (DBML accepts either
+        // case; hand-authored schemas commonly use lowercase).
         final noteMatch =
-            RegExp(r"^Note:\s*'((?:[^'\\]|\\.)*)'\s*$").firstMatch(l);
+            RegExp(r"^note:\s*'((?:[^'\\]|\\.)*)'\s*$", caseSensitive: false)
+                .firstMatch(l);
         if (noteMatch != null) {
           tableNote = _unescape(noteMatch.group(1)!);
           i++;
@@ -1188,11 +1220,9 @@ _ParsedColumn? _parseColumn(String line) {
         final v = p0.substring('default:'.length).trim();
         if (v.isNotEmpty) columnDefault = v;
       } else {
-        final noteMatch =
-            RegExp(r"^note:\s*'((?:[^'\\]|\\.)*)'\s*$", caseSensitive: false)
-                .firstMatch(p0);
-        if (noteMatch != null) {
-          note = _unescape(noteMatch.group(1)!);
+        final nv = _parseNoteValue(p0);
+        if (nv != null) {
+          note = nv;
           continue;
         }
         final refMatch = RegExp(
@@ -1236,6 +1266,23 @@ _ParsedColumn? _parseColumn(String line) {
 /// [_ParsedIndex]. Handles both the single-column (`col [..]`) and
 /// composite (`(a, b) [..]`) forms, and the `[unique, name: '..', note: '..']`
 /// settings.
+/// Extracts a `note:` value written in any of DBML's inline quote styles:
+/// `note: '...'`, `note: "..."` (used when the text contains a single quote),
+/// or `note: '''...'''`. Returns `null` if [p] isn't a note setting.
+String? _parseNoteValue(String p) {
+  final t = p.trim();
+  final triple =
+      RegExp(r"^note:\s*'''(.*)'''\s*$", caseSensitive: false).firstMatch(t);
+  if (triple != null) return triple.group(1)!.trim();
+  final dq = RegExp(r'^note:\s*"((?:[^"\\]|\\.)*)"\s*$', caseSensitive: false)
+      .firstMatch(t);
+  if (dq != null) return _unescape(dq.group(1)!);
+  final sq = RegExp(r"^note:\s*'((?:[^'\\]|\\.)*)'\s*$", caseSensitive: false)
+      .firstMatch(t);
+  if (sq != null) return _unescape(sq.group(1)!);
+  return null;
+}
+
 _ParsedIndex? _parseIndexLine(String line) {
   final l = line.trim();
   if (l.isEmpty) return null;
@@ -1258,12 +1305,17 @@ _ParsedIndex? _parseIndexLine(String line) {
   if (cols.isEmpty) return null;
 
   var unique = false;
+  var pk = false;
   String? name;
   String? note;
   for (final raw in _splitNotes(settingsPart)) {
     final p = raw.trim();
     if (p.toLowerCase() == 'unique') {
       unique = true;
+      continue;
+    }
+    if (p.toLowerCase() == 'pk' || p.toLowerCase() == 'primary key') {
+      pk = true;
       continue;
     }
     final nameM =
@@ -1273,15 +1325,19 @@ _ParsedIndex? _parseIndexLine(String line) {
       name = _unescape(nameM.group(1)!);
       continue;
     }
-    final noteM =
-        RegExp(r"^note:\s*'((?:[^'\\]|\\.)*)'\s*$", caseSensitive: false)
-            .firstMatch(p);
-    if (noteM != null) {
-      note = _unescape(noteM.group(1)!);
+    final nv = _parseNoteValue(p);
+    if (nv != null) {
+      note = nv;
       continue;
     }
   }
-  return _ParsedIndex(columns: cols, unique: unique, name: name, note: note);
+  return _ParsedIndex(
+    columns: cols,
+    unique: unique,
+    pk: pk,
+    name: name,
+    note: note,
+  );
 }
 
 /// Splits the bracketed `[a, b, note: 'x,y', ref: > t.c]` tail on commas
