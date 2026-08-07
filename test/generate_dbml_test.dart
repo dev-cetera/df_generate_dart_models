@@ -129,13 +129,18 @@ void main() {
       expect(tagsLine, contains('text[]'));
     });
 
-    test('PG_enum(name)-Type renders with the parenthesised enum name', () {
+    test('PG_enum(name)-Type renders as the bare enum type name', () {
       // model_pg_user.auth_provider has
-      // PG_enum(auth_provider_kind)-AuthProviderKindType.
+      // PG_enum(auth_provider_kind)-AuthProviderKindType. The column type is
+      // emitted as the bare enum name (`auth_provider_kind`) — standard DBML
+      // that references the emitted `Enum "auth_provider_kind" { ... }` block —
+      // not the non-standard `enum(...)` wrapper. The reverse generator
+      // resolves it back via that block.
       final authLine = dbml
           .split('\n')
           .firstWhere((line) => line.contains('auth_provider '));
-      expect(authLine, contains('enum(auth_provider_kind)'));
+      expect(authLine, contains('auth_provider auth_provider_kind'));
+      expect(authLine, isNot(contains('enum(')));
     });
   });
 

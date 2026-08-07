@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.18.0]
+
+- feat: `df_generate_dbml` now emits column `default:` values (from `Field.columnDefault`), `indexes { ... }` blocks (from `GenerateDartModel.indexes`), and a table-level `note:` (from the model `description`), so a hand-authored schema's defaults, indexes, and notes can round-trip through the models.
+- change: enum-typed columns are emitted as the **bare** DBML enum type name (`status invite_status`) referencing the emitted `Enum "invite_status" { ... }` block, instead of the non-standard `enum(invite_status)` wrapper. This is standard DBML and matches hand-authored schemas; the reverse `df_generate_dart_models_from_dbml` still resolves it via the enum block. Regenerating an existing schema rewrites enum column types to the bare form.
+- Requires `df_generate_dart_models_core ^0.11.2` for the new `columnDefault` / `indexes` annotation slots.
+
 ## [0.17.2]
 
 - chore: bump `df_string` to `^0.4.0`, `df_gen_core` to `^0.8.1`, and `df_generate_dart_models_core` to `^0.11.1`, adopting df_string 0.4.0's case-conversion digit-boundary change. **Behavioural (opt-in on regeneration):** field/wire keys derived from identifiers with embedded digits now emit `phone_e164` instead of `phone_e_164`, `line1` instead of `line_1`. Re-run the generator to adopt the new keys; existing generated files are unchanged until regenerated. All 213 tests pass against df_string 0.4.0.

@@ -249,6 +249,14 @@ void _emitTable(
       notes.add('ref: > $references.$targetColumn');
     }
 
+    // Column DEFAULT — emitted verbatim between the ref and the note, matching
+    // the `[not null, default: <x>, note: '...']` ordering hand-authored DBML
+    // uses. The value already carries its own DBML quoting/backticks.
+    final columnDefault = field.columnDefault;
+    if (columnDefault != null && columnDefault.isNotEmpty) {
+      notes.add('default: $columnDefault');
+    }
+
     final description = field.description;
     if (description != null && description.isNotEmpty) {
       notes.add("note: '${_escapeDbmlString(description)}'");
@@ -258,7 +266,42 @@ void _emitTable(
     buffer.writeln('  $columnName $sqlType$noteSegment');
   }
 
+  // Optional `indexes { ... }` block, then an optional table-level `note:` —
+  // both emitted after the columns to mirror hand-authored DBML layout.
+  _emitIndexes(insight, buffer);
+  final tableNote = insight.annotation.description;
+  if (tableNote != null && tableNote.isNotEmpty) {
+    buffer.writeln();
+    buffer.writeln("  note: '${_escapeDbmlString(tableNote)}'");
+  }
+
   buffer.writeln('}');
+}
+
+/// Emits an `indexes { ... }` block from `GenerateDartModel.indexes`. Each
+/// entry is a map `{columns: [..], unique: bool, name: String, note: String}`.
+/// Single-column indexes render bare (`col [..]`); multi-column render
+/// parenthesised (`(a, b) [..]`).
+void _emitIndexes(ClassInsight<GenerateDartModel> insight, StringBuffer buffer) {
+  final indexes = insight.annotation.indexes;
+  if (indexes == null || indexes.isEmpty) return;
+  buffer.writeln();
+  buffer.writeln('  indexes {');
+  for (final idx in indexes) {
+    final cols = (idx['columns'] as List?)?.map((e) => e.toString()).toList() ??
+        const <String>[];
+    if (cols.isEmpty) continue;
+    final colPart = cols.length == 1 ? cols.first : '(${cols.join(', ')})';
+    final settings = <String>[];
+    if (idx['unique'] == true) settings.add('unique');
+    final name = idx['name'];
+    if (name != null) settings.add("name: '${_escapeDbmlString('$name')}'");
+    final note = idx['note'];
+    if (note != null) settings.add("note: '${_escapeDbmlString('$note')}'");
+    final settingsPart = settings.isEmpty ? '' : ' [${settings.join(', ')}]';
+    buffer.writeln('    $colPart$settingsPart');
+  }
+  buffer.writeln('  }');
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -300,6 +343,16 @@ String _columnNameFor(
   return insight.stringCaseType.convertAll(path).join('_');
 }
 
+/// Converts the generator's internal `enum(<name>)` marker into the bare DBML
+/// enum type name (`<name>`), preserving a trailing `[]` for enum arrays. A
+/// matching `Enum "<name>" { ... }` block is still emitted at the top of the
+/// schema, so the bare form stays unambiguous for the reverse generator.
+String _unwrapEnum(String t) {
+  final m = RegExp(r'^enum\((.+?)\)(\[\])?$').firstMatch(t);
+  if (m == null) return t;
+  return '${m.group(1)}${m.group(2) ?? ''}';
+}
+
 /// Derives the DBML column type from the `PG_*-`/`SQLITE_*-` prefix in
 /// `fieldType`, falling back to a sensible default per the bare Dart
 /// type when no dialect prefix is set.
@@ -308,7 +361,7 @@ String _sqlTypeFor(DartField field, Map<String, String> enumDbmlByDart) {
   final dialectMatch = RegExp(
     r'^(?:PG|SQLITE)_(\w+(?:\([^)]*\))?(?:\[\])?)-',
   ).firstMatch(raw);
-  if (dialectMatch != null) return dialectMatch.group(1)!;
+  if (dialectMatch != null) return _unwrapEnum(dialectMatch.group(1)!);
 
   // Enum detection runs BEFORE the bare-name fallback so analyzer-tagged
   // enums (`UserRoleType@enum`) and bare enum Type literals
@@ -317,11 +370,10 @@ String _sqlTypeFor(DartField field, Map<String, String> enumDbmlByDart) {
   final cleaned = raw.replaceAll('?', '');
   if (cleaned.endsWith('@enum')) {
     final dartName = cleaned.substring(0, cleaned.length - '@enum'.length);
-    final dbmlName = enumDbmlByDart[dartName] ?? _dbmlEnumNameFor(dartName);
-    return 'enum($dbmlName)';
+    return enumDbmlByDart[dartName] ?? _dbmlEnumNameFor(dartName);
   }
   if (enumDbmlByDart.containsKey(cleaned)) {
-    return 'enum(${enumDbmlByDart[cleaned]})';
+    return enumDbmlByDart[cleaned]!;
   }
 
   // Defaults for bare Dart types. `@enum` sentinel is now handled above —

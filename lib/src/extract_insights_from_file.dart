@@ -104,6 +104,7 @@ GenerateDartModel _updateFromClassAnnotationField(
                 final foreignKey = x.foreignKeyFromRecord();
                 final description = x.descriptionFromRecord();
                 final references = x.referencesFromRecord();
+                final columnDefault = x.columnDefaultFromRecord();
                 final field = Field(
                   fieldPath: fieldPath,
                   fieldType: fieldType,
@@ -113,6 +114,7 @@ GenerateDartModel _updateFromClassAnnotationField(
                   foreignKey: foreignKey,
                   description: description,
                   references: references,
+                  columnDefault: columnDefault,
                 );
                 return field.toRecord;
               } catch (e) {
@@ -149,6 +151,14 @@ GenerateDartModel _updateFromClassAnnotationField(
     case GenerateDartModelFieldNames.schema:
       return annotation.mergeWith(
         GenerateDartModel(schema: params.fieldValue.toStringValue()),
+      );
+    case GenerateDartModelFieldNames.indexes:
+      return annotation.mergeWith(
+        GenerateDartModel(
+          indexes: (dartObjToObject(params.fieldValue) as List?)
+              ?.map((e) => (e as Map).map((k, v) => MapEntry(k.toString(), v)))
+              .toList(),
+        ),
       );
     default:
   }
@@ -217,6 +227,9 @@ GenerateDartModel _updateFromAnnotatedMember(
         .memberAnnotationFields[FieldModelFieldNames.references]
         ?.toTypeValue()
         ?.getDisplayString();
+    final columnDefault = params
+        .memberAnnotationFields[FieldModelFieldNames.columnDefault]
+        ?.toStringValue();
     final field = DartField(
       fieldPath: a1 ?? a2,
       fieldType: b1 ?? b2,
@@ -226,6 +239,7 @@ GenerateDartModel _updateFromAnnotatedMember(
       children: children,
       description: description,
       references: references,
+      columnDefault: columnDefault,
     );
     annotation = annotation.mergeWith(
       GenerateDartModel(fields: {...?annotation.fields, field.toRecord}),
