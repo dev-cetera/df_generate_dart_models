@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.19.2]
+
+- fix: `df_generate_dart_models_from_dbml` now preserves DBML enum value casing verbatim (`PENDING`, not `pending`). Since the model layer serialises enums via `.name`, camel-casing the value silently changed the persisted/wire value; enum constants are now emitted exactly as declared in the DBML `enum {...}` block.
+
 ## [0.19.1]
 
 - fix: `df_generate_dart_models_from_dbml` round-trip fidelity — table notes are now matched case-insensitively (`note:`/`Note:`); multi-line `'''...'''` table notes are captured (and no longer mis-parsed as phantom columns); composite `[pk]` index settings, enum-array column types (`weekday_kind[]`), and `note:` values written in any quote style (`'...'`, `"..."`, `'''...'''`) are all preserved. A DBML → model → DBML round-trip now retains the full schema semantics (types, defaults, indexes, notes), re-emitted in the generator's canonical style.

@@ -1388,7 +1388,12 @@ String _toDartIdentifier(String value) {
   if (v.isEmpty) return 'unknown';
   v = v.replaceAll(RegExp(r'[^A-Za-z0-9_]'), '_');
   if (RegExp(r'^[0-9]').hasMatch(v)) v = 'v$v';
-  final camel = v.toCamelCase();
+  // Preserve the DBML enum value VERBATIM (once sanitised to a valid Dart
+  // identifier). The model layer serialises enums via `.name`, so the Dart
+  // value name IS the on-the-wire / in-DB value — camel-casing `PENDING` to
+  // `pending` here would silently change the persisted value. Uppercase enum
+  // constants are unidiomatic Dart but valid, and correctness beats style.
+  final camel = v;
   // Dart reserved + contextual / built-in keywords that can't appear bare as
   // an enum value. Suffix with `_` so the generated source stays valid.
   // Source: dartlang.org/guides/language/language-tour#keywords.
