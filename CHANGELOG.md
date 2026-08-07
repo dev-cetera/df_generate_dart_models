@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.17.2]
+
+- chore: bump `df_string` to `^0.4.0`, `df_gen_core` to `^0.8.1`, and `df_generate_dart_models_core` to `^0.11.1`, adopting df_string 0.4.0's case-conversion digit-boundary change. **Behavioural (opt-in on regeneration):** field/wire keys derived from identifiers with embedded digits now emit `phone_e164` instead of `phone_e_164`, `line1` instead of `line_1`. Re-run the generator to adopt the new keys; existing generated files are unchanged until regenerated. All 213 tests pass against df_string 0.4.0.
+
 ## [0.17.1]
 
 - fix: exclude generated .g.dart from analysis in example too
