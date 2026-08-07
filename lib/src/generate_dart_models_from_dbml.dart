@@ -693,8 +693,16 @@ String _pgTypeFor(String baseName, String baseTail, String arrayTail) {
   // raw `List` (which trips strict-raw-types).
   if (arrayTail == '[]') {
     const intTypes = {
-      'smallint', 'integer', 'int', 'int2', 'int4', 'int8', 'bigint',
-      'serial', 'bigserial', 'smallserial',
+      'smallint',
+      'integer',
+      'int',
+      'int2',
+      'int4',
+      'int8',
+      'bigint',
+      'serial',
+      'bigserial',
+      'smallserial',
     };
     const doubleTypes = {'real', 'double', 'float4', 'float8'};
     const dateTypes = {'timestamptz', 'timestamp', 'date'};
@@ -1322,7 +1330,11 @@ _ParsedIndex? _parseIndexLine(String line) {
   final paren = RegExp(r'^\((.*)\)$').firstMatch(colsPart);
   if (paren != null) {
     cols.addAll(
-      paren.group(1)!.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty),
+      paren
+          .group(1)!
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty),
     );
   } else if (colsPart.isNotEmpty) {
     cols.add(colsPart);
