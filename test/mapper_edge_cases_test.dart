@@ -178,11 +178,14 @@ void main() {
     });
   });
 
-  group('Default catchall handles unknown class names', () {
-    test('unknown bare class falls through to identity', () {
+  group('Default catchall refuses unknown class names', () {
+    test('unknown bare class throws — no silent identity mapping', () {
       // `MyWidget` doesn't match any specific regex; the catchall
-      // `^(\w+)\??$` returns the field name verbatim.
-      expect(mapFrom('MyWidget'), 'v');
+      // `^(\w+)\??$` refuses it rather than copying the value unconverted.
+      expect(
+        () => mapFrom('MyWidget'),
+        throwsA(isA<UnmappedTypeException>()),
+      );
     });
 
     test('unknown PG_ prefix throws — no silent fallback', () {

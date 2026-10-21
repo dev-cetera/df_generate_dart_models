@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.19.4]
+
+- Released @ 10/2026 (UTC)
+- build: widen `analyzer` to `>=8.2.0 <15.0.0` (verified against 8.2.0 and 14.6.0), bump `df_log` to `^0.6.1`, and depend on `df_gen_core ^0.8.2` (without it no `@GenerateDartModel` class is found on analyzer 14) and `df_generate_dart_models_core ^0.11.3`.
+- fix: a field type that no mapper handles — a nested model whose class name lacks a `Model`/`Res`/`Req`/`Entry`/`Spec` affix, an enum the analyzer could not see, a type that is not imported — no longer falls through to an identity mapping (code that does not compile for typed lists and silently skips the conversion for single values). Generation now stops with an `UnmappedTypeException` naming the type, the field, the class and the source file. `dynamic` and `Object` still pass through unchanged.
+- fix: a `fieldType:` Type literal the analyzer cannot resolve (e.g. `fieldType: Address` without importing `Address`) was silently generated as `dynamic`; generation now stops with an error naming the field, the class and the source file. A left-out `fieldType:` is still the `dynamic` shorthand.
+- Output for valid models is byte-identical to 0.19.3 (checked against a full regeneration of a 596-model consumer and this package's integration fixtures, on analyzer 8.2.0 and 14.6.0); the templates are unchanged.
+
 ## [0.19.3]
 
 - fix: `df_generate_dart_models_from_dbml` round-trip fidelity: quoted array column types (`"uuid[]"`, `"text[]"`) are now parsed (were silently dropped) and emit a typed `List<E>`; `jsonb`/`json` columns map to a plain nested `Map<String, dynamic>` (the `PG_jsonb-Map` marker JSON-encoded the value to a String, breaking the wire shape + round-trips); and `$` in a note is escaped so it isn't treated as Dart interpolation.

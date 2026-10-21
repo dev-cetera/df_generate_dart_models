@@ -224,9 +224,7 @@ class DartCoreTypeMappers extends TypeMappers {
         // ---------------------------------------------------------------------
         // Default.
         // ---------------------------------------------------------------------
-        r'^(\w+)\??$': (e) {
-          return '${e.name}';
-        },
+        r'^(\w+)\??$': _passThroughOrThrow,
       });
 
   //
@@ -353,9 +351,7 @@ class DartCoreTypeMappers extends TypeMappers {
         // ---------------------------------------------------------------------
         // Default.
         // ---------------------------------------------------------------------
-        r'^(\w+)\??$': (e) {
-          return '${e.name}';
-        },
+        r'^(\w+)\??$': _passThroughOrThrow,
       });
 
   //
@@ -364,5 +360,74 @@ class DartCoreTypeMappers extends TypeMappers {
 
   String _strType(String code) {
     return r'^(' + code + r')\??$';
+  }
+
+  /// The catch-all for a plain type name that no mapper above claimed.
+  ///
+  /// Only [_PASS_THROUGH_TYPES] may be copied as-is. Any other name (a nested
+  /// model without a recognised affix, an enum the analyzer could not see, a
+  /// type that is not imported) would otherwise be copied unconverted, which
+  /// generates code that does not compile for typed lists and silently skips
+  /// the conversion for single values — so the generator stops instead.
+  static String _passThroughOrThrow(MapperEvent e) {
+    final typeName = e.matchGroups?.elementAt(1);
+    if (_PASS_THROUGH_TYPES.contains(typeName)) {
+      return '${e.name}';
+    }
+    throw UnmappedTypeException(e.type ?? '<unknown>');
+  }
+}
+
+/// Plain types whose JSON value is used unchanged in both directions: they
+/// are untyped by design, so there is nothing to convert.
+const _PASS_THROUGH_TYPES = {'dynamic', 'Object'};
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+/// Thrown when a field's type has no type mapper, so the generator cannot
+/// write the code that reads it from JSON or writes it to JSON.
+///
+/// The mapper throws it with only [type] known; the generator rethrows it with
+/// the [fieldName], [className] and [filePath] it was generating.
+final class UnmappedTypeException implements Exception {
+  /// The type that has no mapper, e.g. `Address`.
+  final String type;
+
+  /// The field's whole declared type, when [type] is part of it, e.g.
+  /// `List<Address>`.
+  final String? fieldType;
+
+  /// The field whose type it is.
+  final String? fieldName;
+
+  /// The annotated class the field belongs to.
+  final String? className;
+
+  /// The source file the model is being generated from.
+  final String? filePath;
+
+  const UnmappedTypeException(
+    this.type, {
+    this.fieldType,
+    this.fieldName,
+    this.className,
+    this.filePath,
+  });
+
+  @override
+  String toString() {
+    final where = [
+      if (filePath != null) 'file `$filePath`',
+      if (className != null) 'class `$className`',
+      if (fieldName != null) 'field `$fieldName`',
+      if (fieldType != null && fieldType != type) 'declared as `$fieldType`',
+    ].join(', ');
+    return 'UnmappedTypeException: no type mapper handles `$type`'
+        '${where.isEmpty ? '' : ' ($where)'}. '
+        'A nested model needs a class name with a Model, Res, Req, Entry or '
+        'Spec prefix or suffix (e.g. `ModelAddress` or `AddressModel`), an '
+        'enum needs a Type or Enum affix or must be imported so the analyzer '
+        'can see it is an enum, and every type must be imported into the file '
+        'that declares the model.';
   }
 }

@@ -90,6 +90,14 @@ GenerateDartModel _updateFromClassAnnotationField(
               final x = DartFromRecordOnDartObjectExt(e);
               try {
                 final fieldPath = x.fieldPathFromRecord() ?? ['unknown'];
+                if (_isUnresolvedFieldType(e)) {
+                  throw StateError(
+                    'The fieldType of field `${fieldPath.join('.')}` in '
+                    '`${params.parent.className}` (${params.fullFilePath}) '
+                    'could not be resolved. Import the type into this file; '
+                    'it would otherwise be generated as `dynamic`.',
+                  );
+                }
                 var fieldType = x.fieldTypeFromRecord() ?? 'dynamic';
                 // Analyzer-driven enum detection: if the slot was written as a
                 // Type literal (`fieldType: AccountStatus`) and that type is
@@ -249,6 +257,17 @@ GenerateDartModel _updateFromAnnotatedMember(
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+/// Whether the `fieldType:` slot on a Field-shaped DartObject names a type the
+/// analyzer could not resolve, e.g. `fieldType: Address` where `Address` is
+/// not imported. Such a slot evaluates to no value whose type is not `Null`;
+/// a left-out `fieldType:` is a real `null` (type `Null`) and stays the
+/// documented `dynamic` shorthand.
+bool _isUnresolvedFieldType(DartObject record) {
+  final slot = record.getField(FieldModelFieldNames.fieldType);
+  if (slot == null || !slot.isNull) return false;
+  return slot.type?.isDartCoreNull != true;
+}
 
 /// Whether the `fieldType:` slot on a Field-shaped DartObject is a Type
 /// literal pointing to an enum (e.g. `Field(fieldType: AccountStatus, ...)`).

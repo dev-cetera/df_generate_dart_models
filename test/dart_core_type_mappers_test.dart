@@ -266,32 +266,84 @@ void main() {
   });
 
   group('default catchall', () {
-    test('unknown plain word falls through to the catchall', () {
-      // `^(\w+)\??$` matches any single word. `Widget` matches no specific
-      // mapper so the catchall fires and returns the value as-is.
-      expect(mapFrom('Widget', name: 'v'), 'v');
+    final throwsUnmapped = throwsA(isA<UnmappedTypeException>());
+
+    test('an unknown plain type name throws instead of passing through', () {
+      // `Widget` matches no specific mapper. Copying the value unconverted
+      // would silently skip the conversion, so the generator stops instead.
+      expect(() => mapFrom('Widget', name: 'v'), throwsUnmapped);
+      expect(() => mapTo('Widget', name: 'v'), throwsUnmapped);
     });
 
-    test(
-        'bare "Type" no longer hits the Type-pattern (would emit invalid code)',
+    test('the exception names the unmapped type', () {
+      expect(
+        () => mapFrom('Address?', name: 'v'),
+        throwsA(
+          isA<UnmappedTypeException>()
+              .having((e) => e.type, 'type', 'Address?')
+              .having((e) => e.toString(), 'message', contains('Address')),
+        ),
+      );
+    });
+
+    test('a nested model without a recognised affix throws in a typed list',
         () {
-      // Tightened from \w* to \w+ on each side so the pattern requires at
-      // least one prefix or suffix character. The Dart core `Type` would
-      // otherwise emit `Type.values.valueOf(...)`, which does not compile.
-      expect(mapFrom('Type', name: 'v'), 'v');
+      expect(() => mapFrom('List<Address>', name: 'v'), throwsUnmapped);
+      expect(() => mapTo('List<Address>', name: 'v'), throwsUnmapped);
+      expect(() => mapFrom('Map<String, Address>', name: 'v'), throwsUnmapped);
     });
 
-    test('bare "Model" no longer hits the Model-pattern', () {
-      expect(mapFrom('Model', name: 'v'), 'v');
+    test('bare "Type", "Model" and "Enum" throw (no affix to strip)', () {
+      // The affix patterns need at least one character beside the affix, so
+      // these reach the catchall, which no longer passes them through.
+      for (final type in ['Type', 'Model', 'Enum']) {
+        expect(() => mapFrom(type, name: 'v'), throwsUnmapped);
+      }
     });
 
-    test('bare "Enum" no longer hits the Enum-pattern', () {
-      expect(mapFrom('Enum', name: 'v'), 'v');
+    test('dynamic and Object pass through unchanged, nullable or not', () {
+      for (final type in ['dynamic', 'Object', 'Object?']) {
+        expect(mapFrom(type, name: 'v'), 'v');
+        expect(mapTo(type, name: 'v'), 'v');
+      }
+    });
+
+    test('untyped collections still map', () {
+      expect(
+        mapFrom('Map<String, dynamic>', name: 'v'),
+        contains('letMapOrNull'),
+      );
+      expect(mapTo('Map<String, dynamic>', name: 'v'), contains('v?.map('));
+      expect(mapFrom('List<Object>', name: 'v'), contains('letListOrNull'));
+      expect(mapFrom('List<dynamic>', name: 'v'), contains('letListOrNull'));
+    });
+
+    test('analyzer-detected enums without an affix still map', () {
+      expect(mapFrom('Weekday@enum', name: 'v'), contains('Weekday.values'));
+      expect(mapTo('Weekday@enum?', name: 'v'), 'v?.name');
     });
 
     test('PaymentModel still hits the Model-pattern', () {
       final r = mapFrom('PaymentModel', name: 'p');
       expect(r, contains('PaymentModel.fromJson'));
+    });
+
+    test('every affixed nested type still maps', () {
+      for (final type in [
+        'ModelAddress',
+        'AddressModel',
+        'ResFoo',
+        'FooRes',
+        'ReqFoo',
+        'FooReq',
+        'EntryFoo',
+        'FooEntry',
+        'SpecFoo',
+        'FooSpec',
+      ]) {
+        expect(mapFrom(type, name: 'v'), contains('$type.fromJson'));
+        expect(mapTo(type, name: 'v'), 'v?.toJson()');
+      }
     });
   });
 

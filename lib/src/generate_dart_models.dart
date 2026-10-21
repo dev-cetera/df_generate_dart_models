@@ -190,6 +190,35 @@ final _defaultMappers = DartCompositeTypeMappers([
   DartCoreTypeMappers.instance,
 ]);
 
+/// Maps [field]'s type to the code that converts the value at [accessor],
+/// using [mappers] (the from-JSON or the to-JSON table).
+///
+/// Throws an [UnmappedTypeException] naming the field, the class and the
+/// source file when no mapper handles the type, so generation stops instead
+/// of writing code that does not convert the value.
+String _mapFieldType(
+  TTypeMappers mappers, {
+  required ClassInsight<GenerateDartModel> insight,
+  required DartField field,
+  required String accessor,
+}) {
+  final fieldTypeCode = field.fieldTypeCode!;
+  try {
+    return DartTypeCodeMapper(mappers).map(
+      fieldName: accessor,
+      fieldTypeCode: fieldTypeCode,
+    );
+  } on UnmappedTypeException catch (e) {
+    throw UnmappedTypeException(
+      e.type,
+      fieldType: fieldTypeCode,
+      fieldName: field.fieldName,
+      className: insight.className,
+      filePath: p.join(insight.dirPath, insight.fileName),
+    );
+  }
+}
+
 final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
   '___DESCRIPTION___': (insight) {
     return insight.annotation.description ??
@@ -323,9 +352,11 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
       // (LowerCase-String, PG_jsonb-Map, STRICT-int, PG_text-String, etc.)
       // match their specific regexes. The strip is only used to render
       // valid Dart for the field declaration, not the mapper.
-      final code = DartTypeCodeMapper(_defaultMappers.fromMappers).map(
-        fieldName: rawKey,
-        fieldTypeCode: field.fieldTypeCode!,
+      final code = _mapFieldType(
+        _defaultMappers.fromMappers,
+        insight: insight,
+        field: field,
+        accessor: rawKey,
       );
 
       return 'final $f = $code;';
@@ -345,10 +376,12 @@ final _interpolator = TemplateInterpolator<ClassInsight<GenerateDartModel>>({
       final f0 = '${f}0';
       // Unstripped on the to-side too so the inverse of every prefix mapper
       // can fire (LowerCase→toLowerCase, PG_jsonb→jsonEncode, etc.).
-      final x = e.fieldTypeCode!;
-      final a = DartTypeCodeMapper(
+      final a = _mapFieldType(
         _defaultMappers.toMappers,
-      ).map(fieldName: f, fieldTypeCode: x);
+        insight: insight,
+        field: e,
+        accessor: f,
+      );
       return 'final $f0 = $a;';
     }).join('\n');
   },
