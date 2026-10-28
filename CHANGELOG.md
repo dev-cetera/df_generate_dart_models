@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.20.2]
+
+- Merge branch 'main' into prod
+
+
 ## [0.20.1]
 
 - ci: sync release workflows (scoped analyze, --no-example, guarded tests)
