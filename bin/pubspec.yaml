@@ -13,11 +13,7 @@
 
 name: generate_dart_models
 homepage: https://dev-cetera.com/
-repository: https://github.com/robmllze/df_generate_dart_models
-funding:
-- https://www.patreon.com/c/robelator
-- https://github.com/sponsors/robelator
-- https://www.buymeacoffee.com/dev_cetera
+repository: https://github.com/dev-cetera/df_generate_dart_models
 
 
 publish_to: none
