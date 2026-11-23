@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.21.0]
+
+- An empty string or collection is a value, not null
+- fromJson and toJson keep "", [], {} and empty sets and queues as themselves; only null or a missing key means absent
+- A required field answered with [] or "" no longer throws in its $ getter
+- Covers every mapper: core, Postgres, SQLite and Firestore, including the trimmed and case-converted string types
+
+
 ## [0.20.3]
 
 - Merge branch 'main' into prod
