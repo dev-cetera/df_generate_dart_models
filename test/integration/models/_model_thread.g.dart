@@ -35,8 +35,11 @@ class ModelThread extends _ModelThread with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'thread';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'thread';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -220,9 +223,9 @@ class ModelThread extends _ModelThread with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final creatorId = json?['creator_id']?.toString().trim().nullIfEmpty;
-      final title = json?['title']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final creatorId = json?['creator_id']?.toString().trim();
+      final title = json?['title']?.toString().trim();
       final comments = letListOrNull<dynamic>(json?['comments'])
           ?.map(
             (p0) => () {
@@ -231,13 +234,12 @@ class ModelThread extends _ModelThread with EquatableMixin {
             }(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final unreadCount = letIntOrNull(json?['unread_count']);
-      final cacheToken = json?['cache_token']?.toString().trim().nullIfEmpty;
+      final cacheToken = json?['cache_token']?.toString().trim();
       final createdAt = () {
-        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       return ModelThread(
@@ -287,9 +289,9 @@ class ModelThread extends _ModelThread with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final creatorId0 = creatorId?.trim().nullIfEmpty;
-      final title0 = title?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final creatorId0 = creatorId?.trim();
+      final title0 = title?.trim();
       final comments0 = () {
         final a = comments;
         return a != null
@@ -298,12 +300,11 @@ class ModelThread extends _ModelThread with EquatableMixin {
                   (p0) => p0?.toJson(),
                 )
                 .nonNulls
-                .nullIfEmpty
-                ?.toList())
+                .toList())
             : null;
       }();
       final unreadCount0 = unreadCount;
-      final cacheToken0 = cacheToken?.trim().nullIfEmpty;
+      final cacheToken0 = cacheToken?.trim();
       final createdAt0 = createdAt?.toUtc().toIso8601String();
       final withNulls = {
         'unread_count': unreadCount0,

@@ -35,8 +35,11 @@ class ModelAccount extends _ModelAccount with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'account';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'account';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -245,23 +248,23 @@ class ModelAccount extends _ModelAccount with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final email = json?['email']?.toString().trim().nullIfEmpty;
-      final username = json?['username']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final email = json?['email']?.toString().trim();
+      final username = json?['username']?.toString().trim();
       final passwordHash = letAsOrNull<Uint8List>(json?['password_hash']);
       final status =
           AccountStatusType.values.valueOf(json?['status']?.toString());
       final role = AccountRoleType.values.valueOf(json?['role']?.toString());
       final createdAt = () {
-        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final updatedAt = () {
-        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        final a = json?['updated_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final deletedAt = () {
-        final a = json?['deleted_at']?.toString().trim().nullIfEmpty;
+        final a = json?['deleted_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       return ModelAccount(
@@ -313,9 +316,9 @@ class ModelAccount extends _ModelAccount with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final email0 = email?.trim().nullIfEmpty;
-      final username0 = username?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final email0 = email?.trim();
+      final username0 = username?.trim();
       final passwordHash0 = passwordHash;
       final status0 = status?.name;
       final role0 = role?.name;

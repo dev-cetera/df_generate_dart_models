@@ -35,8 +35,11 @@ class ModelSmoke extends _ModelSmoke with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'smoke';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'smoke';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -195,12 +198,11 @@ class ModelSmoke extends _ModelSmoke with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final profileId = json?['profile']?['id']?.toString().trim().nullIfEmpty;
-      final profileAvatar =
-          json?['profile']?['avatar']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final profileId = json?['profile']?['id']?.toString().trim();
+      final profileAvatar = json?['profile']?['avatar']?.toString().trim();
       final profileAddressCity =
-          json?['profile']?['address']?['city']?.toString().trim().nullIfEmpty;
+          json?['profile']?['address']?['city']?.toString().trim();
       return ModelSmoke(
         id: id,
         profileId: profileId,
@@ -245,10 +247,10 @@ class ModelSmoke extends _ModelSmoke with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final profileId0 = profileId?.trim().nullIfEmpty;
-      final profileAvatar0 = profileAvatar?.trim().nullIfEmpty;
-      final profileAddressCity0 = profileAddressCity?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final profileId0 = profileId?.trim();
+      final profileAvatar0 = profileAvatar?.trim();
+      final profileAddressCity0 = profileAddressCity?.trim();
       final withNulls = {
         'profile': {
           'id': profileId0,

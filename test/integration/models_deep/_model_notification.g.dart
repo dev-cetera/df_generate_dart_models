@@ -35,8 +35,11 @@ class ModelNotification extends _ModelNotification with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'notification';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'notification';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -244,17 +247,17 @@ class ModelNotification extends _ModelNotification with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
       final recipientRef =
           letAsOrNull<DocumentReference>(json?['recipientRef'])?.path ??
-              json?['recipientRef']?.toString().trim().nullIfEmpty;
+              json?['recipientRef']?.toString().trim();
       final actorRef =
           letAsOrNull<DocumentReference>(json?['actorRef'])?.path ??
-              json?['actorRef']?.toString().trim().nullIfEmpty;
+              json?['actorRef']?.toString().trim();
       final kind =
           NotificationKindType.values.valueOf(json?['kind']?.toString());
-      final title = json?['title']?.toString().trim().nullIfEmpty;
-      final body = json?['body']?.toString().trim().nullIfEmpty;
+      final title = json?['title']?.toString().trim();
+      final body = json?['body']?.toString().trim();
       final previewMedia = () {
         final a = letMapOrNull<String, dynamic>(json?['previewMedia']);
         return a != null ? ModelMediaItem.fromJson(a) : null;
@@ -311,12 +314,12 @@ class ModelNotification extends _ModelNotification with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final recipientRef0 = recipientRef?.trim().nullIfEmpty;
-      final actorRef0 = actorRef?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final recipientRef0 = recipientRef?.trim();
+      final actorRef0 = actorRef?.trim();
       final kind0 = kind?.name;
-      final title0 = title?.trim().nullIfEmpty;
-      final body0 = body?.trim().nullIfEmpty;
+      final title0 = title?.trim();
+      final body0 = body?.trim();
       final previewMedia0 = previewMedia?.toJson();
       final readAt0 =
           readAt != null ? Timestamp.fromDate(readAt!.toUtc()) : null;

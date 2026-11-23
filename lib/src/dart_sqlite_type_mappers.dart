@@ -58,13 +58,13 @@ class DartSqliteTypeMappers extends TypeMappers {
         // JSON columns in SQLite are TEXT under the hood. letMapOrNull /
         // letListOrNull JSON-decode the TEXT automatically.
         r'^SQLITE_(?:json|jsonb)' + _sqliteTail + r'-(Map)\??$': (e) {
-          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?.unmodifiable';
+          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.unmodifiable';
         },
         r'^SQLITE_(?:json|jsonb)' + _sqliteTail + r'-(List)\??$': (e) {
-          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().unmodifiable';
+          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.toList().unmodifiable';
         },
         r'^SQLITE_(?:json|jsonb)' + _sqliteTail + r'-(Set)\??$': (e) {
-          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().unmodifiable';
+          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.toSet().unmodifiable';
         },
       });
 
@@ -78,12 +78,12 @@ class DartSqliteTypeMappers extends TypeMappers {
         // alias so the template substitution (replaceFirst on `p0`) doesn't
         // leave a stray placeholder in the second reference.
         r'^SQLITE_(?:json|jsonb)' + _sqliteTail + r'-(Map)\??$': (e) {
-          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => MapEntry(${e.hashes},)).nonNulls.nullIfEmpty) : null; }()';
+          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => MapEntry(${e.hashes},)).nonNulls) : null; }()';
         },
         r'^SQLITE_(?:json|jsonb)' +
             _sqliteTail +
             r'-(List|Set|Iterable|Queue)\??$': (e) {
-          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()) : null; }()';
+          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => ${e.hashes},).nonNulls.toList()) : null; }()';
         },
       });
 
@@ -121,7 +121,7 @@ class DartSqliteTypeMappers extends TypeMappers {
         // ─── DDL-only — forward to Core's behaviour for the bare type ────
         r'^SQLITE_(?:text|varchar|char|clob)' + _sqliteTail + r'-(String)\??$':
             (e) {
-          return '${e.name}?.toString().trim().nullIfEmpty';
+          return '${e.name}?.toString().trim()';
         },
         r'^SQLITE_integer' + _sqliteTail + r'-(int)\??$': (e) {
           return 'letIntOrNull(${e.name})';
@@ -130,7 +130,7 @@ class DartSqliteTypeMappers extends TypeMappers {
           return 'letDoubleOrNull(${e.name})';
         },
         r'^SQLITE_numeric' + _sqliteTail + r'-(String)\??$': (e) {
-          return '${e.name}?.toString().trim().nullIfEmpty';
+          return '${e.name}?.toString().trim()';
         },
         r'^SQLITE_numeric' + _sqliteTail + r'-(double)\??$': (e) {
           return 'letDoubleOrNull(${e.name})';
@@ -140,7 +140,7 @@ class DartSqliteTypeMappers extends TypeMappers {
         },
         // ISO-string-encoded DateTime (the common default).
         r'^SQLITE_text' + _sqliteTail + r'-(DateTime)\??$': (e) {
-          return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }()';
+          return '(){ final a = ${e.name}?.toString().trim(); return a != null ? DateTime.tryParse(a)?.toUtc(): null; }()';
         },
       });
 
@@ -172,7 +172,7 @@ class DartSqliteTypeMappers extends TypeMappers {
         // ─── DDL-only ────────────────────────────────────────────────────
         r'^SQLITE_(?:text|varchar|char|clob)' + _sqliteTail + r'-(String)\??$':
             (e) {
-          return '${e.name}?.trim().nullIfEmpty';
+          return '${e.name}?.trim()';
         },
         r'^SQLITE_integer' + _sqliteTail + r'-(int)\??$': (e) {
           return '${e.name}';

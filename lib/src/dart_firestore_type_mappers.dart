@@ -82,7 +82,7 @@ class DartFirestoreTypeMappers extends TypeMappers {
         // fall back to a String coercion if the value wasn't a
         // DocumentReference (already-serialised path on the wire).
         r'^FS_ref-(String)\??$': (e) {
-          return 'letAsOrNull<DocumentReference>(${e.name})?.path ?? ${e.name}?.toString().trim().nullIfEmpty';
+          return 'letAsOrNull<DocumentReference>(${e.name})?.path ?? ${e.name}?.toString().trim()';
         },
         // Blob (Firestore's binary type) → Uint8List. `?.` again, with
         // a fallback to direct Uint8List interpretation.
@@ -126,7 +126,7 @@ class DartFirestoreTypeMappers extends TypeMappers {
         // we just emit the path String. Repository code typically does
         // `firestore.doc(model.refPath)` before calling `set`.
         r'^FS_ref-(String)\??$': (e) {
-          return '${e.name}?.trim().nullIfEmpty';
+          return '${e.name}?.trim()';
         },
         // Uint8List → Blob (Firestore's typed binary wrapper).
         r'^FS_blob-(Uint8List)\??$': (e) {

@@ -35,8 +35,11 @@ class ModelBase extends _ModelBase with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'base';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'base';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -249,41 +252,39 @@ class ModelBase extends _ModelBase with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final name = json?['name']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final name = json?['name']?.toString().trim();
       final count = letIntOrNull(json?['count']);
       final ratio = letDoubleOrNull(json?['ratio']);
       final active = letBoolOrNull(json?['active']);
       final createdAt = () {
-        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final homepage = () {
-        final a = json?['homepage']?.toString().trim().nullIfEmpty;
+        final a = json?['homepage']?.toString().trim();
         return a != null ? Uri.tryParse(a) : null;
       }();
       final big = () {
-        final a = json?['big']?.toString().trim().nullIfEmpty;
+        final a = json?['big']?.toString().trim();
         return a != null ? BigInt.tryParse(a) : null;
       }();
       final tags = letListOrNull<dynamic>(json?['tags'])
           ?.map(
-            (p0) => p0?.toString().trim().nullIfEmpty,
+            (p0) => p0?.toString().trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final metadata = letMapOrNull<dynamic, dynamic>(json?['metadata'])
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.toString().trim().nullIfEmpty,
+              p0?.toString().trim(),
               p1,
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .unmodifiable;
       return ModelBase(
         id: id,
         name: name,
@@ -334,8 +335,8 @@ class ModelBase extends _ModelBase with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final name0 = name?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final name0 = name?.trim();
       final count0 = count;
       final ratio0 = ratio;
       final active0 = active;
@@ -344,20 +345,18 @@ class ModelBase extends _ModelBase with EquatableMixin {
       final big0 = big?.toString();
       final tags0 = tags
           ?.map(
-            (p0) => p0?.trim().nullIfEmpty,
+            (p0) => p0?.trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final metadata0 = metadata
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.trim().nullIfEmpty,
+              p0?.trim(),
               p1,
             ),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final withNulls = {
         'tags': tags0,
         'ratio': ratio0,

@@ -44,8 +44,9 @@ void main() {
   group('Base types (DartCoreTypeMappers)', () {
     final code = _read('_model_base.g.dart');
 
-    test('String fields use the coercive trim+nullIfEmpty chain', () {
-      expect(code, contains('?.toString().trim().nullIfEmpty'));
+    test('String fields use the coercive trim chain, keeping an empty string',
+        () {
+      expect(code, contains('?.toString().trim()'));
     });
 
     test('int field uses letIntOrNull (Phase 1 coercion fix)', () {
@@ -86,13 +87,13 @@ void main() {
     final code = _read('_model_pg_user.g.dart');
 
     test('PG_uuid-String forwards to the String coercion', () {
-      expect(code, contains("id = json?['id']?.toString().trim().nullIfEmpty"));
+      expect(code, contains("id = json?['id']?.toString().trim()"));
     });
 
     test('PG_citext-String forwards to the String coercion', () {
       expect(
         code,
-        contains("email = json?['email']?.toString().trim().nullIfEmpty"),
+        contains("email = json?['email']?.toString().trim()"),
       );
     });
 
@@ -100,7 +101,7 @@ void main() {
       expect(
         code,
         contains(
-          "displayName = json?['display_name']?.toString().trim().nullIfEmpty",
+          "displayName = json?['display_name']?.toString().trim()",
         ),
       );
     });
@@ -359,7 +360,7 @@ void main() {
 
     test('List<String> applies the primitive coercion per element', () {
       expect(code, contains("letListOrNull<dynamic>(json?['tags'])"));
-      expect(code, contains('p0?.toString().trim().nullIfEmpty'));
+      expect(code, contains('p0?.toString().trim()'));
     });
 
     test('Map<String, Model> threads both K and V mappers per entry', () {
@@ -368,7 +369,7 @@ void main() {
         contains("letMapOrNull<dynamic, dynamic>(json?['children_by_id'])"),
       );
       // Both p0 (key=String) and p1 (value=Model) get their own mapper.
-      expect(code, contains('p0?.toString().trim().nullIfEmpty'));
+      expect(code, contains('p0?.toString().trim()'));
       expect(code, contains('ModelEnvelopeChild.fromJson'));
     });
 

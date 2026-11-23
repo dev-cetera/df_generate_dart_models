@@ -35,8 +35,11 @@ class ModelPost extends _ModelPost with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'post';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'post';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -260,18 +263,17 @@ class ModelPost extends _ModelPost with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final authorId = json?['author_id']?.toString().trim();
       final visibility =
           PostVisibilityType.values.valueOf(json?['visibility']?.toString());
-      final caption = json?['caption']?.toString().trim().nullIfEmpty;
+      final caption = json?['caption']?.toString().trim();
       final hashtags = letListOrNull<dynamic>(json?['hashtags'])
           ?.map(
-            (p0) => p0?.toString().trim().nullIfEmpty,
+            (p0) => p0?.toString().trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final media = letListOrNull<dynamic>(json?['media'])
           ?.map(
@@ -281,8 +283,7 @@ class ModelPost extends _ModelPost with EquatableMixin {
             }(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final location = () {
         final a = letMapOrNull<String, dynamic>(json?['location']);
@@ -290,15 +291,15 @@ class ModelPost extends _ModelPost with EquatableMixin {
       }();
       final likeCount = letIntOrNull(json?['like_count']);
       final createdAt = () {
-        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final updatedAt = () {
-        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        final a = json?['updated_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final deletedAt = () {
-        final a = json?['deleted_at']?.toString().trim().nullIfEmpty;
+        final a = json?['deleted_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       return ModelPost(
@@ -352,17 +353,16 @@ class ModelPost extends _ModelPost with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final authorId0 = authorId?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final authorId0 = authorId?.trim();
       final visibility0 = visibility?.name;
-      final caption0 = caption?.trim().nullIfEmpty;
+      final caption0 = caption?.trim();
       final hashtags0 = hashtags
           ?.map(
-            (p0) => p0?.trim().nullIfEmpty,
+            (p0) => p0?.trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final media0 = () {
         final a = media;
         return a != null
@@ -371,8 +371,7 @@ class ModelPost extends _ModelPost with EquatableMixin {
                   (p0) => p0?.toJson(),
                 )
                 .nonNulls
-                .nullIfEmpty
-                ?.toList())
+                .toList())
             : null;
       }();
       final location0 =

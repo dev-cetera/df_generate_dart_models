@@ -35,8 +35,11 @@ class ModelSqliteSettings extends _ModelSqliteSettings with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'sqlite_settings';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'sqlite_settings';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -234,10 +237,10 @@ class ModelSqliteSettings extends _ModelSqliteSettings with EquatableMixin {
   ) {
     try {
       final id = letIntOrNull(json?['id']);
-      final userId = json?['user_id']?.toString().trim().nullIfEmpty;
+      final userId = json?['user_id']?.toString().trim();
       final notificationsEnabled =
           letBoolOrNull(json?['notifications_enabled']);
-      final theme = json?['theme']?.toString().trim().nullIfEmpty;
+      final theme = json?['theme']?.toString().trim();
       final lastSyncedAt = () {
         final a = letIntOrNull(json?['last_synced_at']);
         return a != null
@@ -245,19 +248,18 @@ class ModelSqliteSettings extends _ModelSqliteSettings with EquatableMixin {
             : null;
       }();
       final legacyCreatedAt = () {
-        final a = json?['legacy_created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['legacy_created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final preferences = letMapOrNull<dynamic, dynamic>(json?['preferences'])
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.toString().trim().nullIfEmpty,
+              p0?.toString().trim(),
               p1,
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .unmodifiable;
       final avatarCache = letAsOrNull<Uint8List>(json?['avatar_cache']);
       return ModelSqliteSettings(
         id: id,
@@ -308,10 +310,10 @@ class ModelSqliteSettings extends _ModelSqliteSettings with EquatableMixin {
   }) {
     try {
       final id0 = id;
-      final userId0 = userId?.trim().nullIfEmpty;
+      final userId0 = userId?.trim();
       final notificationsEnabled0 =
           notificationsEnabled == null ? null : (notificationsEnabled! ? 1 : 0);
-      final theme0 = theme?.trim().nullIfEmpty;
+      final theme0 = theme?.trim();
       final lastSyncedAt0 = lastSyncedAt?.toUtc().millisecondsSinceEpoch;
       final legacyCreatedAt0 = legacyCreatedAt?.toUtc().toIso8601String();
       final preferences0 = () {
@@ -319,11 +321,10 @@ class ModelSqliteSettings extends _ModelSqliteSettings with EquatableMixin {
         return a != null
             ? jsonEncode(a
                 .map((p0, p1) => MapEntry(
-                      p0?.trim().nullIfEmpty,
+                      p0?.trim(),
                       p1,
                     ))
-                .nonNulls
-                .nullIfEmpty)
+                .nonNulls)
             : null;
       }();
       final avatarCache0 = avatarCache;

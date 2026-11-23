@@ -35,8 +35,11 @@ class ModelEnvelope extends _ModelEnvelope with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'envelope';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'envelope';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -213,8 +216,7 @@ class ModelEnvelope extends _ModelEnvelope with EquatableMixin {
             }(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final uniqueChildren = letSetOrNull<dynamic>(json?['unique_children'])
           ?.map(
@@ -224,22 +226,20 @@ class ModelEnvelope extends _ModelEnvelope with EquatableMixin {
             }(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toSet()
+          .toSet()
           .unmodifiable;
       final tags = letListOrNull<dynamic>(json?['tags'])
           ?.map(
-            (p0) => p0?.toString().trim().nullIfEmpty,
+            (p0) => p0?.toString().trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final childrenById =
           letMapOrNull<dynamic, dynamic>(json?['children_by_id'])
               ?.map(
                 (p0, p1) => MapEntry(
-                  p0?.toString().trim().nullIfEmpty,
+                  p0?.toString().trim(),
                   () {
                     final a = letMapOrNull<String, dynamic>(p1);
                     return a != null ? ModelEnvelopeChild.fromJson(a) : null;
@@ -247,8 +247,7 @@ class ModelEnvelope extends _ModelEnvelope with EquatableMixin {
                 ),
               )
               .nonNulls
-              .nullIfEmpty
-              ?.unmodifiable;
+              .unmodifiable;
       return ModelEnvelope(
         primaryChild: primaryChild,
         children: children,
@@ -300,31 +299,27 @@ class ModelEnvelope extends _ModelEnvelope with EquatableMixin {
             (p0) => p0?.toJson(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final uniqueChildren0 = uniqueChildren
           ?.map(
             (p0) => p0?.toJson(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final tags0 = tags
           ?.map(
-            (p0) => p0?.trim().nullIfEmpty,
+            (p0) => p0?.trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final childrenById0 = childrenById
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.trim().nullIfEmpty,
+              p0?.trim(),
               p1?.toJson(),
             ),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final withNulls = {
         'unique_children': uniqueChildren0,
         'tags': tags0,

@@ -35,8 +35,11 @@ class ModelComment extends _ModelComment with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'comment';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'comment';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -205,12 +208,12 @@ class ModelComment extends _ModelComment with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-      final body = json?['body']?.toString().trim().nullIfEmpty;
-      final parentId = json?['parent_id']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final authorId = json?['author_id']?.toString().trim();
+      final body = json?['body']?.toString().trim();
+      final parentId = json?['parent_id']?.toString().trim();
       final createdAt = () {
-        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       return ModelComment(
@@ -258,10 +261,10 @@ class ModelComment extends _ModelComment with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final authorId0 = authorId?.trim().nullIfEmpty;
-      final body0 = body?.trim().nullIfEmpty;
-      final parentId0 = parentId?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final authorId0 = authorId?.trim();
+      final body0 = body?.trim();
+      final parentId0 = parentId?.trim();
       final createdAt0 = createdAt?.toUtc().toIso8601String();
       final withNulls = {
         'parent_id': parentId0,

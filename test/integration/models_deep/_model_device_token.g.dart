@@ -35,8 +35,11 @@ class ModelDeviceToken extends _ModelDeviceToken with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'device_token';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'device_token';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -235,13 +238,13 @@ class ModelDeviceToken extends _ModelDeviceToken with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
       final accountRef =
           letAsOrNull<DocumentReference>(json?['accountRef'])?.path ??
-              json?['accountRef']?.toString().trim().nullIfEmpty;
-      final token = json?['token']?.toString().trim().nullIfEmpty;
+              json?['accountRef']?.toString().trim();
+      final token = json?['token']?.toString().trim();
       final kind = DeviceKindType.values.valueOf(json?['kind']?.toString());
-      final locale = json?['locale']?.toString().trim().nullIfEmpty;
+      final locale = json?['locale']?.toString().trim();
       final lastSeenAt =
           letAsOrNull<Timestamp>(json?['lastSeenAt'])?.toDate().toUtc();
       final createdAt =
@@ -295,11 +298,11 @@ class ModelDeviceToken extends _ModelDeviceToken with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final accountRef0 = accountRef?.trim().nullIfEmpty;
-      final token0 = token?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final accountRef0 = accountRef?.trim();
+      final token0 = token?.trim();
       final kind0 = kind?.name;
-      final locale0 = locale?.trim().nullIfEmpty;
+      final locale0 = locale?.trim();
       final lastSeenAt0 =
           lastSeenAt != null ? Timestamp.fromDate(lastSeenAt!.toUtc()) : null;
       final createdAt0 = FieldValue.serverTimestamp();

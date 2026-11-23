@@ -35,8 +35,11 @@ class ModelPgPost extends _ModelPgPost with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'pg_post';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'pg_post';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -252,40 +255,38 @@ class ModelPgPost extends _ModelPgPost with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-      final title = json?['title']?.toString().trim().nullIfEmpty;
-      final body = json?['body']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final authorId = json?['author_id']?.toString().trim();
+      final title = json?['title']?.toString().trim();
+      final body = json?['body']?.toString().trim();
       final status =
           PostStatusKindType.values.valueOf(json?['status']?.toString());
       final tags = letListOrNull<dynamic>(json?['tags'])
           ?.map(
-            (p0) => p0?.toString().trim().nullIfEmpty,
+            (p0) => p0?.toString().trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final extra = letMapOrNull<dynamic, dynamic>(json?['extra'])
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.toString().trim().nullIfEmpty,
+              p0?.toString().trim(),
               p1,
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .unmodifiable;
       final metadata = () {
         final a = letMapOrNull<String, dynamic>(json?['metadata']);
         return a != null ? ModelPostMetadata.fromJson(a) : null;
       }();
       final createdAt = () {
-        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final updatedAt = () {
-        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        final a = json?['updated_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       return ModelPgPost(
@@ -338,28 +339,26 @@ class ModelPgPost extends _ModelPgPost with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final authorId0 = authorId?.trim().nullIfEmpty;
-      final title0 = title?.trim().nullIfEmpty;
-      final body0 = body?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final authorId0 = authorId?.trim();
+      final title0 = title?.trim();
+      final body0 = body?.trim();
       final status0 = status?.name;
       final tags0 = tags
           ?.map(
-            (p0) => p0?.trim().nullIfEmpty,
+            (p0) => p0?.trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final extra0 = () {
         final a = extra;
         return a != null
             ? jsonEncode(a
                 .map((p0, p1) => MapEntry(
-                      p0?.trim().nullIfEmpty,
+                      p0?.trim(),
                       p1,
                     ))
-                .nonNulls
-                .nullIfEmpty)
+                .nonNulls)
             : null;
       }();
       final metadata0 =

@@ -35,8 +35,11 @@ class ModelProfile extends _ModelProfile with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'profile';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'profile';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -235,21 +238,21 @@ class ModelProfile extends _ModelProfile with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final accountId = json?['account_id']?.toString().trim().nullIfEmpty;
-      final displayName = json?['display_name']?.toString().trim().nullIfEmpty;
-      final bio = json?['bio']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final accountId = json?['account_id']?.toString().trim();
+      final displayName = json?['display_name']?.toString().trim();
+      final bio = json?['bio']?.toString().trim();
       final avatarUrl = #x0;
       final settings = () {
         final a = letMapOrNull<String, dynamic>(json?['settings']);
         return a != null ? ModelProfileSettings.fromJson(a) : null;
       }();
       final createdAt = () {
-        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final updatedAt = () {
-        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        final a = json?['updated_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       return ModelProfile(
@@ -300,10 +303,10 @@ class ModelProfile extends _ModelProfile with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final accountId0 = accountId?.trim().nullIfEmpty;
-      final displayName0 = displayName?.trim().nullIfEmpty;
-      final bio0 = bio?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final accountId0 = accountId?.trim();
+      final displayName0 = displayName?.trim();
+      final bio0 = bio?.trim();
       final avatarUrl0 = #x0;
       final settings0 =
           settings != null ? jsonEncode(settings!.toJson()) : null;

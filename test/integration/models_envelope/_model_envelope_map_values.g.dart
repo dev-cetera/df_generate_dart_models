@@ -36,8 +36,11 @@ class ModelEnvelopeMapValues extends _ModelEnvelopeMapValues
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'envelope_map_values';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'envelope_map_values';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -183,26 +186,24 @@ class ModelEnvelopeMapValues extends _ModelEnvelopeMapValues
       final tickedBy = letMapOrNull<dynamic, dynamic>(json?['ticked_by'])
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.toString().trim().nullIfEmpty,
+              p0?.toString().trim(),
               () {
-                final a = p1?.toString().trim().nullIfEmpty;
+                final a = p1?.toString().trim();
                 return a != null ? DateTime.tryParse(a)?.toUtc() : null;
               }(),
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .unmodifiable;
       final counts = letMapOrNull<dynamic, dynamic>(json?['counts'])
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.toString().trim().nullIfEmpty,
+              p0?.toString().trim(),
               letIntOrNull(p1),
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .unmodifiable;
       return ModelEnvelopeMapValues(
         tickedBy: tickedBy,
         counts: counts,
@@ -248,21 +249,19 @@ class ModelEnvelopeMapValues extends _ModelEnvelopeMapValues
       final tickedBy0 = tickedBy
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.trim().nullIfEmpty,
+              p0?.trim(),
               p1?.toUtc().toIso8601String(),
             ),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final counts0 = counts
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.trim().nullIfEmpty,
+              p0?.trim(),
               p1,
             ),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final withNulls = {
         'ticked_by': tickedBy0,
         'counts': counts0,

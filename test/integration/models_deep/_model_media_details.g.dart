@@ -35,8 +35,11 @@ class ModelMediaDetails extends _ModelMediaDetails with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'media_details';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'media_details';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -202,14 +205,14 @@ class ModelMediaDetails extends _ModelMediaDetails with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final mime = json?['mime']?.toString().trim().nullIfEmpty;
+      final mime = json?['mime']?.toString().trim();
       final byteSize = letIntOrNull(json?['byte_size']);
       final durationMs = letIntOrNull(json?['duration_ms']);
       final dimensions = () {
         final a = letMapOrNull<String, dynamic>(json?['dimensions']);
         return a != null ? ModelDimensions.fromJson(a) : null;
       }();
-      final altText = json?['alt_text']?.toString().trim().nullIfEmpty;
+      final altText = json?['alt_text']?.toString().trim();
       return ModelMediaDetails(
         mime: mime,
         byteSize: byteSize,
@@ -255,12 +258,12 @@ class ModelMediaDetails extends _ModelMediaDetails with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final mime0 = mime?.trim().nullIfEmpty;
+      final mime0 = mime?.trim();
       final byteSize0 = byteSize;
       final durationMs0 = durationMs;
       final dimensions0 =
           dimensions != null ? jsonEncode(dimensions!.toJson()) : null;
-      final altText0 = altText?.trim().nullIfEmpty;
+      final altText0 = altText?.trim();
       final withNulls = {
         'mime': mime0,
         'duration_ms': durationMs0,

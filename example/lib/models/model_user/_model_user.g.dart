@@ -32,6 +32,15 @@ class ModelUser extends _ModelUser with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
+  /// The database table name this model maps to, mirroring `tableName:` on
+  /// the annotation. When the annotation omits `tableName:`, this is derived
+  /// from the class name (Model prefix/suffix stripped, snake-cased) — no
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'user';
+
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
@@ -183,8 +192,8 @@ class ModelUser extends _ModelUser with EquatableMixin {
   ) {
     try {
       final ref = dataRefFromString(json?['ref']?.toString());
-      final firstName = json?['firstName']?.toString().trim().nullIfEmpty;
-      final lastName = json?['lastName']?.toString().trim().nullIfEmpty;
+      final firstName = json?['firstName']?.toString().trim();
+      final lastName = json?['lastName']?.toString().trim();
       return ModelUser(
         ref: ref,
         firstName: firstName,
@@ -229,8 +238,8 @@ class ModelUser extends _ModelUser with EquatableMixin {
   }) {
     try {
       final ref0 = ref?.path;
-      final firstName0 = firstName?.trim().nullIfEmpty;
-      final lastName0 = lastName?.trim().nullIfEmpty;
+      final firstName0 = firstName?.trim();
+      final lastName0 = lastName?.trim();
       final withNulls = {
         'ref': ref0,
         'lastName': lastName0,
