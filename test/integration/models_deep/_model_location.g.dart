@@ -35,8 +35,11 @@ class ModelLocation extends _ModelLocation with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'location';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'location';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -199,7 +202,7 @@ class ModelLocation extends _ModelLocation with EquatableMixin {
       final latitude = letDoubleOrNull(json?['latitude']);
       final longitude = letDoubleOrNull(json?['longitude']);
       final accuracyM = letDoubleOrNull(json?['accuracy_m']);
-      final placeLabel = json?['place_label']?.toString().trim().nullIfEmpty;
+      final placeLabel = json?['place_label']?.toString().trim();
       return ModelLocation(
         latitude: latitude,
         longitude: longitude,
@@ -247,7 +250,7 @@ class ModelLocation extends _ModelLocation with EquatableMixin {
       final latitude0 = latitude;
       final longitude0 = longitude;
       final accuracyM0 = accuracyM;
-      final placeLabel0 = placeLabel?.trim().nullIfEmpty;
+      final placeLabel0 = placeLabel?.trim();
       final withNulls = {
         'place_label': placeLabel0,
         'longitude': longitude0,

@@ -35,8 +35,11 @@ class ModelPostMetadata extends _ModelPostMetadata with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'post_metadata';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'post_metadata';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -188,9 +191,9 @@ class ModelPostMetadata extends _ModelPostMetadata with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final format = json?['format']?.toString().trim().nullIfEmpty;
+      final format = json?['format']?.toString().trim();
       final wordCount = letIntOrNull(json?['word_count']);
-      final language = json?['language']?.toString().trim().nullIfEmpty;
+      final language = json?['language']?.toString().trim();
       return ModelPostMetadata(
         format: format,
         wordCount: wordCount,
@@ -234,9 +237,9 @@ class ModelPostMetadata extends _ModelPostMetadata with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final format0 = format?.trim().nullIfEmpty;
+      final format0 = format?.trim();
       final wordCount0 = wordCount;
-      final language0 = language?.trim().nullIfEmpty;
+      final language0 = language?.trim();
       final withNulls = {
         'word_count': wordCount0,
         'language': language0,

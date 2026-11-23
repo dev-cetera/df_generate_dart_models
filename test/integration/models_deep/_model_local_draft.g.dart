@@ -35,8 +35,11 @@ class ModelLocalDraft extends _ModelLocalDraft with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'local_draft';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'local_draft';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -219,14 +222,13 @@ class ModelLocalDraft extends _ModelLocalDraft with EquatableMixin {
   ) {
     try {
       final id = letIntOrNull(json?['id']);
-      final caption = json?['caption']?.toString().trim().nullIfEmpty;
+      final caption = json?['caption']?.toString().trim();
       final hashtags = letListOrNull<dynamic>(json?['hashtags'])
           ?.map(
-            (p0) => p0?.toString().trim().nullIfEmpty,
+            (p0) => p0?.toString().trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final media = letListOrNull<dynamic>(json?['media'])
           ?.map(
@@ -236,8 +238,7 @@ class ModelLocalDraft extends _ModelLocalDraft with EquatableMixin {
             }(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final scheduledFor = () {
         final a = letIntOrNull(json?['scheduled_for']);
@@ -300,17 +301,16 @@ class ModelLocalDraft extends _ModelLocalDraft with EquatableMixin {
   }) {
     try {
       final id0 = id;
-      final caption0 = caption?.trim().nullIfEmpty;
+      final caption0 = caption?.trim();
       final hashtags0 = () {
         final a = hashtags;
         return a != null
             ? jsonEncode(a
                 .map(
-                  (p0) => p0?.trim().nullIfEmpty,
+                  (p0) => p0?.trim(),
                 )
                 .nonNulls
-                .nullIfEmpty
-                ?.toList())
+                .toList())
             : null;
       }();
       final media0 = () {
@@ -321,8 +321,7 @@ class ModelLocalDraft extends _ModelLocalDraft with EquatableMixin {
                   (p0) => p0?.toJson(),
                 )
                 .nonNulls
-                .nullIfEmpty
-                ?.toList())
+                .toList())
             : null;
       }();
       final scheduledFor0 = scheduledFor?.toUtc().millisecondsSinceEpoch;

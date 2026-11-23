@@ -35,8 +35,11 @@ class ModelMediaItem extends _ModelMediaItem with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'media_item';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'media_item';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -211,11 +214,10 @@ class ModelMediaItem extends _ModelMediaItem with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
       final kind = MediaKindType.values.valueOf(json?['kind']?.toString());
-      final url = json?['url']?.toString().trim().nullIfEmpty;
-      final thumbnailUrl =
-          json?['thumbnail_url']?.toString().trim().nullIfEmpty;
+      final url = json?['url']?.toString().trim();
+      final thumbnailUrl = json?['thumbnail_url']?.toString().trim();
       final details = () {
         final a = letMapOrNull<String, dynamic>(json?['details']);
         return a != null ? ModelMediaDetails.fromJson(a) : null;
@@ -267,10 +269,10 @@ class ModelMediaItem extends _ModelMediaItem with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
+      final id0 = id?.trim();
       final kind0 = kind?.name;
-      final url0 = url?.trim().nullIfEmpty;
-      final thumbnailUrl0 = thumbnailUrl?.trim().nullIfEmpty;
+      final url0 = url?.trim();
+      final thumbnailUrl0 = thumbnailUrl?.trim();
       final details0 = details != null ? jsonEncode(details!.toJson()) : null;
       final order0 = order;
       final withNulls = {

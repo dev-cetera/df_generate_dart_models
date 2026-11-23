@@ -35,8 +35,11 @@ class ModelEnumSmoke extends _ModelEnumSmoke with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'enum_smoke';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'enum_smoke';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -188,7 +191,7 @@ class ModelEnumSmoke extends _ModelEnumSmoke with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
       final visibility =
           Visibility.values.valueOf(json?['visibility']?.toString());
       final status =
@@ -236,7 +239,7 @@ class ModelEnumSmoke extends _ModelEnumSmoke with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
+      final id0 = id?.trim();
       final visibility0 = visibility?.name;
       final status0 = status?.name;
       final withNulls = {

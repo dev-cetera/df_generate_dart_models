@@ -63,20 +63,20 @@ class DartPostgresTypeMappers extends TypeMappers {
         // returned a decoded Map or a JSON String. letMapOrNull handles
         // both shapes.
         r'^PG_(?:jsonb|json)' + _pgTail + r'-(Map)\??$': (e) {
-          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?.unmodifiable';
+          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.unmodifiable';
         },
         // jsonb-encoded arrays-of-anything come back as List or as JSON
         // String — letListOrNull handles both.
         r'^PG_(?:jsonb|json)' + _pgTail + r'-(List)\??$': (e) {
-          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().unmodifiable';
+          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.toList().unmodifiable';
         },
         r'^PG_(?:jsonb|json)' + _pgTail + r'-(Set)\??$': (e) {
-          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().unmodifiable';
+          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.toSet().unmodifiable';
         },
         // Native Postgres arrays — text[], int[], etc. The driver returns
         // these as already-typed Dart Lists; letListOrNull keeps them safe.
         r'^PG_\w+\[\]-(List)\??$': (e) {
-          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().unmodifiable';
+          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.toList().unmodifiable';
         },
       });
 
@@ -92,15 +92,15 @@ class DartPostgresTypeMappers extends TypeMappers {
         // ${e.name} into a local first because the template's `replaceFirst`
         // substitution only handles one `p0` placeholder per formula.
         r'^PG_(?:jsonb|json)' + _pgTail + r'-(Map)\??$': (e) {
-          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => MapEntry(${e.hashes},)).nonNulls.nullIfEmpty) : null; }()';
+          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => MapEntry(${e.hashes},)).nonNulls) : null; }()';
         },
         r'^PG_(?:jsonb|json)' + _pgTail + r'-(List|Set|Iterable|Queue)\??$':
             (e) {
-          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()) : null; }()';
+          return '(){ final a = ${e.name}; return a != null ? jsonEncode(a.map((${e.args}) => ${e.hashes},).nonNulls.toList()) : null; }()';
         },
         // Native arrays — Dart List binds directly via package:postgres.
         r'^PG_\w+\[\]-(List|Set|Iterable|Queue)\??$': (e) {
-          return '${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';
+          return '${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.toList()';
         },
       });
 
@@ -141,7 +141,7 @@ class DartPostgresTypeMappers extends TypeMappers {
         r'^PG_(?:text|varchar|char|citext|name|xml|uuid|inet|cidr|macaddr|macaddr8|tsvector|tsquery|money|pg_lsn|bit|oid)' +
             _pgTail +
             r'-(String)\??$': (e) {
-          return '${e.name}?.toString().trim().nullIfEmpty';
+          return '${e.name}?.toString().trim()';
         },
         r'^PG_(?:smallint|integer|bigint|int2|int4|int8|smallserial|serial|bigserial)' +
             _pgTail +
@@ -154,7 +154,7 @@ class DartPostgresTypeMappers extends TypeMappers {
         // numeric paired with String keeps full precision; paired with double
         // is the lossy convenience form.
         r'^PG_numeric' + _pgTail + r'-(String)\??$': (e) {
-          return '${e.name}?.toString().trim().nullIfEmpty';
+          return '${e.name}?.toString().trim()';
         },
         r'^PG_numeric' + _pgTail + r'-(double)\??$': (e) {
           return 'letDoubleOrNull(${e.name})';
@@ -164,7 +164,7 @@ class DartPostgresTypeMappers extends TypeMappers {
         },
         r'^PG_(?:timestamp|timestamptz|date)' + _pgTail + r'-(DateTime)\??$':
             (e) {
-          return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }()';
+          return '(){ final a = ${e.name}?.toString().trim(); return a != null ? DateTime.tryParse(a)?.toUtc(): null; }()';
         },
         r'^PG_interval' + _pgTail + r'-(Duration)\??$': (e) {
           return '(){ final a = letAsOrNull<int>(${e.name}); return a != null ? Duration(microseconds: a): null; }()';
@@ -200,7 +200,7 @@ class DartPostgresTypeMappers extends TypeMappers {
         r'^PG_(?:text|varchar|char|citext|name|xml|uuid|inet|cidr|macaddr|macaddr8|tsvector|tsquery|money|pg_lsn|bit|oid)' +
             _pgTail +
             r'-(String)\??$': (e) {
-          return '${e.name}?.trim().nullIfEmpty';
+          return '${e.name}?.trim()';
         },
         r'^PG_(?:smallint|integer|bigint|int2|int4|int8|smallserial|serial|bigserial|real|float4|float8|double|boolean)' +
             _pgTail +

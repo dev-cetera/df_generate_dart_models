@@ -29,7 +29,7 @@ void main() {
 
   group('Nullable trailing-? handling', () {
     test('bare String? matches the same mapper as String', () {
-      expect(mapFrom('String?'), 'v?.toString().trim().nullIfEmpty');
+      expect(mapFrom('String?'), 'v?.toString().trim()');
     });
 
     test('bare int? matches the int mapper', () {
@@ -37,7 +37,7 @@ void main() {
     });
 
     test('PG_uuid-String? matches just like the un-? form', () {
-      expect(mapFrom('PG_uuid-String?'), 'v?.toString().trim().nullIfEmpty');
+      expect(mapFrom('PG_uuid-String?'), 'v?.toString().trim()');
     });
 
     test('STRICT-String? matches STRICT-String', () {
@@ -49,14 +49,14 @@ void main() {
     test('PG_varchar(N)-String tolerates the size parameter', () {
       expect(
         mapFrom('PG_varchar(255)-String'),
-        'v?.toString().trim().nullIfEmpty',
+        'v?.toString().trim()',
       );
     });
 
     test('PG_numeric(p,s)-String tolerates comma-separated parameters', () {
       expect(
         mapFrom('PG_numeric(10,2)-String'),
-        'v?.toString().trim().nullIfEmpty',
+        'v?.toString().trim()',
       );
     });
 
@@ -174,7 +174,7 @@ void main() {
         'DocumentReference is provided', () {
       final r = mapFrom('FS_ref-String');
       expect(r, contains('letAsOrNull<DocumentReference>'));
-      expect(r, contains('v?.toString().trim().nullIfEmpty'));
+      expect(r, contains('v?.toString().trim()'));
     });
   });
 

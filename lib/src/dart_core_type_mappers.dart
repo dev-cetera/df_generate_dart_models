@@ -18,6 +18,13 @@ import 'package:df_generate_dart_models_core/df_generate_dart_models_core.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/// Maps each Dart type to the code that reads it from JSON and writes it back.
+///
+/// An empty value is a value: `""`, `[]`, `{}` and an empty set or queue
+/// round-trip as themselves, and only null (or a missing key) means absent.
+/// Until 0.21.0 every empty string and collection was read and written as
+/// null, so a required field answered with `[]` threw in its `$` getter, and
+/// "nothing" and "missing" looked the same on the wire.
 class DartCoreTypeMappers extends TypeMappers {
   //
   //
@@ -41,19 +48,19 @@ class DartCoreTypeMappers extends TypeMappers {
         // Standard.
         // ---------------------------------------------------------------------
         r'^(Map)\??$': (e) {
-          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty?.unmodifiable';
+          return 'letMapOrNull<dynamic, dynamic>(${e.name})?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.unmodifiable';
         },
         r'^(Iterable)\??$': (e) {
-          return 'letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty';
+          return 'letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls';
         },
         r'^(List)\??$': (e) {
-          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList().unmodifiable';
+          return 'letListOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.toList().unmodifiable';
         },
         r'^(Set)\??$': (e) {
-          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toSet().unmodifiable';
+          return 'letSetOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.toSet().unmodifiable';
         },
         r'^(Queue)\??$': (e) {
-          return '(){ final a = letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty; return a != null ? Queue.of(a): null; }()';
+          return '(){ final a = letIterableOrNull<dynamic>(${e.name})?.map((${e.args}) => ${e.hashes},).nonNulls; return a != null ? Queue.of(a): null; }()';
         },
       });
 
@@ -67,10 +74,10 @@ class DartCoreTypeMappers extends TypeMappers {
         // Standard.
         // ---------------------------------------------------------------------
         r'^(Map)\??$': (e) {
-          return '${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls.nullIfEmpty';
+          return '${e.name}?.map((${e.args}) => MapEntry(${e.hashes},),).nonNulls';
         },
         r'^(Iterable|List|Set|Queue)\??$': (e) {
-          return '${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.nullIfEmpty?.toList()';
+          return '${e.name}?.map((${e.args}) => ${e.hashes},).nonNulls.toList()';
         },
       });
 
@@ -87,7 +94,7 @@ class DartCoreTypeMappers extends TypeMappers {
           return '${e.name}';
         },
         r'^(String)\??$': (e) {
-          return '${e.name}?.toString().trim().nullIfEmpty';
+          return '${e.name}?.toString().trim()';
         },
         r'^(bool)\??$': (e) {
           return 'letBoolOrNull(${e.name})';
@@ -105,25 +112,25 @@ class DartCoreTypeMappers extends TypeMappers {
           // Mirror the Uri mapper: coerce to String first so a non-String JSON
           // value (int, etc.) doesn't throw a TypeError when handed to
           // DateTime.tryParse, which only accepts String.
-          return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; return a != null ? DateTime.tryParse(a)?.toUtc(): null; }()';
+          return '(){ final a = ${e.name}?.toString().trim(); return a != null ? DateTime.tryParse(a)?.toUtc(): null; }()';
         },
         r'^(Duration)\??$': (e) {
           return '(){ final a = letAsOrNull<int>(${e.name}); return a != null ? Duration(microseconds: a): null; }()';
         },
         r'^(Uri)\??$': (e) {
-          return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; return a != null ? Uri.tryParse(a): null; }()';
+          return '(){ final a = ${e.name}?.toString().trim(); return a != null ? Uri.tryParse(a): null; }()';
         },
         r'^(Color)\??$': (e) {
           return '(){ final a = letAsOrNull<int>(${e.name}); return a != null ? Color(a): null; }()';
         },
         r'^(BigInt)\??$': (e) {
-          return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; return a != null ? BigInt.tryParse(a): null; }()';
+          return '(){ final a = ${e.name}?.toString().trim(); return a != null ? BigInt.tryParse(a): null; }()';
         },
         r'^(Uint8List)\??$': (e) {
-          return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; if (a == null) return null; try { return base64Decode(a); } catch (_) { return null; } }()';
+          return '(){ final a = ${e.name}?.toString().trim(); if (a == null) return null; try { return base64Decode(a); } catch (_) { return null; } }()';
         },
         r'^(RegExp)\??$': (e) {
-          return '(){ final a = ${e.name}?.toString().trim().nullIfEmpty; if (a == null) return null; try { return RegExp(a); } catch (_) { return null; } }()';
+          return '(){ final a = ${e.name}?.toString().trim(); if (a == null) return null; try { return RegExp(a); } catch (_) { return null; } }()';
         },
         r'^(Offset)\??$': (e) {
           return '(){ final a = letMapOrNull<String, dynamic>(${e.name}); return a != null ? Offset(letAsOrNull<double>(a[\'dx\']) ?? 0.0, letAsOrNull<double>(a[\'dy\']) ?? 0.0): null; }()';
@@ -149,48 +156,47 @@ class DartCoreTypeMappers extends TypeMappers {
         // ---------------------------------------------------------------------
 
         // Base types
-        _strType(T_TRIMMED_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty',
+        _strType(T_TRIMMED_STRING): (e) => '${e.name}?.toString().trim()',
         _strType(T_NO_SPACES_STRING): (e) =>
-            "${e.name}?.toString().trim().nullIfEmpty?.replaceAll(' ', '')",
+            "${e.name}?.toString().trim().replaceAll(' ', '')",
         _strType(T_SEARCHABLE_STRING): (e) =>
-            "${e.name}?.toString().trim().nullIfEmpty?.toLowerCase().replaceAll(RegExp(r'[^\\w]'), '').nullIfEmpty",
+            "${e.name}?.toString().trim().toLowerCase().replaceAll(RegExp(r'[^\\w]'), '')",
 
         // Non-Trimmed Case Conversions
         _strType(T_LOWER_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toLowerCase()',
+            '${e.name}?.toString().trim().toLowerCase()',
         _strType(T_UPPER_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toUpperCase()',
+            '${e.name}?.toString().trim().toUpperCase()',
         _strType(T_LOWER_SNAKE_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toLowerSnakeCase()',
+            '${e.name}?.toString().trim().toLowerSnakeCase()',
         _strType(T_UPPER_SNAKE_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toUpperSnakeCase()',
+            '${e.name}?.toString().trim().toUpperSnakeCase()',
         _strType(T_LOWER_KEBAB_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toLowerKebabCase()',
+            '${e.name}?.toString().trim().toLowerKebabCase()',
         _strType(T_UPPER_KEBAB_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toUpperKebabCase()',
+            '${e.name}?.toString().trim().toUpperKebabCase()',
         _strType(T_CAMEL_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toCamelCase()',
+            '${e.name}?.toString().trim().toCamelCase()',
         _strType(T_PASCAL_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toPascalCase()',
+            '${e.name}?.toString().trim().toPascalCase()',
 
         // "Trimmed" Case Conversions (Functionally identical implementation to above)
         _strType(T_TRIMMED_LOWER_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toLowerCase()',
+            '${e.name}?.toString().trim().toLowerCase()',
         _strType(T_TRIMMED_UPPER_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toUpperCase()',
+            '${e.name}?.toString().trim().toUpperCase()',
         _strType(T_TRIMMED_LOWER_SNAKE_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toLowerSnakeCase()',
+            '${e.name}?.toString().trim().toLowerSnakeCase()',
         _strType(T_TRIMMED_UPPER_SNAKE_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toUpperSnakeCase()',
+            '${e.name}?.toString().trim().toUpperSnakeCase()',
         _strType(T_TRIMMED_LOWER_KEBAB_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toLowerKebabCase()',
+            '${e.name}?.toString().trim().toLowerKebabCase()',
         _strType(T_TRIMMED_UPPER_KEBAB_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toUpperKebabCase()',
+            '${e.name}?.toString().trim().toUpperKebabCase()',
         _strType(T_TRIMMED_CAMEL_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toCamelCase()',
+            '${e.name}?.toString().trim().toCamelCase()',
         _strType(T_TRIMMED_PASCAL_CASE_STRING): (e) =>
-            '${e.name}?.toString().trim().nullIfEmpty?.toPascalCase()',
+            '${e.name}?.toString().trim().toPascalCase()',
 
         // ---------------------------------------------------------------------
         r'^(DataRefModel)\??$': (e) {
@@ -237,7 +243,7 @@ class DartCoreTypeMappers extends TypeMappers {
         // Standard.
         // ---------------------------------------------------------------------
         r'^(String)\??$': (e) {
-          return '${e.name}?.trim().nullIfEmpty';
+          return '${e.name}?.trim()';
         },
         r'^(dynamic|bool|int|double|num)\??$': (e) {
           return '${e.name}';
@@ -286,47 +292,44 @@ class DartCoreTypeMappers extends TypeMappers {
         // ---------------------------------------------------------------------
 
         // Base types. Receiver is already a String — no toString() needed.
-        _strType(T_TRIMMED_STRING): (e) => '${e.name}?.trim().nullIfEmpty',
+        _strType(T_TRIMMED_STRING): (e) => '${e.name}?.trim()',
         _strType(T_NO_SPACES_STRING): (e) =>
-            "${e.name}?.trim().nullIfEmpty?.replaceAll(' ', '')",
+            "${e.name}?.trim().replaceAll(' ', '')",
         _strType(T_SEARCHABLE_STRING): (e) =>
-            "${e.name}?.trim().nullIfEmpty?.toLowerCase().replaceAll(RegExp(r'[^\\w]'), '').nullIfEmpty",
+            "${e.name}?.trim().toLowerCase().replaceAll(RegExp(r'[^\\w]'), '')",
 
         // Non-Trimmed Case Conversions
-        _strType(T_LOWER_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toLowerCase()',
-        _strType(T_UPPER_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toUpperCase()',
+        _strType(T_LOWER_CASE_STRING): (e) => '${e.name}?.trim().toLowerCase()',
+        _strType(T_UPPER_CASE_STRING): (e) => '${e.name}?.trim().toUpperCase()',
         _strType(T_LOWER_SNAKE_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toLowerSnakeCase()',
+            '${e.name}?.trim().toLowerSnakeCase()',
         _strType(T_UPPER_SNAKE_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toUpperSnakeCase()',
+            '${e.name}?.trim().toUpperSnakeCase()',
         _strType(T_LOWER_KEBAB_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toLowerKebabCase()',
+            '${e.name}?.trim().toLowerKebabCase()',
         _strType(T_UPPER_KEBAB_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toUpperKebabCase()',
-        _strType(T_CAMEL_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toCamelCase()',
+            '${e.name}?.trim().toUpperKebabCase()',
+        _strType(T_CAMEL_CASE_STRING): (e) => '${e.name}?.trim().toCamelCase()',
         _strType(T_PASCAL_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toPascalCase()',
+            '${e.name}?.trim().toPascalCase()',
 
         // "Trimmed" Case Conversions (Functionally identical implementation to above)
         _strType(T_TRIMMED_LOWER_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toLowerCase()',
+            '${e.name}?.trim().toLowerCase()',
         _strType(T_TRIMMED_UPPER_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toUpperCase()',
+            '${e.name}?.trim().toUpperCase()',
         _strType(T_TRIMMED_LOWER_SNAKE_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toLowerSnakeCase()',
+            '${e.name}?.trim().toLowerSnakeCase()',
         _strType(T_TRIMMED_UPPER_SNAKE_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toUpperSnakeCase()',
+            '${e.name}?.trim().toUpperSnakeCase()',
         _strType(T_TRIMMED_LOWER_KEBAB_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toLowerKebabCase()',
+            '${e.name}?.trim().toLowerKebabCase()',
         _strType(T_TRIMMED_UPPER_KEBAB_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toUpperKebabCase()',
+            '${e.name}?.trim().toUpperKebabCase()',
         _strType(T_TRIMMED_CAMEL_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toCamelCase()',
+            '${e.name}?.trim().toCamelCase()',
         _strType(T_TRIMMED_PASCAL_CASE_STRING): (e) =>
-            '${e.name}?.trim().nullIfEmpty?.toPascalCase()',
+            '${e.name}?.trim().toPascalCase()',
 
         r'^(Type-?\w+|\w+-?Type)\??$': (e) {
           return '${e.name}?.name';

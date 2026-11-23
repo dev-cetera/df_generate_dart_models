@@ -35,8 +35,11 @@ class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'profile_settings';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'profile_settings';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -196,8 +199,8 @@ class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
     try {
       final defaultVisibility = PostVisibilityType.values
           .valueOf(json?['default_visibility']?.toString());
-      final language = json?['language']?.toString().trim().nullIfEmpty;
-      final timezone = json?['timezone']?.toString().trim().nullIfEmpty;
+      final language = json?['language']?.toString().trim();
+      final timezone = json?['timezone']?.toString().trim();
       final marketingOptIn = letBoolOrNull(json?['marketing_opt_in']);
       return ModelProfileSettings(
         defaultVisibility: defaultVisibility,
@@ -244,8 +247,8 @@ class ModelProfileSettings extends _ModelProfileSettings with EquatableMixin {
   }) {
     try {
       final defaultVisibility0 = defaultVisibility?.name;
-      final language0 = language?.trim().nullIfEmpty;
-      final timezone0 = timezone?.trim().nullIfEmpty;
+      final language0 = language?.trim();
+      final timezone0 = timezone?.trim();
       final marketingOptIn0 = marketingOptIn;
       final withNulls = {
         'timezone': timezone0,

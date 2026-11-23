@@ -35,8 +35,11 @@ class ModelFeedCache extends _ModelFeedCache with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'feed_cache';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'feed_cache';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -261,10 +264,10 @@ class ModelFeedCache extends _ModelFeedCache with EquatableMixin {
   ) {
     try {
       final id = letIntOrNull(json?['id']);
-      final postId = json?['post_id']?.toString().trim().nullIfEmpty;
-      final authorId = json?['author_id']?.toString().trim().nullIfEmpty;
-      final caption = json?['caption']?.toString().trim().nullIfEmpty;
-      final visibility = json?['visibility']?.toString().trim().nullIfEmpty;
+      final postId = json?['post_id']?.toString().trim();
+      final authorId = json?['author_id']?.toString().trim();
+      final caption = json?['caption']?.toString().trim();
+      final visibility = json?['visibility']?.toString().trim();
       final media = letListOrNull<dynamic>(json?['media'])
           ?.map(
             (p0) => () {
@@ -273,8 +276,7 @@ class ModelFeedCache extends _ModelFeedCache with EquatableMixin {
             }(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final isUnread = letBoolOrNull(json?['is_unread']);
       final likeCount = letIntOrNull(json?['like_count']);
@@ -343,10 +345,10 @@ class ModelFeedCache extends _ModelFeedCache with EquatableMixin {
   }) {
     try {
       final id0 = id;
-      final postId0 = postId?.trim().nullIfEmpty;
-      final authorId0 = authorId?.trim().nullIfEmpty;
-      final caption0 = caption?.trim().nullIfEmpty;
-      final visibility0 = visibility?.trim().nullIfEmpty;
+      final postId0 = postId?.trim();
+      final authorId0 = authorId?.trim();
+      final caption0 = caption?.trim();
+      final visibility0 = visibility?.trim();
       final media0 = () {
         final a = media;
         return a != null
@@ -355,8 +357,7 @@ class ModelFeedCache extends _ModelFeedCache with EquatableMixin {
                   (p0) => p0?.toJson(),
                 )
                 .nonNulls
-                .nullIfEmpty
-                ?.toList())
+                .toList())
             : null;
       }();
       final isUnread0 = isUnread == null ? null : (isUnread! ? 1 : 0);

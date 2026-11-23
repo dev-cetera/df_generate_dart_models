@@ -147,12 +147,12 @@ void main() {
       // PG_text-String resolves to Core's String coercion.
       expect(
         _mapFrom(production, 'PG_text-String', name: 'v'),
-        'v?.toString().trim().nullIfEmpty',
+        'v?.toString().trim()',
       );
       // Bare String still routes to Core.
       expect(
         _mapFrom(production, 'String', name: 'v'),
-        'v?.toString().trim().nullIfEmpty',
+        'v?.toString().trim()',
       );
     });
 

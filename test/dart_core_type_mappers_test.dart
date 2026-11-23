@@ -33,8 +33,8 @@ void main() {
       );
 
   group('objectFromMappers (canonical conversions for fromJson)', () {
-    test('String trims and nullIfEmpty', () {
-      expect(mapFrom('String'), 'x?.toString().trim().nullIfEmpty');
+    test('String trims, and keeps an empty string', () {
+      expect(mapFrom('String'), 'x?.toString().trim()');
     });
 
     test('bool uses letBoolOrNull (coercive, handles SQLite int 0/1)', () {
@@ -63,19 +63,19 @@ void main() {
 
     test('DateTime coerces to String first (regression for TypeError-on-int)',
         () {
-      // The generated code must call `.toString().trim().nullIfEmpty` before
+      // The generated code must call `.toString().trim()` before
       // DateTime.tryParse — without that, a numeric JSON value (e.g. epoch
       // millis) would throw a TypeError at runtime because tryParse only
       // accepts String.
       final r = mapFrom('DateTime');
-      expect(r, contains('toString().trim().nullIfEmpty'));
+      expect(r, contains('toString().trim()'));
       expect(r, contains('DateTime.tryParse(a)'));
     });
   });
 
   group('objectToMappers (canonical conversions for toJson)', () {
-    test('String trims and nullIfEmpty', () {
-      expect(mapTo('String'), 'x?.trim().nullIfEmpty');
+    test('String trims, and keeps an empty string', () {
+      expect(mapTo('String'), 'x?.trim()');
     });
 
     test('bool returns the value as-is', () {
@@ -106,7 +106,7 @@ void main() {
       // redundant work.
       final r = mapTo('TrimmedLowerCase-String', name: 'tag');
       expect(r, isNot(contains('toString()')));
-      expect(r, 'tag?.trim().nullIfEmpty?.toLowerCase()');
+      expect(r, 'tag?.trim().toLowerCase()');
     });
   });
 
@@ -114,7 +114,7 @@ void main() {
     test('List<String> builds a list mapper from String mapper', () {
       final r = mapFrom('List<String>', name: 'names');
       expect(r, contains('letListOrNull<dynamic>(names)'));
-      expect(r, contains('toString().trim().nullIfEmpty'));
+      expect(r, contains('toString().trim()'));
     });
 
     test('Map<String,int> builds a map mapper from String/int mappers', () {
@@ -187,28 +187,28 @@ void main() {
     test('PG_text-String forwards to the standard String coercion', () {
       expect(
         mapFrom('PG_text-String', name: 'v'),
-        'v?.toString().trim().nullIfEmpty',
+        'v?.toString().trim()',
       );
     });
 
     test('PG_varchar(255)-String tolerates the size parameter', () {
       expect(
         mapFrom('PG_varchar(255)-String', name: 'v'),
-        'v?.toString().trim().nullIfEmpty',
+        'v?.toString().trim()',
       );
     });
 
     test('PG_citext-String forwards like PG_text', () {
       expect(
         mapFrom('PG_citext-String', name: 'v'),
-        'v?.toString().trim().nullIfEmpty',
+        'v?.toString().trim()',
       );
     });
 
     test('PG_uuid-String forwards as String', () {
       expect(
         mapFrom('PG_uuid-String', name: 'v'),
-        'v?.toString().trim().nullIfEmpty',
+        'v?.toString().trim()',
       );
     });
 
@@ -440,15 +440,38 @@ void main() {
   });
 
   group('cleanup regressions', () {
-    test(
-        'Searchable-String trailing nullIfEmpty (empty after regex strip → null)',
-        () {
-      // Without the trailing nullIfEmpty, input like "!!!" would survive
-      // trim()/nullIfEmpty (non-empty), get its non-word chars stripped, and
-      // end up as the empty string instead of null.
+    test('Searchable-String strips to an empty string, not null', () {
+      // "!!!" trims to itself, then loses every non-word character: the
+      // result is "", which is a value, like every other empty string.
       final r = mapFrom('Searchable-String', name: 's');
-      // The final method call must be nullIfEmpty.
-      expect(r.endsWith('.nullIfEmpty'), isTrue);
+      expect(r, isNot(contains('nullIfEmpty')));
+      expect(r, endsWith("replaceAll(RegExp(r'[^\\w]'), '')"));
+    });
+
+    test('no mapper turns an empty value into null', () {
+      for (final type in [
+        'String',
+        'List<String>',
+        'Set<String>',
+        'Map<String, String>',
+        'Iterable<String>',
+        'Queue<String>',
+        'Uint8List',
+        'PG_text-String',
+        'SQLITE_text-String',
+        'TrimmedLowerCase-String',
+      ]) {
+        expect(
+          mapFrom(type),
+          isNot(contains('nullIfEmpty')),
+          reason: 'fromJson of $type',
+        );
+        expect(
+          mapTo(type),
+          isNot(contains('nullIfEmpty')),
+          reason: 'toJson of $type',
+        );
+      }
     });
 
     test(
@@ -468,7 +491,7 @@ void main() {
     test('SQLITE_text-String forwards to standard coercion', () {
       expect(
         mapFrom('SQLITE_text-String', name: 'v'),
-        'v?.toString().trim().nullIfEmpty',
+        'v?.toString().trim()',
       );
     });
 

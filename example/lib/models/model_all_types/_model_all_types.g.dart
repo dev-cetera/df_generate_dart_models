@@ -32,6 +32,15 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
+  /// The database table name this model maps to, mirroring `tableName:` on
+  /// the annotation. When the annotation omits `tableName:`, this is derived
+  /// from the class name (Model prefix/suffix stripped, snake-cased) — no
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'all_types';
+
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
@@ -577,13 +586,13 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
   ) {
     try {
       final anyValue = json?['anyValue'];
-      final name = json?['name']?.toString().trim().nullIfEmpty;
+      final name = json?['name']?.toString().trim();
       final active = letBoolOrNull(json?['active']);
       final count = letIntOrNull(json?['count']);
       final ratio = letDoubleOrNull(json?['ratio']);
       final amount = letNumOrNull(json?['amount']);
       final createdAt = () {
-        final a = json?['createdAt']?.toString().trim().nullIfEmpty;
+        final a = json?['createdAt']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final interval = () {
@@ -591,7 +600,7 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
         return a != null ? Duration(microseconds: a) : null;
       }();
       final homepage = () {
-        final a = json?['homepage']?.toString().trim().nullIfEmpty;
+        final a = json?['homepage']?.toString().trim();
         return a != null ? Uri.tryParse(a) : null;
       }();
       final themeColor = () {
@@ -606,11 +615,11 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
       }();
       final shade = ColorEnum.values.valueOf(json?['shade']?.toString());
       final bigCount = () {
-        final a = json?['bigCount']?.toString().trim().nullIfEmpty;
+        final a = json?['bigCount']?.toString().trim();
         return a != null ? BigInt.tryParse(a) : null;
       }();
       final blob = () {
-        final a = json?['blob']?.toString().trim().nullIfEmpty;
+        final a = json?['blob']?.toString().trim();
         if (a == null) return null;
         try {
           return base64Decode(a);
@@ -619,7 +628,7 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
         }
       }();
       final regex = () {
-        final a = json?['regex']?.toString().trim().nullIfEmpty;
+        final a = json?['regex']?.toString().trim();
         if (a == null) return null;
         try {
           return RegExp(a);
@@ -675,111 +684,71 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
                 letAsOrNull<double>(a['y']) ?? 0.0)
             : null;
       }();
-      final trimmed = json?['trimmed']?.toString().trim().nullIfEmpty;
-      final noSpaces =
-          json?['noSpaces']?.toString().trim().nullIfEmpty?.replaceAll(' ', '');
+      final trimmed = json?['trimmed']?.toString().trim();
+      final noSpaces = json?['noSpaces']?.toString().trim().replaceAll(' ', '');
       final searchable = json?['searchable']
           ?.toString()
           .trim()
-          .nullIfEmpty
-          ?.toLowerCase()
-          .replaceAll(RegExp(r'[^\w]'), '')
-          .nullIfEmpty;
-      final lower =
-          json?['lower']?.toString().trim().nullIfEmpty?.toLowerCase();
-      final upper =
-          json?['upper']?.toString().trim().nullIfEmpty?.toUpperCase();
-      final lowerSnake = json?['lowerSnake']
-          ?.toString()
-          .trim()
-          .nullIfEmpty
-          ?.toLowerSnakeCase();
-      final upperSnake = json?['upperSnake']
-          ?.toString()
-          .trim()
-          .nullIfEmpty
-          ?.toUpperSnakeCase();
-      final lowerKebab = json?['lowerKebab']
-          ?.toString()
-          .trim()
-          .nullIfEmpty
-          ?.toLowerKebabCase();
-      final upperKebab = json?['upperKebab']
-          ?.toString()
-          .trim()
-          .nullIfEmpty
-          ?.toUpperKebabCase();
-      final camel =
-          json?['camel']?.toString().trim().nullIfEmpty?.toCamelCase();
-      final pascal =
-          json?['pascal']?.toString().trim().nullIfEmpty?.toPascalCase();
-      final tLower =
-          json?['tLower']?.toString().trim().nullIfEmpty?.toLowerCase();
-      final tUpper =
-          json?['tUpper']?.toString().trim().nullIfEmpty?.toUpperCase();
-      final tLowerSnake = json?['tLowerSnake']
-          ?.toString()
-          .trim()
-          .nullIfEmpty
-          ?.toLowerSnakeCase();
-      final tUpperSnake = json?['tUpperSnake']
-          ?.toString()
-          .trim()
-          .nullIfEmpty
-          ?.toUpperSnakeCase();
-      final tLowerKebab = json?['tLowerKebab']
-          ?.toString()
-          .trim()
-          .nullIfEmpty
-          ?.toLowerKebabCase();
-      final tUpperKebab = json?['tUpperKebab']
-          ?.toString()
-          .trim()
-          .nullIfEmpty
-          ?.toUpperKebabCase();
-      final tCamel =
-          json?['tCamel']?.toString().trim().nullIfEmpty?.toCamelCase();
-      final tPascal =
-          json?['tPascal']?.toString().trim().nullIfEmpty?.toPascalCase();
+          .toLowerCase()
+          .replaceAll(RegExp(r'[^\w]'), '');
+      final lower = json?['lower']?.toString().trim().toLowerCase();
+      final upper = json?['upper']?.toString().trim().toUpperCase();
+      final lowerSnake =
+          json?['lowerSnake']?.toString().trim().toLowerSnakeCase();
+      final upperSnake =
+          json?['upperSnake']?.toString().trim().toUpperSnakeCase();
+      final lowerKebab =
+          json?['lowerKebab']?.toString().trim().toLowerKebabCase();
+      final upperKebab =
+          json?['upperKebab']?.toString().trim().toUpperKebabCase();
+      final camel = json?['camel']?.toString().trim().toCamelCase();
+      final pascal = json?['pascal']?.toString().trim().toPascalCase();
+      final tLower = json?['tLower']?.toString().trim().toLowerCase();
+      final tUpper = json?['tUpper']?.toString().trim().toUpperCase();
+      final tLowerSnake =
+          json?['tLowerSnake']?.toString().trim().toLowerSnakeCase();
+      final tUpperSnake =
+          json?['tUpperSnake']?.toString().trim().toUpperSnakeCase();
+      final tLowerKebab =
+          json?['tLowerKebab']?.toString().trim().toLowerKebabCase();
+      final tUpperKebab =
+          json?['tUpperKebab']?.toString().trim().toUpperKebabCase();
+      final tCamel = json?['tCamel']?.toString().trim().toCamelCase();
+      final tPascal = json?['tPascal']?.toString().trim().toPascalCase();
       final tags = letListOrNull<dynamic>(json?['tags'])
           ?.map(
-            (p0) => p0?.toString().trim().nullIfEmpty,
+            (p0) => p0?.toString().trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final flags = letSetOrNull<dynamic>(json?['flags'])
           ?.map(
             (p0) => letBoolOrNull(p0),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toSet()
+          .toSet()
           .unmodifiable;
       final scores = letIterableOrNull<dynamic>(json?['scores'])
           ?.map(
             (p0) => letIntOrNull(p0),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final lookup = letMapOrNull<dynamic, dynamic>(json?['lookup'])
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.toString().trim().nullIfEmpty,
+              p0?.toString().trim(),
               letDoubleOrNull(p1),
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .unmodifiable;
       final todo = () {
         final a = letIterableOrNull<dynamic>(json?['todo'])
             ?.map(
-              (p0) => p0?.toString().trim().nullIfEmpty,
+              (p0) => p0?.toString().trim(),
             )
-            .nonNulls
-            .nullIfEmpty;
+            .nonNulls;
         return a != null ? Queue.of(a) : null;
       }();
       final matrix = letListOrNull<dynamic>(json?['matrix'])
@@ -789,51 +758,45 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
                   (p0) => letIntOrNull(p0),
                 )
                 .nonNulls
-                .nullIfEmpty
-                ?.toList()
+                .toList()
                 .unmodifiable,
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final groupedColors =
           letMapOrNull<dynamic, dynamic>(json?['groupedColors'])
               ?.map(
                 (p0, p1) => MapEntry(
-                  p0?.toString().trim().nullIfEmpty,
+                  p0?.toString().trim(),
                   letListOrNull<dynamic>(p1)
                       ?.map(
                         (p0) => letIntOrNull(p0),
                       )
                       .nonNulls
-                      .nullIfEmpty
-                      ?.toList()
+                      .toList()
                       .unmodifiable,
                 ),
               )
               .nonNulls
-              .nullIfEmpty
-              ?.unmodifiable;
+              .unmodifiable;
       final nestedMap = letMapOrNull<dynamic, dynamic>(json?['nestedMap'])
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.toString().trim().nullIfEmpty,
+              p0?.toString().trim(),
               letMapOrNull<dynamic, dynamic>(p1)
                   ?.map(
                     (p0, p1) => MapEntry(
-                      p0?.toString().trim().nullIfEmpty,
+                      p0?.toString().trim(),
                       letIntOrNull(p1),
                     ),
                   )
                   .nonNulls
-                  .nullIfEmpty
-                  ?.unmodifiable,
+                  .unmodifiable,
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .unmodifiable;
       final users = letListOrNull<dynamic>(json?['users'])
           ?.map(
             (p0) => () {
@@ -842,19 +805,17 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
             }(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final localized = letMapOrNull<dynamic, dynamic>(json?['localized'])
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.toString().trim().nullIfEmpty,
-              p1?.toString().trim().nullIfEmpty,
+              p0?.toString().trim(),
+              p1?.toString().trim(),
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .unmodifiable;
       return ModelAllTypes(
         anyValue: anyValue,
         name: name,
@@ -948,7 +909,7 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
   }) {
     try {
       final anyValue0 = anyValue;
-      final name0 = name?.trim().nullIfEmpty;
+      final name0 = name?.trim();
       final active0 = active;
       final count0 = count;
       final ratio0 = ratio;
@@ -987,67 +948,58 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
           : null;
       final anchor0 = anchor != null ? {'x': anchor!.x, 'y': anchor!.y} : null;
       final corner0 = corner != null ? {'x': corner!.x, 'y': corner!.y} : null;
-      final trimmed0 = trimmed?.trim().nullIfEmpty;
-      final noSpaces0 = noSpaces?.trim().nullIfEmpty?.replaceAll(' ', '');
-      final searchable0 = searchable
-          ?.trim()
-          .nullIfEmpty
-          ?.toLowerCase()
-          .replaceAll(RegExp(r'[^\w]'), '')
-          .nullIfEmpty;
-      final lower0 = lower?.trim().nullIfEmpty?.toLowerCase();
-      final upper0 = upper?.trim().nullIfEmpty?.toUpperCase();
-      final lowerSnake0 = lowerSnake?.trim().nullIfEmpty?.toLowerSnakeCase();
-      final upperSnake0 = upperSnake?.trim().nullIfEmpty?.toUpperSnakeCase();
-      final lowerKebab0 = lowerKebab?.trim().nullIfEmpty?.toLowerKebabCase();
-      final upperKebab0 = upperKebab?.trim().nullIfEmpty?.toUpperKebabCase();
-      final camel0 = camel?.trim().nullIfEmpty?.toCamelCase();
-      final pascal0 = pascal?.trim().nullIfEmpty?.toPascalCase();
-      final tLower0 = tLower?.trim().nullIfEmpty?.toLowerCase();
-      final tUpper0 = tUpper?.trim().nullIfEmpty?.toUpperCase();
-      final tLowerSnake0 = tLowerSnake?.trim().nullIfEmpty?.toLowerSnakeCase();
-      final tUpperSnake0 = tUpperSnake?.trim().nullIfEmpty?.toUpperSnakeCase();
-      final tLowerKebab0 = tLowerKebab?.trim().nullIfEmpty?.toLowerKebabCase();
-      final tUpperKebab0 = tUpperKebab?.trim().nullIfEmpty?.toUpperKebabCase();
-      final tCamel0 = tCamel?.trim().nullIfEmpty?.toCamelCase();
-      final tPascal0 = tPascal?.trim().nullIfEmpty?.toPascalCase();
+      final trimmed0 = trimmed?.trim();
+      final noSpaces0 = noSpaces?.trim().replaceAll(' ', '');
+      final searchable0 =
+          searchable?.trim().toLowerCase().replaceAll(RegExp(r'[^\w]'), '');
+      final lower0 = lower?.trim().toLowerCase();
+      final upper0 = upper?.trim().toUpperCase();
+      final lowerSnake0 = lowerSnake?.trim().toLowerSnakeCase();
+      final upperSnake0 = upperSnake?.trim().toUpperSnakeCase();
+      final lowerKebab0 = lowerKebab?.trim().toLowerKebabCase();
+      final upperKebab0 = upperKebab?.trim().toUpperKebabCase();
+      final camel0 = camel?.trim().toCamelCase();
+      final pascal0 = pascal?.trim().toPascalCase();
+      final tLower0 = tLower?.trim().toLowerCase();
+      final tUpper0 = tUpper?.trim().toUpperCase();
+      final tLowerSnake0 = tLowerSnake?.trim().toLowerSnakeCase();
+      final tUpperSnake0 = tUpperSnake?.trim().toUpperSnakeCase();
+      final tLowerKebab0 = tLowerKebab?.trim().toLowerKebabCase();
+      final tUpperKebab0 = tUpperKebab?.trim().toUpperKebabCase();
+      final tCamel0 = tCamel?.trim().toCamelCase();
+      final tPascal0 = tPascal?.trim().toPascalCase();
       final tags0 = tags
           ?.map(
-            (p0) => p0?.trim().nullIfEmpty,
+            (p0) => p0?.trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final flags0 = flags
           ?.map(
             (p0) => p0,
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final scores0 = scores
           ?.map(
             (p0) => p0,
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final lookup0 = lookup
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.trim().nullIfEmpty,
+              p0?.trim(),
               p1,
             ),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final todo0 = todo
           ?.map(
-            (p0) => p0?.trim().nullIfEmpty,
+            (p0) => p0?.trim(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final matrix0 = matrix
           ?.map(
             (p0) => p0
@@ -1055,60 +1007,52 @@ class ModelAllTypes extends _ModelAllTypes with EquatableMixin {
                   (p0) => p0,
                 )
                 .nonNulls
-                .nullIfEmpty
-                ?.toList(),
+                .toList(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final groupedColors0 = groupedColors
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.trim().nullIfEmpty,
+              p0?.trim(),
               p1
                   ?.map(
                     (p0) => p0,
                   )
                   .nonNulls
-                  .nullIfEmpty
-                  ?.toList(),
+                  .toList(),
             ),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final nestedMap0 = nestedMap
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.trim().nullIfEmpty,
+              p0?.trim(),
               p1
                   ?.map(
                     (p0, p1) => MapEntry(
-                      p0?.trim().nullIfEmpty,
+                      p0?.trim(),
                       p1,
                     ),
                   )
-                  .nonNulls
-                  .nullIfEmpty,
+                  .nonNulls,
             ),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final users0 = users
           ?.map(
             (p0) => p0?.toJson(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final localized0 = localized
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.trim().nullIfEmpty,
-              p1?.trim().nullIfEmpty,
+              p0?.trim(),
+              p1?.trim(),
             ),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final withNulls = {
         'users': users0,
         'upperSnake': upperSnake0,

@@ -32,6 +32,15 @@ class ModelTest extends _ModelTest with EquatableMixin {
   @override
   String get $className => CLASS_NAME;
 
+  /// The database table name this model maps to, mirroring `tableName:` on
+  /// the annotation. When the annotation omits `tableName:`, this is derived
+  /// from the class name (Model prefix/suffix stripped, snake-cased) — no
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'test';
+
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
   /// round-trips since every field is included.
@@ -188,21 +197,19 @@ class ModelTest extends _ModelTest with EquatableMixin {
             }(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final checks = letListOrNull<dynamic>(json?['checks'])
           ?.map(
             (p0) => letIntOrNull(p0),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList()
+          .toList()
           .unmodifiable;
       final random = letMapOrNull<dynamic, dynamic>(json?['random'])
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.toString().trim().nullIfEmpty,
+              p0?.toString().trim(),
               letMapOrNull<dynamic, dynamic>(p1)
                   ?.map(
                     (p0, p1) => MapEntry(
@@ -211,13 +218,11 @@ class ModelTest extends _ModelTest with EquatableMixin {
                     ),
                   )
                   .nonNulls
-                  .nullIfEmpty
-                  ?.unmodifiable,
+                  .unmodifiable,
             ),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.unmodifiable;
+          .unmodifiable;
       return ModelTest(
         users: users,
         checks: checks,
@@ -266,19 +271,17 @@ class ModelTest extends _ModelTest with EquatableMixin {
             (p0) => p0?.toJson(),
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final checks0 = checks
           ?.map(
             (p0) => p0,
           )
           .nonNulls
-          .nullIfEmpty
-          ?.toList();
+          .toList();
       final random0 = random
           ?.map(
             (p0, p1) => MapEntry(
-              p0?.trim().nullIfEmpty,
+              p0?.trim(),
               p1
                   ?.map(
                     (p0, p1) => MapEntry(
@@ -286,12 +289,10 @@ class ModelTest extends _ModelTest with EquatableMixin {
                       p1,
                     ),
                   )
-                  .nonNulls
-                  .nullIfEmpty,
+                  .nonNulls,
             ),
           )
-          .nonNulls
-          .nullIfEmpty;
+          .nonNulls;
       final withNulls = {
         'users': users0,
         'random': random0,

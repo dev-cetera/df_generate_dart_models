@@ -35,8 +35,11 @@ class ModelPgUser extends _ModelPgUser with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'pg_user';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'pg_user';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -243,20 +246,20 @@ class ModelPgUser extends _ModelPgUser with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final email = json?['email']?.toString().trim().nullIfEmpty;
-      final displayName = json?['display_name']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final email = json?['email']?.toString().trim();
+      final displayName = json?['display_name']?.toString().trim();
       final loginCount = letIntOrNull(json?['login_count']);
       final isActive = letBoolOrNull(json?['is_active']);
       final avatarBytes = letAsOrNull<Uint8List>(json?['avatar_bytes']);
       final authProvider = AuthProviderKindType.values
           .valueOf(json?['auth_provider']?.toString());
       final createdAt = () {
-        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       final updatedAt = () {
-        final a = json?['updated_at']?.toString().trim().nullIfEmpty;
+        final a = json?['updated_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       return ModelPgUser(
@@ -308,9 +311,9 @@ class ModelPgUser extends _ModelPgUser with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final email0 = email?.trim().nullIfEmpty;
-      final displayName0 = displayName?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final email0 = email?.trim();
+      final displayName0 = displayName?.trim();
       final loginCount0 = loginCount;
       final isActive0 = isActive;
       final avatarBytes0 = avatarBytes;

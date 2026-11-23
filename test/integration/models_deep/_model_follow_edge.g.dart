@@ -35,8 +35,11 @@ class ModelFollowEdge extends _ModelFollowEdge with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'follow_edge';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'follow_edge';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -205,13 +208,13 @@ class ModelFollowEdge extends _ModelFollowEdge with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final followerId = json?['follower_id']?.toString().trim().nullIfEmpty;
-      final followeeId = json?['followee_id']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final followerId = json?['follower_id']?.toString().trim();
+      final followeeId = json?['followee_id']?.toString().trim();
       final status =
           FollowStatusType.values.valueOf(json?['status']?.toString());
       final createdAt = () {
-        final a = json?['created_at']?.toString().trim().nullIfEmpty;
+        final a = json?['created_at']?.toString().trim();
         return a != null ? DateTime.tryParse(a)?.toUtc() : null;
       }();
       return ModelFollowEdge(
@@ -259,9 +262,9 @@ class ModelFollowEdge extends _ModelFollowEdge with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final followerId0 = followerId?.trim().nullIfEmpty;
-      final followeeId0 = followeeId?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final followerId0 = followerId?.trim();
+      final followeeId0 = followeeId?.trim();
       final status0 = status?.name;
       final createdAt0 = createdAt?.toUtc().toIso8601String();
       final withNulls = {

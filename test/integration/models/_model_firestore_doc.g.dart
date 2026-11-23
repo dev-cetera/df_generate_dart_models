@@ -35,8 +35,11 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
   /// The database table name this model maps to, mirroring `tableName:` on
   /// the annotation. When the annotation omits `tableName:`, this is derived
   /// from the class name (Model prefix/suffix stripped, snake-cased) — no
-  /// automatic pluralisation.
-  static const tableName = 'firestore_doc';
+  /// automatic pluralisation. The `$` prefix matches the convention used by
+  /// the other framework-reserved statics (`$className`, `$primaryKey`,
+  /// `$foreignKeys`, `$values`) and prevents collisions with user columns
+  /// named `table_name` / `tableName`.
+  static const $tableName = 'firestore_doc';
 
   /// Field list backing `==` and `hashCode` via [EquatableMixin]. Preserves
   /// the same value semantics across hand-construction and `fromJson`
@@ -232,8 +235,8 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
     Map<String, dynamic>? json,
   ) {
     try {
-      final id = json?['id']?.toString().trim().nullIfEmpty;
-      final title = json?['title']?.toString().trim().nullIfEmpty;
+      final id = json?['id']?.toString().trim();
+      final title = json?['title']?.toString().trim();
       final capturedAt =
           letAsOrNull<Timestamp>(json?['capturedAt'])?.toDate().toUtc();
       final createdAt =
@@ -241,7 +244,7 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
       final location = letAsOrNull<GeoPoint>(json?['location']);
       final ownerRef =
           letAsOrNull<DocumentReference>(json?['ownerRef'])?.path ??
-              json?['ownerRef']?.toString().trim().nullIfEmpty;
+              json?['ownerRef']?.toString().trim();
       final thumbnail = letAsOrNull<Blob>(json?['thumbnail'])?.bytes ??
           letAsOrNull<Uint8List>(json?['thumbnail']);
       final legacyStamp = letAsOrNull<Timestamp>(json?['legacyStamp']);
@@ -293,13 +296,13 @@ class ModelFirestoreDoc extends _ModelFirestoreDoc with EquatableMixin {
     bool includeNulls = false,
   }) {
     try {
-      final id0 = id?.trim().nullIfEmpty;
-      final title0 = title?.trim().nullIfEmpty;
+      final id0 = id?.trim();
+      final title0 = title?.trim();
       final capturedAt0 =
           capturedAt != null ? Timestamp.fromDate(capturedAt!.toUtc()) : null;
       final createdAt0 = FieldValue.serverTimestamp();
       final location0 = location;
-      final ownerRef0 = ownerRef?.trim().nullIfEmpty;
+      final ownerRef0 = ownerRef?.trim();
       final thumbnail0 = thumbnail != null ? Blob(thumbnail!) : null;
       final legacyStamp0 = legacyStamp;
       final withNulls = {
